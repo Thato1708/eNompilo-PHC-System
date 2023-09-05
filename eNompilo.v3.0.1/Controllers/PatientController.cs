@@ -57,12 +57,12 @@ namespace eNompiloCounselling.Controllers
 
         public IActionResult PatientProfile(int? Id)
         {
-            if(Id == null || Id == 0)
+            if (Id == null || Id == 0)
             {
                 return NotFound();
             }
             var obj = dbContext.tblPatient.Find(Id);
-            if(obj == null)
+            if (obj == null)
             {
                 return NotFound();
             }
@@ -75,9 +75,9 @@ namespace eNompiloCounselling.Controllers
             //var patientId = _userManager.GetUserId(User);
             var patientFile = dbContext.tblPatientFile.Where(x => x.PatientId == patientId).Include(md => md.MedicalHistory).FirstOrDefault();
             var generalAppointment = dbContext.tblGeneralAppointment.Where(x => x.PatientId == patientId).ToList();
-            var prescription = dbContext.tblSession.Where(x => x.PatientId == patientId).Include(s=>s.SessionNotes.PrescriptionMeds).ToList();
+            var prescription = dbContext.tblSession.Where(x => x.PatientId == patientId).Include(s => s.SessionNotes.PrescriptionMeds).ToList();
             //var condition = dbContext.tblSessionNotes.FromSqlRaw<SessionNotes>("SELECT PotentialCondition FROM SessionNotes sn, Session s, Patient p WHERE s.SessionNotesId = sn.Id AND s.PatientId = {0}", patientId).ToList();
-            
+
 
             PatientDashboardViewModel patientDashboard = new PatientDashboardViewModel()
             {
@@ -103,7 +103,7 @@ namespace eNompiloCounselling.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddPersonalDetails(PersonalDetails model)
         {
-            if(model.ProfilePictureImageFile != null)
+            if (model.ProfilePictureImageFile != null)
             {
                 string wwwRootPath = webHostEnvironment.WebRootPath;
                 string fileName = Path.GetFileNameWithoutExtension(model.ProfilePictureImageFile.FileName);
@@ -114,24 +114,24 @@ namespace eNompiloCounselling.Controllers
                 {
                     await model.ProfilePictureImageFile.CopyToAsync(fileStream);
                 }
-            }   
+            }
             if (model.PatientId != null && model.Gender != null && model.DOB != null && model.EmergencyPerson != null && model.EmergenyContactNr != null && model.Employed != null && model.Citizenship != null && model.MaritalStatus != null && model.AddressLine1 != null && model.City != null && model.Province != null && model.ZipCode != null)
             {
                 dbContext.tblPersonalDetails.Add(model);
                 await dbContext.SaveChangesAsync();
                 return RedirectToAction("AddMedicalHistory");
-            }         
+            }
             return View(model);
         }
 
         public IActionResult EditPersonalDetails(int? Id) //View Not created due to image update issue
         {
-            if(Id == null || Id == 0)
+            if (Id == null || Id == 0)
             {
                 return NotFound();
             }
             var obj = dbContext.tblPersonalDetails.Find(Id);
-            if(obj == null)
+            if (obj == null)
             {
                 return NotFound();
             }
@@ -158,7 +158,7 @@ namespace eNompiloCounselling.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddMedicalHistory(MedicalHistory model)
+        public IActionResult AddMedicalHistory(MedicalHistory model)
         {
             //var userId = _userManager.GetUserId(User);
             //var patient = dbContext.tblPatient.SingleOrDefault(c => c.UserId == userId);
@@ -170,8 +170,8 @@ namespace eNompiloCounselling.Controllers
             //!!!Can we revamp the above code so that when the medical history is submitted (granted we move it tpo inside the ModelState.IsValid) then it retrieves the Medical History's Id and submits it with the Patient's Id to the Patient file. That way, a registered patient with a complete file and history can have a file automatically created for them.!!!
             if (model.PatientId != null && model.PreviousDiagnoses != null && model.PreviousMedication != null && model.GeneralAllergies != null && model.MedicationAllergies != null) //model state was not returning valid.
             {
-                await dbContext.tblMedicalHistory.AddAsync(model);
-                await dbContext.SaveChangesAsync();
+                dbContext.tblMedicalHistory.Add(model);
+                dbContext.SaveChanges();
 
                 var patientId = _contextAccessor.HttpContext.Session.GetInt32("PatientId");
 
@@ -186,45 +186,52 @@ namespace eNompiloCounselling.Controllers
 
                 var medicalHistory = dbContext.tblMedicalHistory.SingleOrDefault(c => c.PatientId == patientId);
                 var medicalHistoryId = medicalHistory.Id;
-                //HttpContext.Session.SetInt32("MedicalHistoryId", medicalHistoryId);
+                HttpContext.Session.SetInt32("MedicalHistoryId", medicalHistoryId);
 
                 var personalDetails = dbContext.tblPersonalDetails.SingleOrDefault(c => c.PatientId == patientId);
                 var personalDetailsId = personalDetails.Id;
-                //HttpContext.Session.SetInt32("PersonalDetailsId", personalDetailsId);
+                HttpContext.Session.SetInt32("PersonalDetailsId", personalDetailsId);
 
-                //int? truePatientId = _contextAccessor.HttpContext.Session.GetInt32("PatientId");
+                int? truePatientId = _contextAccessor.HttpContext.Session.GetInt32("PatientId");
 
-                //if (_contextAccessor.HttpContext.Session.GetInt32("PatientId2") == null)
-                //{
-                //    truePatientId = _contextAccessor.HttpContext.Session.GetInt32("PatientId");
-                //}
-                //else if (_contextAccessor.HttpContext.Session.GetInt32("PatientId") == null)
-                //{
-                //    truePatientId = _contextAccessor.HttpContext.Session.GetInt32("PatientId2");
-                //}
-
-                var patientFile = new PatientFile
+                if (_contextAccessor.HttpContext.Session.GetInt32("PatientId2") == null)
                 {
-                    MedicalHistoryId = medicalHistoryId,
-                    PersonalDetailsId = personalDetailsId,
-                    PatientId = patientId
-                };
-                await dbContext.tblPatientFile.AddAsync(patientFile);
-                await dbContext.SaveChangesAsync();
+                    truePatientId = _contextAccessor.HttpContext.Session.GetInt32("PatientId");
+                }
+                else if (_contextAccessor.HttpContext.Session.GetInt32("PatientId") == null)
+                {
+                    truePatientId = _contextAccessor.HttpContext.Session.GetInt32("PatientId2");
+                }
 
-                return RedirectToAction(actionName:"Index",controllerName:"Home");
-            }    
+                if (true)
+                {
+                    var patientFile = new PatientFile
+                    {
+                        MedicalHistoryId = medicalHistoryId,
+                        PersonalDetailsId = personalDetailsId,
+                        PatientId = truePatientId
+                    };
+                    dbContext.tblPatientFile.Add(patientFile);
+                    dbContext.SaveChanges();
+                }
+
+
+                return RedirectToAction(actionName: "Index");
+
+            }
             return View(model);
         }
 
+        //Add HTTP Post to add to patientFile
+
         public IActionResult EditMedicalHistory(int? Id)
         {
-            if(Id == null || Id == 0)
+            if (Id == null || Id == 0)
             {
                 return NotFound();
             }
             var obj = dbContext.tblMedicalHistory.Find(Id);
-            if(obj == null)
+            if (obj == null)
             {
                 return NotFound();
             }

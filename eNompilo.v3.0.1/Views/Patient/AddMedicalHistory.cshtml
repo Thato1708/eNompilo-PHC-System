@@ -1,0 +1,87 @@
+﻿@using eNompilo.v3._0._1.Constants;
+@using eNompilo.v3._0._1.Models.SystemUsers;
+@model eNompilo.v3._0._1.Models.SystemUsers.MedicalHistory;
+@inject IHttpContextAccessor contextAccessor;
+
+@{
+    ViewData["Title"] = "AddMedicalHistory";
+}
+
+<div class="margined-page pt-4">
+
+    <h2>Medical History</h2>
+    <hr />
+    <div class="row" >
+        <div class="col-md-4" style="margin-left:auto;margin-right:auto;">
+            <form asp-action="AddMedicalHistory">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                @if (contextAccessor.HttpContext.Session.GetInt32("PatientId2") == null)
+                {
+                    <div class="form-group mb-4">
+                        <label asp-for="PatientId" class="control-label"></label>
+                        <input asp-for="PatientId" class="form-control" value="@contextAccessor.HttpContext.Session.GetInt32("PatientId")" />
+                    </div>
+                }
+                else if (contextAccessor.HttpContext.Session.GetInt32("PatientId") == null)
+                {
+                    <div class="form-group mb-4">
+                        <label asp-for="PatientId" class="control-label"></label>
+                        <input asp-for="PatientId" class="form-control" value="@contextAccessor.HttpContext.Session.GetInt32("PatientId2")" />
+                    </div>
+                }
+                <div class="form-group mb-4">
+                    <label asp-for="PreviousDiagnoses" class="control-label"></label>
+                    <textarea asp-for="PreviousDiagnoses" class="form-control" ></textarea>
+                    <span asp-validation-for="PreviousDiagnoses" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-4">
+                    <label asp-for="PreviousMedication" class="control-label"></label>
+                    <textarea asp-for="PreviousMedication" class="form-control" ></textarea>
+                    <span asp-validation-for="PreviousMedication" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-4">
+                    <label asp-for="GeneralAllergies" class="control-label"></label>
+                    <textarea asp-for="GeneralAllergies" class="form-control" ></textarea>
+                    <span asp-validation-for="GeneralAllergies" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-4">
+                    <label asp-for="MedicationAllergies" class="control-label"></label>
+                    <textarea asp-for="MedicationAllergies" class="form-control" ></textarea>
+                    <span asp-validation-for="MedicationAllergies" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-4">
+                    <input type="submit" value="Create" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalFileCreated" />
+                </div>
+            </form>
+        </div>
+    </div>
+    <div>
+        <a asp-controller="Home" asp-action="Index">Back Home</a>
+    </div>
+</div>
+
+<div class="modal fade" id="modalFileCreated" tabindex="-1" aria-labelledby="modalFileCreatedLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalFileCreatedLabel">Congratulations!</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Your have been successfully registered as a patient with an account at the eNompilo Web System.<br />
+                A file has been created for you and you can now use our system to book appointments and access<br />
+                our other online services.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,156 @@
+﻿@model eNompilo.v3._0._1.Views.Home.PractitionerDashboardModel
+
+@{
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+<h1><strong>Welcome to eNompilo </strong></h1>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+<div class="justify-cotent-center">
+    <div class="page-content page-container" id="page-content">
+        <div class="padding ">
+            <div class="row container d-flex justify-content-center" style="margin-left:auto; margin-right:auto;">
+
+                <div class="col-lg-8 grid-margin stretch-card" style="width:100vh;">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">APPOINTMENTS SUMMARY</h4>
+                            <div class="table-responsive">
+                                <table class="table-borderless">
+                                    <thead class="table-bordered">
+                                        <tr>
+                                            <th class="col-2"><i class="bi bi-people-fill icons"></i>Patients Waiting<p style="align-self:auto">2</p></th>
+                                            <th class="col-2"><i class="bi bi-calendar3 icons"></i>Pending Appointments<p style="align-self:end">6</p></th>
+                                            <th class="col-2"><i class="bi bi-calendar2-check-fill icons"></i>Completed Appointments<p style="align-self:center">7</p></th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                            <h4 class="card-title">PRACTITIONER ACTION</h4>
+                            <div class="table-responsive">
+                                <table class="table-borderless">
+                                    <thead class="table-bordered">
+                                        <tr>
+                                            <th class="col-2"><i class="bi bi-capsule-pill icons"></i>Number Of Prescriptions<p class="align-content-center">2</p></th>
+                                        </tr>
+                                        @* <tr>
+                                        <td>Samso Park</td>
+                                        <td>Counselling</td>
+                                        <td>12 May 2017</td>
+                                        <td>12:30</td>
+                                        <td>Ms Hanisa Hintsa</td>
+
+                                        </tr>
+                                        <tr>
+                                        <td>Samso Park</td>
+                                        <td>Counselling</td>
+                                        <td>12 May 2017</td>
+                                        <td>12:30</td>
+                                        <td>Ms Hanisa Hintsa</td>
+
+                                        </tr>
+                                        <tr>
+                                        <td>Samso Park</td>
+                                        <td>Counselling</td>
+                                        <td>12 May 2017</td>
+                                        <td>12:30</td>
+                                        <td>Ms Hanisa Hintsa</td>
+
+                                        </tr> *@
+                                    </thead>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <br />
+    <br />
+    <div class="padding">
+        <div class="row">
+            <div class="card-group row container d-flex justify-content-center" style="margin-left:auto; margin-right:auto; width:123vh; height:fit-content;">
+
+                <div class="col-sm-5">
+                    <div class="card">
+                        <div class="card-header"><strong>Prescription Notes</strong></div>
+                        <div class="card-body">
+                            <table class="table table-bordered">
+                                <p>No records fouund to be retrieved</p>
+                            </table>
+                            <br />
+                            <br />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-5">
+                    <div class="card">
+                        <div class="card-header"><strong>Practitioner notes</strong></div>
+                        <div class="card-header"><strong>Session</strong></div>
+
+                        <div class="card-body">
+                            <p>No records fouund to be retrieved</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <br />
+    <br />
+    <div class="page-content page-container" id="page-content">
+        <div class="padding ">
+            <div class="row container d-flex justify-content-center" style="margin-left:auto; margin-right:auto;">
+
+                <div class="col-lg-8 grid-margin stretch-card" style="width:100vh;">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">UPCOMING APPOINTMENTS</h4>
+                            <div class="table-responsive">
+                                <table class="table-borderless">
+                                    <thead class="table-bordered">
+                                        <tr>
+                                            <th class="col-2">Full Name</th>
+                                            <th class="col-2">Appointment</th>
+                                            <th class="col-2">Appointment Date</th>
+                                            <th class="col-2">Appointment Time</th>
+                                            <th class="col-2">Practitioner</th>
+
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @* <tr>
+                                            <td>Olwethu Mzileni</td>
+                                            <td>Counselling</td>
+                                            <td>12 May 2017</td>
+                                            <td>12:30</td>
+                                            <td>Ms Hanisa Hintsa</td>
+
+                                        </tr> *@
+                                        <tr>
+                                            <td colspan="3">No records fouund to be retrieved</td>
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <br />
+    <br />
+
+</div>
+

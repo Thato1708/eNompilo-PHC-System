@@ -1,0 +1,55 @@
+﻿@model eNompilo.v3._0._1.Models.Family_Planning.FamilyPlanningAppointment
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="margined-page pt-4">
+
+<div>
+    <h2>Your Upcoming Appointment(s)</h2>
+    <hr />
+    <dl class="row" style="margin-left:auto;margin-right:auto;">
+        <dt class = "col-sm-2 mb-4">
+            @Html.DisplayNameFor(model => model.BookingReasons)
+        </dt>
+        <dd class = "col-sm-10 mb-4">
+            @Html.DisplayFor(model => model.BookingReasons)
+        </dd>
+        <dt class = "col-sm-2 mb-4">
+            @Html.DisplayNameFor(model => model.PreferredDate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PreferredDate)
+        </dd>
+        <dt class = "col-sm-2 mb-4">
+            @Html.DisplayNameFor(model => model.PreferredTime)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PreferredTime)
+        </dd>
+        <dt class = "col-sm-2 mb-4">
+            @Html.DisplayNameFor(model => model.Patient)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Patient.Email)
+        </dd>
+        <dt class = "col-sm-2 mb-4">
+            @Html.DisplayNameFor(model => model.PatientFile)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PatientFile.Id)
+        </dd>
+        <dt class = "col-sm-2 mb-4">
+            @Html.DisplayNameFor(model => model.Archived)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Archived)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Update" asp-route-id="@Model?.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
+</div>

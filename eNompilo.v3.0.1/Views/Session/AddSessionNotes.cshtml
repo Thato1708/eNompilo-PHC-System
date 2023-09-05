@@ -1,0 +1,64 @@
+﻿@model eNompilo.v3._0._1.Models.SessionNotes
+
+@using eNompilo.v3._0._1.Constants;
+
+@{
+    ViewData["Title"] = "AddSessionNotes";
+}
+
+<div class="margined-page pt-4">
+
+    <h2>Session Notes</h2>
+    <hr />
+    <div class="row" >
+        <div class="col-md-4" style="margin-left:auto;margin-right:auto;">
+            <form asp-action="AddSessionNotes">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group mb-4">
+                    <label asp-for="PractitionerNotes" class="control-label"></label>
+                    <textarea asp-for="PractitionerNotes" class="form-control" />
+                    <span asp-validation-for="PractitionerNotes" class="text-danger"></span>
+                </div>
+                <div class="form-group form-check mb-4">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="ConditionIndication" /> @Html.DisplayNameFor(model => model.ConditionIndication)
+                    </label>
+                </div>
+                <div class="form-group mb-4">
+                    <label asp-for="PotentialCondition" class="control-label"></label>
+                    <textarea asp-for="PotentialCondition" class="form-control" />
+                    <span asp-validation-for="PotentialCondition" class="text-danger"></span>
+                </div>
+                <div class="form-group form-check mb-4">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="IsADanger" /> @Html.DisplayNameFor(model => model.IsADanger)
+                    </label>
+                </div>
+                <div class="form-group form-check mb-4">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="IsAbused" /> @Html.DisplayNameFor(model => model.IsAbused)
+                    </label>
+                </div>
+                <div class="form-group form-check mb-4">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="Archived" /> @Html.DisplayNameFor(model => model.Archived)
+                    </label>
+                </div>
+                <div class="form-group mb-4">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
+</div>
+
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

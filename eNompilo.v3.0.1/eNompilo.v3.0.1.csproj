@@ -8,6 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="NewFolder\**" />
+    <Content Remove="NewFolder\**" />
+    <EmbeddedResource Remove="NewFolder\**" />
+    <None Remove="NewFolder\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <_ContentIncludedByDefault Remove="wwwroot\img\Screenshot %28200%29.png" />
   </ItemGroup>
 
@@ -27,7 +34,6 @@
     <Folder Include="Models\Counselling\Booking\" />
     <Folder Include="Models\GBV\" />
     <Folder Include="Models\SMP\" />
-    <Folder Include="NewFolder\" />
     <Folder Include="Views\Home\EmptyPages\" />
     <Folder Include="wwwroot\img\NewFolder\" />
   </ItemGroup>

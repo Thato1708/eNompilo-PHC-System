@@ -77,16 +77,16 @@
                     <input asp-for="EmergenyContactNr" type="number" class="form-control" />
                     <span asp-validation-for="EmergenyContactNr" class="text-danger"></span>
                 </div>
-                <div class="form-group form-check mb-4">
+                <div class="form-group form-check">
                     <label class="form-check-label"> Are you Employed (If yes, tick the checkbox)</label>
-                    <input class="form-check-input employedCheckbox" asp-for="Employed" />
+                    <input id="employedCheckbox" class="form-check-input" asp-for="Employed" />
                 </div>
-                <div class="workTelDiv form-group mb-4">
+                <div id="workTelDiv" class="form-group">
                     <label asp-for="WorkTel" class="control-label"></label>
                     <input asp-for="WorkTel" type="number" class="form-control" />
                     <span asp-validation-for="WorkTel" class="text-danger"></span>
                 </div>
-                <div class="workEmailDiv form-group mb-4">
+                <div id="workEmailDiv" class="form-group">
                     <label asp-for="WorkEmail" class="control-label"></label>
                     <input asp-for="WorkEmail" class="form-control" />
                     <span asp-validation-for="WorkEmail" class="text-danger"></span>
@@ -159,4 +159,24 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        window.onload = function () {
+            var checkbox = document.getElementById('employedCheckbox');
+            var workTelDiv = document.getElementById('workTelDiv');
+            var workEmailDiv = document.getElementById('workEmailDiv');
+
+            checkbox.addEventListener('change', function () {
+                if (checkbox.checked) {
+                    workTelDiv.style.display = 'block';
+                    workEmailDiv.style.display = 'block';
+                } else {
+                    workTelDiv.style.display = 'none';
+                    workEmailDiv.style.display = 'none';
+                }
+            });
+
+            // Trigger change event to set initial visibility
+            checkbox.dispatchEvent(new Event('change'));
+        };
+    </script>
 }

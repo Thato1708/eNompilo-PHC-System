@@ -160,66 +160,62 @@ namespace eNompiloCounselling.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult AddMedicalHistory(MedicalHistory model)
         {
-            //var userId = _userManager.GetUserId(User);
-            //var patient = dbContext.tblPatient.SingleOrDefault(c => c.UserId == userId);
-            //var patientId = patient.Id;
-
-            //HttpContext.Session.SetInt32("PatientId", patientId);
-
-
-            //!!!Can we revamp the above code so that when the medical history is submitted (granted we move it tpo inside the ModelState.IsValid) then it retrieves the Medical History's Id and submits it with the Patient's Id to the Patient file. That way, a registered patient with a complete file and history can have a file automatically created for them.!!!
             if (model.PatientId != null && model.PreviousDiagnoses != null && model.PreviousMedication != null && model.GeneralAllergies != null && model.MedicationAllergies != null) //model state was not returning valid.
             {
                 dbContext.tblMedicalHistory.Add(model);
                 dbContext.SaveChanges();
 
-                var patientId = _contextAccessor.HttpContext.Session.GetInt32("PatientId");
-
-                if (_contextAccessor.HttpContext.Session.GetInt32("PatientId2") == null)
-                {
-                    patientId = _contextAccessor.HttpContext.Session.GetInt32("PatientId");
-                }
-                else if (_contextAccessor.HttpContext.Session.GetInt32("PatientId") == null)
-                {
-                    patientId = _contextAccessor.HttpContext.Session.GetInt32("PatientId2");
-                }
-
-                var medicalHistory = dbContext.tblMedicalHistory.SingleOrDefault(c => c.PatientId == patientId);
-                var medicalHistoryId = medicalHistory.Id;
-                HttpContext.Session.SetInt32("MedicalHistoryId", medicalHistoryId);
-
-                var personalDetails = dbContext.tblPersonalDetails.SingleOrDefault(c => c.PatientId == patientId);
-                var personalDetailsId = personalDetails.Id;
-                HttpContext.Session.SetInt32("PersonalDetailsId", personalDetailsId);
-
-                int? truePatientId = _contextAccessor.HttpContext.Session.GetInt32("PatientId");
-
-                if (_contextAccessor.HttpContext.Session.GetInt32("PatientId2") == null)
-                {
-                    truePatientId = _contextAccessor.HttpContext.Session.GetInt32("PatientId");
-                }
-                else if (_contextAccessor.HttpContext.Session.GetInt32("PatientId") == null)
-                {
-                    truePatientId = _contextAccessor.HttpContext.Session.GetInt32("PatientId2");
-                }
-
-                if (true)
-                {
-                    var patientFile = new PatientFile
-                    {
-                        MedicalHistoryId = medicalHistoryId,
-                        PersonalDetailsId = personalDetailsId,
-                        PatientId = truePatientId
-                    };
-                    dbContext.tblPatientFile.Add(patientFile);
-                    dbContext.SaveChanges();
-                }
-
-
-                return RedirectToAction(actionName: "Index");
-
+                return CreatePatientFile();
             }
             return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreatePatientFile()
+        {
+            var patientId = _contextAccessor.HttpContext.Session.GetInt32("PatientId");
+
+            if (_contextAccessor.HttpContext.Session.GetInt32("PatientId2") == null)
+            {
+                patientId = _contextAccessor.HttpContext.Session.GetInt32("PatientId");
+            }
+            else if (_contextAccessor.HttpContext.Session.GetInt32("PatientId") == null)
+            {
+                patientId = _contextAccessor.HttpContext.Session.GetInt32("PatientId2");
+            }
+
+            var medicalHistory = dbContext.tblMedicalHistory.SingleOrDefault(c => c.PatientId == patientId);
+            var medicalHistoryId = medicalHistory.Id;
+            //HttpContext.Session.SetInt32("MedicalHistoryId", medicalHistoryId);
+
+            var personalDetails = dbContext.tblPersonalDetails.SingleOrDefault(c => c.PatientId == patientId);
+            var personalDetailsId = personalDetails.Id;
+            //HttpContext.Session.SetInt32("PersonalDetailsId", personalDetailsId);
+
+            //int? truePatientId = _contextAccessor.HttpContext.Session.GetInt32("PatientId");
+
+            //if (_contextAccessor.HttpContext.Session.GetInt32("PatientId2") == null)
+            //{
+            //    truePatientId = _contextAccessor.HttpContext.Session.GetInt32("PatientId");
+            //}
+            //else if (_contextAccessor.HttpContext.Session.GetInt32("PatientId") == null)
+            //{
+            //    truePatientId = _contextAccessor.HttpContext.Session.GetInt32("PatientId2");
+            //}
+
+            PatientFile model = new PatientFile()
+            {
+                MedicalHistoryId = medicalHistoryId,
+                PersonalDetailsId = personalDetailsId,
+                PatientId = patientId,
+            };
+
+
+            dbContext.tblPatientFile.Add(model);
+            dbContext.SaveChanges();
+
+            return RedirectToAction(actionName: "Index", controllerName: "Home");
         }
 
         //Add HTTP Post to add to patientFile

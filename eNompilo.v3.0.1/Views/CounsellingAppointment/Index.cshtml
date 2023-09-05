@@ -1,0 +1,81 @@
+﻿@model IEnumerable<eNompilo.v3._0._1.Models.Counselling.CounsellingAppointment>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="margined-page pt-4">
+    <h1>Index</h1>
+
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.SessionPreference)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.BookingReasons)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ChallengesSpecific)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PreferredDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PreferredTime)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Patient)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PatientFile)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Archived)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SessionPreference)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BookingReasons)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ChallengesSpecific)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PreferredDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PreferredTime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Patient.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PatientFile.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Archived)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+

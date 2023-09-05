@@ -1,0 +1,82 @@
+﻿@using eNompilo.v3._0._1.Constants;
+@using eNompilo.v3._0._1.Models.SystemUsers;
+@model ApplicationUser
+
+@{
+    ViewData["Title"] = "Register Patient";
+    Layout = "~/Views/Shared/_AuthenticationLayout.cshtml";
+}
+
+<div class="container">
+    <form asp-action="Patient" method="post" class="p-5">
+        <h1 class="text-center" style="color: #2036d9;"><strong>Register Patient Account</strong></h1>
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <br />
+        <div class="form-group mb-4">
+                    <label asp-for="IdNumber" class="control-label"></label>
+                    <input asp-for="IdNumber" type="number" class="form-control" placeholder="Enter ID Number" autocomplete="username" aria-required="true"/>
+                    <span asp-validation-for="IdNumber" class="text-danger"></span>
+                </div>
+
+        <div class="form-group mb-4">
+                    <label asp-for="Titles" class="control-label"></label>
+                    <select asp-for="Titles" class="form-control" asp-items="Html.GetEnumSelectList<Titles>()">
+                        <option disabled selected hidden>Please select an option</option>
+                    </select>
+                    <span asp-validation-for="Titles" class="text-danger"></span>
+                </div>
+
+                <div class="row mb-4 d-flex align-content-between">
+            <div class="col-6 form-group">
+                        <label asp-for="FirstName" class="control-label"></label>
+                        <input asp-for="FirstName" class="form-control" placeholder="Enter your first name"/>
+                        <span asp-validation-for="FirstName" class="text-danger"></span>
+                    </div>
+
+            <div class="form-group col-6">
+                        <label asp-for="MiddleName" class="control-label"></label>
+                        <input asp-for="MiddleName" class="form-control" placeholder="Enter your middle name"/>
+                        <span asp-validation-for="MiddleName" class="text-danger"></span>
+                    </div>
+                </div>
+
+        <div class="form-group mb-4">
+                    <label asp-for="LastName" class="control-label"></label>
+                    <input asp-for="LastName" class="form-control" placeholder="Enter your last name"/>
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+
+        <div class="form-group mb-4">
+                    <label asp-for="Email" class="control-label"></label>
+                    <input asp-for="Email" class="form-control" placeholder="Enter your email address"/>
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-4">
+                    <label asp-for="PhoneNumber" class="control-label"></label>
+                    <input asp-for="PhoneNumber" type="number" class="form-control" placeholder="Enter your phone number"/>
+                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                </div>
+
+                <div class="py-2">
+                    <label asp-for="Password" class="control-label"></label>
+                    <input asp-for="Password" class="form-control" placeholder="Enter your password" autocomplete="new-password" aria-required="true"/>
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+
+                <div class="py-2 ">
+                    <label asp-for="ConfirmPassword" class="control-label"></label>
+                    <input asp-for="ConfirmPassword" class="form-control" placeholder="Confirm your password" autocomplete="new-password" aria-required="true"/>
+                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                </div>
+
+                <div class="form-group py-2 mt-3">
+                    <input type="submit" value="Register" class=" w-100 btn btn-primary" style="background-color: #1e36cc; color:#ced4f8;"/>
+                    <p>
+                        <a asp-area="Identity" asp-page="/Account/Login">Please login here</a>
+                    </p>
+                </div>
+        
+    </form>
+</div>

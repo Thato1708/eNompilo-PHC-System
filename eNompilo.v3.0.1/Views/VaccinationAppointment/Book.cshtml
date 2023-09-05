@@ -1,0 +1,78 @@
+﻿@model eNompilo.v3._0._1.Models.Vaccination.VaccinationAppointment
+
+@using eNompilo.v3._0._1.Constants;
+
+@{
+    ViewData["Title"] = "Book";
+}
+
+<div class="margined-page pt-4" >
+    <h2>Book for Your Vaccination</h2>
+    <hr />
+    <div class="row" >
+        <div class="col-md-4" style="margin-left:auto;margin-right:auto;">
+            <form asp-action="Book">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group form-check mb-4">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="BeenVaccinated" /> @Html.DisplayNameFor(model => model.BeenVaccinated)
+                    </label>
+                </div>
+                <div class="form-group mb-4">
+                    <label asp-for="PreviousVaccine" class="control-label"></label>
+                    <textarea asp-for="PreviousVaccine" class="form-control" ></textarea>
+                    <span asp-validation-for="PreviousVaccine" class="text-danger"></span>
+                </div>
+                <div class="form-group form-check mb-4">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="IsPregnant" /> @Html.DisplayNameFor(model => model.IsPregnant)
+                    </label>
+                </div>
+                <div class="form-group mb-4">
+                    <label asp-for="VaccinableDiseases" class="control-label"></label>
+                    <select asp-for="VaccinableDiseases" class="form-control" asp-items="Html.GetEnumSelectList<VaccinableDiseases>()">
+                        <option disabled selected hidden>Please select an option</option>
+                    </select>
+                    <span asp-validation-for="VaccinableDiseases" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-4">
+                    <label asp-for="PreferredDate" class="control-label"></label>
+                    <input asp-for="PreferredDate" class="form-control" />
+                    <span asp-validation-for="PreferredDate" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-4">
+                    <label asp-for="PreferredTime" class="control-label"></label>
+                    <input asp-for="PreferredTime" class="form-control" />
+                    <span asp-validation-for="PreferredTime" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-4">
+                    <label asp-for="PatientId" class="control-label"></label>
+                    <select asp-for="PatientId" class="form-control" asp-items="ViewBag.PatientId"></select>
+                </div>
+                <div class="form-group mb-4">
+                    <label asp-for="PatientFileId" class="control-label"></label>
+                    <select asp-for="PatientFileId" class="form-control" asp-items="ViewBag.PatientFileId"></select>
+                </div>
+                <div class="form-group form-check mb-4">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="Archived" /> @Html.DisplayNameFor(model => model.Archived)
+                    </label>
+                </div>
+                <div class="form-group mb-4">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
+</div>
+
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,59 @@
+﻿@model eNompilo.v3._0._1.Models.SessionNotes
+
+@{
+    ViewData["Title"] = "SessionNotesDetails";
+}
+
+<div class="margined-page pt-4" >
+    <h1>SessionNotesDetails</h1>
+
+    <div>
+        <h2>SessionNotes</h2>
+        <hr />
+        <dl class="row" style="margin-left:auto;margin-right:auto;">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.PractitionerNotes)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.PractitionerNotes)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.ConditionIndication)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.ConditionIndication)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.PotentialCondition)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.PotentialCondition)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.IsADanger)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.IsADanger)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.IsAbused)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.IsAbused)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Archived)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Archived)
+            </dd>
+        </dl>
+    </div>
+    <div>
+        <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+        <a asp-action="Index">Back to List</a>
+    </div>
+
+</div>
+
+

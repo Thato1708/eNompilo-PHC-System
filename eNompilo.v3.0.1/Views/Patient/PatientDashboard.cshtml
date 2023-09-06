@@ -13,26 +13,26 @@
             <div class="card mb-4">
                 <div class="card-body">
                     <h4 class="card-title">PATIENT HEALTH HISTORY</h4>
-                        <table class="table table-borderless">
-                            <thead class="table table-bordered">
-                                <tr>
-                                    <th>Previous Diagnosis</th>
-                                    <th>Previous Prescriptions</th>
-                                    <th>General Allergies</th>
-                                    <th>Medical Allergies</th>
+                    <table class="table table-borderless">
+                        <thead class="table table-bordered">
+                            <tr>
+                                <th>Previous Diagnosis</th>
+                                <th>Previous Prescriptions</th>
+                                <th>General Allergies</th>
+                                <th>Medical Allergies</th>
 
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>@Model.PatientFiles.MedicalHistory.PreviousDiagnoses </td>
-                                    <td>@Model.PatientFiles.MedicalHistory.PreviousMedication </td>
-                                    <td>@Model.PatientFiles.MedicalHistory.GeneralAllergies </td>
-                                    <td>@Model.PatientFiles.MedicalHistory.MedicationAllergies </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>@Model.PatientFiles.MedicalHistory.PreviousDiagnoses </td>
+                                <td>@Model.PatientFiles.MedicalHistory.PreviousMedication </td>
+                                <td>@Model.PatientFiles.MedicalHistory.GeneralAllergies </td>
+                                <td>@Model.PatientFiles.MedicalHistory.MedicationAllergies </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
             @*Card group*@
@@ -45,15 +45,15 @@
                                 <strong>Medication Prescriptions</strong>
                                 @foreach (var item in Model.Medication)
                                 {
-                                <div class="row">
+                                    <div class="row">
                                         <div class="card-body col">
-                                        <strong>@item.SessionNotes.PrescriptionMeds</strong>
+                                            <strong>@item.SessionNotes.PrescriptionMeds</strong>
+                                        </div>
+                                        <div class="card-body col">
+                                            <p class="card-text">@item.SessionNotes.PrescriptionMeds</p>
+                                        </div>
                                     </div>
-                                    <div class="card-body col">
-                                        <p class="card-text">@item.SessionNotes.PrescriptionMeds</p>
-                                    </div>
-                                </div>
-                                    }
+                                }
                             </div>
                         </div>
                     </div>
@@ -71,51 +71,51 @@
                         </div>
                     </div>
                 }
-                </div>
-
-@*
-                @if (Model.Session.Count > 0)
-                {
-                    <div class="col">
-                        <div class="card">
-                            <div class="card-header">
-                                <strong>Diagnosis</strong>
-                                @foreach (var item in Model.Session)
-                                {
-                                <div class="row">
-                                    <div class="card-body col">
-                                        <strong>@item.PotentialCondition</strong>
-                                    </div>
-                                    <div class="card-body col">
-                                        <p class="card-text">@item.ConditionIndication</p>
-                                    </div>
-                                </div>
-                                }
-                            </div>
-                        </div>
-                    </div>
-                }
-                else
-                {
-                    <div class="col">
-                        <div class="card">
-                            <div class="card-header">
-                                <strong>Diagnosis</strong>
-                                <div class="row">
-                                    <div class="card-body col">
-                                        <p class="card-text">No Record Found to be Retrieved.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                }
             </div>
-                *@
-            @*Third Card*@
-            @if (Model.GeneralAppointments.Count > 0)
+
+            @*
+            @if (Model.Session.Count > 0)
             {
-                <div class="card mb-4">
+            <div class="col">
+            <div class="card">
+            <div class="card-header">
+            <strong>Diagnosis</strong>
+            @foreach (var item in Model.Session)
+            {
+            <div class="row">
+            <div class="card-body col">
+            <strong>@item.PotentialCondition</strong>
+            </div>
+            <div class="card-body col">
+            <p class="card-text">@item.ConditionIndication</p>
+            </div>
+            </div>
+            }
+            </div>
+            </div>
+            </div>
+            }
+            else
+            {
+            <div class="col">
+            <div class="card">
+            <div class="card-header">
+            <strong>Diagnosis</strong>
+            <div class="row">
+            <div class="card-body col">
+            <p class="card-text">No Record Found to be Retrieved.</p>
+            </div>
+            </div>
+            </div>
+            </div>
+            </div>
+            }
+            </div>
+            *@
+            @*Third Card*@
+            @* @if (Model.GeneralAppointments.Count > 0)
+            {
+                 *@<div class="card mb-4">
                     <div class="card-body">
                         <h4 class="card-title">UPCOMING APPOINTMENTS</h4>
                         <table class="table table-borderless">
@@ -127,22 +127,22 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach(var item in Model.GeneralAppointments)
+                                @foreach (var item in Model.GeneralAppointments)
                                 {
                                     <tr>
-                                        <td>@item.PatientFile.PersonalDetails.Patient.FirstName @item.PatientFile.PersonalDetails.Patient.LastName </td>
-                                    <td>@item.PreferredDate</td>
-                                    <td>@item.PreferredTime</td>
+                                        <td>@item.Patient.FirstName @item.Patient.LastName </td>
+                                        <td>@item.PreferredDate</td>
+                                        <td>@item.PreferredTime</td>
 
-                                </tr>
+                                    </tr>
                                 }
-                                
+
                             </tbody>
                         </table>
                     </div>
                 </div>
 
-            }
+            @* }
             else
             {
                 <div class="card mb-4">
@@ -164,7 +164,7 @@
                         </table>
                     </div>
                 </div>
-            }
+            } *@
         </div>
     </div>
 </div>

@@ -35,19 +35,35 @@
                         <a asp-controller="Home" asp-action="Index" class="dashboard-nav-item mt-4">
                             <i class="bi bi-house-door-fill me-2" style="font-size:1.5rem;"></i> Home
                         </a>
+
                         <a asp-controller="Patient" asp-action="PatientDashboard" class="dashboard-nav-item active">
                             <i class="bi bi-speedometer me-2" style="font-size:1.5rem;"></i> Dashboard
                         </a>
-                        @* <a href="#" class="dashboard-nav-item"><i class="bi bi-calendar-check-fill"></i> Appointment </a> *@
+                        
                         <div class='dashboard-nav-dropdown'>
                             <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle">
-                                <i class="bi bi-calendar-check-fill me-2" style="font-size:1.5rem;"></i> Appointment
+                                <i class="bi bi-calendar-plus-fill me-2" style="font-size:1.5rem;"></i> Book Appointment
                             </a>
                             <div class='dashboard-nav-dropdown-menu'>
                                 <a asp-controller="GeneralAppointment" asp-action="Book" class="dashboard-nav-dropdown-item">Book an Appointment</a>
-                                <a asp-controller="GeneralAppointment" asp-action="Index" class="dashboard-nav-dropdown-item">View Appointments</a>
+                                <a asp-controller="CounsellingAppointment" asp-action="Book" class="dashboard-nav-dropdown-item">Book to See a Counsellor</a>
+                                <a asp-controller="FamilyPlanningAppointment" asp-action="Book" class="dashboard-nav-dropdown-item">Book for Family Planning</a>
+                                <a asp-controller="VaccinationAppointment" asp-action="Book" class="dashboard-nav-dropdown-item">Book to Get Vaccinated</a>
                             </div>
                         </div>
+
+                        <div class='dashboard-nav-dropdown'>
+                            <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle">
+                                <i class="bi bi-calendar-check-fill me-2" style="font-size:1.5rem;"></i> View Your Appointments
+                            </a>
+                            <div class='dashboard-nav-dropdown-menu'>
+                                <a asp-controller="GeneralAppointment" asp-action="Index" class="dashboard-nav-dropdown-item">View Appointments</a>
+                                <a asp-controller="CounsellingAppointment" asp-action="Index" class="dashboard-nav-dropdown-item">View All Counselling Appointments</a>
+                                <a asp-controller="FamilyPlanningAppointment" asp-action="Index" class="dashboard-nav-dropdown-item">Family Planning Appointments</a>
+                                <a asp-controller="VaccinationAppointment" asp-action="Index" class="dashboard-nav-dropdown-item">Vaccination Appointment</a>
+                            </div>
+                        </div>
+
                         <a asp-controller="Practitioner" asp-action="Index" class="dashboard-nav-item"><i class="bi bi-people-fill me-2" style="font-size:1.5rem;"></i> Practitioners</a>
 
 
@@ -129,8 +145,12 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.js" asp-append-version="true"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js" asp-append-version="true"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false){
     <script>
+
         const mobileScreen = window.matchMedia("(max-width: 990px )");
         $(document).ready(function () {
             $(".dashboard-nav-dropdown-toggle").click(function () {
@@ -150,6 +170,18 @@
                 }
             });
         });
+    </script>
+    <script>
+        new DataTable('#dtCouApp');
+        new DataTable('#dtFamPlanApp');
+        new DataTable('#dtGenApp');
+        new DataTable('#dtPatient');
+        new DataTable('#dtPatientFile');
+        new DataTable('#dtPractitioner');
+        new DataTable('#dtPractitionerDiary');
+        new DataTable('#dtSession');
+        new DataTable('#dtUsers');
+        new DataTable('#dtVacApp');
     </script>
     }
 </body>

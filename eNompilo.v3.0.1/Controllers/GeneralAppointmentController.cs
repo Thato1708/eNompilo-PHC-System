@@ -10,14 +10,17 @@ namespace eNompiloCounselling.Controllers
     public class GeneralAppointmentController : Controller
     {
         private readonly ApplicationDbContext dbContext;
+        private readonly IHttpContextAccessor _contextAccessor;
 
-        public GeneralAppointmentController(ApplicationDbContext context)
+        public GeneralAppointmentController(ApplicationDbContext context, IHttpContextAccessor contextAccessor)
         {
             dbContext = context;
+            _contextAccessor = contextAccessor;
         }
         public IActionResult Index()
-		{
-            IEnumerable<GeneralAppointment> objList = dbContext.tblGeneralAppointment;
+        {
+            var patientId = _contextAccessor.HttpContext.Session.GetInt32("PatientId");
+            IEnumerable<GeneralAppointment> objList = dbContext.tblGeneralAppointment.Where(p=>p.Patient.Id == patientId).Include(p=>p.Patient).ToList();
 			return View(objList);
         }
 

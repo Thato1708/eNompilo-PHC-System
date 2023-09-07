@@ -72,9 +72,8 @@ namespace eNompiloCounselling.Controllers
         public IActionResult PatientDashboard()
         {
             var patientId = _contextAccessor.HttpContext.Session.GetInt32("PatientId");
-            //var patientId = _userManager.GetUserId(User);
             var patientFile = dbContext.tblPatientFile.Where(x => x.PatientId == patientId).Include(md => md.MedicalHistory).FirstOrDefault();
-            var generalAppointment = dbContext.tblGeneralAppointment.Where(p => p.PatientId == patientId);
+            //var generalAppointment = dbContext.tblGeneralAppointment.Where(p => p.PatientId == patientId);
             var prescription = dbContext.tblSession.Where(x => x.PatientId == patientId).ToList();
             //var condition = dbContext.tblSessionNotes.FromSqlRaw<SessionNotes>("SELECT PotentialCondition FROM SessionNotes sn, Session s, Patient p WHERE s.SessionNotesId = sn.Id AND s.PatientId = {0}", patientId).ToList();
 
@@ -82,7 +81,7 @@ namespace eNompiloCounselling.Controllers
             PatientDashboardViewModel patientDashboard = new PatientDashboardViewModel()
             {
                 PatientFiles = patientFile,
-                GeneralAppointments = dbContext.tblGeneralAppointment.Where(p => p.PatientId == patientId),
+                GeneralAppointments = dbContext.tblGeneralAppointment.Where(p => p.PatientId == patientId).Include(p=>p.Patient).ToList(),
                 Medication = prescription,
                 //Session = condition
             };

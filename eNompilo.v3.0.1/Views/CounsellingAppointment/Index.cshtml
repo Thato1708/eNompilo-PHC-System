@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
 }
 
 <div class="margined-page pt-4">
@@ -10,33 +11,33 @@
     <p>
         <a asp-action="Create">Create New</a>
     </p>
-    <table class="table">
+    <table id="dtCouApp" class="table table-striped" style="margin-left:auto;margin-right:auto;">
         <thead>
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.SessionPreference)
+                    Preferred Attendance
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.BookingReasons)
+                    Booking Reasons
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.ChallengesSpecific)
+                    Reasons Specified
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.PreferredDate)
+                    Preferred Date
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.PreferredTime)
+                    Preferred Time
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Patient)
+                    Patient
                 </th>
-                <th>
+                @*<th>
                     @Html.DisplayNameFor(model => model.PatientFile)
-                </th>
-                <th>
+                </th>*@
+                @*<th>
                     @Html.DisplayNameFor(model => model.Archived)
-                </th>
+                </th>*@
                 <th></th>
             </tr>
         </thead>
@@ -60,14 +61,15 @@
                         @Html.DisplayFor(modelItem => item.PreferredTime)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Patient.Email)
+                        @Html.DisplayFor(modelItem => item.Patient.FirstName)
+                        @Html.DisplayFor(modelItem => item.Patient.LastName)
                     </td>
-                    <td>
+                    @*<td>
                         @Html.DisplayFor(modelItem => item.PatientFile.Id)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Archived)
-                    </td>
+                    </td>*@
                     <td>
                         <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                         <a asp-action="Details" asp-route-id="@item.Id">Details</a> |

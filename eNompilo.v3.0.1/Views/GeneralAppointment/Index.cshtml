@@ -11,27 +11,27 @@
     <p>
         <a asp-action="Book">Create New</a>
     </p>
-    <table class="table">
+    <table id="dtGenApp" class="table" class="table table-striped" style="margin-left:auto;margin-right:auto;">
         <thead>
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.PatientIssues)
+                    Patient Issues/Struggles
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.PreferredDate)
+                    Preferred Date
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.PreferredTime)
+                    Preferred Time
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Patient)
                 </th>
-                <th>
+                @*<th>
                     @Html.DisplayNameFor(model => model.PatientFile)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Archived)
-                </th>
+                </th>*@
                 <th></th>
             </tr>
         </thead>
@@ -49,14 +49,14 @@
                         @Html.DisplayFor(modelItem => item.PreferredTime)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Patient.FirstName)
+                        @Html.DisplayFor(modelItem => item.Patient.FirstName) @Html.DisplayFor(modelItem => item.Patient.LastName)
                     </td>
-                    <td>
+                    @*<td>
                         @Html.DisplayFor(modelItem => item.PatientFile.Id)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Archived)
-                    </td>
+                    </td>*@
                     <td>
                         <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                         <a asp-action="Details" asp-route-id="@item.Id">Details</a> |

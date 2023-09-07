@@ -13,7 +13,7 @@ namespace eNompilo.v3._0._1.Models.Family_Planning
         public int Id { get; set; }
 
         [Required]
-        [Display(Name = "What service would you like to book for?")]
+        [Display(Name = "Booking Reason")]
         public BookingReasons BookingReasons { get; set; }
 
         [NotMapped]
@@ -25,13 +25,13 @@ namespace eNompilo.v3._0._1.Models.Family_Planning
         [Required]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MM-yyyy}")]
         [DataType(DataType.Date)]
-        [Display(Name = "Please choose an available date you'd prefer")]
+        [Display(Name = "Appointment Date")]
         public DateTime? PreferredDate { get; set; }
 
         [Required]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0: HH:mm}")]
         [DataType(DataType.Time)]
-        [Display(Name = "Please choose an available time you'd prefer")]
+        [Display(Name = "Preffered Time")]
         public DateTime? PreferredTime { get; set; }
 
         [Required]

@@ -135,6 +135,10 @@ namespace eNompilo.v3._0._1.Controllers
 		{
 			return View();
 		}
-			 
+		
+		public IActionResult Vaccination()
+		{
+			return View();
+		}
 	}
 }

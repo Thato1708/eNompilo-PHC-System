@@ -13,10 +13,10 @@ namespace eNompilo.v3._0._1.Models.Vaccination
         public int Id { get; set; }
 
         [Required]
-        [Display(Name = "Have you ever been vaccinated before?")]
+        [Display(Name = "Vaccinated Before?")]
         public bool BeenVaccinated { get; set; }
 
-        [Display(Name = "What have you been previously vaccinated for?")]
+        [Display(Name = "Vaccinated for what previously?")]
         public string? PreviousVaccine { get; set; }
 
         [Required]
@@ -24,7 +24,7 @@ namespace eNompilo.v3._0._1.Models.Vaccination
         public bool IsPregnant { get; set; }
 
         [Required]
-        [Display(Name = "Please seect the disease you are vaccinating for?")]
+        [Display(Name = "Disease vaccinating for.")]
         public VaccinableDiseases VaccinableDiseases { get; set; }
 
         [NotMapped]
@@ -36,13 +36,13 @@ namespace eNompilo.v3._0._1.Models.Vaccination
         [Required]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MM-yyyy}")]
         [DataType(DataType.Date)]
-        [Display(Name = "Please choose an available date you'd prefer")]
+        [Display(Name = "Appointment Date")]
         public DateTime? PreferredDate { get; set; }
 
         [Required]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0: HH:mm}")]
         [DataType(DataType.Time)]
-        [Display(Name = "Please choose an available time you'd prefer")]
+        [Display(Name = "Preffered Time")]
         public DateTime? PreferredTime { get; set; }
 
         [Required]

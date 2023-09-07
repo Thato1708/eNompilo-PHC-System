@@ -37,4 +37,8 @@
     <Folder Include="wwwroot\img\NewFolder\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="wwwroot\css\flatline2.gif" />
+  </ItemGroup>
+
 </Project>

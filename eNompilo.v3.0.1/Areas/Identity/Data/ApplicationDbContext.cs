@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using eNompilo.v3._0._1.Models.Family_Planning;
+using eNompilo.v3._0._1.Models.GBV;
 
 namespace eNompilo.v3._0._1.Areas.Identity.Data;
 
@@ -63,4 +64,6 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<PrescriptionMeds> tblPrescriptionMeds { get; set; }
     public DbSet<Session> tblSession { get; set; }
     public DbSet<SessionNotes> tblSessionNotes { get; set; }
+    public DbSet<ReportGBV> tblReportGBV { get; set; }
+
 }

@@ -73,15 +73,22 @@ namespace eNompiloCounselling.Controllers
         {
             var patientId = _contextAccessor.HttpContext.Session.GetInt32("PatientId");
             var patientFile = dbContext.tblPatientFile.Where(x => x.PatientId == patientId).Include(md => md.MedicalHistory).FirstOrDefault();
-            //var generalAppointment = dbContext.tblGeneralAppointment.Where(p => p.PatientId == patientId);
-            var prescription = dbContext.tblSession.Where(x => x.PatientId == patientId).ToList();
-            //var condition = dbContext.tblSessionNotes.FromSqlRaw<SessionNotes>("SELECT PotentialCondition FROM SessionNotes sn, Session s, Patient p WHERE s.SessionNotesId = sn.Id AND s.PatientId = {0}", patientId).ToList();
+            var generalAppointment = dbContext.tblGeneralAppointment.Where(p => p.PatientId == patientId).Include(p => p.Patient).ToList();
+            var prescription = dbContext.tblSession.Where(x => x.PatientId == patientId).Include(x => x.Patient).ToList();
+
+
+            var personalDetails = dbContext.tblPersonalDetails.SingleOrDefault(c => c.PatientId == patientId);
+            var personalDetailsId = personalDetails.Id;
+
+            var sessionNotes = dbContext.tblSessionNotes.SingleOrDefault();
+
+            //var condition = dbContext.tblSessionNotes.Where(x => x.Id).ToList();
 
 
             PatientDashboardViewModel patientDashboard = new PatientDashboardViewModel()
             {
                 PatientFiles = patientFile,
-                GeneralAppointments = dbContext.tblGeneralAppointment.Where(p => p.PatientId == patientId).Include(p=>p.Patient).ToList(),
+                GeneralAppointments = generalAppointment,
                 Medication = prescription,
                 //Session = condition
             };

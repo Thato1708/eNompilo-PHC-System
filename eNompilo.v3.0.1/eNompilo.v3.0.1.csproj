@@ -32,7 +32,6 @@
 
   <ItemGroup>
     <Folder Include="Models\Counselling\Booking\" />
-    <Folder Include="Models\GBV\" />
     <Folder Include="Models\SMP\" />
     <Folder Include="Views\Home\EmptyPages\" />
     <Folder Include="wwwroot\img\NewFolder\" />

@@ -113,9 +113,9 @@
             </div>
             *@
             @*Third Card*@
-            @* @if (Model.GeneralAppointments.Count > 0)
+            @if (Model.GeneralAppointments.ToList().Count > 0)
             {
-                 *@<div class="card mb-4">
+                 <div class="card mb-4">
                     <div class="card-body">
                         <h4 class="card-title">UPCOMING APPOINTMENTS</h4>
                         <table class="table table-borderless">
@@ -130,9 +130,9 @@
                                 @foreach (var item in Model.GeneralAppointments)
                                 {
                                     <tr>
-                                        <td>@item.Patient.FirstName @item.Patient.LastName </td>
-                                        <td>@item.PreferredDate</td>
-                                        <td>@item.PreferredTime</td>
+                                        <td>@item.Patient.FirstName @item.Patient.LastName</td>
+                                        <td>@item.PreferredDate.Value.ToString("dd/MMMM/yyyy")</td>
+                                        <td>@item.PreferredTime.Value.ToString("HH:mm")</td>
 
                                     </tr>
                                 }
@@ -142,7 +142,7 @@
                     </div>
                 </div>
 
-            @* }
+             }
             else
             {
                 <div class="card mb-4">
@@ -164,7 +164,7 @@
                         </table>
                     </div>
                 </div>
-            } *@
+            } 
         </div>
     </div>
 </div>

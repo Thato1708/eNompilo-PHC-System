@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
 }
 
 <div class="margined-page pt-4" >
@@ -10,7 +11,7 @@
     <p>
         <a asp-action="Create">Create New</a>
     </p>
-    <table class="table" style="margin-left:auto;margin-right:auto;">
+    <table id="dtVacApp" class="table table-striped" style="margin-left:auto;margin-right:auto;">
         <thead>
             <tr>
                 <th>

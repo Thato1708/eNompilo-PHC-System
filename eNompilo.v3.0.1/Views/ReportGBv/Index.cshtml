@@ -1,38 +1,63 @@
-﻿@model IEnumerable<eNompilo.v3._0._1.Models.Counselling.CounsellingAppointment>
+﻿@model IEnumerable<eNompilo.v3._0._1.Models.GBV.ReportGBV>
 
 @{
     ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
 }
 
-div class="margined-page pt-4">
-<h1>Index</h1>
+<div class="margined-page pt-4">
+    <h1>Index</h1>
 
-<p>
-    <a asp-action="Create"> Report </a>
-</p>
-
-<table class="table">
-    <thead>
-        <tr>
-            <th> 
-                @Html.DisplayNameFor(model => model.ChallengesSpecific)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PatientId)
-            </th>
-           @*  <th>
-                @Html.DisplayNameFor
-            </th> *@
-        </tr>
-
-
-    </thead>
-
-
-
-
-
-</table>
-
-
-
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+    <table id="dtCouApp" class="table table-striped" style="margin-left:auto;margin-right:auto;">
+        <thead>
+            <tr>
+                <th>I am the: </th>
+                <th>
+                   Would you like to stay anonymous:
+                </th>
+                <th>
+                    Incident Type:
+                </th>
+                <th>
+                    Preferred method of communication:
+                </th>
+                <th>
+                    Would you like to be booked for counselling:
+                </th>
+                <th>
+                    Patient:
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Role)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdentityType)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IncidentType)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CommunicationType)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CounsellingBooking)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Patient.FirstName)
+                        @Html.DisplayFor(modelItem => item.Patient.LastName)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    </div>

@@ -146,4 +146,38 @@ namespace eNompilo.v3._0._1.Constants
 	{
 		issue1, issue2, issue3
 	}
+
+	public enum Role
+	{
+		[Display(Name ="Victim")] Victim,
+        [Display(Name = "Community member")] CommunityMember,
+        [Display(Name = "Family member")] familyMember,
+         Other,
+    }
+
+	public enum IdentityType
+	{
+		Yes , No
+	}
+
+    public enum IncidentType
+	{
+        [Display(Name = "Physical Abuse")] physicalAbuse,
+        [Display(Name = "Emotional Abuse")] EmotionalAbuse,
+        Rape,
+		Other
+    }
+
+	public enum CommunicationType
+	{
+		Phone,Email
+	}
+
+	public enum CounsellingBooking
+	{
+		Yes,No
+	}
+
+
+
 }

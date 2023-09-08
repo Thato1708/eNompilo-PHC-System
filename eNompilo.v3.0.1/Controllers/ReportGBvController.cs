@@ -31,9 +31,11 @@ namespace eNompilo.v3._0._1.Controllers
             return View();
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult report(ReportGBV model)
         {
-            if(ModelState.IsValid)
+            if (model.PatientId != null && model.PatientFileId != null && model.Role != null && model.IdentityType != null && model.IncidentType != null && model.CommunicationType != null && model.CounsellingBooking != null)
             {
                 _context.tblReportGBV.Add(model);
                 _context.SaveChanges();

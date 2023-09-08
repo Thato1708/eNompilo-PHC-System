@@ -1,4 +1,4 @@
-﻿@model eNompilo.v3._0._1.Models.SystemUsers.ApplicationUser
+﻿@model eNompilo.v3._0._1.Models.ViewModels.UserTypeViewModel;
 
 @using Microsoft.AspNetCore.Identity;
 @using eNompilo.v3._0._1.Constants;
@@ -7,102 +7,153 @@
 @inject SignInManager<ApplicationUser> SignInManager
 
 @{
-    ViewData["Title"] = "Add New User";
+	ViewData["Title"] = "Add New User";
 }
 
 <div class="margined-page pt-4">
 
-    @*  @if (SignInManager.IsSignedIn(User))
-    {
-        @if (User.IsInRole(RoleConstants.Receptionist) || User.IsInRole(RoleConstants.Admin))
-        { *@
+	@if (SignInManager.IsSignedIn(User))
+	{
+	@if (User.IsInRole(RoleConstants.Receptionist) || User.IsInRole(RoleConstants.Admin))
+	{
 
-            <h2>Add a New User</h2>
-            <hr />
-            <div class="row d-flex align-items-center">
-                <div class="col-md-4" style="margin-left:auto;margin-right:auto;">
-                    <form asp-action="CreateUser" method="post">
-                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                        <div class="form-group mb-4">
-                            <label asp-for="IdNumber" class="control-label"></label>
-                            <input asp-for="IdNumber" class="form-control" />
-                            <span asp-validation-for="IdNumber" class="text-danger"></span>
-                        </div>
-                        <div class="form-group mb-4">
-                            <label asp-for="Titles" class="control-label"></label>
-                            <select asp-for="Titles" class="form-control" asp-items="Html.GetEnumSelectList<Titles>()">
-                                <option disabled selected hidden>Please select an option</option>
-                            </select>
-                            <span asp-validation-for="Titles" class="text-danger"></span>
-                        </div>
-                        <div class="row mb-4 d-flex align-content-between">
-                            <div class="col-6 form-group">
-                                <label asp-for="FirstName" class="control-label"></label>
-                                <input asp-for="FirstName" class="form-control" placeholder="Enter your first name" />
-                                <span asp-validation-for="FirstName" class="text-danger"></span>
-                            </div>
+	<h2>Add a New User</h2>
+	<hr />
+	<div class="row d-flex align-items-center">
+		<div class="col-md-4" style="margin-left:auto;margin-right:auto;">
+			<form asp-action="CreateUser" method="post">
+				<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+				<div class="form-group mb-4">
+					<label asp-for="AppUser.IdNumber" class="control-label"></label>
+					<input asp-for="AppUser.IdNumber" class="form-control" />
+					<span asp-validation-for="AppUser.IdNumber" class="text-danger"></span>
+				</div>
+				<div class="form-group mb-4">
+					<label asp-for="AppUser.Titles" class="control-label"></label>
+					<select asp-for="AppUser.Titles" class="form-control" asp-items="Html.GetEnumSelectList<Titles>()">
+						<option disabled selected hidden>Please select an option</option>
+					</select>
+					<span asp-validation-for="AppUser.Titles" class="text-danger"></span>
+				</div>
+				<div class="row mb-4 d-flex align-content-between">
+					<div class="col-6 form-group">
+						<label asp-for="AppUser.FirstName" class="control-label"></label>
+						<input asp-for="AppUser.FirstName" class="form-control" placeholder="Enter your first name" />
+						<span asp-validation-for="AppUser.FirstName" class="text-danger"></span>
+					</div>
 
-                            <div class="form-group col-6">
-                                <label asp-for="MiddleName" class="control-label"></label>
-                                <input asp-for="MiddleName" class="form-control" placeholder="Enter your middle name" />
-                                <span asp-validation-for="MiddleName" class="text-danger"></span>
-                            </div>
-                        </div>
+					<div class="form-group col-6">
+						<label asp-for="AppUser.MiddleName" class="control-label"></label>
+						<input asp-for="AppUser.MiddleName" class="form-control" placeholder="Enter your middle name" />
+						<span asp-validation-for="AppUser.MiddleName" class="text-danger"></span>
+					</div>
+				</div>
 
-                        <div class="form-group mb-4">
-                            <label asp-for="LastName" class="control-label"></label>
-                            <input asp-for="LastName" class="form-control" placeholder="Enter your last name" />
-                            <span asp-validation-for="LastName" class="text-danger"></span>
-                        </div>
+				<div class="form-group mb-4">
+					<label asp-for="AppUser.LastName" class="control-label"></label>
+					<input asp-for="AppUser.LastName" class="form-control" placeholder="Enter your last name" />
+					<span asp-validation-for="AppUser.LastName" class="text-danger"></span>
+				</div>
 
-                        <div class="form-group mb-4">
-                            <label asp-for="Email" class="control-label"></label>
-                            <input asp-for="Email" class="form-control" placeholder="Enter your email address" />
-                            <span asp-validation-for="Email" class="text-danger"></span>
-                        </div>
+				<div class="form-group mb-4">
+					<label asp-for="AppUser.Email" class="control-label"></label>
+					<input asp-for="AppUser.Email" class="form-control" placeholder="Enter your email address" />
+					<span asp-validation-for="AppUser.Email" class="text-danger"></span>
+				</div>
 
-                        <div class="form-group mb-4">
-                            <label asp-for="PhoneNumber" class="control-label"></label>
-                            <input asp-for="PhoneNumber" type="number" class="form-control" placeholder="Enter your phone number" />
-                            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
-                        </div>
+				<div class="form-group mb-4">
+					<label asp-for="AppUser.PhoneNumber" class="control-label"></label>
+					<input asp-for="AppUser.PhoneNumber" type="number" class="form-control" placeholder="Enter your phone number" />
+					<span asp-validation-for="AppUser.PhoneNumber" class="text-danger"></span>
+				</div>
 
-                        <div class="form-group mb-4">
-                            <label asp-for="UserRole" class="control-label"></label>
-                            <select asp-for="UserRole" class="form-control" asp-items="Html.GetEnumSelectList<UserRole>()">
-                                <option disabled selected hidden>Please select an option</option>
-                            </select>
-                            <span asp-validation-for="UserRole" class="text-danger"></span>
-                        </div>
+				<div class="form-group mb-4">
+					<label asp-for="AppUser.UserRole" class="control-label"></label>
+					<select asp-for="AppUser.UserRole" class="form-control" id="roleChanged" asp-items="Html.GetEnumSelectList<UserRole>()">
+						<option disabled selected hidden>Please select an option</option>
+					</select>
+					<span asp-validation-for="AppUser.UserRole" class="text-danger"></span>
+				</div>
 
-                        <div class="py-2">
-                            <label asp-for="Password" class="control-label"></label>
-                            <input asp-for="Password" class="form-control" placeholder="Enter your password" />
-                            <span asp-validation-for="Password" class="text-danger"></span>
-                        </div>
+				@*<div id="pracProfilePicDiv" class="form-group mb-4">
+					<label asp-for="Practitioner.ProfilePictureImageFile" class="control-label"></label>
+					<input asp-for="Practitioner.ProfilePicture" class="form-control" type="file" id="formFile" accept="image/*" />
+					<span asp-validation-for="Practitioner.ProfilePictureImageFile" class="text-danger"></span>
+				</div>
 
-                        <div class="py-2 ">
-                            <label asp-for="ConfirmPassword" class="control-label"></label>
-                            <input asp-for="ConfirmPassword" class="form-control" placeholder="Confirm your password" />
-                            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <input type="submit" value="Create" class="btn btn-primary" />
-                        </div>
-                    </form>
-                </div>
-            </div>
-     @*    }
+				<div id="adminProfilePicDiv" class="form-group mb-4">
+					<label asp-for="Admin.ProfilePictureImageFile" class="control-label"></label>
+					<input asp-for="Admin.ProfilePicture" class="form-control" type="file" id="formFile" accept="image/*" />
+					<span asp-validation-for="Admin.ProfilePictureImageFile" class="text-danger"></span>
+				</div>
 
-    }
- *@
-    <div>
-        <a asp-action="Index">Back to List</a>
-    </div>
+				<div id="recProfilePicDiv" class="form-group mb-4">
+					<label asp-for="Receptionist.ProfilePictureImageFile" class="control-label"></label>
+					<input asp-for="Receptionist.ProfilePicture" class="form-control" type="file" id="formFile" accept="image/*" />
+					<span asp-validation-for="Receptionist.ProfilePictureImageFile" class="text-danger"></span>
+				</div>*@
+
+				<div id="pracTypeDiv" class="form-group mb-4">
+					<label asp-for="Practitioner.PractitionerType" class="control-label">Practitioner Type (If user is a practitioner)</label>
+					<select asp-for="Practitioner.PractitionerType" class="form-control" id="roleChanged" asp-items="Html.GetEnumSelectList<PractitionerType>()">
+						<option disabled selected hidden>Please select an option</option>
+					</select>
+					<span asp-validation-for="Practitioner.PractitionerType" class="text-danger"></span>
+				</div>
+
+				<div id="counsellorTypeDiv" class="form-group mb-4">
+					<label asp-for="Practitioner.CounsellorType" class="control-label">Counsellor Type (If counsellor)</label>
+					<select asp-for="Practitioner.CounsellorType" class="form-control" id="roleChanged" asp-items="Html.GetEnumSelectList<CounsellorType>()">
+						<option disabled selected hidden>Please select an option</option>
+					</select>
+					<span asp-validation-for="Practitioner.CounsellorType" class="text-danger"></span>
+				</div>
+
+				<div class="py-2">
+					<label asp-for="AppUser.Password" class="control-label"></label>
+					<input asp-for="AppUser.Password" class="form-control" placeholder="Enter your password" />
+					<span asp-validation-for="AppUser.Password" class="text-danger"></span>
+				</div>
+
+				<div class="py-2 ">
+					<label asp-for="AppUser.ConfirmPassword" class="control-label"></label>
+					<input asp-for="AppUser.ConfirmPassword" class="form-control" placeholder="Confirm your password" />
+					<span asp-validation-for="AppUser.ConfirmPassword" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<input type="submit" value="Create" class="btn btn-primary" />
+				</div>
+			</form>
+		</div>
+	</div>
+	    }
+
+	}
+	
+	<div>
+		<a asp-action="Index">Back to List</a>
+	</div>
 </div>
 
 @section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+		//<script>
+		//	window.onload = function () {
+		//		var roleDropdown = document.getElementById('roleChanged');
+		//		var pracProfile = document.getElementById('pracProfilePicDiv');
+		//		var adminProfile = document.getElementById('adminProfilePicDiv');
+		//		var recProfile = document.getElementById('recProfilePicDiv');
+		//		var pracType = document.getElementById('pracTypeDiv');
+		//		var counType = document.getElementById('counsellorTypeDiv');
+
+		//		roleDropdown.addEventListener('change', function () {
+		//			if()
+		//		});
+
+		//		// Trigger change event to set initial visibility
+		//		checkbox.dispatchEvent(new Event('change'));
+		//	};
+		//</script>
+	}
 }

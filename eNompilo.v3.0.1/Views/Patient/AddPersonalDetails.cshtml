@@ -4,15 +4,15 @@
 
 @{
     ViewData["Title"] = "AddPersonalDetails";
+    Layout = "~/Views/Shared/_AuthenticationLayout.cshtml";
 }
 
-<div class="margined-page pt-4">
-
-    <h2>Personal Details</h2>
-    <hr />
+<div class="container">
     <div class="row" >
-        <div class="col-md-4" style="margin-left:auto;margin-right:auto;">
-            <form asp-action="AddPersonalDetails" enctype="multipart/form-data" method="post">
+		<form asp-action="AddPersonalDetails" enctype="multipart/form-data" method="post" class="p-5">
+
+            <h2 style="color: #2036d9;"><strong>Personal Details</strong></h2>
+			<hr />
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group mb-4">
                     <label asp-for="ProfilePictureImageFile" class="control-label"></label>
@@ -143,13 +143,9 @@
                 </label>
                 </div>*@
                 <div class="form-group mb-4">
-                    <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Create" class="btn btn-primary w-100" style="background-color: #1e36cc; color:#ced4f8;" />
                 </div>
             </form>
-        </div>
-    </div>
-    <div>
-        <a asp-action="Index">Back to List</a>
     </div>
 </div>
 

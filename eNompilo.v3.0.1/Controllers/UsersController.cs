@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using eNompilo.v3._0._1.Controllers;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using eNompilo.v3._0._1.Models.ViewModels;
 
 namespace eNompilo.v3._0._1.Controllers
 {
@@ -33,51 +35,73 @@ namespace eNompilo.v3._0._1.Controllers
             return View();
         }
 
+        //private IEnumerable<SelectListItem> GetSelectListItems()
+        //{
+        //    var selectList = new List<SelectListItem>();
+
+        //    var enumValues = Enum.GetValues(typeof(UserRole)) as UserRole[];
+        //    if(enumValues == null || enumValues.Length == 0)
+        //    {
+        //        return null;
+        //    }
+        //    foreach(var enumValue in enumValues)
+        //    {
+        //        selectList.Add(new SelectListItem
+        //        {
+        //            Value = enumValue.ToString(),
+        //            Text = enumValue.ToString()
+        //        });
+        //    }
+        //    return selectList;
+        //}
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateUser(ApplicationUser model)
+        public async Task<IActionResult> CreateUser(UserTypeViewModel model)
         {
-            model.UserName = model.IdNumber;
+            model.AppUser.UserName = model.AppUser.IdNumber;
             if (ModelState.IsValid)
             {
-                var result = await _userManager.CreateAsync(model, model.Password);
+                var result = await _userManager.CreateAsync(model.AppUser, model.AppUser.Password);
 
                 if (result.Succeeded)
                 {
-                    if (model.UserRole == UserRole.Admin)
+                    if (model.AppUser.UserRole == UserRole.Admin)
                     {
-                        await _userManager.AddToRoleAsync(model, RoleConstants.Admin);
+                        await _userManager.AddToRoleAsync(model.AppUser, RoleConstants.Admin);
                         var admin = new Admin
                         {
-                            UserId = model.Id,
-                            CreatedOn = model.CreatedOn,
+                            UserId = model.AppUser.Id,
+                            CreatedOn = model.AppUser.CreatedOn,
                             Archived = false,
                         };
                         _context.tblAdmin.Add(admin);
                     }
-                    else if (model.UserRole == UserRole.Practitioner)
+                    else if (model.AppUser.UserRole == UserRole.Practitioner)
                     {
-                        await _userManager.AddToRoleAsync(model, RoleConstants.Practitioner);
+                        await _userManager.AddToRoleAsync(model.AppUser, RoleConstants.Practitioner);
                         var practitioner = new Practitioner
                         {
-                            UserId = model.Id,
-                            CreatedOn = model.CreatedOn,
+                            UserId = model.AppUser.Id,
+                            PractitionerType = model.Practitioner.PractitionerType,
+                            CounsellorType = model.Practitioner.CounsellorType,
+                            CreatedOn = model.AppUser.CreatedOn,
                             Archived = false,
                         };
                         _context.tblPractitioner.Add(practitioner);
                     }
-                    else if (model.UserRole == UserRole.Patient)
+                    else if (model.AppUser.UserRole == UserRole.Patient)
                     {
-                        await _userManager.AddToRoleAsync(model, RoleConstants.Patient);
+                        await _userManager.AddToRoleAsync(model.AppUser, RoleConstants.Patient);
                         var patient = new Patient
                         {
-                            UserId = model.Id,
-                            IdNumber = model.IdNumber,
-                            FirstName = model.FirstName,
-                            LastName = model.LastName,
-                            Email = model.Email,
-                            PhoneNumber = model.PhoneNumber,
-                            CreatedOn = model.CreatedOn,
+                            UserId = model.AppUser.Id,
+                            IdNumber = model.AppUser.IdNumber,
+                            FirstName = model.AppUser.FirstName,
+                            LastName = model.AppUser.LastName,
+                            Email = model.AppUser.Email,
+                            PhoneNumber = model.AppUser.PhoneNumber,
+                            CreatedOn = model.AppUser.CreatedOn,
                             Archived = false,
                         };
                         _context.tblPatient.Add(patient);
@@ -86,14 +110,14 @@ namespace eNompilo.v3._0._1.Controllers
                         _logger.LogInformation("User created a new account with password");
                         return RedirectToAction("AddPersonalDetails", "Patient", patient.Id);
                     }
-                    else if (model.UserRole == UserRole.Receptionist)
+                    else if (model.AppUser.UserRole == UserRole.Receptionist)
                     {
-                        await _userManager.AddToRoleAsync(model, RoleConstants.Receptionist);
+                        await _userManager.AddToRoleAsync(model.AppUser, RoleConstants.Receptionist);
 
                         var receptionist = new Receptionist
                         {
-                            UserId = model.Id,
-                            CreatedOn = model.CreatedOn,
+                            UserId = model.AppUser.Id,
+                            CreatedOn = model.AppUser.CreatedOn,
                             Archived = false,
                         };
                         _context.tblReceptionist.Add(receptionist);

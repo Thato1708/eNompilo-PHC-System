@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using eNompilo.v3._0._1.Areas.Identity.Data;
 
@@ -11,9 +12,10 @@ using eNompilo.v3._0._1.Areas.Identity.Data;
 namespace eNompilo.v3._0._1.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230908102148_migrationReRun")]
+    partial class migrationReRun
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -63,7 +65,7 @@ namespace eNompilo.v3._0._1.Migrations
 
                     b.HasIndex("PatientId");
 
-                    b.ToTable("CounsellingAppointment", (string)null);
+                    b.ToTable("CounsellingAppointment");
                 });
 
             modelBuilder.Entity("eNompilo.v3._0._1.Models.Family_Planning.FamilyPlanningAppointment", b =>
@@ -80,10 +82,6 @@ namespace eNompilo.v3._0._1.Migrations
                     b.Property<int>("BookingReasons")
                         .HasColumnType("int");
 
-                    b.Property<string>("ChallengesSpecific")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("PatientFileId")
                         .HasColumnType("int");
 
@@ -98,16 +96,13 @@ namespace eNompilo.v3._0._1.Migrations
                         .IsRequired()
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("SessionPreference")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("PatientFileId");
 
                     b.HasIndex("PatientId");
 
-                    b.ToTable("FamilyPlanningAppointment", (string)null);
+                    b.ToTable("FamilyPlanningAppointment");
                 });
 
             modelBuilder.Entity("eNompilo.v3._0._1.Models.GBV.ReportGBV", b =>
@@ -171,7 +166,7 @@ namespace eNompilo.v3._0._1.Migrations
 
                     b.HasIndex("PatientId");
 
-                    b.ToTable("GeneralAppointment", (string)null);
+                    b.ToTable("GeneralAppointment");
                 });
 
             modelBuilder.Entity("eNompilo.v3._0._1.Models.PractitionerDiary", b =>
@@ -204,7 +199,7 @@ namespace eNompilo.v3._0._1.Migrations
 
                     b.HasIndex("PractitionerId");
 
-                    b.ToTable("PractitionerDiary", (string)null);
+                    b.ToTable("PractitionerDiary");
                 });
 
             modelBuilder.Entity("eNompilo.v3._0._1.Models.PrescriptionMeds", b =>
@@ -233,7 +228,7 @@ namespace eNompilo.v3._0._1.Migrations
 
                     b.HasIndex("SessionNotesId");
 
-                    b.ToTable("PrescriptionMeds", (string)null);
+                    b.ToTable("PrescriptionMeds");
                 });
 
             modelBuilder.Entity("eNompilo.v3._0._1.Models.Session", b =>
@@ -276,7 +271,7 @@ namespace eNompilo.v3._0._1.Migrations
 
                     b.HasIndex("SessionNotesId");
 
-                    b.ToTable("Session", (string)null);
+                    b.ToTable("Session");
                 });
 
             modelBuilder.Entity("eNompilo.v3._0._1.Models.SessionNotes", b =>
@@ -306,14 +301,9 @@ namespace eNompilo.v3._0._1.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("SessionId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("SessionId");
-
-                    b.ToTable("SessionNotes", (string)null);
+                    b.ToTable("SessionNotes");
                 });
 
             modelBuilder.Entity("eNompilo.v3._0._1.Models.SystemUsers.Admin", b =>
@@ -338,7 +328,7 @@ namespace eNompilo.v3._0._1.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Admin", (string)null);
+                    b.ToTable("Admin");
                 });
 
             modelBuilder.Entity("eNompilo.v3._0._1.Models.SystemUsers.ApplicationUser", b =>
@@ -456,12 +446,10 @@ namespace eNompilo.v3._0._1.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("GeneralAllergies")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("MedicationAllergies")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
@@ -469,12 +457,10 @@ namespace eNompilo.v3._0._1.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("PreviousDiagnoses")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("PreviousMedication")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
@@ -482,7 +468,7 @@ namespace eNompilo.v3._0._1.Migrations
 
                     b.HasIndex("PatientId");
 
-                    b.ToTable("MedicalHistory", (string)null);
+                    b.ToTable("MedicalHistory");
                 });
 
             modelBuilder.Entity("eNompilo.v3._0._1.Models.SystemUsers.Patient", b =>
@@ -500,7 +486,6 @@ namespace eNompilo.v3._0._1.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
@@ -538,7 +523,7 @@ namespace eNompilo.v3._0._1.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Patient", (string)null);
+                    b.ToTable("Patient");
                 });
 
             modelBuilder.Entity("eNompilo.v3._0._1.Models.SystemUsers.PatientFile", b =>
@@ -583,7 +568,7 @@ namespace eNompilo.v3._0._1.Migrations
 
                     b.HasIndex("PersonalDetailsId");
 
-                    b.ToTable("PatientFile", (string)null);
+                    b.ToTable("PatientFile");
                 });
 
             modelBuilder.Entity("eNompilo.v3._0._1.Models.SystemUsers.PersonalDetails", b =>
@@ -674,7 +659,7 @@ namespace eNompilo.v3._0._1.Migrations
 
                     b.HasIndex("PatientId");
 
-                    b.ToTable("PersonalDetails", (string)null);
+                    b.ToTable("PersonalDetails");
                 });
 
             modelBuilder.Entity("eNompilo.v3._0._1.Models.SystemUsers.Practitioner", b =>
@@ -705,7 +690,7 @@ namespace eNompilo.v3._0._1.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Practitioner", (string)null);
+                    b.ToTable("Practitioner");
                 });
 
             modelBuilder.Entity("eNompilo.v3._0._1.Models.SystemUsers.Receptionist", b =>
@@ -730,7 +715,7 @@ namespace eNompilo.v3._0._1.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Receptionist", (string)null);
+                    b.ToTable("Receptionist");
                 });
 
             modelBuilder.Entity("eNompilo.v3._0._1.Models.Vaccination.VaccinationAppointment", b =>
@@ -776,7 +761,7 @@ namespace eNompilo.v3._0._1.Migrations
 
                     b.HasIndex("PatientId");
 
-                    b.ToTable("VaccinationAppointment", (string)null);
+                    b.ToTable("VaccinationAppointment");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -1035,17 +1020,6 @@ namespace eNompilo.v3._0._1.Migrations
                     b.Navigation("Practitioner");
 
                     b.Navigation("SessionNotes");
-                });
-
-            modelBuilder.Entity("eNompilo.v3._0._1.Models.SessionNotes", b =>
-                {
-                    b.HasOne("eNompilo.v3._0._1.Models.Session", "Session")
-                        .WithMany()
-                        .HasForeignKey("SessionId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Session");
                 });
 
             modelBuilder.Entity("eNompilo.v3._0._1.Models.SystemUsers.Admin", b =>

@@ -17,7 +17,7 @@ namespace eNompilo.v3._0._1.Models.SystemUsers
         public string? ProfilePicture { get; set; }
 
         [NotMapped]
-        [Display(Name = "Upload File")]
+        [Display(Name = "Upload Profile Image")]
         public IFormFile? ProfilePictureImageFile { get; set; }
 
         [Required]

@@ -44,7 +44,7 @@ namespace eNompilo.v3._0._1.Controllers
         //    {
         //        return null;
         //    }
-        //    foreach(var enumValue in enumValues)
+        //    foreach(var enumValue in enumValues) 
         //    {
         //        selectList.Add(new SelectListItem
         //        {
@@ -60,7 +60,7 @@ namespace eNompilo.v3._0._1.Controllers
         public async Task<IActionResult> CreateUser(UserTypeViewModel model)
         {
             model.AppUser.UserName = model.AppUser.IdNumber;
-            if (ModelState.IsValid)
+            if (model.AppUser.IdNumber != null && model.AppUser.Titles != null && model.AppUser.FirstName != null && model.AppUser.LastName != null && model.AppUser.PhoneNumber != null && model.AppUser.Password != null && model.AppUser.ConfirmPassword != null && model.AppUser.UserName != null && model.AppUser.Archived != null)
             {
                 var result = await _userManager.CreateAsync(model.AppUser, model.AppUser.Password);
 

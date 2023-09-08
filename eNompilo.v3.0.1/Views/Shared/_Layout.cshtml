@@ -117,16 +117,19 @@
                             <li class="nav-item">
                                 <a class="nav-link nav-link-2" asp-area="" asp-controller="Home" asp-action="Index"><strong>Home</strong></a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link nav-link-2" asp-area="" asp-controller="Home" asp-action="Index" asp-fragment="about-us"><strong>About Us</strong></a>
+                            </li>
                             <li class="nav-item dropdown btn-group d-xs-flex justify-content-center" style="z-index:1010;">
                                 <div class="d-inline-flex">
                                     <a class="nav-link nav-link-2" asp-area="" asp-controller="Home" asp-action="OurServices"><strong>Our Services</strong></a>
-                                    <a class="nav-link nav-link-2 dropdown-toggle dd-toggle" asp-area="" asp-controller="Home" asp-action="Privacy" id="navbarDropdownMenuLink" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><strong></strong></a>
+                                    <a class="nav-link nav-link-2 dropdown-toggle dd-toggle" href="#" id="navbarDropdownMenuLink" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><strong></strong></a>
                                     <ul class="dropdown-menu position-absolute text-center border-0" style="right:auto;left:auto;">
-                                        <li><a class="dropdown-item nav-link nav-link-2" asp-area="" asp-controller="Home" asp-action="PageComingSoon"><strong>Counselling</strong></a></li>
-                                        <li><a class="dropdown-item nav-link nav-link-2" asp-area="" asp-controller="Home" asp-action="PageComingSoon"><strong>Family Planning</strong></a></li>
-                                        <li><a class="dropdown-item nav-link nav-link-2" asp-area="" asp-controller="Home" asp-action="PageComingSoon"><strong>Gender-Based Violence</strong></a></li>
-                                        <li><a class="dropdown-item nav-link nav-link-2" asp-area="" asp-controller="Home" asp-action="SpecialisedMedicalProcedures"><strong>Specialized Medical Procedures</strong></a></li>
-                                        <li><a class="dropdown-item nav-link nav-link-2" asp-area="" asp-controller="Home" asp-action="PageComingSoon"><strong>Vaccination</strong></a></li>
+                                        <li><a class="dropdown-item nav-link nav-link-2" asp-area="" asp-controller="Home" asp-action="OurServices" asp-fragment="counselling"><strong>Counselling</strong></a></li>
+                                        <li><a class="dropdown-item nav-link nav-link-2" asp-area="" asp-controller="Home" asp-action="OurServices" asp-fragment="family-planning"><strong>Family Planning</strong></a></li>
+                                        <li><a class="dropdown-item nav-link nav-link-2" asp-area="" asp-controller="Home" asp-action="OurServices" asp-fragment="gbv"><strong>Gender-Based Violence</strong></a></li>
+                                        <li><a class="dropdown-item nav-link nav-link-2" asp-area="" asp-controller="Home" asp-action="OurServices" asp-fragment="specialized-medical-procedures"><strong>Specialized Medical Procedures</strong></a></li>
+                                        <li><a class="dropdown-item nav-link nav-link-2" asp-area="" asp-controller="Home" asp-action="OurServices" asp-fragment="vaccination"><strong>Vaccination</strong></a></li>
                                     </ul>
                                 </div>
                             </li>
@@ -143,11 +146,11 @@
                                 </li>
                             }
                             <li class="nav-item">
+                                <a class="nav-link nav-link-2" asp-area="" asp-controller="Home" asp-action="Index" asp-fragment="faq"><strong>FAQ</strong></a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link nav-link-2" @* asp-area="" asp-controller="Home" asp-action="Index" asp-fragment="contact" *@ href="#footer"><strong>Contact Us</strong></a>
                             </li>
-                            @*<li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Patient" asp-action="PatientDashboard">Patient</a>
-                        </li>*@
                         </ul>
                     }
 

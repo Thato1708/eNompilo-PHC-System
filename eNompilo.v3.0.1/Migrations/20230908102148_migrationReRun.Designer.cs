@@ -12,8 +12,8 @@ using eNompilo.v3._0._1.Areas.Identity.Data;
 namespace eNompilo.v3._0._1.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230905203008_removedRequiredKeyWord")]
-    partial class removedRequiredKeyWord
+    [Migration("20230908102148_migrationReRun")]
+    partial class migrationReRun
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -103,6 +103,32 @@ namespace eNompilo.v3._0._1.Migrations
                     b.HasIndex("PatientId");
 
                     b.ToTable("FamilyPlanningAppointment");
+                });
+
+            modelBuilder.Entity("eNompilo.v3._0._1.Models.GBV.ReportGBV", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<bool>("Archived")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("PatientFileId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PatientId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PatientFileId");
+
+                    b.HasIndex("PatientId");
+
+                    b.ToTable("ReportGBV");
                 });
 
             modelBuilder.Entity("eNompilo.v3._0._1.Models.GeneralAppointment", b =>
@@ -653,7 +679,7 @@ namespace eNompilo.v3._0._1.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("PractitionerType")
+                    b.Property<int?>("PractitionerType")
                         .HasColumnType("int");
 
                     b.Property<string>("UserId")
@@ -895,6 +921,25 @@ namespace eNompilo.v3._0._1.Migrations
                 });
 
             modelBuilder.Entity("eNompilo.v3._0._1.Models.Family_Planning.FamilyPlanningAppointment", b =>
+                {
+                    b.HasOne("eNompilo.v3._0._1.Models.SystemUsers.PatientFile", "PatientFile")
+                        .WithMany()
+                        .HasForeignKey("PatientFileId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("eNompilo.v3._0._1.Models.SystemUsers.Patient", "Patient")
+                        .WithMany()
+                        .HasForeignKey("PatientId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Patient");
+
+                    b.Navigation("PatientFile");
+                });
+
+            modelBuilder.Entity("eNompilo.v3._0._1.Models.GBV.ReportGBV", b =>
                 {
                     b.HasOne("eNompilo.v3._0._1.Models.SystemUsers.PatientFile", "PatientFile")
                         .WithMany()

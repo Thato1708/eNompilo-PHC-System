@@ -18,11 +18,28 @@ namespace eNompilo.v3._0._1.Controllers
             _context = context; 
         }
 
-
         public IActionResult Index()
         {
             IEnumerable<ReportGBV> objList = _context.tblReportGBV;
+            return View(objList);
+        }
+
+
+        
+        public IActionResult report()
+        {
             return View();
+        }
+
+        public IActionResult report(ReportGBV model)
+        {
+            if(ModelState.IsValid)
+            {
+                _context.tblReportGBV.Add(model);
+                _context.SaveChanges();
+                return RedirectToAction("Index", "Home");
+            }
+            return View(model);
         }
 
 

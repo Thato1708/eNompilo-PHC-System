@@ -19,20 +19,20 @@
                     <input asp-for="ProfilePicture" class="form-control" type="file" id="formFile" accept="image/*" />
                     <span asp-validation-for="ProfilePictureImageFile" class="text-danger"></span>
                 </div>
-                @if (contextAccessor.HttpContext.Session.GetInt32("PatientId2") == null)
-                {
+                @*@if (contextAccessor.HttpContext.Session.GetInt32("PatientId2") == null)
+                {*@
                     <div class="form-group mb-4">
                         <label asp-for="PatientId" class="control-label"></label>
                         <input asp-for="PatientId" class="form-control" value="@contextAccessor.HttpContext.Session.GetInt32("PatientId")" />
                     </div>
-                }
+                @*}
                 else if (contextAccessor.HttpContext.Session.GetInt32("PatientId") == null)
                 {
                     <div class="form-group mb-4">
                         <label asp-for="PatientId" class="control-label"></label>
                         <input asp-for="PatientId" class="form-control" value="@contextAccessor.HttpContext.Session.GetInt32("PatientId2")" />
                     </div>
-                }
+                }*@
 
                 @*Maybe an if statement where if a patient is logged in, we get the above but if a receptionist is logged in, it's then a list of patients just registered - maybe sorted by the date of creation*@
                 <div class="form-group mb-4">

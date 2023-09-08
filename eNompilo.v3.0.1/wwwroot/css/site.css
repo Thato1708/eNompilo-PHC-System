@@ -357,6 +357,9 @@ image-align {
     max-width: 100%;
     height: auto;
 }
+.smp-btn-align{
+    text-align:center;
+}
 
 /*Splash Sct=reen content style*/
 

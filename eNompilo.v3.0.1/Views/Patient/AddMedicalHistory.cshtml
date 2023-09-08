@@ -18,18 +18,21 @@
 
                 @if (contextAccessor.HttpContext.Session.GetInt32("PatientId2") == null)
                 {
-                    <div class="form-group mb-4">
+                    <div class="form-group mb-4" hidden>
                         <label asp-for="PatientId" class="control-label"></label>
                         <input asp-for="PatientId" class="form-control" value="@contextAccessor.HttpContext.Session.GetInt32("PatientId")" />
+                        <span asp-validation-for="PatientId" class="text-danger"></span>
                     </div>
                 }
                 else if (contextAccessor.HttpContext.Session.GetInt32("PatientId") == null)
                 {
-                    <div class="form-group mb-4">
+                <div class="form-group mb-4" hidden>
                         <label asp-for="PatientId" class="control-label"></label>
                         <input asp-for="PatientId" class="form-control" value="@contextAccessor.HttpContext.Session.GetInt32("PatientId2")" />
+                        <span asp-validation-for="PatientId" class="text-danger"></span>
                     </div>
                 }
+                else{<script>alert("User not found! Please clear your cookies and try again or contact the system administrator")</script>}
                 <div class="form-group mb-4">
                     <label asp-for="PreviousDiagnoses" class="control-label"></label>
                     <textarea asp-for="PreviousDiagnoses" class="form-control" ></textarea>

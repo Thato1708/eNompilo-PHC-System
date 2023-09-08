@@ -33,7 +33,7 @@ namespace eNompilo.v3._0._1.Models.SystemUsers
         public PersonalDetails PersonalDetails { get; set; } 
 
         [PersonalData]
-        public int MedicalHistoryId { get; set; }
+        public int? MedicalHistoryId { get; set; }
         [ForeignKey("MedicalHistoryId")]
         public MedicalHistory MedicalHistory { get; set; }
 

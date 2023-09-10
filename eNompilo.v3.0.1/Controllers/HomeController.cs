@@ -8,6 +8,7 @@ using eNompilo.v3._0._1.Models.SystemUsers;
 using eNompilo.v3._0._1.Areas.Identity.Data;
 using eNompilo.v3._0._1.Constants;
 using Microsoft.EntityFrameworkCore;
+using eNompilo.v3._0._1.Models.ViewModels;
 
 namespace eNompilo.v3._0._1.Controllers
 {
@@ -43,6 +44,23 @@ namespace eNompilo.v3._0._1.Controllers
                 var patientFile = _context.tblPatientFile.SingleOrDefault(c => c.PatientId == patientId);
                 var patientFileId = patientFile.Id;
                 HttpContext.Session.SetInt32("PatientFileId", patientFileId);
+
+				ViewBag.SuccessMessage = TempData["SuccessMessage"] as string;
+
+				var generalAppointment = _context.tblGeneralAppointment.Where(p => p.PatientId == patientId).Include(p => p.Patient).ToList();
+				var counsellingAppointment = _context.tblCounsellingAppointment.Where(p => p.PatientId == patientId).Include(p => p.Patient).ToList();
+				var fpAppointment = _context.tblFamilyPlanningAppointment.Where(p => p.PatientId == patientId).Include(p => p.Patient).ToList();
+				var vaccinationAppointment = _context.tblVaccinationAppointment.Where(p => p.PatientId == patientId).Include(p => p.Patient).ToList();
+
+                HomePageViewModel viewModel = new HomePageViewModel()
+                {
+                    GeneralAppointments = generalAppointment,
+                    CounsellingAppointments = counsellingAppointment,
+                    FamilyPlanningAppointments = fpAppointment,
+                    VaccinationAppointments = vaccinationAppointment
+                };
+
+                return View(viewModel);
             }
 			else if (_signInManager.IsSignedIn(User) && User.IsInRole(RoleConstants.Admin))
 			{

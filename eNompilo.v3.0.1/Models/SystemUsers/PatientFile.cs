@@ -9,33 +9,20 @@ namespace eNompilo.v3._0._1.Models.SystemUsers
 {
     public class PatientFile
     {
-        public PatientFile()
-        {
-            this.Patient = new Patient();
-            this.PersonalDetails = new PersonalDetails();
-            this.MedicalHistory = new MedicalHistory();
-            this.VaccinationAppointments = new List<VaccinationAppointment>();
-            this.CounsellingAppointments = new List<CounsellingAppointment>();
-            this.GeneralAppointments = new List<GeneralAppointment>();
-            this.Sessions = new List<Session>();
-        }
         [Key]
         public int Id { get; set; }
 
         [PersonalData]
+        [ForeignKey("Patient")]
         public int? PatientId { get; set; }
-        [ForeignKey("PatientId")]
-        public Patient Patient { get; set; } //Can it be created when a patient is created?
 
         [PersonalData]
+        [ForeignKey("PersonalDetails")]
         public int? PersonalDetailsId { get; set; }
-        [ForeignKey("PersonalDetailsId")]
-        public PersonalDetails PersonalDetails { get; set; } 
 
         [PersonalData]
+        [ForeignKey("MedicalHistory")]
         public int? MedicalHistoryId { get; set; }
-        [ForeignKey("MedicalHistoryId")]
-        public MedicalHistory MedicalHistory { get; set; }
 
         [PersonalData]
         public int? VaccinationAppointmentId { get; set; }
@@ -57,5 +44,9 @@ namespace eNompilo.v3._0._1.Models.SystemUsers
 
         [Required]
         public bool Archived { get; set; } = false;
+
+        public Patient Patient { get; set; } //Can it be created when a patient is created?
+        public PersonalDetails PersonalDetails { get; set; } 
+        public MedicalHistory MedicalHistory { get; set; }
     }
 }

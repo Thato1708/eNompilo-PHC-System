@@ -17,9 +17,9 @@
     {
         @if(User.IsInRole(RoleConstants.Patient)){
         <li class="nav-item dropdown">
-           
-            
-                <a id="dropdownMenuButton1" class="btn nav-link nav-link-2 text-dark text-center dropdown-toggle" href="#" type="button" data-bs-toggle="dropdown" aria-expanded="false"><strong>Welcome @UserManager.GetUserAsync(User).Result.FirstName @UserManager.GetUserAsync(User).Result.LastName!</strong></a>
+
+
+                <a id="dropdownMenuButton1" class="btn nav-link nav-link-2 text-dark text-center dropdown-toggle" href="#" type="button" data-bs-toggle="dropdown" aria-expanded="false"><strong>Welcome @UserManager.GetUserAsync(User).Result.Titles. @UserManager.GetUserAsync(User).Result.FirstName @UserManager.GetUserAsync(User).Result.LastName!</strong></a>
 
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                     <li><a class="dropdown-item nav-link nav-link-2 text-dark text-center" asp-controller="Patient" asp-action="PatientDashboard" title="Manage"><strong>Dashboard</strong></a></li>
@@ -32,9 +32,9 @@
         }
         else if(User.IsInRole(RoleConstants.Practitioner)){
         <li class="nav-item dropdown">
-           
-            
-                <a id="dropdownMenuButton1" class="btn nav-link nav-link-2 text-dark text-center dropdown-toggle" href="#" type="button" data-bs-toggle="dropdown" aria-expanded="false"><strong>Welcome @UserManager.GetUserAsync(User).Result.FirstName @UserManager.GetUserAsync(User).Result.LastName!</strong></a>
+
+
+                <a id="dropdownMenuButton1" class="btn nav-link nav-link-2 text-dark text-center dropdown-toggle" href="#" type="button" data-bs-toggle="dropdown" aria-expanded="false"><strong>Welcome @UserManager.GetUserAsync(User).Result.Titles. @UserManager.GetUserAsync(User).Result.FirstName @UserManager.GetUserAsync(User).Result.LastName!</strong></a>
 
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                     <li><a class="dropdown-item nav-link nav-link-2 text-dark text-center" asp-controller="Home" asp-action="PractitionerDashboard" title="Manage"><strong>Dashboard</strong></a></li>
@@ -47,9 +47,9 @@
         }
         else if(User.IsInRole(RoleConstants.Admin)){
         <li class="nav-item dropdown">
-           
-            
-                <a id="dropdownMenuButton1" class="btn nav-link nav-link-2 text-dark text-center dropdown-toggle" href="#" type="button" data-bs-toggle="dropdown" aria-expanded="false"><strong>Welcome @UserManager.GetUserAsync(User).Result.FirstName @UserManager.GetUserAsync(User).Result.LastName!</strong></a>
+
+
+                <a id="dropdownMenuButton1" class="btn nav-link nav-link-2 text-dark text-center dropdown-toggle" href="#" type="button" data-bs-toggle="dropdown" aria-expanded="false"><strong>Welcome @UserManager.GetUserAsync(User).Result.Titles. @UserManager.GetUserAsync(User).Result.FirstName @UserManager.GetUserAsync(User).Result.LastName!</strong></a>
 
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                     <li><a class="dropdown-item nav-link nav-link-2 text-dark text-center" asp-controller="Home" asp-action="AdminDashboard" title="Manage"><strong>Dashboard</strong></a></li>
@@ -62,9 +62,9 @@
         }
         else if(User.IsInRole(RoleConstants.Receptionist)){
         <li class="nav-item dropdown">
-           
-            
-                <a id="dropdownMenuButton1" class="btn nav-link nav-link-2 text-dark text-center dropdown-toggle" href="#" type="button" data-bs-toggle="dropdown" aria-expanded="false"><strong>Welcome @UserManager.GetUserAsync(User).Result.FirstName @UserManager.GetUserAsync(User).Result.LastName!</strong></a>
+
+
+                <a id="dropdownMenuButton1" class="btn nav-link nav-link-2 text-dark text-center dropdown-toggle" href="#" type="button" data-bs-toggle="dropdown" aria-expanded="false"><strong>Welcome @UserManager.GetUserAsync(User).Result.Titles. @UserManager.GetUserAsync(User).Result.FirstName @UserManager.GetUserAsync(User).Result.LastName!</strong></a>
 
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                     <li><a class="dropdown-item nav-link nav-link-2 text-dark text-center" asp-controller="Home" asp-action="ReceptionistDashboard" title="Manage"><strong>Dashboard</strong></a></li>

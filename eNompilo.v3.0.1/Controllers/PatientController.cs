@@ -191,13 +191,11 @@ namespace eNompiloCounselling.Controllers
                 patientId = _contextAccessor.HttpContext.Session.GetInt32("PatientId2");
             }
 
-            var medicalHistory = dbContext.tblMedicalHistory.SingleOrDefault(c => c.Patient.Id == patientId);
-            var medicalHistoryId = medicalHistory.Id;
-            HttpContext.Session.SetInt32("MedicalHistoryId", medicalHistoryId);
-
             var personalDetails = dbContext.tblPersonalDetails.SingleOrDefault(c => c.PatientId == patientId);
             var personalDetailsId = personalDetails.Id;
-            HttpContext.Session.SetInt32("PersonalDetailsId", personalDetailsId);
+
+            var medicalHistory = dbContext.tblMedicalHistory.SingleOrDefault(c => c.PatientId == patientId);
+            var medicalHistoryId = medicalHistory.Id;
 
             int? truePatientId = patientId;
 
@@ -210,14 +208,22 @@ namespace eNompiloCounselling.Controllers
                 truePatientId = _contextAccessor.HttpContext.Session.GetInt32("PatientId2");
             }
 
+            //@UserManager.GetUserAsync(User).Result.FirstName @UserManager.GetUserAsync(User).Result.LastName
+
+            var patientName = _userManager.GetUserAsync(User).Result.Titles + ". " + _userManager.GetUserAsync(User).Result.FirstName + " " + _userManager.GetUserAsync(User).Result.LastName.ToString();
+
             PatientFile model = new PatientFile()
             {
                 PatientId = truePatientId,
                 PersonalDetailsId = personalDetailsId,
-                MedicalHistoryId = medicalHistoryId
+                MedicalHistoryId = medicalHistoryId,
+                Archived = false
             };
+
             dbContext.tblPatientFile.Add(model);
             dbContext.SaveChanges();
+
+            TempData["SuccessMessage"] = "Congratulations " + patientName + "! You have been successfully registered as an eNompilo Patient and a file has been created for you.";
 
             return RedirectToAction(actionName: "Index", controllerName: "Home");
         }

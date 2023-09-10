@@ -155,6 +155,8 @@ a.mail {
 .margined-page{
     margin-left: 75px;
     margin-right: 75px;
+    padding-top: 20px;
+    padding-bottom: 20px;
 }
 
 .images, .buttons {

@@ -37,7 +37,7 @@
 
             @*Card group*@
             <div class="card-group row d-flex mb-4">
-                @if (Model.Medication.Count > 0)
+                @if (Model.Medication.ToList().Count > 0)
                 {
                     <div class="col">
                         <div class="card">

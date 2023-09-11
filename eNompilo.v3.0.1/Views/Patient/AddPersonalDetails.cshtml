@@ -16,7 +16,7 @@
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group mb-4">
                     <label asp-for="ProfilePictureImageFile" class="control-label"></label>
-                    <input asp-for="ProfilePicture" class="form-control" type="file" id="formFile" accept="image/*" />
+                    <input asp-for="ProfilePictureImageFile" class="form-control" type="file" id="formFile" accept="image/*" />
                     <span asp-validation-for="ProfilePictureImageFile" class="text-danger"></span>
                 </div>
                 @if (contextAccessor.HttpContext.Session.GetInt32("PatientId2") == null)

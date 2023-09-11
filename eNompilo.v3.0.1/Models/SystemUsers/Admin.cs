@@ -10,22 +10,22 @@ namespace eNompilo.v3._0._1.Models.SystemUsers
         public int Id { get; set; }
 
         [Required]
+        [ForeignKey("User")]
         public string UserId { get; set; }
-        [ForeignKey("UserId")]
-        public ApplicationUser Users { get; set; }
 
-		//[PersonalData]
-		//[Display(Name = "Profile Picture")]
-		//public string? ProfilePicture { get; set; }
+        [PersonalData]
+        [Display(Name = "Profile Picture")]
+        public string? ProfilePicture { get; set; }
 
-		//[NotMapped]
-		//[Display(Name = "Upload Profile Picture")]
-		//public IFormFile? ProfilePictureImageFile { get; set; }
+        [NotMapped]
+        [Display(Name = "Upload Profile Picture")]
+        public IFormFile? ProfilePictureImageFile { get; set; }
 
-		[Required]
+        [Required]
         public DateTime CreatedOn { get; set; } = DateTime.Now;
 
         [Required]
         public bool Archived { get; set; }
+        public ApplicationUser Users { get; set; }
     }
 }

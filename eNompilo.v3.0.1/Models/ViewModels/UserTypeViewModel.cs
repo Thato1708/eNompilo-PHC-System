@@ -9,5 +9,5 @@ namespace eNompilo.v3._0._1.Models.ViewModels
 		public Practitioner Practitioner { get; set; }
 		public Admin Admin { get; set; }
 		public Receptionist Receptionist { get; set; }
-	}
+    }
 }

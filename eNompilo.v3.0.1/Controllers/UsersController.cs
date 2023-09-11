@@ -7,6 +7,8 @@ using Microsoft.EntityFrameworkCore;
 using eNompilo.v3._0._1.Controllers;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using eNompilo.v3._0._1.Models.ViewModels;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
 
 namespace eNompilo.v3._0._1.Controllers
 {
@@ -16,14 +18,16 @@ namespace eNompilo.v3._0._1.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ApplicationDbContext _context;
         private readonly ILogger<RegisterController> _logger;
+		private readonly IWebHostEnvironment webHostEnvironment;
 
-        public UsersController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, ApplicationDbContext context, ILogger<RegisterController> logger)
+		public UsersController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, ApplicationDbContext context, ILogger<RegisterController> logger, IWebHostEnvironment hostEnvironment)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _context = context;
             _logger = logger;
-        }
+			webHostEnvironment = hostEnvironment;
+		}
         public IActionResult Index()
         {
             IEnumerable<ApplicationUser> objList = _context.Users.Where(u => u.Archived == true || u.Archived == false);
@@ -59,7 +63,47 @@ namespace eNompilo.v3._0._1.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateUser(UserTypeViewModel model)
         {
-            model.AppUser.UserName = model.AppUser.IdNumber;
+			if (model.AppUser.UserRole == UserRole.Admin)
+			{
+				string wwwRootPath = webHostEnvironment.WebRootPath;
+				//string fileName = Path.GetFileNameWithoutExtension(model.Admin.ProfilePictureImageFile.FileName);
+				string fileName = _userManager.GetUserAsync(User).Result.FirstName.ToLower().ToString() + "_" + _userManager.GetUserAsync(User).Result.LastName.ToLower().ToString();
+				string ext = Path.GetExtension(model.Admin.ProfilePictureImageFile.FileName);
+				model.Admin.ProfilePicture = fileName = fileName + "_" + DateTime.Now.ToString("ddMMMyyyyHHmmss") + ext;
+				string path = Path.Combine(wwwRootPath + "\\img\\uploads", fileName);
+				using (var fileStream = new FileStream(path, FileMode.Create))
+				{
+					await model.Admin.ProfilePictureImageFile.CopyToAsync(fileStream);
+				}
+			}
+            else if (model.AppUser.UserRole == UserRole.Practitioner)
+			{
+				string wwwRootPath = webHostEnvironment.WebRootPath;
+				//string fileName = Path.GetFileNameWithoutExtension(model.Practitioner.ProfilePictureImageFile.FileName);
+				string fileName = _userManager.GetUserAsync(User).Result.FirstName.ToLower().ToString() + "_" + _userManager.GetUserAsync(User).Result.LastName.ToLower().ToString();
+				string ext = Path.GetExtension(model.Practitioner.ProfilePictureImageFile.FileName);
+				model.Practitioner.ProfilePicture = fileName = fileName + "_" + DateTime.Now.ToString("ddMMMyyyyHHmmss") + ext;
+				string path = Path.Combine(wwwRootPath + "\\img\\uploads", fileName);
+				using (var fileStream = new FileStream(path, FileMode.Create))
+				{
+					await model.Practitioner.ProfilePictureImageFile.CopyToAsync(fileStream);
+				}
+			}
+            else  if (model.AppUser.UserRole == UserRole.Receptionist)
+			{
+				string wwwRootPath = webHostEnvironment.WebRootPath;
+				//string fileName = Path.GetFileNameWithoutExtension(model.Receptionist.ProfilePictureImageFile.FileName);
+				string fileName = _userManager.GetUserAsync(User).Result.FirstName.ToLower().ToString() + "_" + _userManager.GetUserAsync(User).Result.LastName.ToLower().ToString();
+				string ext = Path.GetExtension(model.Receptionist.ProfilePictureImageFile.FileName);
+				model.Receptionist.ProfilePicture = fileName = fileName + "_" + DateTime.Now.ToString("ddMMMyyyyHHmmss") + ext;
+				string path = Path.Combine(wwwRootPath + "\\img\\uploads", fileName);
+				using (var fileStream = new FileStream(path, FileMode.Create))
+				{
+					await model.Receptionist.ProfilePictureImageFile.CopyToAsync(fileStream);
+				}
+			}
+
+			model.AppUser.UserName = model.AppUser.IdNumber;
             if (model.AppUser.IdNumber != null && model.AppUser.Titles != null && model.AppUser.FirstName != null && model.AppUser.LastName != null && model.AppUser.PhoneNumber != null && model.AppUser.Password != null && model.AppUser.ConfirmPassword != null && model.AppUser.UserName != null && model.AppUser.Archived != null)
             {
                 var result = await _userManager.CreateAsync(model.AppUser, model.AppUser.Password);
@@ -72,6 +116,7 @@ namespace eNompilo.v3._0._1.Controllers
                         var admin = new Admin
                         {
                             UserId = model.AppUser.Id,
+                            ProfilePicture = model.Admin.ProfilePicture,
                             CreatedOn = model.AppUser.CreatedOn,
                             Archived = false,
                         };
@@ -83,6 +128,7 @@ namespace eNompilo.v3._0._1.Controllers
                         var practitioner = new Practitioner
                         {
                             UserId = model.AppUser.Id,
+                            ProfilePicture = model.Practitioner.ProfilePicture,
                             PractitionerType = model.Practitioner.PractitionerType,
                             CounsellorType = model.Practitioner.CounsellorType,
                             CreatedOn = model.AppUser.CreatedOn,
@@ -117,6 +163,7 @@ namespace eNompilo.v3._0._1.Controllers
                         var receptionist = new Receptionist
                         {
                             UserId = model.AppUser.Id,
+                            ProfilePicture = model.Receptionist.ProfilePicture,
                             CreatedOn = model.AppUser.CreatedOn,
                             Archived = false,
                         };

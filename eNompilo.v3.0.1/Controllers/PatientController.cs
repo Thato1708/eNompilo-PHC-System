@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using eNompilo.v3._0._1.Models.ViewModels;
+using Microsoft.AspNetCore.Hosting;
+using System.Diagnostics;
 
 namespace eNompiloCounselling.Controllers
 {
@@ -107,7 +109,7 @@ namespace eNompiloCounselling.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddPersonalDetails(PersonalDetails model)
+        public IActionResult AddPersonalDetails(PersonalDetails model)
         {
             if (model.ProfilePictureImageFile != null)
             {
@@ -115,16 +117,16 @@ namespace eNompiloCounselling.Controllers
                 string fileName = Path.GetFileNameWithoutExtension(model.ProfilePictureImageFile.FileName);
                 string ext = Path.GetExtension(model.ProfilePictureImageFile.FileName);
                 model.ProfilePicture = fileName = fileName + "_" + DateTime.Now.ToString("ddMMMyyyyHHmmss") + ext;
-                string path = Path.Combine(wwwRootPath + "\\img\\uploads", fileName);
+                string path = Path.Combine(wwwRootPath + "/img/uploads/", fileName);
                 using (var fileStream = new FileStream(path, FileMode.Create))
                 {
-                    await model.ProfilePictureImageFile.CopyToAsync(fileStream);
+                    model.ProfilePictureImageFile.CopyTo(fileStream);
                 }
             }
             if (model.PatientId != null && model.Gender != null && model.DOB != null && model.EmergencyPerson != null && model.EmergenyContactNr != null && model.Employed != null && model.Citizenship != null && model.MaritalStatus != null && model.AddressLine1 != null && model.City != null && model.Province != null && model.ZipCode != null)
             {
                 dbContext.tblPersonalDetails.Add(model);
-                await dbContext.SaveChangesAsync();
+                dbContext.SaveChanges();
                 return RedirectToAction("AddMedicalHistory");
             }
             return View(model);

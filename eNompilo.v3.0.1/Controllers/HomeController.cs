@@ -47,17 +47,19 @@ namespace eNompilo.v3._0._1.Controllers
 
 				ViewBag.SuccessMessage = TempData["SuccessMessage"] as string;
 
-				var generalAppointment = _context.tblGeneralAppointment.Where(p => p.PatientId == patientId).Include(p => p.Patient).ToList();
-				var counsellingAppointment = _context.tblCounsellingAppointment.Where(p => p.PatientId == patientId).Include(p => p.Patient).ToList();
-				var fpAppointment = _context.tblFamilyPlanningAppointment.Where(p => p.PatientId == patientId).Include(p => p.Patient).ToList();
-				var vaccinationAppointment = _context.tblVaccinationAppointment.Where(p => p.PatientId == patientId).Include(p => p.Patient).ToList();
+				//var generalAppointment = _context.tblGeneralAppointment.Where(p => p.PatientId == patientId).Include(p => p.Patient).ToList();
+				//var counsellingAppointment = _context.tblCounsellingAppointment.Where(p => p.PatientId == patientId).Include(p => p.Patient).ToList();
+				//var fpAppointment = _context.tblFamilyPlanningAppointment.Where(p => p.PatientId == patientId).Include(p => p.Patient).ToList();
+				//var vaccinationAppointment = _context.tblVaccinationAppointment.Where(p => p.PatientId == patientId).Include(p => p.Patient).ToList();
+				var personalDetails = _context.tblPersonalDetails.Where(p => p.PatientId == patientId).FirstOrDefault();
 
                 HomePageViewModel viewModel = new HomePageViewModel()
                 {
-                    GeneralAppointments = generalAppointment,
-                    CounsellingAppointments = counsellingAppointment,
-                    FamilyPlanningAppointments = fpAppointment,
-                    VaccinationAppointments = vaccinationAppointment
+                    //GeneralAppointments = generalAppointment,
+                    //CounsellingAppointments = counsellingAppointment,
+                    //FamilyPlanningAppointments = fpAppointment,
+                    //VaccinationAppointments = vaccinationAppointment,
+					PersonalDetails = personalDetails
                 };
 
                 return View(viewModel);

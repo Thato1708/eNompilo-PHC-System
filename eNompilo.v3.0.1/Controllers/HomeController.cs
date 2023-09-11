@@ -96,7 +96,37 @@ namespace eNompilo.v3._0._1.Controllers
 
 		public IActionResult EmergencyLine()
 		{
-			return View();
+            if (_signInManager.IsSignedIn(User) && User.IsInRole(RoleConstants.Patient))
+            {
+                var userId = _userManager.GetUserId(User);
+                var patient = _context.tblPatient.SingleOrDefault(c => c.UserId == userId);
+                var patientId = patient.Id;
+                HttpContext.Session.SetInt32("PatientId", patientId);
+
+                var patientFile = _context.tblPatientFile.SingleOrDefault(c => c.PatientId == patientId);
+                var patientFileId = patientFile.Id;
+                HttpContext.Session.SetInt32("PatientFileId", patientFileId);
+
+                ViewBag.SuccessMessage = TempData["SuccessMessage"] as string;
+
+                //var generalAppointment = _context.tblGeneralAppointment.Where(p => p.PatientId == patientId).Include(p => p.Patient).ToList();
+                //var counsellingAppointment = _context.tblCounsellingAppointment.Where(p => p.PatientId == patientId).Include(p => p.Patient).ToList();
+                //var fpAppointment = _context.tblFamilyPlanningAppointment.Where(p => p.PatientId == patientId).Include(p => p.Patient).ToList();
+                //var vaccinationAppointment = _context.tblVaccinationAppointment.Where(p => p.PatientId == patientId).Include(p => p.Patient).ToList();
+                var personalDetails = _context.tblPersonalDetails.Where(p => p.PatientId == patientId).FirstOrDefault();
+
+                HomePageViewModel viewModel = new HomePageViewModel()
+                {
+                    //GeneralAppointments = generalAppointment,
+                    //CounsellingAppointments = counsellingAppointment,
+                    //FamilyPlanningAppointments = fpAppointment,
+                    //VaccinationAppointments = vaccinationAppointment,
+                    PersonalDetails = personalDetails
+                };
+
+                return View(viewModel);
+            }
+            return View();
 		}
 
 		public IActionResult Privacy()
@@ -106,17 +136,107 @@ namespace eNompilo.v3._0._1.Controllers
 
         public IActionResult EmptyPage()
 		{
-			return View();
+            if (_signInManager.IsSignedIn(User) && User.IsInRole(RoleConstants.Patient))
+            {
+                var userId = _userManager.GetUserId(User);
+                var patient = _context.tblPatient.SingleOrDefault(c => c.UserId == userId);
+                var patientId = patient.Id;
+                HttpContext.Session.SetInt32("PatientId", patientId);
+
+                var patientFile = _context.tblPatientFile.SingleOrDefault(c => c.PatientId == patientId);
+                var patientFileId = patientFile.Id;
+                HttpContext.Session.SetInt32("PatientFileId", patientFileId);
+
+                ViewBag.SuccessMessage = TempData["SuccessMessage"] as string;
+
+                //var generalAppointment = _context.tblGeneralAppointment.Where(p => p.PatientId == patientId).Include(p => p.Patient).ToList();
+                //var counsellingAppointment = _context.tblCounsellingAppointment.Where(p => p.PatientId == patientId).Include(p => p.Patient).ToList();
+                //var fpAppointment = _context.tblFamilyPlanningAppointment.Where(p => p.PatientId == patientId).Include(p => p.Patient).ToList();
+                //var vaccinationAppointment = _context.tblVaccinationAppointment.Where(p => p.PatientId == patientId).Include(p => p.Patient).ToList();
+                var personalDetails = _context.tblPersonalDetails.Where(p => p.PatientId == patientId).FirstOrDefault();
+
+                HomePageViewModel viewModel = new HomePageViewModel()
+                {
+                    //GeneralAppointments = generalAppointment,
+                    //CounsellingAppointments = counsellingAppointment,
+                    //FamilyPlanningAppointments = fpAppointment,
+                    //VaccinationAppointments = vaccinationAppointment,
+                    PersonalDetails = personalDetails
+                };
+
+                return View(viewModel);
+            }
+            return View();
 		}
 
         public IActionResult PageComingSoon()
 		{
-			return View();
+            if (_signInManager.IsSignedIn(User) && User.IsInRole(RoleConstants.Patient))
+            {
+                var userId = _userManager.GetUserId(User);
+                var patient = _context.tblPatient.SingleOrDefault(c => c.UserId == userId);
+                var patientId = patient.Id;
+                HttpContext.Session.SetInt32("PatientId", patientId);
+
+                var patientFile = _context.tblPatientFile.SingleOrDefault(c => c.PatientId == patientId);
+                var patientFileId = patientFile.Id;
+                HttpContext.Session.SetInt32("PatientFileId", patientFileId);
+
+                ViewBag.SuccessMessage = TempData["SuccessMessage"] as string;
+
+                //var generalAppointment = _context.tblGeneralAppointment.Where(p => p.PatientId == patientId).Include(p => p.Patient).ToList();
+                //var counsellingAppointment = _context.tblCounsellingAppointment.Where(p => p.PatientId == patientId).Include(p => p.Patient).ToList();
+                //var fpAppointment = _context.tblFamilyPlanningAppointment.Where(p => p.PatientId == patientId).Include(p => p.Patient).ToList();
+                //var vaccinationAppointment = _context.tblVaccinationAppointment.Where(p => p.PatientId == patientId).Include(p => p.Patient).ToList();
+                var personalDetails = _context.tblPersonalDetails.Where(p => p.PatientId == patientId).FirstOrDefault();
+
+                HomePageViewModel viewModel = new HomePageViewModel()
+                {
+                    //GeneralAppointments = generalAppointment,
+                    //CounsellingAppointments = counsellingAppointment,
+                    //FamilyPlanningAppointments = fpAppointment,
+                    //VaccinationAppointments = vaccinationAppointment,
+                    PersonalDetails = personalDetails
+                };
+
+                return View(viewModel);
+            }
+            return View();
 		}
 
 		public IActionResult OurServices()
 		{
-			return View();
+            if (_signInManager.IsSignedIn(User) && User.IsInRole(RoleConstants.Patient))
+            {
+                var userId = _userManager.GetUserId(User);
+                var patient = _context.tblPatient.SingleOrDefault(c => c.UserId == userId);
+                var patientId = patient.Id;
+                HttpContext.Session.SetInt32("PatientId", patientId);
+
+                var patientFile = _context.tblPatientFile.SingleOrDefault(c => c.PatientId == patientId);
+                var patientFileId = patientFile.Id;
+                HttpContext.Session.SetInt32("PatientFileId", patientFileId);
+
+                ViewBag.SuccessMessage = TempData["SuccessMessage"] as string;
+
+                //var generalAppointment = _context.tblGeneralAppointment.Where(p => p.PatientId == patientId).Include(p => p.Patient).ToList();
+                //var counsellingAppointment = _context.tblCounsellingAppointment.Where(p => p.PatientId == patientId).Include(p => p.Patient).ToList();
+                //var fpAppointment = _context.tblFamilyPlanningAppointment.Where(p => p.PatientId == patientId).Include(p => p.Patient).ToList();
+                //var vaccinationAppointment = _context.tblVaccinationAppointment.Where(p => p.PatientId == patientId).Include(p => p.Patient).ToList();
+                var personalDetails = _context.tblPersonalDetails.Where(p => p.PatientId == patientId).FirstOrDefault();
+
+                HomePageViewModel viewModel = new HomePageViewModel()
+                {
+                    //GeneralAppointments = generalAppointment,
+                    //CounsellingAppointments = counsellingAppointment,
+                    //FamilyPlanningAppointments = fpAppointment,
+                    //VaccinationAppointments = vaccinationAppointment,
+                    PersonalDetails = personalDetails
+                };
+
+                return View(viewModel);
+            }
+            return View();
 		}
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
@@ -144,11 +264,71 @@ namespace eNompilo.v3._0._1.Controllers
 		}
 		public IActionResult EmergencyHotlines()
 		{
-			return View();
+            if (_signInManager.IsSignedIn(User) && User.IsInRole(RoleConstants.Patient))
+            {
+                var userId = _userManager.GetUserId(User);
+                var patient = _context.tblPatient.SingleOrDefault(c => c.UserId == userId);
+                var patientId = patient.Id;
+                HttpContext.Session.SetInt32("PatientId", patientId);
+
+                var patientFile = _context.tblPatientFile.SingleOrDefault(c => c.PatientId == patientId);
+                var patientFileId = patientFile.Id;
+                HttpContext.Session.SetInt32("PatientFileId", patientFileId);
+
+                ViewBag.SuccessMessage = TempData["SuccessMessage"] as string;
+
+                //var generalAppointment = _context.tblGeneralAppointment.Where(p => p.PatientId == patientId).Include(p => p.Patient).ToList();
+                //var counsellingAppointment = _context.tblCounsellingAppointment.Where(p => p.PatientId == patientId).Include(p => p.Patient).ToList();
+                //var fpAppointment = _context.tblFamilyPlanningAppointment.Where(p => p.PatientId == patientId).Include(p => p.Patient).ToList();
+                //var vaccinationAppointment = _context.tblVaccinationAppointment.Where(p => p.PatientId == patientId).Include(p => p.Patient).ToList();
+                var personalDetails = _context.tblPersonalDetails.Where(p => p.PatientId == patientId).FirstOrDefault();
+
+                HomePageViewModel viewModel = new HomePageViewModel()
+                {
+                    //GeneralAppointments = generalAppointment,
+                    //CounsellingAppointments = counsellingAppointment,
+                    //FamilyPlanningAppointments = fpAppointment,
+                    //VaccinationAppointments = vaccinationAppointment,
+                    PersonalDetails = personalDetails
+                };
+
+                return View(viewModel);
+            }
+            return View();
 		}
 		public IActionResult SpecialisedMedicalProcedures()
 		{
-			return View();
+            if (_signInManager.IsSignedIn(User) && User.IsInRole(RoleConstants.Patient))
+            {
+                var userId = _userManager.GetUserId(User);
+                var patient = _context.tblPatient.SingleOrDefault(c => c.UserId == userId);
+                var patientId = patient.Id;
+                HttpContext.Session.SetInt32("PatientId", patientId);
+
+                var patientFile = _context.tblPatientFile.SingleOrDefault(c => c.PatientId == patientId);
+                var patientFileId = patientFile.Id;
+                HttpContext.Session.SetInt32("PatientFileId", patientFileId);
+
+                ViewBag.SuccessMessage = TempData["SuccessMessage"] as string;
+
+                //var generalAppointment = _context.tblGeneralAppointment.Where(p => p.PatientId == patientId).Include(p => p.Patient).ToList();
+                //var counsellingAppointment = _context.tblCounsellingAppointment.Where(p => p.PatientId == patientId).Include(p => p.Patient).ToList();
+                //var fpAppointment = _context.tblFamilyPlanningAppointment.Where(p => p.PatientId == patientId).Include(p => p.Patient).ToList();
+                //var vaccinationAppointment = _context.tblVaccinationAppointment.Where(p => p.PatientId == patientId).Include(p => p.Patient).ToList();
+                var personalDetails = _context.tblPersonalDetails.Where(p => p.PatientId == patientId).FirstOrDefault();
+
+                HomePageViewModel viewModel = new HomePageViewModel()
+                {
+                    //GeneralAppointments = generalAppointment,
+                    //CounsellingAppointments = counsellingAppointment,
+                    //FamilyPlanningAppointments = fpAppointment,
+                    //VaccinationAppointments = vaccinationAppointment,
+                    PersonalDetails = personalDetails
+                };
+
+                return View(viewModel);
+            }
+            return View();
 		}
 
 		public IActionResult SplashScreen()

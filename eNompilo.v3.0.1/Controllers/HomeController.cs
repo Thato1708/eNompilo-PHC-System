@@ -153,6 +153,54 @@ namespace eNompilo.v3._0._1.Controllers
 
                 return View(viewModel);
             }
+            else if (_signInManager.IsSignedIn(User) && User.IsInRole(RoleConstants.Admin))
+            {
+                var userId = _userManager.GetUserId(User);
+                var patient = _context.tblAdmin.SingleOrDefault(c => c.UserId == userId);
+                var patientId = patient.Id;
+                HttpContext.Session.SetInt32("AdminId", patientId);
+
+                var admin = _context.tblAdmin.Where(p => p.Id == patientId).FirstOrDefault();
+
+                HomePageViewModel viewModel = new HomePageViewModel()
+                {
+                    Admin = admin
+                };
+
+                return View(viewModel);
+            }
+            else if (_signInManager.IsSignedIn(User) && User.IsInRole(RoleConstants.Practitioner))
+            {
+                var userId = _userManager.GetUserId(User);
+                var patient = _context.tblPractitioner.SingleOrDefault(c => c.UserId == userId);
+                var patientId = patient.Id;
+                HttpContext.Session.SetInt32("PractitionerId", patientId);
+
+                var practitioner = _context.tblPractitioner.Where(p => p.Id == patientId).FirstOrDefault();
+
+                HomePageViewModel viewModel = new HomePageViewModel()
+                {
+                    Practitioner = practitioner
+                };
+
+                return View(viewModel);
+            }
+            else if (_signInManager.IsSignedIn(User) && User.IsInRole(RoleConstants.Receptionist))
+            {
+                var userId = _userManager.GetUserId(User);
+                var patient = _context.tblReceptionist.SingleOrDefault(c => c.UserId == userId);
+                var patientId = patient.Id;
+                HttpContext.Session.SetInt32("ReceptionistId", patientId);
+
+                var receptionist = _context.tblReceptionist.Where(p => p.Id == patientId).FirstOrDefault();
+
+                HomePageViewModel viewModel = new HomePageViewModel()
+                {
+                    Receptionist = receptionist
+                };
+
+                return View(viewModel);
+            }
             return View();
 		}
 
@@ -193,6 +241,54 @@ namespace eNompilo.v3._0._1.Controllers
 
                 return View(viewModel);
             }
+            else if (_signInManager.IsSignedIn(User) && User.IsInRole(RoleConstants.Admin))
+            {
+                var userId = _userManager.GetUserId(User);
+                var patient = _context.tblAdmin.SingleOrDefault(c => c.UserId == userId);
+                var patientId = patient.Id;
+                HttpContext.Session.SetInt32("AdminId", patientId);
+
+                var admin = _context.tblAdmin.Where(p => p.Id == patientId).FirstOrDefault();
+
+                HomePageViewModel viewModel = new HomePageViewModel()
+                {
+                    Admin = admin
+                };
+
+                return View(viewModel);
+            }
+            else if (_signInManager.IsSignedIn(User) && User.IsInRole(RoleConstants.Practitioner))
+            {
+                var userId = _userManager.GetUserId(User);
+                var patient = _context.tblPractitioner.SingleOrDefault(c => c.UserId == userId);
+                var patientId = patient.Id;
+                HttpContext.Session.SetInt32("PractitionerId", patientId);
+
+                var practitioner = _context.tblPractitioner.Where(p => p.Id == patientId).FirstOrDefault();
+
+                HomePageViewModel viewModel = new HomePageViewModel()
+                {
+                    Practitioner = practitioner
+                };
+
+                return View(viewModel);
+            }
+            else if (_signInManager.IsSignedIn(User) && User.IsInRole(RoleConstants.Receptionist))
+            {
+                var userId = _userManager.GetUserId(User);
+                var patient = _context.tblReceptionist.SingleOrDefault(c => c.UserId == userId);
+                var patientId = patient.Id;
+                HttpContext.Session.SetInt32("ReceptionistId", patientId);
+
+                var receptionist = _context.tblReceptionist.Where(p => p.Id == patientId).FirstOrDefault();
+
+                HomePageViewModel viewModel = new HomePageViewModel()
+                {
+                    Receptionist = receptionist
+                };
+
+                return View(viewModel);
+            }
             return View();
 		}
 
@@ -228,6 +324,54 @@ namespace eNompilo.v3._0._1.Controllers
 
                 return View(viewModel);
             }
+            else if (_signInManager.IsSignedIn(User) && User.IsInRole(RoleConstants.Admin))
+            {
+                var userId = _userManager.GetUserId(User);
+                var patient = _context.tblAdmin.SingleOrDefault(c => c.UserId == userId);
+                var patientId = patient.Id;
+                HttpContext.Session.SetInt32("AdminId", patientId);
+
+                var admin = _context.tblAdmin.Where(p => p.Id == patientId).FirstOrDefault();
+
+                HomePageViewModel viewModel = new HomePageViewModel()
+                {
+                    Admin = admin
+                };
+
+                return View(viewModel);
+            }
+            else if (_signInManager.IsSignedIn(User) && User.IsInRole(RoleConstants.Practitioner))
+            {
+                var userId = _userManager.GetUserId(User);
+                var patient = _context.tblPractitioner.SingleOrDefault(c => c.UserId == userId);
+                var patientId = patient.Id;
+                HttpContext.Session.SetInt32("PractitionerId", patientId);
+
+                var practitioner = _context.tblPractitioner.Where(p => p.Id == patientId).FirstOrDefault();
+
+                HomePageViewModel viewModel = new HomePageViewModel()
+                {
+                    Practitioner = practitioner
+                };
+
+                return View(viewModel);
+            }
+            else if (_signInManager.IsSignedIn(User) && User.IsInRole(RoleConstants.Receptionist))
+            {
+                var userId = _userManager.GetUserId(User);
+                var patient = _context.tblReceptionist.SingleOrDefault(c => c.UserId == userId);
+                var patientId = patient.Id;
+                HttpContext.Session.SetInt32("ReceptionistId", patientId);
+
+                var receptionist = _context.tblReceptionist.Where(p => p.Id == patientId).FirstOrDefault();
+
+                HomePageViewModel viewModel = new HomePageViewModel()
+                {
+                    Receptionist = receptionist
+                };
+
+                return View(viewModel);
+            }
             return View();
 		}
 
@@ -259,6 +403,54 @@ namespace eNompilo.v3._0._1.Controllers
                     //FamilyPlanningAppointments = fpAppointment,
                     //VaccinationAppointments = vaccinationAppointment,
                     PersonalDetails = personalDetails
+                };
+
+                return View(viewModel);
+            }
+            else if (_signInManager.IsSignedIn(User) && User.IsInRole(RoleConstants.Admin))
+            {
+                var userId = _userManager.GetUserId(User);
+                var patient = _context.tblAdmin.SingleOrDefault(c => c.UserId == userId);
+                var patientId = patient.Id;
+                HttpContext.Session.SetInt32("AdminId", patientId);
+
+                var admin = _context.tblAdmin.Where(p => p.Id == patientId).FirstOrDefault();
+
+                HomePageViewModel viewModel = new HomePageViewModel()
+                {
+                    Admin = admin
+                };
+
+                return View(viewModel);
+            }
+            else if (_signInManager.IsSignedIn(User) && User.IsInRole(RoleConstants.Practitioner))
+            {
+                var userId = _userManager.GetUserId(User);
+                var patient = _context.tblPractitioner.SingleOrDefault(c => c.UserId == userId);
+                var patientId = patient.Id;
+                HttpContext.Session.SetInt32("PractitionerId", patientId);
+
+                var practitioner = _context.tblPractitioner.Where(p => p.Id == patientId).FirstOrDefault();
+
+                HomePageViewModel viewModel = new HomePageViewModel()
+                {
+                    Practitioner = practitioner
+                };
+
+                return View(viewModel);
+            }
+            else if (_signInManager.IsSignedIn(User) && User.IsInRole(RoleConstants.Receptionist))
+            {
+                var userId = _userManager.GetUserId(User);
+                var patient = _context.tblReceptionist.SingleOrDefault(c => c.UserId == userId);
+                var patientId = patient.Id;
+                HttpContext.Session.SetInt32("ReceptionistId", patientId);
+
+                var receptionist = _context.tblReceptionist.Where(p => p.Id == patientId).FirstOrDefault();
+
+                HomePageViewModel viewModel = new HomePageViewModel()
+                {
+                    Receptionist = receptionist
                 };
 
                 return View(viewModel);
@@ -321,6 +513,54 @@ namespace eNompilo.v3._0._1.Controllers
 
                 return View(viewModel);
             }
+            else if (_signInManager.IsSignedIn(User) && User.IsInRole(RoleConstants.Admin))
+            {
+                var userId = _userManager.GetUserId(User);
+                var patient = _context.tblAdmin.SingleOrDefault(c => c.UserId == userId);
+                var patientId = patient.Id;
+                HttpContext.Session.SetInt32("AdminId", patientId);
+
+                var admin = _context.tblAdmin.Where(p => p.Id == patientId).FirstOrDefault();
+
+                HomePageViewModel viewModel = new HomePageViewModel()
+                {
+                    Admin = admin
+                };
+
+                return View(viewModel);
+            }
+            else if (_signInManager.IsSignedIn(User) && User.IsInRole(RoleConstants.Practitioner))
+            {
+                var userId = _userManager.GetUserId(User);
+                var patient = _context.tblPractitioner.SingleOrDefault(c => c.UserId == userId);
+                var patientId = patient.Id;
+                HttpContext.Session.SetInt32("PractitionerId", patientId);
+
+                var practitioner = _context.tblPractitioner.Where(p => p.Id == patientId).FirstOrDefault();
+
+                HomePageViewModel viewModel = new HomePageViewModel()
+                {
+                    Practitioner = practitioner
+                };
+
+                return View(viewModel);
+            }
+            else if (_signInManager.IsSignedIn(User) && User.IsInRole(RoleConstants.Receptionist))
+            {
+                var userId = _userManager.GetUserId(User);
+                var patient = _context.tblReceptionist.SingleOrDefault(c => c.UserId == userId);
+                var patientId = patient.Id;
+                HttpContext.Session.SetInt32("ReceptionistId", patientId);
+
+                var receptionist = _context.tblReceptionist.Where(p => p.Id == patientId).FirstOrDefault();
+
+                HomePageViewModel viewModel = new HomePageViewModel()
+                {
+                    Receptionist = receptionist
+                };
+
+                return View(viewModel);
+            }
             return View();
 		}
 		public IActionResult SpecialisedMedicalProcedures()
@@ -351,6 +591,54 @@ namespace eNompilo.v3._0._1.Controllers
                     //FamilyPlanningAppointments = fpAppointment,
                     //VaccinationAppointments = vaccinationAppointment,
                     PersonalDetails = personalDetails
+                };
+
+                return View(viewModel);
+            }
+            else if (_signInManager.IsSignedIn(User) && User.IsInRole(RoleConstants.Admin))
+            {
+                var userId = _userManager.GetUserId(User);
+                var patient = _context.tblAdmin.SingleOrDefault(c => c.UserId == userId);
+                var patientId = patient.Id;
+                HttpContext.Session.SetInt32("AdminId", patientId);
+
+                var admin = _context.tblAdmin.Where(p => p.Id == patientId).FirstOrDefault();
+
+                HomePageViewModel viewModel = new HomePageViewModel()
+                {
+                    Admin = admin
+                };
+
+                return View(viewModel);
+            }
+            else if (_signInManager.IsSignedIn(User) && User.IsInRole(RoleConstants.Practitioner))
+            {
+                var userId = _userManager.GetUserId(User);
+                var patient = _context.tblPractitioner.SingleOrDefault(c => c.UserId == userId);
+                var patientId = patient.Id;
+                HttpContext.Session.SetInt32("PractitionerId", patientId);
+
+                var practitioner = _context.tblPractitioner.Where(p => p.Id == patientId).FirstOrDefault();
+
+                HomePageViewModel viewModel = new HomePageViewModel()
+                {
+                    Practitioner = practitioner
+                };
+
+                return View(viewModel);
+            }
+            else if (_signInManager.IsSignedIn(User) && User.IsInRole(RoleConstants.Receptionist))
+            {
+                var userId = _userManager.GetUserId(User);
+                var patient = _context.tblReceptionist.SingleOrDefault(c => c.UserId == userId);
+                var patientId = patient.Id;
+                HttpContext.Session.SetInt32("ReceptionistId", patientId);
+
+                var receptionist = _context.tblReceptionist.Where(p => p.Id == patientId).FirstOrDefault();
+
+                HomePageViewModel viewModel = new HomePageViewModel()
+                {
+                    Receptionist = receptionist
                 };
 
                 return View(viewModel);

@@ -182,23 +182,36 @@ namespace eNompilo.v3._0._1.Controllers
 
         public IActionResult EditUser([FromRoute] string Id)
         {
-            var objUser = _context.Users.Where(u => u.Id == Id && (u.Archived == true || u.Archived == false)).FirstOrDefault();
+            var user = _context.Users.Where(u => u.Id == Id).FirstOrDefault();
 
-            if (objUser == null)
+            if (user == null)
+            {
                 return NotFound();
+            }
 
-            return View(objUser); //we didn't do the whole viewModel thingie, in case that comes back to bite us in the a**e
+            var model = new EditUserViewModel
+            {
+                IdNumber = user.IdNumber,
+                Titles = user.Titles,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                PhoneNumber = user.PhoneNumber,
+                Archived = user.Archived,
+
+            };
+            return View(model); //we didn't do the whole viewModel thingie, in case that comes back to bite us in the a**e
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditUser(ApplicationUser model, Patient patient)
+        public async Task<IActionResult> EditUser(EditUserViewModel model)
         {
             model.UserName = model.IdNumber;
             if (ModelState.IsValid)
             {
                 var user = _context.Users.Where(u => u.Id == model.Id).FirstOrDefault();
-                var obj = _context.tblPatient.Where(u => u.Id == patient.Id).FirstOrDefault();
+                var obj = _context.tblPatient.Where(u => u.Id == model.Patient.Id).FirstOrDefault();
 
                 if(user == null)
                 {
@@ -211,19 +224,19 @@ namespace eNompilo.v3._0._1.Controllers
                 }
 
                 user.IdNumber = model.IdNumber;
+                user.Titles = model.Titles;
                 user.FirstName = model.FirstName;
                 user.LastName = model.LastName;
                 user.Email = model.Email;
                 user.PhoneNumber = model.PhoneNumber;
-                user.Password = model.Password;
                 user.Archived = model.Archived;
 
-                patient.IdNumber = model.IdNumber;
-                patient.FirstName = model.FirstName;
-                patient.LastName = model.LastName;
-                patient.Email = model.Email;
-                patient.PhoneNumber = model.PhoneNumber;
-                patient.Archived = model.Archived;
+                obj.IdNumber = model.IdNumber;
+                obj.FirstName = model.FirstName;
+                obj.LastName = model.LastName;
+                obj.Email = model.Email;
+                obj.PhoneNumber = model.PhoneNumber;
+                obj.Archived = model.Archived;
 
                 _context.Users.Update(user);
                 _context.tblPatient.Update(obj);

@@ -29,7 +29,7 @@
                         }
                     else
                         {
-                            <img src="@("~/img/uploads/"+Model.PersonalDetails.ProfilePicture)" asp-append-version="true" class="rounded" style="width:36px;" />
+                            <img src="@("~/img/uploads/"+Model.PersonalDetails.ProfilePicture)" asp-append-version="true" class="rounded me-2" style="width:36px;" />
                         } @UserManager.GetUserAsync(User).Result.Titles. @UserManager.GetUserAsync(User).Result.FirstName @UserManager.GetUserAsync(User).Result.LastName!</strong></a>
 
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
@@ -45,7 +45,15 @@
         <li class="nav-item dropdown">
 
 
-                <a id="dropdownMenuButton1" class="btn nav-link nav-link-2 text-dark text-center dropdown-toggle" href="#" type="button" data-bs-toggle="dropdown" aria-expanded="false"><strong>Welcome @UserManager.GetUserAsync(User).Result.Titles. @UserManager.GetUserAsync(User).Result.FirstName @UserManager.GetUserAsync(User).Result.LastName!</strong></a>
+                <a id="dropdownMenuButton1" class="btn nav-link nav-link-2 text-dark text-center dropdown-toggle" href="#" type="button" data-bs-toggle="dropdown" aria-expanded="false"><strong>
+                    @if (Model.Practitioner.ProfilePicture == null)
+                        {
+                            <img src="~/img/uploads/DefaultProfilePicture.png" style="width:30px;" class="rounded me-2">
+                        }
+                        else
+                        {
+                            <img src="@("~/img/uploads"+Model.Practitioner.ProfilePicture)" asp-append-version="true" class="rounded me-2" style="width:36px;" alt="image not null" />
+                        } @UserManager.GetUserAsync(User).Result.Titles. @UserManager.GetUserAsync(User).Result.FirstName @UserManager.GetUserAsync(User).Result.LastName!</strong></a>
 
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                     <li><a class="dropdown-item nav-link nav-link-2 text-dark text-center" asp-controller="Home" asp-action="PractitionerDashboard" title="Manage"><strong>Dashboard</strong></a></li>
@@ -60,7 +68,15 @@
         <li class="nav-item dropdown">
 
 
-                <a id="dropdownMenuButton1" class="btn nav-link nav-link-2 text-dark text-center dropdown-toggle" href="#" type="button" data-bs-toggle="dropdown" aria-expanded="false"><strong>Welcome @UserManager.GetUserAsync(User).Result.Titles. @UserManager.GetUserAsync(User).Result.FirstName @UserManager.GetUserAsync(User).Result.LastName!</strong></a>
+                <a id="dropdownMenuButton1" class="btn nav-link nav-link-2 text-dark text-center dropdown-toggle" href="#" type="button" data-bs-toggle="dropdown" aria-expanded="false"><strong>
+                    @if (Model.Admin.ProfilePicture == null)
+                        {
+                            <img src="~/img/uploads/DefaultProfilePicture.png" style="width:30px;" class="rounded me-2">
+                        }
+                        else
+                        {
+                            <img src="@("~/img/uploads"+Model.Admin.ProfilePicture)" asp-append-version="true" class="rounded me-2" style="width:30px;" alt="image not null" />
+                        } @UserManager.GetUserAsync(User).Result.Titles. @UserManager.GetUserAsync(User).Result.FirstName @UserManager.GetUserAsync(User).Result.LastName!</strong></a>
 
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                     <li><a class="dropdown-item nav-link nav-link-2 text-dark text-center" asp-controller="Home" asp-action="AdminDashboard" title="Manage"><strong>Dashboard</strong></a></li>
@@ -75,7 +91,15 @@
         <li class="nav-item dropdown">
 
 
-                <a id="dropdownMenuButton1" class="btn nav-link nav-link-2 text-dark text-center dropdown-toggle" href="#" type="button" data-bs-toggle="dropdown" aria-expanded="false"><strong>Welcome @UserManager.GetUserAsync(User).Result.Titles. @UserManager.GetUserAsync(User).Result.FirstName @UserManager.GetUserAsync(User).Result.LastName!</strong></a>
+				<a id="dropdownMenuButton1" class="btn nav-link nav-link-2 text-dark text-center dropdown-toggle" href="#" type="button" data-bs-toggle="dropdown" aria-expanded="false"><strong>
+                    @if (Model.Receptionist.ProfilePicture == null)
+						{
+                            <img src="~/img/uploads/DefaultProfilePicture.png" style="width:30px;" class="rounded me-2">
+						}
+						else
+						{
+                            <img src="@("~/img/uploads"+Model.Receptionist.ProfilePicture)" asp-append-version="true" class="rounded me-2" style="width:30px;" alt="image not null" />
+						} @UserManager.GetUserAsync(User).Result.Titles. @UserManager.GetUserAsync(User).Result.FirstName @UserManager.GetUserAsync(User).Result.LastName!</strong></a>
 
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                     <li><a class="dropdown-item nav-link nav-link-2 text-dark text-center" asp-controller="Home" asp-action="ReceptionistDashboard" title="Manage"><strong>Dashboard</strong></a></li>
@@ -125,8 +149,8 @@
 
                     
 
-                    @*@if(Model.Practitioner.ProfilePicture == null){<img src="~/img/uploads/DefaultProfilePicture.png" class="rounded">}else{<img src="@("~/img/uploads"+Model.Practitioner.ProfilePicture)" asp-append-version="true" class="rounded" style="width:15vw;" alt="image not null" />}
+                    @*
 
-                    @if(Model.Admin.ProfilePicture == null){<img src="~/img/uploads/DefaultProfilePicture.png" class="rounded">}else{<img src="@("~/img/uploads"+Model.Admin.ProfilePicture)" asp-append-version="true" class="rounded" style="width:30px;" alt="image not null" />}
+                    
 
-                    @if(Model.Receptionist.ProfilePicture == null){<img src="~/img/uploads/DefaultProfilePicture.png" class="rounded">}else{<img src="@("~/img/uploads"+Model.Receptionist.ProfilePicture)" asp-append-version="true" class="rounded" style="width:15vw;" alt="image not null" />}*@
+                    *@

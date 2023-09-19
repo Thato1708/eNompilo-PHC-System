@@ -25,6 +25,11 @@ namespace eNompilo.v3._0._1.Models.ViewModels
         public string FirstName { get; set; }
 
         [Required]
+        [Display(Name = "Middle Name")]
+        [StringLength(120, ErrorMessage = "The {0} must be at least {2} and at a max {1} characters long.", MinimumLength = 2)]
+        public string MiddleName { get; set; }
+
+        [Required]
         [Display(Name = "Last Name")]
         [StringLength(120, ErrorMessage = "The {0} must be at least {2} and at a max {1} characters long.", MinimumLength = 2)]
         public string LastName { get; set; }

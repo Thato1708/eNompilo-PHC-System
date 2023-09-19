@@ -180,6 +180,7 @@ namespace eNompilo.v3._0._1.Controllers
             return View(model);
         }
 
+        [HttpGet]
         public IActionResult EditUser([FromRoute] string Id)
         {
             var user = _context.Users.Where(u => u.Id == Id).FirstOrDefault();
@@ -194,6 +195,7 @@ namespace eNompilo.v3._0._1.Controllers
                 IdNumber = user.IdNumber,
                 Titles = user.Titles,
                 FirstName = user.FirstName,
+                MiddleName = user.MiddleName,
                 LastName = user.LastName,
                 Email = user.Email,
                 PhoneNumber = user.PhoneNumber,
@@ -208,7 +210,7 @@ namespace eNompilo.v3._0._1.Controllers
         public async Task<IActionResult> EditUser(EditUserViewModel model)
         {
             model.UserName = model.IdNumber;
-            if (ModelState.IsValid)
+            if (model.IdNumber != null && model.FirstName != null && model.LastName != null && model.PhoneNumber != null)
             {
                 var user = _context.Users.Where(u => u.Id == model.Id).FirstOrDefault();
                 var obj = _context.tblPatient.Where(u => u.Id == model.Patient.Id).FirstOrDefault();
@@ -226,6 +228,7 @@ namespace eNompilo.v3._0._1.Controllers
                 user.IdNumber = model.IdNumber;
                 user.Titles = model.Titles;
                 user.FirstName = model.FirstName;
+                user.MiddleName = model.MiddleName;
                 user.LastName = model.LastName;
                 user.Email = model.Email;
                 user.PhoneNumber = model.PhoneNumber;
@@ -233,7 +236,8 @@ namespace eNompilo.v3._0._1.Controllers
 
                 obj.IdNumber = model.IdNumber;
                 obj.FirstName = model.FirstName;
-                obj.LastName = model.LastName;
+				obj.MiddleName = model.MiddleName;
+				obj.LastName = model.LastName;
                 obj.Email = model.Email;
                 obj.PhoneNumber = model.PhoneNumber;
                 obj.Archived = model.Archived;

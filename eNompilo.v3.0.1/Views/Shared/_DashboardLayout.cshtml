@@ -4,6 +4,7 @@
 @using eNompilo.v3._0._1.Constants;
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
+@inject IHttpContextAccessor contextAccessor;
 
 <!DOCTYPE html>
 
@@ -38,6 +39,10 @@
 
                         <a asp-controller="Patient" asp-action="PatientDashboard" class="dashboard-nav-item active">
                             <i class="bi bi-speedometer me-2" style="font-size:1.5rem;"></i> Dashboard
+                        </a>
+
+                        <a asp-area="" asp-controller="Users" asp-action="UserProfile" asp-route="@contextAccessor.HttpContext.Session.GetString("user_id")" class="dashboard-nav-item active">
+                            <i class="bi bi-person-circle me-2" style="font-size:1.5rem;"></i> Profile
                         </a>
                         
                         <div class='dashboard-nav-dropdown'>
@@ -87,6 +92,10 @@
                         <a asp-controller="Home" asp-action="PractitionerDashboard" class="dashboard-nav-item active">
                             <i class="bi bi-speedometer me-2" style="font-size:1.5rem;"></i> Dashboard
                         </a>
+
+                        <a asp-controller="Users" asp-action="UserProfile" asp-route="@contextAccessor.HttpContext.Session.GetString("user_id")" class="dashboard-nav-item active">
+                            <i class="bi bi-person-circle me-2" style="font-size:1.5rem;"></i> Profile
+                        </a>
                         @* <a href="#" class="dashboard-nav-item"><i class="bi bi-calendar-check-fill"></i> Appointment </a> *@
                         <div class='dashboard-nav-dropdown'>
                             <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle">
@@ -119,6 +128,10 @@
                         </a>
                         <a asp-controller="Home" asp-action="AdminDashboard" class="dashboard-nav-item active">
                             <i class="bi bi-speedometer me-2" style="font-size:1.5rem;"></i> Dashboard
+                        </a>
+
+                        <a asp-controller="Users" asp-action="UserProfile" asp-route="@contextAccessor.HttpContext.Session.GetString("user_id")" class="dashboard-nav-item active">
+                            <i class="bi bi-person-circle me-2" style="font-size:1.5rem;"></i> Profile
                         </a>
                         @* <a href="#" class="dashboard-nav-item"><i class="bi bi-calendar-check-fill"></i> Appointment </a> *@
                         <div class='dashboard-nav-dropdown'>

@@ -39,6 +39,7 @@ namespace eNompilo.v3._0._1.Controllers
 				var userId = _userManager.GetUserId(User);
 				var patient = _context.tblPatient.SingleOrDefault(c => c.UserId == userId);
 				var patientId = patient.Id;
+                HttpContext.Session.SetString("user_id", userId);
 				HttpContext.Session.SetInt32("PatientId", patientId);
 
                 var patientFile = _context.tblPatientFile.SingleOrDefault(c => c.PatientId == patientId);
@@ -69,7 +70,8 @@ namespace eNompilo.v3._0._1.Controllers
 				var userId = _userManager.GetUserId(User);
 				var patient = _context.tblAdmin.SingleOrDefault(c => c.UserId == userId);
 				var patientId = patient.Id;
-				HttpContext.Session.SetInt32("AdminId", patientId);
+                HttpContext.Session.SetString("user_id", userId);
+                HttpContext.Session.SetInt32("AdminId", patientId);
 
                 var admin = _context.tblAdmin.Where(p => p.Id == patientId).FirstOrDefault();
 
@@ -85,7 +87,8 @@ namespace eNompilo.v3._0._1.Controllers
 				var userId = _userManager.GetUserId(User);
 				var patient = _context.tblPractitioner.SingleOrDefault(c => c.UserId == userId);
 				var patientId = patient.Id;
-				HttpContext.Session.SetInt32("PractitionerId", patientId);
+                HttpContext.Session.SetString("user_id", userId);
+                HttpContext.Session.SetInt32("PractitionerId", patientId);
 
                 var practitioner = _context.tblPractitioner.Where(p => p.Id == patientId).FirstOrDefault();
 
@@ -101,7 +104,8 @@ namespace eNompilo.v3._0._1.Controllers
 				var userId = _userManager.GetUserId(User);
 				var patient = _context.tblReceptionist.SingleOrDefault(c => c.UserId == userId);
 				var patientId = patient.Id;
-				HttpContext.Session.SetInt32("ReceptionistId", patientId);
+                HttpContext.Session.SetString("user_id", userId);
+                HttpContext.Session.SetInt32("ReceptionistId", patientId);
 
                 var receptionist = _context.tblReceptionist.Where(p => p.Id == patientId).FirstOrDefault();
 

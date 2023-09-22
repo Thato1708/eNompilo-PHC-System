@@ -250,7 +250,7 @@ namespace eNompilo.v3._0._1.Controllers
             return View(model);
         }
 
-        public IActionResult UserDetails([FromRoute] string Id)
+        public IActionResult UserDetails([FromRoute] string Id) //public IActionResult UserDetails([FromRoute] string Id)
         {
             var objUser = _context.Users.Where(u => u.Id == Id && (u.Archived == true || u.Archived == false)).FirstOrDefault();
 
@@ -260,7 +260,7 @@ namespace eNompilo.v3._0._1.Controllers
             return View(objUser); //we didn't do the whole viewModel thingie, in case that comes back to bite us in the a**e
         }
 
-        public IActionResult DeleteUser([FromRoute] string Id)
+        public IActionResult DeleteUser([FromRoute] string Id) //public IActionResult DeleteUser([FromRoute] string Id)
         {
             if (Id == "" || Id == null)
                 return NotFound();
@@ -284,6 +284,31 @@ namespace eNompilo.v3._0._1.Controllers
             _context.Users.Remove(model);
             _context.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        public IActionResult UserProfile([FromRoute]string Id)
+        {
+            if (Id == "" || Id == null)
+                return NotFound();
+
+            var obj = _context.Users.Where(u => u.Id == Id).FirstOrDefault();
+            var obj2 = _context.tblPatientFile.Where(u => u.Patient.UserId == Id).FirstOrDefault();
+            var obj3 = _context.tblAdmin.Where(u => u.Users.Id == Id).FirstOrDefault();
+            var obj4 = _context.tblPractitioner.Where(u => u.Users.Id == Id).FirstOrDefault();
+            var obj5 = _context.tblReceptionist.Where(u => u.Users.Id == Id).FirstOrDefault();
+
+            if (obj == null || obj2 == null || obj3 == null || obj4 == null || obj5 == null)
+                return NotFound();
+
+            var model = new UserProfileViewModel
+            {
+                AppUserId = Id,
+                PatientId = obj2.Id,
+                AdminId = obj3.Id,
+                PractitionerId = obj4.Id,
+                ReceptionistId = obj5.Id
+            };
+            return View(model);
         }
     } 
 }

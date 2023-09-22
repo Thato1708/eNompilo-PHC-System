@@ -1,0 +1,54 @@
+﻿@model eNompilo.v3._0._1.Models.ViewModels.UserProfileViewModel
+@using Microsoft.AspNetCore.Identity;
+@using eNompilo.v3._0._1.Constants;
+@using eNompilo.v3._0._1.Models.SystemUsers;
+@inject UserManager<ApplicationUser> UserManager
+@inject SignInManager<ApplicationUser> SignInManager
+
+@{
+    ViewData["Title"] = "UserProfile";
+    string profilePicture = Model.PatientFile.PersonalDetails.ProfilePicture;
+}
+
+
+<div class="margined-page pt-4">
+    <h1>User Profile</h1>
+
+    @if (SignInManager.IsSignedIn(User))
+    {
+        @if (User.IsInRole(RoleConstants.Patient))
+        {
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            @if (profilePicture == null)
+                            {
+                                <img src="~/img/uploads/DefaultProfilePicture.png" style="width:30px;" class="rounded me-2">
+                            }
+                            else
+                            {
+                                <img src="@("~/img/uploads/"+profilePicture)" asp-append-version="true" class="rounded me-2" style="width:36px;" />
+                            }
+                        </th>
+                        <th>
+                            <h3>First Name:</h3> <strong>@UserManager.GetUserAsync(User).Result.FirstName</strong><br />
+                            @if (UserManager.GetUserAsync(User).Result.MiddleName != null)
+                            {
+                                <h3>Middle Name:</h3> <strong>@UserManager.GetUserAsync(User).Result.MiddleName</strong><br />
+                            }
+                            <h3>Surname:</h3> <strong>@UserManager.GetUserAsync(User).Result.LastName</strong>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+        }
+    }
+</div>
+

@@ -25,6 +25,9 @@
 <body>
     <div>
         <div class='dashboard'>
+            @{
+                
+            }
             @if (User.IsInRole(RoleConstants.Patient))
             {
                 <div class="dashboard-nav" style="background:#060b28">
@@ -41,7 +44,7 @@
                             <i class="bi bi-speedometer me-2" style="font-size:1.5rem;"></i> Dashboard
                         </a>
 
-                        <a asp-area="" asp-controller="Users" asp-action="UserProfile" asp-route="@contextAccessor.HttpContext.Session.GetString("user_id")" class="dashboard-nav-item active">
+                        <a asp-controller="Users" asp-action="UserProfile" class="dashboard-nav-item active">
                             <i class="bi bi-person-circle me-2" style="font-size:1.5rem;"></i> Profile
                         </a>
                         
@@ -93,7 +96,7 @@
                             <i class="bi bi-speedometer me-2" style="font-size:1.5rem;"></i> Dashboard
                         </a>
 
-                        <a asp-controller="Users" asp-action="UserProfile" asp-route="@contextAccessor.HttpContext.Session.GetString("user_id")" class="dashboard-nav-item active">
+                        <a asp-controller="Users" asp-action="UserProfile" class="dashboard-nav-item active">
                             <i class="bi bi-person-circle me-2" style="font-size:1.5rem;"></i> Profile
                         </a>
                         @* <a href="#" class="dashboard-nav-item"><i class="bi bi-calendar-check-fill"></i> Appointment </a> *@
@@ -130,7 +133,7 @@
                             <i class="bi bi-speedometer me-2" style="font-size:1.5rem;"></i> Dashboard
                         </a>
 
-                        <a asp-controller="Users" asp-action="UserProfile" asp-route="@contextAccessor.HttpContext.Session.GetString("user_id")" class="dashboard-nav-item active">
+                        <a asp-controller="Users" asp-action="UserProfile" class="dashboard-nav-item active">
                             <i class="bi bi-person-circle me-2" style="font-size:1.5rem;"></i> Profile
                         </a>
                         @* <a href="#" class="dashboard-nav-item"><i class="bi bi-calendar-check-fill"></i> Appointment </a> *@

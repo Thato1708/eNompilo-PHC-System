@@ -19,15 +19,17 @@ namespace eNompilo.v3._0._1.Controllers
         private readonly ApplicationDbContext _context;
         private readonly ILogger<RegisterController> _logger;
 		private readonly IWebHostEnvironment webHostEnvironment;
+        private readonly IHttpContextAccessor _contextAccessor;
 
-		public UsersController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, ApplicationDbContext context, ILogger<RegisterController> logger, IWebHostEnvironment hostEnvironment)
+        public UsersController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, ApplicationDbContext context, ILogger<RegisterController> logger, IWebHostEnvironment hostEnvironment, IHttpContextAccessor contextAccessor)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _context = context;
             _logger = logger;
 			webHostEnvironment = hostEnvironment;
-		}
+            _contextAccessor = contextAccessor;
+        }
         public IActionResult Index()
         {
             IEnumerable<ApplicationUser> objList = _context.Users.Where(u => u.Archived == true || u.Archived == false);
@@ -209,18 +211,14 @@ namespace eNompilo.v3._0._1.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditUser(EditUserViewModel model)
         {
+            int? patientId = HttpContext.Session.GetInt32("PatientId");
+            string? userId = HttpContext.Session.GetString("user_id");
             model.UserName = model.IdNumber;
             if (model.IdNumber != null && model.FirstName != null && model.LastName != null && model.PhoneNumber != null)
             {
                 var user = _context.Users.Where(u => u.Id == model.Id).FirstOrDefault();
-                var obj = _context.tblPatient.Where(u => u.Id == model.Patient.Id).FirstOrDefault();
 
                 if(user == null)
-                {
-                    return NotFound();
-                }
-
-                if(obj == null)
                 {
                     return NotFound();
                 }
@@ -234,21 +232,19 @@ namespace eNompilo.v3._0._1.Controllers
                 user.PhoneNumber = model.PhoneNumber;
                 user.Archived = model.Archived;
 
-                obj.IdNumber = model.IdNumber;
-                obj.FirstName = model.FirstName;
-				obj.MiddleName = model.MiddleName;
-				obj.LastName = model.LastName;
-                obj.Email = model.Email;
-                obj.PhoneNumber = model.PhoneNumber;
-                obj.Archived = model.Archived;
+                if(_signInManager.IsSignedIn(User) && User.IsInRole(RoleConstants.Patient))
+                {
+                    var patient = _context.tblPatient.Where(u => u.Id == model.Patient.Id).FirstOrDefault();
+                }
 
                 _context.Users.Update(user);
-                _context.tblPatient.Update(obj);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
             return View(model);
         }
+
+        
 
         public IActionResult UserDetails([FromRoute] string Id) //public IActionResult UserDetails([FromRoute] string Id)
         {
@@ -288,10 +284,13 @@ namespace eNompilo.v3._0._1.Controllers
 
         public IActionResult UserProfile([FromRoute]string Id)
         {
+            string userId = HttpContext.Session.GetString("user_id");
+            ViewBag.UserId = userId;
+
             if (Id == "" || Id == null)
                 return NotFound();
 
-            var obj = _context.Users.Where(u => u.Id == Id).FirstOrDefault();
+            var obj = _context.Users.Where(u => u.Id == userId).FirstOrDefault();
             var obj2 = _context.tblPatientFile.Where(u => u.Patient.UserId == Id).FirstOrDefault();
             var obj3 = _context.tblAdmin.Where(u => u.Users.Id == Id).FirstOrDefault();
             var obj4 = _context.tblPractitioner.Where(u => u.Users.Id == Id).FirstOrDefault();

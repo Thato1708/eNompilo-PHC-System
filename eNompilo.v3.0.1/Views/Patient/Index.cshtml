@@ -15,34 +15,16 @@
         <thead>
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.Users)
-                </th>
-                <th>
                     @Html.DisplayNameFor(model => model.IdNumber)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Titles)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.FirstName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.MiddleName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.LastName)
+                    Full Name
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Email)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.PhoneNumber)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.CreatedOn)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Archived)
                 </th>
                 <th></th>
             </tr>
@@ -52,34 +34,16 @@
             {
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Users.Id)
-                    </td>
-                    <td>
                         @Html.DisplayFor(modelItem => item.IdNumber)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Titles)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.FirstName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.MiddleName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.LastName)
+                        @Html.DisplayFor(modelItem => item.Titles). @Html.DisplayFor(modelItem => item.FirstName) @Html.DisplayFor(modelItem => item.MiddleName) @Html.DisplayFor(modelItem => item.LastName)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Email)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.PhoneNumber)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.CreatedOn)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Archived)
                     </td>
                     <td>
                         <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

@@ -204,7 +204,7 @@ namespace eNompilo.v3._0._1.Controllers
                 Archived = user.Archived,
 
             };
-            return View(model); //we didn't do the whole viewModel thingie, in case that comes back to bite us in the a**e
+            return View(model);
         }
 
         [HttpPost]
@@ -232,12 +232,25 @@ namespace eNompilo.v3._0._1.Controllers
                 user.PhoneNumber = model.PhoneNumber;
                 user.Archived = model.Archived;
 
-                if(_signInManager.IsSignedIn(User) && User.IsInRole(RoleConstants.Patient))
-                {
-                    var patient = _context.tblPatient.Where(u => u.Id == model.Patient.Id).FirstOrDefault();
-                }
-
                 _context.Users.Update(user);
+
+                if(user.UserRole == UserRole.Patient)
+                {
+                    Patient patient = new Patient()
+                    {
+                        UserId = user.Id,
+                        IdNumber = user.IdNumber,
+                        Titles = user.Titles,
+                        FirstName = user.FirstName,
+                        MiddleName = user.MiddleName,
+                        LastName = user.LastName,
+                        Email = user.Email,
+                        PhoneNumber = user.PhoneNumber,
+                        Archived = user.Archived,
+                    };
+
+                    _context.tblPatient.Update(patient);
+                }
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
             }

@@ -37,16 +37,21 @@ namespace eNompilo.v3._0._1.Models.ViewModels
         [PersonalData]
         [Display(Name = "Email Address")]
         [EmailAddress]
-        public override string? Email { get; set; }
+        public string? Email { get; set; }
 
         [Required]
         [PersonalData]
         [Display(Name = "Phone Number")]
         [StringLength(10, ErrorMessage = "Standard phone number can only be 10 digits long.", MinimumLength = 10)] //datatype must be number in view/html
-        public override string PhoneNumber { get; set; }
+        public string PhoneNumber { get; set; }
+
+        [Display(Name = "User Role")]
+        public UserRole UserRole { get; set; }
 
         public bool Archived { get; set; }
 
         public Patient Patient { get; set; }
+
+        public virtual ApplicationUser ApplicationUser { get; set; }
     }
 }

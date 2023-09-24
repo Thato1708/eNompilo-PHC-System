@@ -59,6 +59,8 @@ public class ApplicationUser : IdentityUser
     [Display(Name = "User Role")]
     public UserRole UserRole { get; set; }
 
+    public DateTime LastLogin { get; set; }
+
     public bool Archived { get; set; }
 }
 

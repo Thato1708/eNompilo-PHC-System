@@ -22,12 +22,16 @@ namespace eNompilo.v3._0._1.Areas.Identity.Pages.Account
     public class LoginModel : PageModel
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger<LoginModel> _logger;
+        private readonly ApplicationDbContext _context;
 
-        public LoginModel(SignInManager<ApplicationUser> signInManager, ILogger<LoginModel> logger)
+        public LoginModel(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager, ILogger<LoginModel> logger, ApplicationDbContext context)
         {
             _signInManager = signInManager;
+            _userManager = userManager;
             _logger = logger;
+            _context = context;
         }
 
         /// <summary>
@@ -109,13 +113,21 @@ namespace eNompilo.v3._0._1.Areas.Identity.Pages.Account
 
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 
-            if (ModelState.IsValid)
+            if (Input.IdNumber != null && Input.Password != null)
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var result = await _signInManager.PasswordSignInAsync(Input.IdNumber, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
+                    //var userId = _userManager.GetUserId(User);
+                    //var user = _context.Users.Find(userId);
+                    //if(user != null)
+                    //{
+                    //    user.LastLogin = DateTime.UtcNow;
+                    //    _context.Users.Update(user);
+                    //    _context.SaveChanges();
+                    //}
                     _logger.LogInformation("User logged in.");
                     return LocalRedirect(returnUrl);
                 }

@@ -21,11 +21,17 @@ namespace eNompilo.v3._0._1.Models.ViewModels
         [ForeignKey("Receptionist")]
         public int? ReceptionistId { get; set; }
 
-        public virtual ApplicationUser ApplicationUser { get; set; }
-        public virtual Admin Admin { get; set; }
-        public virtual PatientFile PatientFile { get; set; }
-        public virtual Practitioner Practitioner { get; set; }
-        public virtual Receptionist Receptionist { get; set; }
+        [ForeignKey("PersonalDetails")]
+        public int? PersonalDetailsId { get; set; }
+
+        public DateTime LastLogin { get; set; }
+
+        public virtual ApplicationUser ApplicationUsers { get; set; }
+        public virtual Admin Admins { get; set; }
+        public virtual PatientFile PatientFiles { get; set; }
+        public virtual PersonalDetails PersonalDetails { get; set; }
+        public virtual Practitioner Practitioners { get; set; }
+        public virtual Receptionist Receptionists { get; set; }
 
     }
 }

@@ -1,59 +1,80 @@
-﻿@model eNompilo.v3._0._1.Models.Family_Planning.FamilyPlanningAppointment
+﻿@model eNompilo.v3._0._1.Models.ViewModels.ArchiveItemViewModel
+
+@using eNompilo.v3._0._1.Constants;
+@using eNompilo.v3._0._1.Areas.Identity.Data;
+@using eNompilo.v3._0._1.Models.Family_Planning;
+
+@inject ApplicationDbContext _context
 
 @{
     ViewData["Title"] = "Cancel";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+
+    var familyPlanning = _context.tblFamilyPlanningAppointment.Where(va => va.Id == Model.Id).FirstOrDefault();
+
 }
 
 <div class="margined-page pt-4">
+    <h1>Cancel</h1>
 
-<h1>Cancel</h1>
+    <h2>Are you sure you want to cancel this appointment?</h2>
+    <div>
+        <hr />
+        <dl class="row" style="margin-left:auto;margin-right:auto;">
+            <dt class="col-sm-3">
+                Booking Reasons:
+            </dt>
+            <dd class="col-sm-9">
+                @familyPlanning.BookingReasons
+            </dd>
+            <dt class="col-sm-3">
+                Appointment Date:
+            </dt>
+            <dd class="col-sm-9">
+                @Convert.ToDateTime(familyPlanning.PreferredDate).ToString("dd MMM yyyy")
+            </dd>
+            <dt class="col-sm-3">
+                Appointment Time:
+            </dt>
+            <dd class="col-sm-9">
+                @Convert.ToDateTime(familyPlanning.PreferredTime).ToString("HH:mm")
+            </dd>
+        </dl>
 
-<h2>Are you sure you want to cancel this appointment?</h2>
-<div style="margin-left:auto;margin-right:auto;">
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2 mb-4">
-            What are you booking for?
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.BookingReasons)
-        </dd>
-        <dt class = "col-sm-2 mb-4">
-            Appointment Date
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PreferredDate)
-        </dd>
-        <dt class = "col-sm-2 mb-4">
-            Appointment Time
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PreferredTime)
-        </dd>
-        <dt class = "col-sm-2 mb-4">
-            @Html.DisplayNameFor(model => model.Patient)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Patient.FirstName) @Html.DisplayFor(model => model.Patient.LastName)
-        </dd>
-        <dt class = "col-sm-2 mb-4">
-            @Html.DisplayNameFor(model => model.PatientFile)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PatientFile.Id)
-        </dd>
-        <dt class = "col-sm-2 mb-4">
-            @Html.DisplayNameFor(model => model.Archived)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Archived)
-        </dd>
-    </dl>
-    
-    <form asp-action="Cancel">
-        <input type="hidden" asp-for="Id" />
-        <input type="submit" value="Cancel Appointment" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
-    </form>
+        <form asp-action="Cancel" method="post">
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group form-check mb-4">
+                <label class="form-check-label">
+                    Tick the checkbox to confirm you are cancelling this appointment
+                    <input class="form-check-input" id="archiveElmnt" asp-for="Archived" />
+                </label>
+            </div>
+            <input type="submit" id="btnSubmit" value="Cancel" class="btn btn-danger" /> |
+            <a asp-action="Index">Back to List</a>
+        </form>
+    </div>
 </div>
-</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        window.onload = function () {
+            var checkbox = document.getElementById('archiveElmnt');
+            var button = document.getElementById('btnSubmit');
+
+            checkbox.addEventListener('change', function () {
+                if (checkbox.checked) {
+                    button.disabled = false;
+                } else {
+                    button.disabled = true;
+                }
+            });
+
+            // Trigger change event to set initial visibility
+            checkbox.dispatchEvent(new Event('change'));
+        };
+    </script>
+}
+

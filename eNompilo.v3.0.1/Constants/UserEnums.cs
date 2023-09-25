@@ -8,8 +8,10 @@ namespace eNompilo.v3._0._1.Constants
 		Female,
 		[Display(Name = "Male")]
 		Male,
-		[Display(Name = "Other")]
-		Other
+		[Display(Name = "Gender Fluid")]
+		GenderFluid,
+		[Display(Name = "Non-Confirming")]
+		NonBinary
 	}
 	public enum Race
 	{
@@ -70,7 +72,7 @@ namespace eNompilo.v3._0._1.Constants
 	public enum SessionPreference
 	{
 		Online,
-		[Display(Name = "Face to Face/In-Person")]
+		[Display(Name = "Face to Face")]
 		FaceToFace
 	}
 	public enum Provinces
@@ -144,8 +146,23 @@ namespace eNompilo.v3._0._1.Constants
 
 	public enum EmotionalChallenges
 	{
-		issue1, issue2, issue3
-	}
+		Suicidal,
+		Depression,
+		Nervous,
+		Apathy,
+		[Display(Name ="Feelings of Hopelessness")] FeelingHopeless,
+		[Display(Name ="Trouble Sleeping")] TroubleSleeping,
+		[Display(Name ="Increased Cynicism or Pessimism")] MoreCynicalAndPessimistic,
+		[Display(Name ="Sense of Dread")] SenseOfDread,
+        [Display(Name ="Lack of Motivation")] LackUnmotivation,
+		Irritability,
+		[Display(Name ="Physical Fatigue")] PhysicalFatigue,
+		Absentmindedness,
+		[Display(Name ="Change in Appetite")] NoAppetite,
+		[Display(Name ="Difficulty Concentrating")] CannotConcentrate,
+		[Display(Name ="Irrational Angernger")] IrrationalAnger,
+		[Display(Name ="Doctor/Nurse Referral")] DoctorReferral
+    }
 
 	public enum Role
 	{
@@ -177,7 +194,5 @@ namespace eNompilo.v3._0._1.Constants
 	{
 		Yes,No
 	}
-
-
-
 }
+ 

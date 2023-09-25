@@ -1,5 +1,6 @@
 ﻿@model eNompilo.v3._0._1.Models.ViewModels.UserProfileViewModel
 @using Microsoft.AspNetCore.Identity;
+@using System.Collections;
 @using eNompilo.v3._0._1.Constants;
 @using eNompilo.v3._0._1.Models.SystemUsers;
 @inject UserManager<ApplicationUser> UserManager
@@ -17,8 +18,13 @@
     string fullname = @UserManager.GetUserAsync(User).Result.FirstName + middlename + ' ' + @UserManager.GetUserAsync(User).Result.LastName;
 
     var user = _context.Users.Where(u => u.Id == UserManager.GetUserAsync(User).Result.Id).FirstOrDefault();
-    var patient = _context.tblPersonalDetails.Where(p => p.Patient.UserId == UserManager.GetUserAsync(User).Result.Id).FirstOrDefault();
-    var medicalHistory = _context.tblMedicalHistory.Where(p => p.Patient.UserId == UserManager.GetUserAsync(User).Result.Id).FirstOrDefault();
+    var patient = _context.tblPersonalDetails.Where(p => p.Patient.UserId == user.Id).FirstOrDefault();
+    var medicalHistory = _context.tblMedicalHistory.Where(p => p.Patient.UserId == user.Id).FirstOrDefault();
+    var generalAppointments = _context.tblGeneralAppointment.Where(p => p.Patient.UserId == user.Id).FirstOrDefault();
+    var counsellingAppointments = _context.tblCounsellingAppointment.Where(p => p.Patient.UserId == user.Id).FirstOrDefault();
+    var familyPlanningAppointments = _context.tblFamilyPlanningAppointment.Where(p => p.Patient.UserId == user.Id).FirstOrDefault();
+    var vaccinationAppointments = _context.tblVaccinationAppointment.Where(p => p.Patient.UserId == user.Id).FirstOrDefault();
+
     var dayOfLastLogin = (DateTime.UtcNow - user.LastLogin).Days;
     var patientAge = 0;
 

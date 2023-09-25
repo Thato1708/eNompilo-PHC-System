@@ -2,9 +2,13 @@
 using eNompilo.v3._0._1.Models;
 using eNompilo.v3._0._1.Models.Counselling;
 using eNompilo.v3._0._1.Models.SystemUsers;
+using eNompilo.v3._0._1.Constants;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
+using eNompilo.v3._0._1.Models.ViewModels;
 
 namespace eNompiloCounselling.Controllers
 {
@@ -12,16 +16,35 @@ namespace eNompiloCounselling.Controllers
     public class CounsellingAppointmentController : Controller
     {
         private readonly ApplicationDbContext dbContext;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
 
-        public CounsellingAppointmentController(ApplicationDbContext context)
+        public CounsellingAppointmentController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
         {
             dbContext = context;
+            _userManager = userManager;
+            _signInManager = signInManager;
+
         }
         public IActionResult Index()
-		{
-            IEnumerable<CounsellingAppointment> objList = dbContext.tblCounsellingAppointment;
-			return View(objList);
+        {
+            if (_signInManager.IsSignedIn(User))
+            {
+                if (User.IsInRole(RoleConstants.Patient))
+                {
+                    IEnumerable<CounsellingAppointment> objList = dbContext.tblCounsellingAppointment.Where(va => va.Archived == false).ToList(); ;
+                    return View(objList);
+                }
+            else if (User.IsInRole(RoleConstants.Admin))
+            {
+                IEnumerable<CounsellingAppointment> objList = dbContext.tblCounsellingAppointment;
+                return View(objList);
+            }
+            }
+      
+            return NotFound();
         }
+    
 
         public IActionResult Book()
         {
@@ -92,18 +115,34 @@ namespace eNompiloCounselling.Controllers
             {
                 return NotFound();
             }
-            return View(obj);
+            var model = new ArchiveItemViewModel
+            {
+                Id = obj.Id,
+                CounsAppointmentId = obj.Id,
+                Archived = obj.Archived
+            };
+            return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Cancel(CounsellingAppointment model)
+        public IActionResult Cancel(ArchiveItemViewModel model)
         {
             if(!ModelState.IsValid)
             {
                 return View(model);
             }
-            dbContext.tblCounsellingAppointment.Remove(model);
+
+            var obj = dbContext.tblCounsellingAppointment.Where(va => va.Id == model.Id).FirstOrDefault();
+
+            if (obj == null)
+            {
+                return NotFound();
+            }
+
+            obj.Archived = model.Archived;
+
+            dbContext.tblCounsellingAppointment.Update(obj);
             dbContext.SaveChanges();
             return RedirectToAction("Index");
         }

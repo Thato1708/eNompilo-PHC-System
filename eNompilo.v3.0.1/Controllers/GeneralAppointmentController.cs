@@ -1,6 +1,7 @@
 ﻿using eNompilo.v3._0._1.Areas.Identity.Data;
 using eNompilo.v3._0._1.Models;
 using eNompilo.v3._0._1.Models.SystemUsers;
+using eNompilo.v3._0._1.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -93,18 +94,34 @@ namespace eNompiloCounselling.Controllers
             {
                 return NotFound();
             }
-            return View(obj);
+            var model = new ArchiveItemViewModel
+            {
+                Id = obj.Id,
+                GenAppointmentId = obj.Id,
+                Archived = obj.Archived
+            };
+            return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Cancel(GeneralAppointment model)
+        public IActionResult Cancel(ArchiveItemViewModel model)
         {
             if(!ModelState.IsValid)
             {
                 return View(model);
             }
-            dbContext.tblGeneralAppointment.Remove(model);
+
+            var obj = dbContext.tblGeneralAppointment.Where(va => va.Id == model.Id).FirstOrDefault();
+
+            if (obj == null)
+            {
+                return NotFound();
+            }
+
+            obj.Archived = model.Archived;
+
+            dbContext.tblGeneralAppointment.Update(obj);
             dbContext.SaveChanges();
             return RedirectToAction("Index");
         }

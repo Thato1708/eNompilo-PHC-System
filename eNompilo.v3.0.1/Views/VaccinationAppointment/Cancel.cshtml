@@ -1,80 +1,79 @@
-﻿@model eNompilo.v3._0._1.Models.Vaccination.VaccinationAppointment
+﻿@model eNompilo.v3._0._1.Models.ViewModels.ArchiveItemViewModel
+
+@using eNompilo.v3._0._1.Constants;
+@using eNompilo.v3._0._1.Areas.Identity.Data;
+@using eNompilo.v3._0._1.Models.Vaccination;
+
+@inject ApplicationDbContext _context
 
 @{
     ViewData["Title"] = "Cancel";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+
+    var vaccination = _context.tblVaccinationAppointment.Where(va => va.Id == Model.Id).FirstOrDefault();
 }
 
 <div class="margined-page pt-4" >
     <h1>Cancel</h1>
 
-    <h2>Are you sure you want to delete this?</h2>
+    <h2>Are you sure you want to cancel this appointment?</h2>
     <div>
-        <h4>VaccinationAppointment</h4>
         <hr />
         <dl class="row" style="margin-left:auto;margin-right:auto;">
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.BeenVaccinated)
+            <dt class="col-sm-3">
+                Vaccination For:
             </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.BeenVaccinated)
+            <dd class="col-sm-9">
+                @vaccination.VaccinableDiseases
             </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.PreviousVaccine)
+            <dt class="col-sm-3">
+                Appointment Date:
             </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.PreviousVaccine)
+            <dd class="col-sm-9">
+                @Convert.ToDateTime(vaccination.PreferredDate).ToString("dd MMM yyyy")
             </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.IsPregnant)
+            <dt class="col-sm-3">
+                Appointment Time:
             </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.IsPregnant)
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.VaccinableDiseases)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.VaccinableDiseases)
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.PreferredDate)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.PreferredDate)
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.PreferredTime)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.PreferredTime)
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Patient)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Patient.Email)
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.PatientFile)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.PatientFile.Id)
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Archived)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Archived)
+            <dd class="col-sm-9">
+                @Convert.ToDateTime(vaccination.PreferredTime).ToString("HH:mm")
             </dd>
         </dl>
 
-        <form asp-action="Cancel">
+        <form asp-action="Cancel" method="post">
             <input type="hidden" asp-for="Id" />
-            <input type="submit" value="Delete" class="btn btn-danger" /> |
+            <div class="form-group form-check mb-4">
+                <label class="form-check-label">
+                    Tick the checkbox to confirm you are cancelling this appointment
+                    <input class="form-check-input" id="archiveElmnt" asp-for="Archived" />
+                </label>
+            </div>
+            <input type="submit" id="btnSubmit" value="Cancel" class="btn btn-danger" /> |
             <a asp-action="Index">Back to List</a>
         </form>
     </div>
 </div>
 
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        window.onload = function () {
+            var checkbox = document.getElementById('archiveElmnt');
+            var button = document.getElementById('btnSubmit');
 
+            checkbox.addEventListener('change', function () {
+                if (checkbox.checked) {
+                    button.disabled = false;
+                } else {
+                    button.disabled = true;
+                }
+            });
+
+            // Trigger change event to set initial visibility
+            checkbox.dispatchEvent(new Event('change'));
+        };
+    </script>
+}
 

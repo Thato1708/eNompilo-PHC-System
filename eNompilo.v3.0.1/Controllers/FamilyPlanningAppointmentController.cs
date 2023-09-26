@@ -1,25 +1,44 @@
-﻿using eNompilo.v3._0._1.Models.Counselling;
-using eNompilo.v3._0._1.Areas.Identity.Data;
-
+﻿using eNompilo.v3._0._1.Areas.Identity.Data;
+using eNompilo.v3._0._1.Models.Family_Planning;
+using eNompilo.v3._0._1.Models.SystemUsers;
+using eNompilo.v3._0._1.Constants;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using eNompilo.v3._0._1.Models.Family_Planning;
+using Microsoft.AspNetCore.Identity;
+using eNompilo.v3._0._1.Models.ViewModels;
+using eNompilo.v3._0._1.Models.Vaccination;
 
 namespace eNompilo.v3._0._1.Controllers
 {
     public class FamilyPlanningAppointmentController : Controller
     {
         private readonly ApplicationDbContext dbContext;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
 
-        public FamilyPlanningAppointmentController(ApplicationDbContext context)
+        public FamilyPlanningAppointmentController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
         {
             dbContext = context;
-            
+            _userManager = userManager;
+            _signInManager = signInManager;
+
         }
         public IActionResult Index()
         {
-            IEnumerable<FamilyPlanningAppointment> objList = dbContext.tblFamilyPlanningAppointment;
-            return View(objList);
+            if (_signInManager.IsSignedIn(User))
+            {
+                if (User.IsInRole(RoleConstants.Patient))
+                {
+                    IEnumerable<FamilyPlanningAppointment> objList = dbContext.tblFamilyPlanningAppointment.Where(va=>va.Archived == false).ToList();
+                    return View(objList);
+                }
+                else if (User.IsInRole(RoleConstants.Admin))
+                {
+                    IEnumerable<FamilyPlanningAppointment> objList = dbContext.tblFamilyPlanningAppointment;
+                    return View(objList);
+                }
+            }
+            return NotFound();
         }
 
         public IActionResult Book()
@@ -36,7 +55,7 @@ namespace eNompilo.v3._0._1.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Book(FamilyPlanningAppointment model)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 dbContext.tblFamilyPlanningAppointment.Add(model);
                 dbContext.SaveChanges();
@@ -47,12 +66,12 @@ namespace eNompilo.v3._0._1.Controllers
 
         public IActionResult Update(int? Id)
         {
-            if(Id == null||Id == 0)
+            if (Id == null || Id == 0)
             {
                 return NotFound();
             }
             var obj = dbContext.tblFamilyPlanningAppointment.Find(Id);
-            if(obj == null)
+            if (obj == null)
             {
                 return NotFound();
             }
@@ -63,7 +82,7 @@ namespace eNompilo.v3._0._1.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Update(FamilyPlanningAppointment model)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return View(model);
             }
@@ -80,29 +99,48 @@ namespace eNompilo.v3._0._1.Controllers
             return View(obj);
         }
 
-        public IActionResult Cancel(int? Id)
+        public IActionResult Cancel([FromRoute] int? Id)
         {
             if(Id == 0 || Id == null)
             {
                 return NotFound();
             }
-            var obj = dbContext.tblFamilyPlanningAppointment.Find(Id);
+            var obj = dbContext.tblFamilyPlanningAppointment.Where(va => va.Id == Id).FirstOrDefault();
             if(obj == null)
             {
                 return NotFound();
             }
-            return View(obj);
+
+            var model = new ArchiveItemViewModel
+            {
+                Id = obj.Id,
+                FPAppointmentId = obj.Id,
+                Archived = obj.Archived
+            };
+
+            return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Cancel(FamilyPlanningAppointment model)
+        public IActionResult Cancel(ArchiveItemViewModel model)
         {
             if(!ModelState.IsValid)
             {
                 return View(model);
             }
-            dbContext.tblFamilyPlanningAppointment.Remove(model);
+
+            var obj = dbContext.tblFamilyPlanningAppointment.Where(va => va.Id == model.Id).FirstOrDefault();
+
+            if (obj == null)
+            {
+                return NotFound();
+            }
+
+            obj.Archived = model.Archived;
+
+
+            dbContext.tblFamilyPlanningAppointment.Update(obj);
             dbContext.SaveChanges();
             return RedirectToAction("Index");
         }

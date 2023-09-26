@@ -12,11 +12,10 @@ namespace eNompilo.v3._0._1.Models.Vaccination
         [Key]
         public int ID { get; set; }
 
-        [Required]
         [PersonalData]
-        public int PatientId { get; set; }
-        [ForeignKey("PatientId")]
-        public Patient Patient { get; set; }
+        [ForeignKey("Patient")]
+        public int? PatientId { get; set; }
+        
 
         [Required]
         public string VaccineAdministered { get; set; }
@@ -31,5 +30,7 @@ namespace eNompilo.v3._0._1.Models.Vaccination
 
         [Required]
         public string SiteAddress { get; set; }
+
+        public Patient Patient { get; set; }
     }
 }

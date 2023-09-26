@@ -1,6 +1,6 @@
-﻿using System.ComponentModel;
+﻿using eNompilo.v3._0._1.Constants;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using eNompilo.v3._0._1.Constants;
 
 namespace eNompilo.v3._0._1.Models.Vaccination
 {

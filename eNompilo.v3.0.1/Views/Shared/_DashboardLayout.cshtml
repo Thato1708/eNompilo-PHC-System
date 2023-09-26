@@ -111,6 +111,8 @@
                                 <a asp-controller="PractitionerDiary" asp-action="Index" class="dashboard-nav-dropdown-item">List of bookings</a>
                             </div>
                         </div>
+                        <a asp-controller="Patient" asp-action="Index" class="dashboard-nav-item"><i class="bi bi-people-fill me-2" style="font-size:1.5rem;"></i> Patients</a>
+
                         <div class="dashboard-nav-dropdown">
                             <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle">
                                 <i class="bi bi-heart-pulse" style="font-size:1.5rem;"></i> Specialised Medical Procedures
@@ -119,7 +121,17 @@
                                 <a asp-controller="Home" asp-action="ProcedureVideos" class="dashboard-nav-dropdown-item">Procedure Videos</a>
                             </div>
                         </div>
-                        <a asp-controller="Patient" asp-action="Index" class="dashboard-nav-item"><i class="bi bi-people-fill me-2" style="font-size:1.5rem;"></i> Patients</a>
+
+                        @*for the vaccination part on the dashboard*@
+                        <div class="dashboard-nav-dropdown">
+                            <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle">
+								<i class="bi bi-virus2" style="font-size:1.5rem;"></i> Vaccination
+                            </a>
+                            <div class="dashboard-nav-dropdown-menu">
+                                <a asp-controller="Vaccination" asp-action="VaccinationInventory" class="dashboard-nav-dropdown-item">Inventory</a>
+                            </div>
+                        </div>
+                        
                         
 
 

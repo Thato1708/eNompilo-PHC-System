@@ -22,9 +22,8 @@ namespace eNompilo.v3._0._1.Models.SystemUsers
 
         [Required]
         [PersonalData]
+        [ForeignKey("Patient")]
         public int PatientId { get; set; }
-        [ForeignKey("PatientId")]
-        public Patient Patient { get; set; }
 
         [Required]
         [Display(Name = "Please select who referred you to us.")]
@@ -120,5 +119,6 @@ namespace eNompilo.v3._0._1.Models.SystemUsers
 
         [Required]
         public bool Archived { get; set; } = false;
+        public virtual Patient Patient { get; set; }
     }
 }

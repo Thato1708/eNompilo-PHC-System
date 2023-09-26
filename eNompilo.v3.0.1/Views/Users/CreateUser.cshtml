@@ -15,122 +15,239 @@
 
 	@if (SignInManager.IsSignedIn(User))
 	{
-	@if (User.IsInRole(RoleConstants.Receptionist) || User.IsInRole(RoleConstants.Admin))
-	{
+		@if (User.IsInRole(RoleConstants.Receptionist) || User.IsInRole(RoleConstants.Admin))
+		{
 
-	<h2>Add a New User</h2>
-	<hr />
-	<div class="row d-flex align-items-center">
-		<div class="col-md-4" style="margin-left:auto;margin-right:auto;">
-			<form asp-action="CreateUser" method="post">
-				<div asp-validation-summary="ModelOnly" class="text-danger"></div>
-				<div class="form-group mb-4">
-					<label asp-for="AppUser.IdNumber" class="control-label"></label>
-					<input asp-for="AppUser.IdNumber" class="form-control" />
-					<span asp-validation-for="AppUser.IdNumber" class="text-danger"></span>
-				</div>
-				<div class="form-group mb-4">
-					<label asp-for="AppUser.Titles" class="control-label"></label>
-					<select asp-for="AppUser.Titles" class="form-control" asp-items="Html.GetEnumSelectList<Titles>()">
-						<option disabled selected hidden>Please select an option</option>
-					</select>
-					<span asp-validation-for="AppUser.Titles" class="text-danger"></span>
-				</div>
-				<div class="row mb-4 d-flex align-content-between">
-					<div class="col-6 form-group">
-						<label asp-for="AppUser.FirstName" class="control-label"></label>
-						<input asp-for="AppUser.FirstName" class="form-control" placeholder="Enter your first name" />
-						<span asp-validation-for="AppUser.FirstName" class="text-danger"></span>
-					</div>
+			<h2>Add a New User</h2>
+			<hr />
+			<div class="row d-flex align-items-center">
+				<div class="col-md-4" style="margin-left:auto;margin-right:auto;">
+					<form asp-action="CreateUser" method="post">
+						<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+						<div class="form-group mb-4">
+							<label asp-for="AppUser.IdNumber" class="control-label"></label>
+							<input asp-for="AppUser.IdNumber" class="form-control" />
+							<span asp-validation-for="AppUser.IdNumber" class="text-danger"></span>
+						</div>
+						<div class="form-group mb-4">
+							<label asp-for="AppUser.Titles" class="control-label"></label>
+							<select asp-for="AppUser.Titles" class="form-control" asp-items="Html.GetEnumSelectList<Titles>()">
+								<option disabled selected hidden>Please select an option</option>
+							</select>
+							<span asp-validation-for="AppUser.Titles" class="text-danger"></span>
+						</div>
+						<div class="row mb-4 d-flex align-content-between">
+							<div class="col-6 form-group">
+								<label asp-for="AppUser.FirstName" class="control-label"></label>
+								<input asp-for="AppUser.FirstName" class="form-control" placeholder="Enter your first name" />
+								<span asp-validation-for="AppUser.FirstName" class="text-danger"></span>
+							</div>
 
-					<div class="form-group col-6">
-						<label asp-for="AppUser.MiddleName" class="control-label"></label>
-						<input asp-for="AppUser.MiddleName" class="form-control" placeholder="Enter your middle name" />
-						<span asp-validation-for="AppUser.MiddleName" class="text-danger"></span>
-					</div>
-				</div>
+							<div class="form-group col-6">
+								<label asp-for="AppUser.MiddleName" class="control-label"></label>
+								<input asp-for="AppUser.MiddleName" class="form-control" placeholder="Enter your middle name" />
+								<span asp-validation-for="AppUser.MiddleName" class="text-danger"></span>
+							</div>
+						</div>
 
-				<div class="form-group mb-4">
-					<label asp-for="AppUser.LastName" class="control-label"></label>
-					<input asp-for="AppUser.LastName" class="form-control" placeholder="Enter your last name" />
-					<span asp-validation-for="AppUser.LastName" class="text-danger"></span>
-				</div>
+						<div class="form-group mb-4">
+							<label asp-for="AppUser.LastName" class="control-label"></label>
+							<input asp-for="AppUser.LastName" class="form-control" placeholder="Enter your last name" />
+							<span asp-validation-for="AppUser.LastName" class="text-danger"></span>
+						</div>
 
-				<div class="form-group mb-4">
-					<label asp-for="AppUser.Email" class="control-label"></label>
-					<input asp-for="AppUser.Email" class="form-control" placeholder="Enter your email address" />
-					<span asp-validation-for="AppUser.Email" class="text-danger"></span>
-				</div>
+						<div class="form-group mb-4">
+							<label asp-for="AppUser.Email" class="control-label"></label>
+							<input asp-for="AppUser.Email" class="form-control" placeholder="Enter your email address" />
+							<span asp-validation-for="AppUser.Email" class="text-danger"></span>
+						</div>
 
-				<div class="form-group mb-4">
-					<label asp-for="AppUser.PhoneNumber" class="control-label"></label>
-					<input asp-for="AppUser.PhoneNumber" type="number" class="form-control" placeholder="Enter your phone number" />
-					<span asp-validation-for="AppUser.PhoneNumber" class="text-danger"></span>
-				</div>
+						<div class="form-group mb-4">
+							<label asp-for="AppUser.PhoneNumber" class="control-label"></label>
+							<input asp-for="AppUser.PhoneNumber" type="number" class="form-control" placeholder="Enter your phone number" />
+							<span asp-validation-for="AppUser.PhoneNumber" class="text-danger"></span>
+						</div>
 
-				<div class="form-group mb-4">
-					<label asp-for="AppUser.UserRole" class="control-label"></label>
-					<select asp-for="AppUser.UserRole" class="form-control" id="roleChanged" asp-items="Html.GetEnumSelectList<UserRole>()">
-						<option disabled selected hidden>Please select an option</option>
-					</select>
-					<span asp-validation-for="AppUser.UserRole" class="text-danger"></span>
-				</div>
+						<div class="py-2">
+							<label asp-for="AppUser.Password" class="control-label"></label>
+							<input asp-for="AppUser.Password" class="form-control" placeholder="Enter your password" />
+							<span asp-validation-for="AppUser.Password" class="text-danger"></span>
+						</div>
 
-				@*<div id="pracProfilePicDiv" class="form-group mb-4">
-					<label asp-for="Practitioner.ProfilePictureImageFile" class="control-label"></label>
-					<input asp-for="Practitioner.ProfilePicture" class="form-control" type="file" id="formFile" accept="image/*" />
-					<span asp-validation-for="Practitioner.ProfilePictureImageFile" class="text-danger"></span>
-				</div>
+						<div class="py-2 ">
+							<label asp-for="AppUser.ConfirmPassword" class="control-label"></label>
+							<input asp-for="AppUser.ConfirmPassword" class="form-control" placeholder="Confirm your password" />
+							<span asp-validation-for="AppUser.ConfirmPassword" class="text-danger"></span>
+						</div>
+						<div class="form-group mb-4">
+							<label asp-for="AppUser.UserRole" class="control-label"></label>
+							<select asp-for="AppUser.UserRole" class="form-control" id="roleChanged" asp-items="Html.GetEnumSelectList<UserRole>()">
+								<option disabled selected hidden>Please select an option</option>
+							</select>
+							<span asp-validation-for="AppUser.UserRole" class="text-danger"></span>
+						</div>
 
-				<div id="adminProfilePicDiv" class="form-group mb-4">
-					<label asp-for="Admin.ProfilePictureImageFile" class="control-label"></label>
-					<input asp-for="Admin.ProfilePicture" class="form-control" type="file" id="formFile" accept="image/*" />
-					<span asp-validation-for="Admin.ProfilePictureImageFile" class="text-danger"></span>
-				</div>
+						<div class="admin-group">
 
-				<div id="recProfilePicDiv" class="form-group mb-4">
-					<label asp-for="Receptionist.ProfilePictureImageFile" class="control-label"></label>
-					<input asp-for="Receptionist.ProfilePicture" class="form-control" type="file" id="formFile" accept="image/*" />
-					<span asp-validation-for="Receptionist.ProfilePictureImageFile" class="text-danger"></span>
-				</div>*@
+							<div id="adminProfilePicDiv" class="form-group mb-4">
+								<label asp-for="Admin.ProfilePictureImageFile" class="control-label"></label>
+								<input asp-for="Admin.ProfilePicture" class="form-control" type="file" id="formFile" accept="image/*" />
+								<span asp-validation-for="Admin.ProfilePictureImageFile" class="text-danger"></span>
+							</div>
 
-				<div id="pracTypeDiv" class="form-group mb-4">
-					<label asp-for="Practitioner.PractitionerType" class="control-label">Practitioner Type (If user is a practitioner)</label>
-					<select asp-for="Practitioner.PractitionerType" class="form-control" id="roleChanged" asp-items="Html.GetEnumSelectList<PractitionerType>()">
-						<option disabled selected hidden>Please select an option</option>
-					</select>
-					<span asp-validation-for="Practitioner.PractitionerType" class="text-danger"></span>
-				</div>
+							<div class="form-group mb-4">
+								<label asp-for="Admin.Gender" class="control-label"></label>
+								<select asp-for="Admin.Gender" class="form-control" id="roleChanged" asp-items="Html.GetEnumSelectList<Gender>()">
+									<option disabled selected hidden>Please select an option</option>
+								</select>
+								<span asp-validation-for="Admin.Gender" class="text-danger"></span>
+							</div>
 
-				<div id="counsellorTypeDiv" class="form-group mb-4">
-					<label asp-for="Practitioner.CounsellorType" class="control-label">Counsellor Type (If counsellor)</label>
-					<select asp-for="Practitioner.CounsellorType" class="form-control" id="roleChanged" asp-items="Html.GetEnumSelectList<CounsellorType>()">
-						<option disabled selected hidden>Please select an option</option>
-					</select>
-					<span asp-validation-for="Practitioner.CounsellorType" class="text-danger"></span>
-				</div>
+							<div class="form-group mb-4">
+								<label asp-for="Admin.DOB" class="control-label"></label>
+								<input asp-for="Admin.DOB" class="form-control" />
+								<span asp-validation-for="Admin.DOB" class="text-danger"></span>
+							</div>
 
-				<div class="py-2">
-					<label asp-for="AppUser.Password" class="control-label"></label>
-					<input asp-for="AppUser.Password" class="form-control" placeholder="Enter your password" />
-					<span asp-validation-for="AppUser.Password" class="text-danger"></span>
-				</div>
+							<div class="form-group mb-4">
+								<label asp-for="Admin.HomeTel" class="control-label"></label>
+								<input asp-for="Admin.HomeTel" class="form-control" />
+								<span asp-validation-for="Admin.HomeTel" class="text-danger"></span>
+							</div>
 
-				<div class="py-2 ">
-					<label asp-for="AppUser.ConfirmPassword" class="control-label"></label>
-					<input asp-for="AppUser.ConfirmPassword" class="form-control" placeholder="Confirm your password" />
-					<span asp-validation-for="AppUser.ConfirmPassword" class="text-danger"></span>
+							<div class="form-group mb-4">
+								<label asp-for="Admin.EmergencyPerson" class="control-label"></label>
+								<input asp-for="Admin.EmergencyPerson" class="form-control" />
+								<span asp-validation-for="Admin.EmergencyPerson" class="text-danger"></span>
+							</div>
+
+							<div class="form-group mb-4">
+								<label asp-for="Admin.EmergenyContactNr" class="control-label"></label>
+								<input asp-for="Admin.EmergenyContactNr" class="form-control" />
+								<span asp-validation-for="Admin.EmergenyContactNr" class="text-danger"></span>
+							</div>
+
+							<div class="form-group mb-4">
+								<label asp-for="Admin.WorkTel" class="control-label"></label>
+								<input asp-for="Admin.WorkTel" class="form-control" />
+								<span asp-validation-for="Admin.WorkTel" class="text-danger"></span>
+							</div>
+
+							<div class="form-group mb-4">
+								<label asp-for="Admin.WorkEmail" class="control-label"></label>
+								<input asp-for="Admin.WorkEmail" class="form-control" />
+								<span asp-validation-for="Admin.WorkEmail" class="text-danger"></span>
+							</div>
+
+							<div class="form-group mb-4">
+								<label asp-for="Admin.LineManager" class="control-label"></label>
+								<input asp-for="Admin.LineManager" class="form-control" />
+								<span asp-validation-for="Admin.LineManager" class="text-danger"></span>
+							</div>
+
+							<div class="form-group mb-4">
+								<label asp-for="Admin.Citizenship" class="control-label"></label>
+								<select asp-for="Admin.Citizenship" class="form-control" id="roleChanged" asp-items="Html.GetEnumSelectList<Citizenship>()">
+									<option disabled selected hidden>Please select an option</option>
+								</select>
+								<span asp-validation-for="Admin.Citizenship" class="text-danger"></span>
+							</div>
+
+							<div class="form-group mb-4">
+								<label asp-for="Admin.MaritalStatus" class="control-label"></label>
+								<select asp-for="Admin.MaritalStatus" class="form-control" id="roleChanged" asp-items="Html.GetEnumSelectList<MaritalStatus>()">
+									<option disabled selected hidden>Please select an option</option>
+								</select>
+								<span asp-validation-for="Admin.MaritalStatus" class="text-danger"></span>
+							</div>
+
+							@*STOPPED HERE FIX PROFILE PIC THING ALSO*@
+
+							<div class="form-group mb-4">
+								<label asp-for="Admin.DOB" class="control-label"></label>
+								<input asp-for="Admin.DOB" class="form-control" />
+								<span asp-validation-for="Admin.DOB" class="text-danger"></span>
+							</div>
+
+							<div class="form-group mb-4">
+								<label asp-for="Admin.HomeTel" class="control-label"></label>
+								<input asp-for="Admin.HomeTel" class="form-control" />
+								<span asp-validation-for="Admin.HomeTel" class="text-danger"></span>
+							</div>
+
+							<div class="form-group mb-4">
+								<label asp-for="Admin.EmergencyPerson" class="control-label"></label>
+								<input asp-for="Admin.EmergencyPerson" class="form-control" />
+								<span asp-validation-for="Admin.EmergencyPerson" class="text-danger"></span>
+							</div>
+
+							<div class="form-group mb-4">
+								<label asp-for="Admin.EmergencyPerson" class="control-label"></label>
+								<input asp-for="Admin.EmergencyPerson" class="form-control" />
+								<span asp-validation-for="Admin.EmergencyPerson" class="text-danger"></span>
+							</div>
+
+							<div class="form-group mb-4">
+								<label asp-for="Admin.Gender" class="control-label"></label>
+								<select asp-for="Admin.Gender" class="form-control" id="roleChanged" asp-items="Html.GetEnumSelectList<Gender>()">
+									<option disabled selected hidden>Please select an option</option>
+								</select>
+								<span asp-validation-for="Admin.Gender" class="text-danger"></span>
+							</div>
+
+							<div class="form-group mb-4">
+								<label asp-for="Admin.EmergencyPerson" class="control-label"></label>
+								<input asp-for="Admin.EmergencyPerson" class="form-control" />
+								<span asp-validation-for="Admin.EmergencyPerson" class="text-danger"></span>
+							</div>
+						</div>
+
+						<div class="patient-group">
+						</div>
+
+						<div class="practitioner-group">
+							<div id="pracProfilePicDiv" class="form-group mb-4">
+								<label asp-for="Practitioner.ProfilePictureImageFile" class="control-label"></label>
+								<input asp-for="Practitioner.ProfilePicture" class="form-control" type="file" id="formFile" accept="image/*" />
+								<span asp-validation-for="Practitioner.ProfilePictureImageFile" class="text-danger"></span>
+							</div>
+							<div id="pracTypeDiv" class="form-group mb-4">
+								<label asp-for="Practitioner.PractitionerType" class="control-label">Practitioner Type (If user is a practitioner)</label>
+								<select asp-for="Practitioner.PractitionerType" class="form-control" id="roleChanged" asp-items="Html.GetEnumSelectList<PractitionerType>()">
+									<option disabled selected hidden>Please select an option</option>
+								</select>
+								<span asp-validation-for="Practitioner.PractitionerType" class="text-danger"></span>
+							</div>
+							<div id="counsellorTypeDiv" class="form-group mb-4">
+								<label asp-for="Practitioner.CounsellorType" class="control-label">Counsellor Type (If counsellor)</label>
+								<select asp-for="Practitioner.CounsellorType" class="form-control" id="roleChanged" asp-items="Html.GetEnumSelectList<CounsellorType>()">
+									<option disabled selected hidden>Please select an option</option>
+								</select>
+								<span asp-validation-for="Practitioner.CounsellorType" class="text-danger"></span>
+							</div>
+						</div>
+
+						<div class="receptionist-group">
+							<div id="recProfilePicDiv" class="form-group mb-4">
+								<label asp-for="Receptionist.ProfilePictureImageFile" class="control-label"></label>
+								<input asp-for="Receptionist.ProfilePicture" class="form-control" type="file" id="formFile" accept="image/*" />
+								<span asp-validation-for="Receptionist.ProfilePictureImageFile" class="text-danger"></span>
+							</div>
+						</div>
+
+
+
+
+						<div class="form-group">
+							<input type="submit" value="Create" class="btn btn-primary" />
+						</div>
+					</form>
 				</div>
-				<div class="form-group">
-					<input type="submit" value="Create" class="btn btn-primary" />
-				</div>
-			</form>
-		</div>
-	</div>
-	    }
+			</div>
+		}
 
 	}
-	
+
 	<div>
 		<a asp-action="Index">Back to List</a>
 	</div>
@@ -139,22 +256,22 @@
 @section Scripts {
 	@{
 		await Html.RenderPartialAsync("_ValidationScriptsPartial");
-		//<script>
-		//	window.onload = function () {
-		//		var roleDropdown = document.getElementById('roleChanged');
-		//		var pracProfile = document.getElementById('pracProfilePicDiv');
-		//		var adminProfile = document.getElementById('adminProfilePicDiv');
-		//		var recProfile = document.getElementById('recProfilePicDiv');
-		//		var pracType = document.getElementById('pracTypeDiv');
-		//		var counType = document.getElementById('counsellorTypeDiv');
+		<script>
+			window.onload = function () {
+				var roleDropdown = document.getElementById('roleChanged');
+				var pracProfile = document.getElementById('pracProfilePicDiv');
+				var adminProfile = document.getElementById('adminProfilePicDiv');
+				var recProfile = document.getElementById('recProfilePicDiv');
+				var pracType = document.getElementById('pracTypeDiv');
+				var counType = document.getElementById('counsellorTypeDiv');
 
-		//		roleDropdown.addEventListener('change', function () {
-		//			if()
-		//		});
+				roleDropdown.addEventListener('change', function () {
+					if ()
+							});
 
-		//		// Trigger change event to set initial visibility
-		//		checkbox.dispatchEvent(new Event('change'));
-		//	};
-		//</script>
+				// Trigger change event to set initial visibility
+				checkbox.dispatchEvent(new Event('change'));
+			};
+		</script>
 	}
 }

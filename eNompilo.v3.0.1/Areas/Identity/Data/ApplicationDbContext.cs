@@ -65,5 +65,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<Session> tblSession { get; set; }
     public DbSet<SessionNotes> tblSessionNotes { get; set; }
     public DbSet<ReportGBV> tblReportGBV { get; set; }
+    public DbSet<eNompilo.v3._0._1.Models.Vaccination.DoseTracking>? DoseTracking { get; set; }
+    public DbSet<eNompilo.v3._0._1.Models.Vaccination.VaccinationInventory>? VaccinationInventory { get; set; }
 
 }

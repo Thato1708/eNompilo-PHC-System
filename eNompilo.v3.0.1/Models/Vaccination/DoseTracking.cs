@@ -1,5 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using eNompilo.v3._0._1.Constants;
+using eNompilo.v3._0._1.Models.SystemUsers;
+using Microsoft.AspNetCore.Identity;
 
 namespace eNompilo.v3._0._1.Models.Vaccination
 {
@@ -7,10 +11,25 @@ namespace eNompilo.v3._0._1.Models.Vaccination
     {
         [Key]
         public int ID { get; set; }
+
+        [Required]
+        [PersonalData]
+        public int PatientId { get; set; }
+        [ForeignKey("PatientId")]
+        public Patient Patient { get; set; }
+
+        [Required]
         public string VaccineAdministered { get; set; }
-        public DateOnly DateAdministered { get; set; }
-        public DateOnly? SecondDose { get; set; }
+
+        [Required]
+        public DateTime DateAdministered { get; set; }
+        public DateTime? SecondDose { get; set; }
+
+        [Required]
+        [DisplayName("Recieved vaccine")]
         public VaccinableDiseases Vaccine { get; set; }
+
+        [Required]
         public string SiteAddress { get; set; }
     }
 }

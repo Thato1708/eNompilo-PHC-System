@@ -58,7 +58,7 @@
                         }
                         else
                         {
-                            <img src="@("~/img/uploads"+Model.Practitioner.ProfilePicture)" asp-append-version="true" class="rounded-circle me-2" style="width:36px;" alt="image not null" />
+                            <img src="@("~/img/uploads/"+Model.Practitioner.ProfilePicture)" asp-append-version="true" class="rounded-circle me-2" style="width:36px;" alt="image not null" />
                         } @UserManager.GetUserAsync(User).Result.Titles. @UserManager.GetUserAsync(User).Result.FirstName @UserManager.GetUserAsync(User).Result.LastName!</strong></a>
 
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
@@ -77,11 +77,11 @@
                 <a id="dropdownMenuButton1" class="btn nav-link nav-link-2 text-dark text-center dropdown-toggle" href="#" type="button" data-bs-toggle="dropdown" aria-expanded="false"><strong>
                     @if (Model.Admin.ProfilePicture == null)
                         {
-                            <img src="~/img/uploads/DefaultProfilePicture.png" style="width:30px;" class="rounded-circle me-2">
+                            <img src="~/img/uploads/DefaultProfilePicture.png" style="width:36px;" class="rounded-circle me-2">
                         }
                         else
                         {
-                            <img src="@("~/img/uploads"+Model.Admin.ProfilePicture)" asp-append-version="true" class="rounded-circle me-2" style="width:30px;" alt="image not null" />
+                            <img src="@("~/img/uploads/"+Model.Admin.ProfilePicture)" asp-append-version="true" class="rounded-circle me-2" style="width:36px;" alt="image not null" />
                         } @UserManager.GetUserAsync(User).Result.Titles. @UserManager.GetUserAsync(User).Result.FirstName @UserManager.GetUserAsync(User).Result.LastName!</strong></a>
 
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
@@ -100,11 +100,11 @@
 				<a id="dropdownMenuButton1" class="btn nav-link nav-link-2 text-dark text-center dropdown-toggle" href="#" type="button" data-bs-toggle="dropdown" aria-expanded="false"><strong>
                     @if (Model.Receptionist.ProfilePicture == null)
 						{
-                            <img src="~/img/uploads/DefaultProfilePicture.png" style="width:30px;" class="rounded-circle me-2">
+                            <img src="~/img/uploads/DefaultProfilePicture.png" style="width:36px;" class="rounded-circle me-2">
 						}
 						else
 						{
-                            <img src="@("~/img/uploads"+Model.Receptionist.ProfilePicture)" asp-append-version="true" class="rounded-circle me-2" style="width:30px;" alt="image not null" />
+                            <img src="@("~/img/uploads/"+Model.Receptionist.ProfilePicture)" asp-append-version="true" class="rounded-circle me-2" style="width:36px;" alt="image not null" />
 						} @UserManager.GetUserAsync(User).Result.Titles. @UserManager.GetUserAsync(User).Result.FirstName @UserManager.GetUserAsync(User).Result.LastName!</strong></a>
 
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">

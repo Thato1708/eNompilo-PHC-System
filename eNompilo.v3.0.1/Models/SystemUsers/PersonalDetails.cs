@@ -26,10 +26,6 @@ namespace eNompilo.v3._0._1.Models.SystemUsers
         public int PatientId { get; set; }
 
         [Required]
-        [Display(Name = "Please select who referred you to us.")]
-        public HearFromUs Referrer { get; set; }
-
-        [Required]
         [PersonalData]
         public Gender Gender { get; set; }
 

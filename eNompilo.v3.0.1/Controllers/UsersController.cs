@@ -10,6 +10,7 @@ using eNompilo.v3._0._1.Models.ViewModels;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using System.Collections.Concurrent;
+using System.Composition;
 
 namespace eNompilo.v3._0._1.Controllers
 {
@@ -70,7 +71,7 @@ namespace eNompilo.v3._0._1.Controllers
 			{
 				string wwwRootPath = webHostEnvironment.WebRootPath;
 				//string fileName = Path.GetFileNameWithoutExtension(model.Admin.ProfilePictureImageFile.FileName);
-				string fileName = _userManager.GetUserAsync(User).Result.FirstName.ToLower().ToString() + "_" + _userManager.GetUserAsync(User).Result.LastName.ToLower().ToString();
+				string fileName = model.AppUser.FirstName.ToLower().ToString() + "_" + model.AppUser.LastName.ToLower().ToString();
 				string ext = Path.GetExtension(model.Admin.ProfilePictureImageFile.FileName);
 				model.Admin.ProfilePicture = fileName = fileName + "_" + DateTime.Now.ToString("ddMMMyyyyHHmmss") + ext;
 				string path = Path.Combine(wwwRootPath + "\\img\\uploads", fileName);
@@ -83,7 +84,7 @@ namespace eNompilo.v3._0._1.Controllers
 			{
 				string wwwRootPath = webHostEnvironment.WebRootPath;
 				//string fileName = Path.GetFileNameWithoutExtension(model.Practitioner.ProfilePictureImageFile.FileName);
-				string fileName = _userManager.GetUserAsync(User).Result.FirstName.ToLower().ToString() + "_" + _userManager.GetUserAsync(User).Result.LastName.ToLower().ToString();
+				string fileName = model.AppUser.FirstName.ToLower().ToString() + "_" + model.AppUser.LastName.ToLower().ToString();
 				string ext = Path.GetExtension(model.Practitioner.ProfilePictureImageFile.FileName);
 				model.Practitioner.ProfilePicture = fileName = fileName + "_" + DateTime.Now.ToString("ddMMMyyyyHHmmss") + ext;
 				string path = Path.Combine(wwwRootPath + "\\img\\uploads", fileName);
@@ -96,7 +97,7 @@ namespace eNompilo.v3._0._1.Controllers
 			{
 				string wwwRootPath = webHostEnvironment.WebRootPath;
 				//string fileName = Path.GetFileNameWithoutExtension(model.Receptionist.ProfilePictureImageFile.FileName);
-				string fileName = _userManager.GetUserAsync(User).Result.FirstName.ToLower().ToString() + "_" + _userManager.GetUserAsync(User).Result.LastName.ToLower().ToString();
+				string fileName = model.AppUser.FirstName.ToLower().ToString() + "_" + model.AppUser.LastName.ToLower().ToString();
 				string ext = Path.GetExtension(model.Receptionist.ProfilePictureImageFile.FileName);
 				model.Receptionist.ProfilePicture = fileName = fileName + "_" + DateTime.Now.ToString("ddMMMyyyyHHmmss") + ext;
 				string path = Path.Combine(wwwRootPath + "\\img\\uploads", fileName);
@@ -105,6 +106,22 @@ namespace eNompilo.v3._0._1.Controllers
 					await model.Receptionist.ProfilePictureImageFile.CopyToAsync(fileStream);
 				}
 			}
+			else if (model.AppUser.UserRole == UserRole.Patient)
+			{
+				string wwwRootPath = webHostEnvironment.WebRootPath;
+				//string fileName = Path.GetFileNameWithoutExtension(model.Receptionist.ProfilePictureImageFile.FileName);
+				string fileName = model.AppUser.FirstName.ToLower().ToString() + "_" + model.AppUser.LastName.ToLower().ToString();
+				string ext = Path.GetExtension(model.PersonalDetails.ProfilePictureImageFile.FileName);
+				model.PersonalDetails.ProfilePicture = fileName = fileName + "_" + DateTime.Now.ToString("ddMMMyyyyHHmmss") + ext;
+				string path = Path.Combine(wwwRootPath + "\\img\\uploads", fileName);
+				using (var fileStream = new FileStream(path, FileMode.Create))
+				{
+					await model.PersonalDetails.ProfilePictureImageFile.CopyToAsync(fileStream);
+				}
+			}
+
+			//var rolesOptions = _context.UserRoles.ToList();
+			//ViewBag.roleOptions = new SelectList(rolesOptions);
 
 			model.AppUser.UserName = model.AppUser.IdNumber;
 			if (model.AppUser.IdNumber != null && model.AppUser.Titles != null && model.AppUser.FirstName != null && model.AppUser.LastName != null && model.AppUser.PhoneNumber != null && model.AppUser.Password != null && model.AppUser.ConfirmPassword != null && model.AppUser.UserName != null && model.AppUser.Archived != null)
@@ -120,6 +137,22 @@ namespace eNompilo.v3._0._1.Controllers
 						{
 							UserId = model.AppUser.Id,
 							ProfilePicture = model.Admin.ProfilePicture,
+							Gender = model.Admin.Gender,
+							DOB = model.Admin.DOB,
+							HomeTel = model.Admin.HomeTel,
+							EmergencyPerson = model.Admin.EmergencyPerson,
+							EmergenyContactNr = model.Admin.EmergenyContactNr,
+							WorkTel = model.Admin.WorkTel,
+							WorkEmail = model.Admin.WorkEmail,
+							LineManager = model.Admin.LineManager,
+							Citizenship = model.Admin.Citizenship,
+							MaritalStatus = model.Admin.MaritalStatus,
+							AddressLine1 = model.Admin.AddressLine1,
+							AddressLine2 = model.Admin.AddressLine2,
+							Suburb = model.Admin.Suburb,
+							City = model.Admin.City,
+							Province = model.Admin.Province,
+							ZipCode = model.Admin.ZipCode,
 							CreatedOn = model.AppUser.CreatedOn,
 							Archived = false,
 						};
@@ -134,10 +167,39 @@ namespace eNompilo.v3._0._1.Controllers
 							ProfilePicture = model.Practitioner.ProfilePicture,
 							PractitionerType = model.Practitioner.PractitionerType,
 							CounsellorType = model.Practitioner.CounsellorType,
+							Gender = model.Practitioner.Gender,
+							DOB = model.Practitioner.DOB,
+							HomeTel = model.Practitioner.HomeTel,
+							EmergencyPerson = model.Practitioner.EmergencyPerson,
+							EmergenyContactNr = model.Practitioner.EmergenyContactNr,
+							WorkTel = model.Practitioner.WorkTel,
+							WorkEmail = model.Practitioner.WorkEmail,
+							LineManager = model.Practitioner.LineManager,
+							Citizenship = model.Practitioner.Citizenship,
+							MaritalStatus = model.Practitioner.MaritalStatus,
+							AddressLine1 = model.Practitioner.AddressLine1,
+							AddressLine2 = model.Practitioner.AddressLine2,
+							Suburb = model.Practitioner.Suburb,
+							City = model.Practitioner.City,
+							Province = model.Practitioner.Province,
+							ZipCode = model.Practitioner.ZipCode,
 							CreatedOn = model.AppUser.CreatedOn,
 							Archived = false,
 						};
 						_context.tblPractitioner.Add(practitioner);
+					}
+					else if (model.AppUser.UserRole == UserRole.Receptionist)
+					{
+						await _userManager.AddToRoleAsync(model.AppUser, RoleConstants.Receptionist);
+
+						var receptionist = new Receptionist
+						{
+							UserId = model.AppUser.Id,
+							ProfilePicture = model.Receptionist.ProfilePicture,
+							CreatedOn = model.AppUser.CreatedOn,
+							Archived = false,
+						};
+						_context.tblReceptionist.Add(receptionist);
 					}
 					else if (model.AppUser.UserRole == UserRole.Patient)
 					{
@@ -154,23 +216,12 @@ namespace eNompilo.v3._0._1.Controllers
 							Archived = false,
 						};
 						_context.tblPatient.Add(patient);
-
 						await _context.SaveChangesAsync();
 						_logger.LogInformation("User created a new account with password");
-						return RedirectToAction("AddPersonalDetails", "Patient", patient.Id);
-					}
-					else if (model.AppUser.UserRole == UserRole.Receptionist)
-					{
-						await _userManager.AddToRoleAsync(model.AppUser, RoleConstants.Receptionist);
 
-						var receptionist = new Receptionist
-						{
-							UserId = model.AppUser.Id,
-							ProfilePicture = model.Receptionist.ProfilePicture,
-							CreatedOn = model.AppUser.CreatedOn,
-							Archived = false,
-						};
-						_context.tblReceptionist.Add(receptionist);
+						var patientVar = await _context.tblPatient.Where(p => p.UserId == model.AppUser.Id).FirstOrDefaultAsync();
+						int patientId = patientVar.Id;
+						return await AddPersonalMedical(model);
 					}
 
 					await _context.SaveChangesAsync();
@@ -181,6 +232,88 @@ namespace eNompilo.v3._0._1.Controllers
 					ModelState.AddModelError(string.Empty, error.Description);
 			}
 			return View(model);
+		}
+
+
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public async Task<IActionResult> AddPersonalMedical(UserTypeViewModel model)
+		{
+			var patient = _context.tblPatient.Where(p => p.Id == model.Patient.Id).FirstOrDefault();
+
+			if(patient == null)
+			{
+				return NotFound();
+			}
+
+			var personalDetails = new PersonalDetails()
+			{
+				ProfilePicture = model.PersonalDetails.ProfilePicture,
+				PatientId = patient.Id,
+				Gender = model.PersonalDetails.Gender,
+				DOB = model.PersonalDetails.DOB,
+				Height = model.PersonalDetails.Height,
+				Weight = model.PersonalDetails.Weight,
+				BloodType = model.PersonalDetails.BloodType,
+				HomeTel = model.PersonalDetails.HomeTel,
+				EmergencyPerson = model.PersonalDetails.EmergencyPerson,
+				EmergenyContactNr = model.PersonalDetails.EmergenyContactNr,
+				Employed = model.PersonalDetails.Employed,
+				WorkTel = model.PersonalDetails.WorkTel,
+				WorkEmail = model.PersonalDetails.WorkEmail,
+				Citizenship = model.PersonalDetails.Citizenship,
+				MaritalStatus = model.PersonalDetails.MaritalStatus,
+				AddressLine1 = model.PersonalDetails.AddressLine1,
+				AddressLine2 = model.PersonalDetails.AddressLine2,
+				Suburb = model.PersonalDetails.Suburb,
+				City = model.PersonalDetails.City,
+				Province = model.PersonalDetails.Province,
+				ZipCode = model.PersonalDetails.ZipCode,
+				Archived = false,
+			};
+
+			await _context.tblPersonalDetails.AddAsync(personalDetails);
+
+			var medicalHistory = new MedicalHistory()
+			{
+				PatientId = patient.Id,
+				PreviousDiagnoses = model.MedicalHistory.PreviousDiagnoses,
+				PreviousMedication = model.MedicalHistory.PreviousMedication,
+				GeneralAllergies = model.MedicalHistory.GeneralAllergies,
+				MedicationAllergies = model.MedicalHistory.MedicationAllergies
+			};
+
+			await _context.tblMedicalHistory.AddAsync(medicalHistory);
+			await _context.SaveChangesAsync();
+			return CreatePatientFile(patient);
+		}
+
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public ActionResult CreatePatientFile(Patient patient)
+		{
+			var personalDetails = _context.tblPersonalDetails.Where(c => c.PatientId == patient.Id).FirstOrDefault();
+			var personalDetailsId = personalDetails.Id;
+
+			var medicalHistory = _context.tblMedicalHistory.Where(c => c.PatientId == patient.Id).FirstOrDefault();
+			var medicalHistoryId = medicalHistory.Id;
+
+			var patientName = patient.Titles + ". " + patient.FirstName + " " + patient.LastName;
+
+			PatientFile model = new PatientFile()
+			{
+				PatientId = patient.Id,
+				PersonalDetailsId = personalDetailsId,
+				MedicalHistoryId = medicalHistoryId,
+				Archived = false
+			};
+
+			_context.tblPatientFile.Add(model);
+			_context.SaveChanges();
+
+			TempData["SuccessMessage"] = "Congratulations " + patientName + "! You have been successfully registered as an eNompilo Patient and a file has been created for you.";
+
+			return RedirectToAction(actionName: "Index", controllerName: "Home");
 		}
 
 		[HttpGet]

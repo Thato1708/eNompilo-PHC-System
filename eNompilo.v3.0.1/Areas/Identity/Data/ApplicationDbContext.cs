@@ -60,6 +60,8 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<CounsellingAppointment> tblCounsellingAppointment { get; set; }
     public DbSet<FamilyPlanningAppointment> tblFamilyPlanningAppointment { get; set; }
     public DbSet<VaccinationAppointment> tblVaccinationAppointment { get; set; }
+    public DbSet<VaccinationInventory> tblVaccinationInventory { get; set; }
+    public DbSet<DoseTracking> tblDoseTracking { get; set; }
     public DbSet<PractitionerDiary> tblPractitionerDiary { get; set; }
     public DbSet<PrescriptionMeds> tblPrescriptionMeds { get; set; }
     public DbSet<Session> tblSession { get; set; }

@@ -13,6 +13,9 @@ namespace eNompilo.v3._0._1.Models.Vaccination
         [DisplayName("Vaccine for: ")]
         public VaccinableDiseases Diseases { get; set; }
 
+        [DisplayName("Vaccine name")]
+        public string VaccineName { get; set; }
+
         [Required]
         [DisplayName("Quantity")]
         public int Quantity { get; set; }

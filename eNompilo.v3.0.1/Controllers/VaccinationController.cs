@@ -9,6 +9,7 @@ using eNompilo.v3._0._1.Areas.Identity.Data;
 using eNompilo.v3._0._1.Constants;
 using Microsoft.EntityFrameworkCore;
 using eNompilo.v3._0._1.Models.ViewModels;
+using eNompilo.v3._0._1.Models.Vaccination;
 
 namespace eNompilo.v3._0._1.Controllers
 {
@@ -32,15 +33,47 @@ namespace eNompilo.v3._0._1.Controllers
 
         public IActionResult Index()
         {
+            if (User.IsInRole(RoleConstants.Practitioner))
+            {
+                IEnumerable<VaccinationInventory> objList = _context.tblVaccinationInventory;
+                return View(objList);
+            }
             return View();
         }
+
         public IActionResult DoseTracking()
         {
             return View();
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult DoseTracking(DoseTracking model)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.tblDoseTracking.Add(model);
+                _context.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View();
+        }
+
         public IActionResult VaccinationInventory()
         {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult VaccinationInventory(VaccinationInventory model)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.tblVaccinationInventory.Add(model);
+                _context.SaveChanges();
+                return RedirectToAction("Index");
+            }
             return View();
         }
 

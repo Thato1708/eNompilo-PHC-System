@@ -128,7 +128,9 @@
 								<i class="bi bi-virus2" style="font-size:1.5rem;"></i> Vaccination
                             </a>
                             <div class="dashboard-nav-dropdown-menu">
-                                <a asp-controller="Vaccination" asp-action="VaccinationInventory" class="dashboard-nav-dropdown-item">Inventory</a>
+                                <a asp-controller="Vaccination" asp-action="VaccinationInventory" class="dashboard-nav-dropdown-item">Add Vaccines</a>
+                                <a asp-controller="Vaccination" asp-action="Index" class="dashboard-nav-dropdown-item">Inventory</a>
+                                <a asp-controller="Vaccination" asp-action="DoseTracking" class="dashboard-nav-dropdown-item">Inventory</a>
                             </div>
                         </div>
                         
@@ -254,6 +256,7 @@
         new DataTable('#dtSession');
         new DataTable('#dtUsers');
         new DataTable('#dtVacApp');
+        new DataTable('#dtVaxInventory');
     </script>
     }
 </body>

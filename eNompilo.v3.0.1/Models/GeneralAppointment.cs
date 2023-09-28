@@ -44,6 +44,8 @@ namespace eNompilo.v3._0._1.Models
         [ForeignKey("PatientFileId")]
         public PatientFile PatientFile { get; set; }
 
+        [Required]
+        public bool SessionConfirmed { get; set; } = false;
 
         [Required]
         public bool Archived { get; set; }

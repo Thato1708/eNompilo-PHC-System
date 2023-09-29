@@ -40,6 +40,8 @@ namespace eNompilo.v3._0._1.Controllers
 
 		public IActionResult CreateUser()
 		{
+			//var rolesOptions = _context.Roles.ToList();
+			//ViewBag.roleOptions = new SelectList(rolesOptions);
 			return View();
 		}
 
@@ -67,92 +69,106 @@ namespace eNompilo.v3._0._1.Controllers
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> CreateUser(UserTypeViewModel model)
 		{
-			if (model.UserRole == UserRole.Admin)
+			if (model.UserRole == UserRole.Admin && model.ProfilePictureImageFile != null)
 			{
 				string wwwRootPath = webHostEnvironment.WebRootPath;
-				//string fileName = Path.GetFileNameWithoutExtension(model.Admin.ProfilePictureImageFile.FileName);
+				//string fileName = Path.GetFileNameWithoutExtension(model.ProfilePictureImageFile.FileName);
 				string fileName = model.FirstName.ToLower().ToString() + "_" + model.LastName.ToLower().ToString();
-				string ext = Path.GetExtension(model.Admin.ProfilePictureImageFile.FileName);
-				model.Admin.ProfilePicture = fileName = fileName + "_" + DateTime.Now.ToString("ddMMMyyyyHHmmss") + ext;
+				string ext = Path.GetExtension(model.ProfilePictureImageFile.FileName);
+				model.ProfilePicture = fileName = fileName + "_" + DateTime.Now.ToString("ddMMMyyyyHHmmss") + ext;
 				string path = Path.Combine(wwwRootPath + "/img/uploads", fileName);
 				using (var fileStream = new FileStream(path, FileMode.Create))
 				{
-					await model.Admin.ProfilePictureImageFile.CopyToAsync(fileStream);
+					await model.ProfilePictureImageFile.CopyToAsync(fileStream);
 				}
 			}
-			else if (model.UserRole == UserRole.Practitioner)
+			else if (model.UserRole == UserRole.Practitioner && model.ProfilePictureImageFile != null)
 			{
 				string wwwRootPath = webHostEnvironment.WebRootPath;
-				//string fileName = Path.GetFileNameWithoutExtension(model.Practitioner.ProfilePictureImageFile.FileName);
+				//string fileName = Path.GetFileNameWithoutExtension(model.ProfilePictureImageFile.FileName);
 				string fileName = model.FirstName.ToLower().ToString() + "_" + model.LastName.ToLower().ToString();
-				string ext = Path.GetExtension(model.Practitioner.ProfilePictureImageFile.FileName);
-				model.Practitioner.ProfilePicture = fileName = fileName + "_" + DateTime.Now.ToString("ddMMMyyyyHHmmss") + ext;
+				string ext = Path.GetExtension(model.ProfilePictureImageFile.FileName);
+				model.ProfilePicture = fileName = fileName + "_" + DateTime.Now.ToString("ddMMMyyyyHHmmss") + ext;
 				string path = Path.Combine(wwwRootPath + "/img/uploads", fileName);
 				using (var fileStream = new FileStream(path, FileMode.Create))
 				{
-					await model.Practitioner.ProfilePictureImageFile.CopyToAsync(fileStream);
+					await model.ProfilePictureImageFile.CopyToAsync(fileStream);
 				}
 			}
-			else if (model.UserRole == UserRole.Receptionist)
+			else if (model.UserRole == UserRole.Receptionist && model.ProfilePictureImageFile != null)
 			{
 				string wwwRootPath = webHostEnvironment.WebRootPath;
-				//string fileName = Path.GetFileNameWithoutExtension(model.Receptionist.ProfilePictureImageFile.FileName);
+				//string fileName = Path.GetFileNameWithoutExtension(model.ProfilePictureImageFile.FileName);
 				string fileName = model.FirstName.ToLower().ToString() + "_" + model.LastName.ToLower().ToString();
-				string ext = Path.GetExtension(model.Receptionist.ProfilePictureImageFile.FileName);
-				model.Receptionist.ProfilePicture = fileName = fileName + "_" + DateTime.Now.ToString("ddMMMyyyyHHmmss") + ext;
+				string ext = Path.GetExtension(model.ProfilePictureImageFile.FileName);
+				model.ProfilePicture = fileName = fileName + "_" + DateTime.Now.ToString("ddMMMyyyyHHmmss") + ext;
 				string path = Path.Combine(wwwRootPath + "/img/uploads", fileName);
 				using (var fileStream = new FileStream(path, FileMode.Create))
 				{
-					await model.Receptionist.ProfilePictureImageFile.CopyToAsync(fileStream);
+					await model.ProfilePictureImageFile.CopyToAsync(fileStream);
 				}
 			}
-			else if (model.UserRole == UserRole.Patient)
+			else if (model.UserRole == UserRole.Patient && model.ProfilePictureImageFile != null)
 			{
 				string wwwRootPath = webHostEnvironment.WebRootPath;
-				//string fileName = Path.GetFileNameWithoutExtension(model.Receptionist.ProfilePictureImageFile.FileName);
+				//string fileName = Path.GetFileNameWithoutExtension(model.ProfilePictureImageFile.FileName);
 				string fileName = model.FirstName.ToLower().ToString() + "_" + model.LastName.ToLower().ToString();
-				string ext = Path.GetExtension(model.PersonalDetails.ProfilePictureImageFile.FileName);
-				model.PersonalDetails.ProfilePicture = fileName = fileName + "_" + DateTime.Now.ToString("ddMMMyyyyHHmmss") + ext;
+				string ext = Path.GetExtension(model.ProfilePictureImageFile.FileName);
+				model.ProfilePicture = fileName = fileName + "_" + DateTime.Now.ToString("ddMMMyyyyHHmmss") + ext;
 				string path = Path.Combine(wwwRootPath + "/img/uploads", fileName);
 				using (var fileStream = new FileStream(path, FileMode.Create))
 				{
-					await model.PersonalDetails.ProfilePictureImageFile.CopyToAsync(fileStream);
+					await model.ProfilePictureImageFile.CopyToAsync(fileStream);
 				}
 			}
 
-			//var rolesOptions = _context.UserRoles.ToList();
-			//ViewBag.roleOptions = new SelectList(rolesOptions);
-
-			model.AppUser.UserName = model.IdNumber;
-			if (model.IdNumber != null && model.Titles != null && model.FirstName != null && model.LastName != null && model.PhoneNumber != null && model.Password != null && model.ConfirmPassword != null)
+			if (ModelState.IsValid)
 			{
-				var result = await _userManager.CreateAsync(model.AppUser, model.Password);
+
+				var user = new ApplicationUser
+				{
+					UserName = model.IdNumber,
+					IdNumber = model.IdNumber,
+					Titles = model.Titles,
+					FirstName = model.FirstName,
+					MiddleName = model.MiddleName,
+					LastName = model.LastName,
+					Email = model.Email,
+					PhoneNumber = model.PhoneNumber,
+					Password = model.Password,
+					ConfirmPassword = model.ConfirmPassword,
+					CreatedOn = model.CreatedOn,
+					UserRole = model.UserRole,
+					Archived = false,
+				};
+
+				var result = await _userManager.CreateAsync(user, model.Password);
 
 				if (result.Succeeded)
 				{
 					if (model.UserRole == UserRole.Admin)
 					{
-						await _userManager.AddToRoleAsync(model.AppUser, RoleConstants.Admin);
+						await _userManager.AddToRoleAsync(user, RoleConstants.Admin);
 						var admin = new Admin
 						{
-							UserId = model.Id,
-							ProfilePicture = model.Admin.ProfilePicture,
-							Gender = model.Admin.Gender,
-							DOB = model.Admin.DOB,
-							HomeTel = model.Admin.HomeTel,
-							EmergencyPerson = model.Admin.EmergencyPerson,
-							EmergenyContactNr = model.Admin.EmergenyContactNr,
-							WorkTel = model.Admin.WorkTel,
-							WorkEmail = model.Admin.WorkEmail,
-							LineManager = model.Admin.LineManager,
-							Citizenship = model.Admin.Citizenship,
-							MaritalStatus = model.Admin.MaritalStatus,
-							AddressLine1 = model.Admin.AddressLine1,
-							AddressLine2 = model.Admin.AddressLine2,
-							Suburb = model.Admin.Suburb,
-							City = model.Admin.City,
-							Province = model.Admin.Province,
-							ZipCode = model.Admin.ZipCode,
+							UserId = user.Id,
+							ProfilePicture = model.ProfilePicture,
+							Gender = model.Gender,
+							DOB = model.DOB,
+							HomeTel = model.HomeTel,
+							EmergencyPerson = model.EmergencyPerson,
+							EmergenyContactNr = model.EmergenyContactNr,
+							WorkTel = model.WorkTel,
+							WorkEmail = model.WorkEmail,
+							LineManager = model.LineManager,
+							Citizenship = model.Citizenship,
+							MaritalStatus = model.MaritalStatus,
+							AddressLine1 = model.AddressLine1,
+							AddressLine2 = model.AddressLine2,
+							Suburb = model.Suburb,
+							City = model.City,
+							Province = model.Province,
+							ZipCode = model.ZipCode,
 							CreatedOn = model.CreatedOn,
 							Archived = false,
 						};
@@ -160,29 +176,29 @@ namespace eNompilo.v3._0._1.Controllers
 					}
 					else if (model.UserRole == UserRole.Practitioner)
 					{
-						await _userManager.AddToRoleAsync(model.AppUser, RoleConstants.Practitioner);
+						await _userManager.AddToRoleAsync(user, RoleConstants.Practitioner);
 						var practitioner = new Practitioner
 						{
-							UserId = model.Id,
-							ProfilePicture = model.Practitioner.ProfilePicture,
-							PractitionerType = model.Practitioner.PractitionerType,
-							CounsellorType = model.Practitioner.CounsellorType,
-							Gender = model.Practitioner.Gender,
-							DOB = model.Practitioner.DOB,
-							HomeTel = model.Practitioner.HomeTel,
-							EmergencyPerson = model.Practitioner.EmergencyPerson,
-							EmergenyContactNr = model.Practitioner.EmergenyContactNr,
-							WorkTel = model.Practitioner.WorkTel,
-							WorkEmail = model.Practitioner.WorkEmail,
-							LineManager = model.Practitioner.LineManager,
-							Citizenship = model.Practitioner.Citizenship,
-							MaritalStatus = model.Practitioner.MaritalStatus,
-							AddressLine1 = model.Practitioner.AddressLine1,
-							AddressLine2 = model.Practitioner.AddressLine2,
-							Suburb = model.Practitioner.Suburb,
-							City = model.Practitioner.City,
-							Province = model.Practitioner.Province,
-							ZipCode = model.Practitioner.ZipCode,
+							UserId = user.Id,
+							ProfilePicture = model.ProfilePicture,
+							PractitionerType = model.PractitionerType,
+							CounsellorType = model.CounsellorType,
+							Gender = model.Gender,
+							DOB = model.DOB,
+							HomeTel = model.HomeTel,
+							EmergencyPerson = model.EmergencyPerson,
+							EmergenyContactNr = model.EmergenyContactNr,
+							WorkTel = model.WorkTel,
+							WorkEmail = model.WorkEmail,
+							LineManager = model.LineManager,
+							Citizenship = model.Citizenship,
+							MaritalStatus = model.MaritalStatus,
+							AddressLine1 = model.AddressLine1,
+							AddressLine2 = model.AddressLine2,
+							Suburb = model.Suburb,
+							City = model.City,
+							Province = model.Province,
+							ZipCode = model.ZipCode,
 							CreatedOn = model.CreatedOn,
 							Archived = false,
 						};
@@ -190,23 +206,39 @@ namespace eNompilo.v3._0._1.Controllers
 					}
 					else if (model.UserRole == UserRole.Receptionist)
 					{
-						await _userManager.AddToRoleAsync(model.AppUser, RoleConstants.Receptionist);
+						await _userManager.AddToRoleAsync(user, RoleConstants.Receptionist);
 
 						var receptionist = new Receptionist
 						{
-							UserId = model.Id,
-							ProfilePicture = model.Receptionist.ProfilePicture,
-							CreatedOn = model.CreatedOn,
+							UserId = user.Id,
+							ProfilePicture = model.ProfilePicture,
+                            Gender = model.Gender,
+                            DOB = model.DOB,
+                            HomeTel = model.HomeTel,
+                            EmergencyPerson = model.EmergencyPerson,
+                            EmergenyContactNr = model.EmergenyContactNr,
+                            WorkTel = model.WorkTel,
+                            WorkEmail = model.WorkEmail,
+                            LineManager = model.LineManager,
+                            Citizenship = model.Citizenship,
+                            MaritalStatus = model.MaritalStatus,
+                            AddressLine1 = model.AddressLine1,
+                            AddressLine2 = model.AddressLine2,
+                            Suburb = model.Suburb,
+                            City = model.City,
+                            Province = model.Province,
+                            ZipCode = model.ZipCode,
+                            CreatedOn = model.CreatedOn,
 							Archived = false,
 						};
 						_context.tblReceptionist.Add(receptionist);
 					}
 					else if (model.UserRole == UserRole.Patient)
 					{
-						await _userManager.AddToRoleAsync(model.AppUser, RoleConstants.Patient);
+						await _userManager.AddToRoleAsync(user, RoleConstants.Patient);
 						var patient = new Patient
 						{
-							UserId = model.Id,
+							UserId = user.Id,
 							IdNumber = model.IdNumber,
 							FirstName = model.FirstName,
 							LastName = model.LastName,
@@ -219,8 +251,8 @@ namespace eNompilo.v3._0._1.Controllers
 						await _context.SaveChangesAsync();
 						_logger.LogInformation("User created a new account with password");
 
-						var patientVar = await _context.tblPatient.Where(p => p.UserId == model.Id).FirstOrDefaultAsync();
-						int patientId = patientVar.Id;
+						var patientVar = await _context.tblPatient.Where(p => p.UserId == user.Id).FirstOrDefaultAsync();
+						ViewBag.patientId = patientVar.Id;
 						return await AddPersonalMedical(model);
 					}
 
@@ -239,7 +271,8 @@ namespace eNompilo.v3._0._1.Controllers
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> AddPersonalMedical(UserTypeViewModel model)
 		{
-			var patient = _context.tblPatient.Where(p => p.Id == model.Patient.Id).FirstOrDefault();
+			int patientId = ViewBag.patientId;
+			var patient = await _context.tblPatient.Where(p => p.Id == patientId).FirstOrDefaultAsync();
 
 			if(patient == null)
 			{
@@ -248,27 +281,27 @@ namespace eNompilo.v3._0._1.Controllers
 
 			var personalDetails = new PersonalDetails()
 			{
-				ProfilePicture = model.PersonalDetails.ProfilePicture,
-				PatientId = patient.Id,
-				Gender = model.PersonalDetails.Gender,
-				DOB = model.PersonalDetails.DOB,
-				Height = model.PersonalDetails.Height,
-				Weight = model.PersonalDetails.Weight,
-				BloodType = model.PersonalDetails.BloodType,
-				HomeTel = model.PersonalDetails.HomeTel,
-				EmergencyPerson = model.PersonalDetails.EmergencyPerson,
-				EmergenyContactNr = model.PersonalDetails.EmergenyContactNr,
-				Employed = model.PersonalDetails.Employed,
-				WorkTel = model.PersonalDetails.WorkTel,
-				WorkEmail = model.PersonalDetails.WorkEmail,
-				Citizenship = model.PersonalDetails.Citizenship,
-				MaritalStatus = model.PersonalDetails.MaritalStatus,
-				AddressLine1 = model.PersonalDetails.AddressLine1,
-				AddressLine2 = model.PersonalDetails.AddressLine2,
-				Suburb = model.PersonalDetails.Suburb,
-				City = model.PersonalDetails.City,
-				Province = model.PersonalDetails.Province,
-				ZipCode = model.PersonalDetails.ZipCode,
+				ProfilePicture = model.ProfilePicture,
+				PatientId = patientId,
+				Gender = model.Gender,
+				DOB = model.DOB,
+				Height = model.Height,
+				Weight = model.Weight,
+				BloodType = model.BloodType,
+				HomeTel = model.HomeTel,
+				EmergencyPerson = model.EmergencyPerson,
+				EmergenyContactNr = model.EmergenyContactNr,
+				Employed = model.Employed,
+				WorkTel = model.WorkTel,
+				WorkEmail = model.WorkEmail,
+				Citizenship = model.Citizenship,
+				MaritalStatus = model.MaritalStatus,
+				AddressLine1 = model.AddressLine1,
+				AddressLine2 = model.AddressLine2,
+				Suburb = model.Suburb,
+				City = model.City,
+				Province = model.Province,
+				ZipCode = model.ZipCode,
 				Archived = false,
 			};
 
@@ -276,21 +309,21 @@ namespace eNompilo.v3._0._1.Controllers
 
 			var medicalHistory = new MedicalHistory()
 			{
-				PatientId = patient.Id,
-				PreviousDiagnoses = model.MedicalHistory.PreviousDiagnoses,
-				PreviousMedication = model.MedicalHistory.PreviousMedication,
-				GeneralAllergies = model.MedicalHistory.GeneralAllergies,
-				MedicationAllergies = model.MedicalHistory.MedicationAllergies
+				PatientId = patientId,
+				PreviousDiagnoses = model.PreviousDiagnoses,
+				PreviousMedication = model.PreviousMedication,
+				GeneralAllergies = model.GeneralAllergies,
+				MedicationAllergies = model.MedicationAllergies
 			};
 
 			await _context.tblMedicalHistory.AddAsync(medicalHistory);
-			await _context.SaveChangesAsync();
+			_context.SaveChanges();
 			return CreatePatientFile(patient);
 		}
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public ActionResult CreatePatientFile(Patient patient)
+		public IActionResult CreatePatientFile(Patient patient)
 		{
 			var personalDetails = _context.tblPersonalDetails.Where(c => c.PatientId == patient.Id).FirstOrDefault();
 			var personalDetailsId = personalDetails.Id;
@@ -516,7 +549,7 @@ namespace eNompilo.v3._0._1.Controllers
 /*
 	if (model.UserRole == UserRole.Patient)
 	{
-		var patient = _context.tblPatient.Where(p => p.Id == model.Patient.Id).FirstOrDefault();
+		var patient = _context.tblPatient.Where(p => p.Id == model.Id).FirstOrDefault();
 		patient.UserId = user.Id;
 		patient.IdNumber = user.IdNumber;
 		patient.Titles = user.Titles;

@@ -1,0 +1,65 @@
+﻿@model eNompilo.v3._0._1.Models.SystemUsers.PatientFile
+
+@{
+    ViewData["Title"] = "CreatePatientFile";
+}
+
+<h1>CreatePatientFile</h1>
+
+<h4>PatientFile</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreatePatientFile" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="PatientId" class="control-label"></label>
+                <select asp-for="PatientId" class ="form-control" disabled asp-items="ViewBag.PatientId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="PersonalDetailsId" class="control-label"></label>
+                <select asp-for="PersonalDetailsId" class ="form-control" disabled asp-items="ViewBag.PersonalDetailsId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="MedicalHistoryId" class="control-label"></label>
+                <select asp-for="MedicalHistoryId" class ="form-control" disabled asp-items="ViewBag.MedicalHistoryId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="VaccinationAppointmentId" class="control-label"></label>
+                <input asp-for="VaccinationAppointmentId" class="form-control" />
+                <span asp-validation-for="VaccinationAppointmentId" disabled class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CounsellorAppointmentId" class="control-label"></label>
+                <input asp-for="CounsellorAppointmentId" class="form-control" />
+                <span asp-validation-for="CounsellorAppointmentId" disabled class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="GeneralAppointmentId" class="control-label"></label>
+                <input asp-for="GeneralAppointmentId" class="form-control" />
+                <span asp-validation-for="GeneralAppointmentId" disabled class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SessionsId" class="control-label"></label>
+                <input asp-for="SessionsId" class="form-control" />
+                <span asp-validation-for="SessionsId" disabled class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Archived" /> @Html.DisplayNameFor(model => model.Archived)
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

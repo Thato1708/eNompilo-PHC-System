@@ -10,6 +10,7 @@ using eNompilo.v3._0._1.Constants;
 using Microsoft.EntityFrameworkCore;
 using eNompilo.v3._0._1.Models.ViewModels;
 using eNompilo.v3._0._1.Models.Vaccination;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace eNompilo.v3._0._1.Controllers
 {
@@ -43,6 +44,8 @@ namespace eNompilo.v3._0._1.Controllers
 
         public IActionResult DoseTracking()
         {
+            
+
             return View();
         }
 
@@ -50,13 +53,22 @@ namespace eNompilo.v3._0._1.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult DoseTracking(DoseTracking model)
         {
-            if (ModelState.IsValid)
+            DoseTracking doseTracking = new DoseTracking 
             {
-                _context.tblDoseTracking.Add(model);
+                PatientId = model.PatientId,
+                VaccineAdministered = model.VaccineAdministered,
+                DateAdministered = model.DateAdministered,
+                SecondDose = model.SecondDose,
+                SiteAddress = model.SiteAddress,
+            };
+
+            //if (ModelState.IsValid)
+            //{
+                _context.tblDoseTracking.Add(doseTracking);
                 _context.SaveChanges();
                 return RedirectToAction("Index");
-            }
-            return View();
+            //}
+            //return View();
         }
 
         public IActionResult VaccinationInventory()

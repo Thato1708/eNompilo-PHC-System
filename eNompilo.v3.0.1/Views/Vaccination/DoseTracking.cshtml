@@ -1,54 +1,77 @@
 ﻿@model eNompilo.v3._0._1.Models.Vaccination.DoseTracking
+@inject IHttpContextAccessor contextAccessor
+@inject eNompilo.v3._0._1.Areas.Identity.Data.ApplicationDbContext dbContext
+
 
 @{
     ViewData["Title"] = "DoseTracking";
     Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+
+    IEnumerable<SelectListItem> patient = dbContext.tblPatient.Select(p => new SelectListItem
+            {
+                Value = p.Id.ToString(),
+                Text = p.FirstName + " " + p.LastName,
+            });
+
+    IEnumerable<SelectListItem> vaccines = dbContext.tblVaccinationInventory.Select(v => new SelectListItem
+            {
+                Value = v.VaccineName,
+                Text = v.VaccineName,
+            });
 }
 
-<h1>DoseTracking</h1>
+<div class="margined-page">
+    <h2>DoseTracking</h2>
+    <hr />
+    <div class="row">
+        <div class="col-md-4" style="margin-left:auto;margin-right:auto;">
+            <form asp-action="DoseTracking">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group mb-4">
+                    <label asp-for="Patient" class="control-label"></label>
+                    <select asp-for="PatientId" class="form-control" id="roleChanged" name="patient" asp-items="@patient">
+                        <option disabled selected hidden>Please select an option</option>
+                        @*@foreach (var item in rolesList)
+                        {
+                        <option value="@item.Text" id="@item.Text">@item.Text</option>
+                        }*@
+					</select>
+					<span asp-validation-for="PatientId" class="text-danger"></span>
 
-<hr />
-<div class="row">
-    <div class="col-md-4" style="margin-left:auto;margin-right:auto;">
-        <form asp-action="DoseTracking">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group mb-4">
-                <label asp-for="PatientId" class="control-label"></label>
-                <select asp-for="PatientId" class ="form-control" asp-items="ViewBag.PatientId"></select>
-            </div>
-            <div class="form-group mb-4">
-                <label asp-for="VaccineAdministered" class="control-label"></label>
-                <input asp-for="VaccineAdministered" class="form-control" />
-                <span asp-validation-for="VaccineAdministered" class="text-danger"></span>
-            </div>
-            <div class="form-group mb-4">
-                <label asp-for="DateAdministered" class="control-label"></label>
-                <input asp-for="DateAdministered" class="form-control" />
-                <span asp-validation-for="DateAdministered" class="text-danger"></span>
-            </div>
-            <div class="form-group mb-4">
-                <label asp-for="SecondDose" class="control-label"></label>
-                <input asp-for="SecondDose" class="form-control" />
-                <span asp-validation-for="SecondDose" class="text-danger"></span>
-            </div>
-            <div class="form-group mb-4">
-                <label asp-for="Vaccine" class="control-label"></label>
-                <select asp-for="Vaccine" class="form-control"></select>
-                <span asp-validation-for="Vaccine" class="text-danger"></span>
-            </div>
-            <div class="form-group mb-4">
-                <label asp-for="SiteAddress" class="control-label"></label>
-                <input asp-for="SiteAddress" class="form-control" />
-                <span asp-validation-for="SiteAddress" class="text-danger"></span>
-            </div>
-
-            <div class="form-group mb-4">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+                </div>
+                <div class="form-group mb-4">
+                    <label asp-for="VaccineAdministered" class="control-label"></label>
+                    <select asp-for="VaccineAdministered" class="form-control" id="roleChanged" name="patient" asp-items="@vaccines">
+                        <option disabled selected hidden>Please select an option</option>
+                        @*@foreach (var item in rolesList)
+                        {
+                        <option value="@item.Text" id="@item.Text">@item.Text</option>
+                        }*@
+                    </select>
+                    <span asp-validation-for="VaccineAdministered" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-4">
+                    <label asp-for="DateAdministered" class="control-label"></label>
+                    <input asp-for="DateAdministered" class="form-control" />
+                    <span asp-validation-for="DateAdministered" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-4">
+                    <label asp-for="SecondDose" class="control-label"></label>
+                    <input asp-for="SecondDose" class="form-control" />
+                    <span asp-validation-for="SecondDose" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-4">
+                    <label asp-for="SiteAddress" class="control-label"></label>
+                    <input asp-for="SiteAddress" class="form-control" />
+                    <span asp-validation-for="SiteAddress" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
     </div>
 </div>
-
 <div>
     <a asp-action="Index">Back to List</a>
 </div>

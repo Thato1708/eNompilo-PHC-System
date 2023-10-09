@@ -14,21 +14,23 @@ namespace eNompilo.v3._0._1.Models.Vaccination
 
         [PersonalData]
         [ForeignKey("Patient")]
+        [DisplayName("Patients")]
         public int? PatientId { get; set; }
         
 
-        [Required]
+        [Required][DisplayName("Recieved vaccine")]
         public string VaccineAdministered { get; set; }
 
         [Required]
+        [DisplayName("Date Administered")]
         public DateTime DateAdministered { get; set; }
+
+        [DisplayName("Second Dose Date")]
         public DateTime? SecondDose { get; set; }
 
-        [Required]
-        [DisplayName("Recieved vaccine")]
-        public VaccinableDiseases Vaccine { get; set; }
 
         [Required]
+        [DisplayName("Site Address")]
         public string SiteAddress { get; set; }
 
         public Patient Patient { get; set; }

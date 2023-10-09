@@ -1,0 +1,203 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>FAQ</title>
+
+    <link rel="stylesheet" href="https:///cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/css/bootstrap.min.css">
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js">
+    </script>
+
+    <style type="text/css">
+        body {
+            background: #eee;
+            padding-top: 20px;
+            font-family: -webkit-pictograph;
+        }
+
+        .header {
+            border-radius: 20px 20px 0px 0px;
+            padding: 10px 0px;
+            background: blue;
+            color: #fff;
+            width: 100%;
+            display: flex;
+            align-content: center;
+            justify-content: center;
+        }
+
+        .faq-item {
+            margin-bottom: 40px;
+            margin-top: 40px;
+        }
+
+        .faq-body {
+            display: none;
+            margin-top: 30px;
+        }
+
+        .faq-wrapper {
+            width: 75%;
+            margin: 0 auto;
+        }
+
+        .faq-inner {
+            padding: 30px;
+            background: aliceblue;
+        }
+
+        .faq-plus {
+            float: right;
+            font-size: 1.4em;
+            line-height: 1em;
+            cursor: pointer;
+        }
+
+        hr {
+            background-color: blue;
+        }
+    </style>
+
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="faq-wrapper">
+                <div class="header">
+                    <h1>GBV Frequently Asked Questions</h1>
+                </div>
+                <div class="faq-inner">
+                    <div class="faq-item">
+                        <h3>
+                            Can I report a case anonymously ?
+                            <span class="faq-plus">&plus;</span>
+                        </h3>
+                        <div class="faq-body">
+                            Yes,confidentiality and intergrity is one the most important aspects of the E-Nompilo system.
+                            Our qualified medical professionals handle every case with care and users can most definitely
+                            report cases anonymously. Users should know that their identity and information will be kept
+                            safe and private.
+                        </div>
+                    </div>
+                    <hr />
+
+                    <div class="faq-item">
+                        <h3>
+                            What can I do if I know of someone who is a victim ?
+                            <span class="faq-plus">&plus;</span>
+
+                        </h3>
+                        <div class="faq-body">
+                            You can assist the person by alerting them about the E-Nompilo GBV site and giving them
+                            information on how to report a case. You can also report the case on behalf of the individual.
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="faq-item">
+                        <h3>
+                            How old do I have to be to report a case ?
+                            <span class="faq-plus">&plus;</span>
+
+                        </h3>
+                        <div class="faq-body">
+                            There is no age restriction when reporting a case.
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="faq-item">
+                        <h3>
+                            Will I get more support after reporting a case ?
+                            <span class="faq-plus">&plus;</span>
+
+                        </h3>
+                        <hr>
+                        <div class="faq-body">
+                            Victims will be booked for trauma counselling, and
+                            will get continous support from Social workers,
+                            Counsellors and all the E-Nompilo staff members. Victims should
+                            know that their well-being is our priority and all the
+                            Enompilo health care workers are here for them.
+                        </div>
+                        <div class="faq-item">
+                            <h3>
+                                What happens if the person abusing me is a family member or guardian ?
+                                <span class="faq-plus">&plus;</span>
+
+                            </h3>
+                            <div class="faq-body">
+                             You can report anyone who has abused you even if its someone you are 
+                             dependent on. You  will then be allocated to a social worker and moved 
+                             to a safe house if necessary.
+
+
+
+                            </div>
+                            <hr>
+                            <div class="faq-item">
+                                <h3>
+                                    What cases can i report ?
+                                    <span class="faq-plus">&plus;</span>
+
+                                </h3>
+                                <div class="faq-body">
+                                    You can report any case but the common cases include Physical Abuse, Emotional Abuse and
+                                    Rape.
+                  
+
+
+
+                                </div>
+                                <hr>
+                                <div class="faq-item">
+                                    <h3>
+                                        When can i report a case ?
+                                        <span class="faq-plus">&plus;</span>
+
+                                    </h3>
+                                    
+                                    <div class="faq-body">
+                                        The E-Nompilo GBV subsystem is available 24/7 and you can report a 
+                                        case anytime.
+                                   
+
+
+
+
+
+                                    </div>
+                                    <hr>
+                                    <div class="faq-item">
+                                        <h3>
+                                            How can the support group help me as a victim ?
+                                            <span class="faq-plus">&plus;</span>
+
+                                        </h3>
+                                        <div class="faq-body">
+                                            The support group aims to empower victims by educating them about GBV and 
+                                            also offering mentorship and counselling on how they can improve themselves.
+
+
+
+
+                                        </div>
+                                        <hr>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(".faq-plus").on('click', function(){
+            $(this).parent().parent().find('.faq-body').
+                slideToggle();
+        });
+    </script>
+</body>
+</html>

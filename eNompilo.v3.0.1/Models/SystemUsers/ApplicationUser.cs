@@ -36,16 +36,19 @@ public class ApplicationUser : IdentityUser
     [PersonalData]
     [Display(Name = "Email Address")]
     [EmailAddress]
+    [RegularExpression(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$", ErrorMessage = "Please enter correct email format (username@domain.ext.cde)")]
     public override string? Email { get; set; }
 
     [Required]
     [PersonalData]
     [Display(Name = "Phone Number")]
     [StringLength(10, ErrorMessage = "Standard phone number can only be 10 digits long.", MinimumLength = 10)] //datatype must be number in view/html
+    [RegularExpression(@"^((?:\+27|27)|0)(=|60|70|80|61|71|81|62|72|82|63|73|83|64|74|84|65|75|85|66|76|86|67|77|87|68|78|88|69|79|89)(\d{7})$", ErrorMessage = "Please enter a South African number.")]
     public override string PhoneNumber { get; set; }
 
     [Required]
     [DataType(DataType.Password)]
+    [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*]).{8,}$", ErrorMessage = "Password must have at least:\n8 characters in length\n1 lowercase character\n1 uppercase letter\na numerical value\na special character")]
     public string Password { get; set; }
 
     [Required]

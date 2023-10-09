@@ -121,12 +121,12 @@ namespace eNompilo.v3._0._1.Models.ViewModels
 
         [PersonalData]
         [Display(Name = "Emergency Contact Person (Full Name)")]
-        public string EmergencyPerson { get; set; }
+        public string? EmergencyPerson { get; set; }
 
         [PersonalData]
         [Display(Name = "Emergency Contact Number")]
         [StringLength(10, ErrorMessage = "Standard phone number can only be 10 digits long.", MinimumLength = 10)]
-        public string EmergenyContactNr { get; set; }
+        public string? EmergenyContactNr { get; set; }
 
         [PersonalData]
         [Display(Name = "Employment Status")]
@@ -149,7 +149,7 @@ namespace eNompilo.v3._0._1.Models.ViewModels
 
         [PersonalData]
         [Display(Name = "Address Line 1")]
-        public string AddressLine1 { get; set; }
+        public string? AddressLine1 { get; set; }
 
         [PersonalData]
         [Display(Name = "Address Line 2")]
@@ -160,13 +160,13 @@ namespace eNompilo.v3._0._1.Models.ViewModels
         public string? Suburb { get; set; }
 
         [PersonalData]
-        public string City { get; set; }
+        public string? City { get; set; }
 
         [PersonalData]
         public Provinces Province { get; set; }
 
         [PersonalData]
-        public string ZipCode { get; set; }
+        public string? ZipCode { get; set; }
 
 
         //Additional Admin/Practitioner/Receptionist properties

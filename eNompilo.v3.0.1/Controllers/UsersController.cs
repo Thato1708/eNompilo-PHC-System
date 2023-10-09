@@ -247,13 +247,57 @@ namespace eNompilo.v3._0._1.Controllers
 							CreatedOn = model.CreatedOn,
 							Archived = false,
 						};
-						_context.tblPatient.Add(patient);
-						await _context.SaveChangesAsync();
+						await _context.tblPatient.AddAsync(patient);
+                        var output = await _context.SaveChangesAsync();
+
+						if (output != null)
+						{
+							var patientVar = await _context.tblPatient.Where(p => p.UserId == user.Id).FirstOrDefaultAsync();
+
+							var personalDetails = new PersonalDetails()
+							{
+								ProfilePicture = model.ProfilePicture,
+								PatientId = patientVar.Id,
+								Gender = model.Gender,
+								DOB = model.DOB,
+								Height = model.Height,
+								Weight = model.Weight,
+								BloodType = model.BloodType,
+								HomeTel = model.HomeTel,
+								EmergencyPerson = model.EmergencyPerson,
+								EmergenyContactNr = model.EmergenyContactNr,
+								Employed = model.Employed,
+								WorkTel = model.WorkTel,
+								WorkEmail = model.WorkEmail,
+								Citizenship = model.Citizenship,
+								MaritalStatus = model.MaritalStatus,
+								AddressLine1 = model.AddressLine1,
+								AddressLine2 = model.AddressLine2,
+								Suburb = model.Suburb,
+								City = model.City,
+								Province = model.Province,
+								ZipCode = model.ZipCode,
+								Archived = false,
+							};
+
+							await _context.tblPersonalDetails.AddAsync(personalDetails);
+
+							var medicalHistory = new MedicalHistory()
+							{
+								PatientId = patientVar.Id,
+								PreviousDiagnoses = model.PreviousDiagnoses,
+								PreviousMedication = model.PreviousMedication,
+								GeneralAllergies = model.GeneralAllergies,
+								MedicationAllergies = model.MedicationAllergies
+							};
+
+							await _context.tblMedicalHistory.AddAsync(medicalHistory);
+							_context.SaveChanges();
+						}
+                        
 						_logger.LogInformation("User created a new account with password");
 
-						var patientVar = await _context.tblPatient.Where(p => p.UserId == user.Id).FirstOrDefaultAsync();
-						ViewBag.patientId = patientVar.Id;
-						return await AddPersonalMedical(model);
+                        return CreatePatientFile(patient);
 					}
 
 					await _context.SaveChangesAsync();
@@ -267,59 +311,18 @@ namespace eNompilo.v3._0._1.Controllers
 		}
 
 
-		[HttpPost]
-		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> AddPersonalMedical(UserTypeViewModel model)
-		{
-			int patientId = ViewBag.patientId;
-			var patient = await _context.tblPatient.Where(p => p.Id == patientId).FirstOrDefaultAsync();
+		//[HttpPost]
+		//[ValidateAntiForgeryToken]
+		//public async Task<IActionResult> AddPersonalMedical(UserTypeViewModel model)
+		//{
+		//	int patientId = ViewBag.patientId;
+		//	var patient = await _context.tblPatient.Where(p => p.Id == patientId).FirstOrDefaultAsync();
 
-			if(patient == null)
-			{
-				return NotFound();
-			}
-
-			var personalDetails = new PersonalDetails()
-			{
-				ProfilePicture = model.ProfilePicture,
-				PatientId = patientId,
-				Gender = model.Gender,
-				DOB = model.DOB,
-				Height = model.Height,
-				Weight = model.Weight,
-				BloodType = model.BloodType,
-				HomeTel = model.HomeTel,
-				EmergencyPerson = model.EmergencyPerson,
-				EmergenyContactNr = model.EmergenyContactNr,
-				Employed = model.Employed,
-				WorkTel = model.WorkTel,
-				WorkEmail = model.WorkEmail,
-				Citizenship = model.Citizenship,
-				MaritalStatus = model.MaritalStatus,
-				AddressLine1 = model.AddressLine1,
-				AddressLine2 = model.AddressLine2,
-				Suburb = model.Suburb,
-				City = model.City,
-				Province = model.Province,
-				ZipCode = model.ZipCode,
-				Archived = false,
-			};
-
-			await _context.tblPersonalDetails.AddAsync(personalDetails);
-
-			var medicalHistory = new MedicalHistory()
-			{
-				PatientId = patientId,
-				PreviousDiagnoses = model.PreviousDiagnoses,
-				PreviousMedication = model.PreviousMedication,
-				GeneralAllergies = model.GeneralAllergies,
-				MedicationAllergies = model.MedicationAllergies
-			};
-
-			await _context.tblMedicalHistory.AddAsync(medicalHistory);
-			_context.SaveChanges();
-			return CreatePatientFile(patient);
-		}
+		//	if(patient == null)
+		//	{
+		//		return NotFound();
+		//	}
+		//}
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]

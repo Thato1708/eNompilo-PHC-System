@@ -292,7 +292,7 @@ namespace eNompilo.v3._0._1.Controllers
 							};
 
 							await _context.tblMedicalHistory.AddAsync(medicalHistory);
-							_context.SaveChanges();
+							await _context.SaveChangesAsync();
 						}
                         
 						_logger.LogInformation("User created a new account with password");

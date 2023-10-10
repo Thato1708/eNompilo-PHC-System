@@ -13,13 +13,12 @@ namespace eNompilo.v3._0._1.Models.Vaccination
         public int ID { get; set; }
 
         [PersonalData]
-        [ForeignKey("Patient")]
         [DisplayName("Patients")]
         public int? PatientId { get; set; }
         
 
         [Required][DisplayName("Recieved vaccine")]
-        public string VaccineAdministered { get; set; }
+        public int? VaccineInventoryId { get; set; }
 
         [Required]
         [DisplayName("Date Administered")]
@@ -33,6 +32,7 @@ namespace eNompilo.v3._0._1.Models.Vaccination
         [DisplayName("Site Address")]
         public string SiteAddress { get; set; }
 
-        public Patient Patient { get; set; }
+        public IEnumerable<Patient>? Patient { get; set; }
+        public IEnumerable<VaccinationInventory>? VaccinationInventory { get; set; }
     }
 }

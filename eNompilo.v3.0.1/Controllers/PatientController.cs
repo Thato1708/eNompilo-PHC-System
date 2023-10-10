@@ -114,7 +114,8 @@ namespace eNompiloCounselling.Controllers
             if (model.ProfilePictureImageFile != null)
             {
                 string wwwRootPath = webHostEnvironment.WebRootPath;
-                string fileName = Path.GetFileNameWithoutExtension(model.ProfilePictureImageFile.FileName);
+                //string fileName = Path.GetFileNameWithoutExtension(model.ProfilePictureImageFile.FileName);
+                string fileName = _userManager.GetUserAsync(User).Result.FirstName.ToLower() + "_" + _userManager.GetUserAsync(User).Result.FirstName.ToLower();
                 string ext = Path.GetExtension(model.ProfilePictureImageFile.FileName);
                 model.ProfilePicture = fileName = fileName + "_" + DateTime.Now.ToString("ddMMMyyyyHHmmss") + ext;
                 string path = Path.Combine(wwwRootPath + "/img/uploads/", fileName);

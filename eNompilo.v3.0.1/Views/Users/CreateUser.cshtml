@@ -29,7 +29,7 @@
             <hr />
             <div class="row d-flex align-items-center">
                 <div class="col-md-10" style="margin-left:auto;margin-right:auto;">
-                    <form asp-action="CreateUser" method="post">
+                    <form asp-action="CreateUser" enctype="multipart/form-data" method="post">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <div class="general-form">
                             <div class="form-group mb-4">
@@ -110,7 +110,7 @@
 
 
                         <div id="user_group" style="display: none;">
-                            <h3 id="userHeader2">Admin Personal Details</h3>
+                            <h3 id="userHeader2"></h3>
                             <div class="peronal-details">
                                 <div class="form-group mb-4">
                                     <label asp-for="ProfilePictureImageFile" class="control-label"></label>
@@ -199,12 +199,12 @@
 
                                 <div class="row mb-4">
 
-                                    <div class="form-group mb-4 col">
+                                    <div class="form-group mb-4 col" id="workTelDiv">
                                         <label asp-for="WorkTel" class="control-label"></label>
                                         <input asp-for="WorkTel" class="form-control" />
                                         <span asp-validation-for="WorkTel" class="text-danger"></span>
                                     </div>
-                                    <div class="form-group mb-4 col">
+                                    <div class="form-group mb-4 col" id="workEmailDiv">
                                         <label asp-for="WorkEmail" class="control-label"></label>
                                         <input asp-for="WorkEmail" class="form-control" />
                                         <span asp-validation-for="WorkEmail" class="text-danger"></span>
@@ -355,6 +355,16 @@
                         var practitionerThings = document.querySelectorAll(".practitionerStuff")
                         var staffThings = document.querySelectorAll(".staffStuff")
 
+                        checkbox.addEventListener('change', function () {
+                            if (checkbox.checked) {
+                                workTelDiv.style.display = 'block';
+                                workEmailDiv.style.display = 'block';
+                            } else {
+                                workTelDiv.style.display = 'none';
+                                workEmailDiv.style.display = 'none';
+                            }
+                        });
+
                         selectedOption.addEventListener('change', function () {
                             if (selectedOption.value == "0") {
                                 for (stuff of personalThings) {
@@ -367,10 +377,12 @@
                                     stuff.style.display = "block"
                                 }
                                 userHeader.innerText = "Add a new Admin"
+                                userHeader2.innerText = "Admin Personal Details"
                                 userGroup.style.display = "block";
                                 userGroup.disabled = false;
                                 workTelDiv.style.display = 'block';
                                 workEmailDiv.style.display = 'block';
+                                counsellorTypeDiv.style.display = "none"
                             } else if (selectedOption.value == "1") {
                                 for (stuff of personalThings) {
                                     stuff.style.display = "block"
@@ -382,8 +394,13 @@
                                     stuff.style.display = "none"
                                 }
                                 userHeader.innerText = "Add a new Patient"
+                                userHeader2.innerText = "Patient Personal Details"
                                 userGroup.style.display = "block";
                                 userGroup.disabled = false;
+                                checkbox.checked = false;
+                                workTelDiv.style.display = 'none';
+                                workEmailDiv.style.display = 'none';
+                                counsellorTypeDiv.style.display = "none"
                             } else if (selectedOption.value == "2") {
                                 for (stuff of personalThings) {
                                     stuff.style.display = "none"
@@ -395,6 +412,7 @@
                                     stuff.style.display = "block"
                                 }
                                 userHeader.innerText = "Add a new Practitioner"
+                                userHeader2.innerText = "Practitioner Personal Details"
                                 userGroup.style.display = "block";
                                 userGroup.disabled = false;
                                 workTelDiv.style.display = 'block';
@@ -410,14 +428,20 @@
                                     stuff.style.display = "block"
                                 }
                                 userHeader.innerText = "Add a new Receptionist"
+                                userHeader2.innerText = "Receptionist Personal Details"
                                 userGroup.style.display = "block";
                                 userGroup.disabled = false;
                                 workTelDiv.style.display = 'block';
                                 workEmailDiv.style.display = 'block';
+                                counsellorTypeDiv.style.display = "none"
                             } else {
                                 userHeader.innerText = "Add a new User"
+                                userHeader2.innerText = "Personal Details"
                                 userGroup.style.display = "none";
                                 userGroup.disabled = true;
+                                workTelDiv.style.display = 'none';
+                                workEmailDiv.style.display = 'none';
+                                counsellorTypeDiv.style.display = "none"
                             }
                         });
 
@@ -426,16 +450,6 @@
                                 counsellorTypeDiv.style.display = "block"
                             } else {
                                 counsellorTypeDiv.style.display = "none"
-                            }
-                        });
-
-                        checkbox.addEventListener('change', function () {
-                            if (checkbox.checked) {
-                                workTelDiv.style.display = 'block';
-                                workEmailDiv.style.display = 'block';
-                            } else {
-                                workTelDiv.style.display = 'none';
-                                workEmailDiv.style.display = 'none';
                             }
                         });
 

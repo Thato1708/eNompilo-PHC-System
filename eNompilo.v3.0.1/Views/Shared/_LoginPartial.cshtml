@@ -8,12 +8,20 @@
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 @inject IHttpContextAccessor contextAccessor;
+@inject eNompilo.v3._0._1.Areas.Identity.Data.ApplicationDbContext _context
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 @{
-    int? patientId = contextAccessor.HttpContext.Session.GetInt32("PatientFileId");
-    int? adminId = contextAccessor.HttpContext.Session.GetInt32("AdminId");
+    int? userTypeId = null;
+    if(User.IsInRole(RoleConstants.Patient))
+        userTypeId = _context.tblPatient.Where(p => p.UserId == UserManager.GetUserId(User).ToString()).FirstOrDefault().Id;
+    else if(User.IsInRole(RoleConstants.Admin))
+        userTypeId = _context.tblAdmin.Where(p => p.UserId == UserManager.GetUserId(User).ToString()).FirstOrDefault().Id;
+    else if(User.IsInRole(RoleConstants.Practitioner))
+        userTypeId = _context.tblPractitioner.Where(p => p.UserId == UserManager.GetUserId(User).ToString()).FirstOrDefault().Id;
+    else if(User.IsInRole(RoleConstants.Receptionist))
+        userTypeId = _context.tblReceptionist.Where(p => p.UserId == UserManager.GetUserId(User).ToString()).FirstOrDefault().Id;
 }
 
 <ul class="navbar-nav">
@@ -35,11 +43,11 @@
                         }
                     else
                         {
-                            <img src="@("~/img/uploads/"+Model.PersonalDetails.ProfilePicture)" asp-append-version="true" class="rounded-circle me-2" style="width:36px;" />
+                            <img src="@("~/img/uploads/"+Model.PersonalDetails.ProfilePicture)" asp-append-version="true" class="rounded-circle me-2" style="width:36px; object-fit:cover;" />
                         } @UserManager.GetUserAsync(User).Result.Titles. @UserManager.GetUserAsync(User).Result.FirstName @UserManager.GetUserAsync(User).Result.LastName!</strong></a>
 
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                    <li><a class="dropdown-item nav-link nav-link-2 text-dark text-center" asp-controller="Users" asp-action="UserProfile" asp-route-id="@patientId" title="Manage"><strong>Dashboard</strong></a></li>
+                    <li><a class="dropdown-item nav-link nav-link-2 text-dark text-center" asp-controller="Users" asp-action="UserProfile" asp-route-id="@userTypeId" title="Manage"><strong>Dashboard</strong></a></li>
                     @* <li><a class="dropdown-item nav-link nav-link-2 text-dark text-center" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage"><strong>Account</strong></a></li> *@
                     <li class="nav-item">
                         <a class="dropdown-item nav-link nav-link-2 btn btn-link text-dark text-center" href="#" data-bs-toggle="modal" data-bs-target="#myModal"><strong>Logout</strong> <i class="bi bi-door-open-fill" style="color:red"></i></a>
@@ -58,12 +66,11 @@
                         }
                         else
                         {
-                            <img src="@("~/img/uploads/"+Model.Practitioner.ProfilePicture)" asp-append-version="true" class="rounded-circle me-2" style="width:36px;" alt="image not null" />
+                            <img src="@("~/img/uploads/"+Model.Practitioner.ProfilePicture)" asp-append-version="true" class="rounded-circle me-2" style="width:36px; object-fit:cover;" alt="image not null" />
                         } @UserManager.GetUserAsync(User).Result.Titles. @UserManager.GetUserAsync(User).Result.FirstName @UserManager.GetUserAsync(User).Result.LastName!</strong></a>
 
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                    <li><a class="dropdown-item nav-link nav-link-2 text-dark text-center" asp-controller="Home" asp-action="PractitionerDashboard" title="Manage"><strong>Dashboard</strong></a></li>
-                    <li><a class="dropdown-item nav-link nav-link-2 text-dark text-center" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage"><strong>Account</strong></a></li>
+                    <li><a class="dropdown-item nav-link nav-link-2 text-dark text-center" asp-controller="Users" asp-action="UserProfile" asp-route-id="@userTypeId" title="Manage"><strong>Dashboard</strong></a></li>
                     <li class="nav-item">
                         <a class="dropdown-item nav-link nav-link-2 btn btn-link text-dark text-center" href="#" data-bs-toggle="modal" data-bs-target="#myModal"><strong>Logout</strong> <i class="bi bi-door-open-fill" style="color:red"></i></a>
                     </li>
@@ -81,12 +88,11 @@
                         }
                         else
                         {
-                            <img src="@("~/img/uploads/"+Model.Admin.ProfilePicture)" asp-append-version="true" class="rounded-circle me-2" style="width:36px;" alt="image not null" />
+                            <img src="@("~/img/uploads/"+Model.Admin.ProfilePicture)" asp-append-version="true" class="rounded-circle me-2" style="width:36px; object-fit:cover;" alt="image not null" />
                         } @UserManager.GetUserAsync(User).Result.Titles. @UserManager.GetUserAsync(User).Result.FirstName @UserManager.GetUserAsync(User).Result.LastName!</strong></a>
 
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                    <li><a class="dropdown-item nav-link nav-link-2 text-dark text-center" asp-controller="Users" asp-action="UserProfile" asp-route-id="@adminId" title="Manage"><strong>Dashboard</strong></a></li>
-                    <li><a class="dropdown-item nav-link nav-link-2 text-dark text-center" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage"><strong>Account</strong></a></li>
+                    <li><a class="dropdown-item nav-link nav-link-2 text-dark text-center" asp-controller="Users" asp-action="UserProfile" asp-route-id="@userTypeId" title="Manage"><strong>Dashboard</strong></a></li>
                     <li class="nav-item">
                         <a class="dropdown-item nav-link nav-link-2 btn btn-link text-dark text-center" href="#" data-bs-toggle="modal" data-bs-target="#myModal"><strong>Logout</strong> <i class="bi bi-door-open-fill" style="color:red"></i></a>
                     </li>
@@ -104,12 +110,11 @@
 						}
 						else
 						{
-                            <img src="@("~/img/uploads/"+Model.Receptionist.ProfilePicture)" asp-append-version="true" class="rounded-circle me-2" style="width:36px;" alt="image not null" />
+                            <img src="@("~/img/uploads/"+Model.Receptionist.ProfilePicture)" asp-append-version="true" class="rounded-circle me-2" style="width:36px; object-fit:cover;" alt="image not null" />
 						} @UserManager.GetUserAsync(User).Result.Titles. @UserManager.GetUserAsync(User).Result.FirstName @UserManager.GetUserAsync(User).Result.LastName!</strong></a>
 
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                    <li><a class="dropdown-item nav-link nav-link-2 text-dark text-center" asp-controller="Home" asp-action="ReceptionistDashboard" title="Manage"><strong>Dashboard</strong></a></li>
-                    <li><a class="dropdown-item nav-link nav-link-2 text-dark text-center" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage"><strong>Account</strong></a></li>
+                    <li><a class="dropdown-item nav-link nav-link-2 text-dark text-center" asp-controller="Users" asp-action="UserProfile" asp-route-id="@userTypeId" title="Manage"><strong>Dashboard</strong></a></li>
                     <li class="nav-item">
                         <a class="dropdown-item nav-link nav-link-2 btn btn-link text-dark text-center" href="#" data-bs-toggle="modal" data-bs-target="#myModal"><strong>Logout</strong> <i class="bi bi-door-open-fill" style="color:red"></i></a>
                     </li>

@@ -19,14 +19,17 @@
 
     var user = _context.Users.Where(u => u.Id == UserManager.GetUserAsync(User).Result.Id).FirstOrDefault();
     var patient = _context.tblPersonalDetails.Where(p => p.Patient.UserId == user.Id).FirstOrDefault();
+    var admin = _context.tblAdmin.Where(p => p.UserId == user.Id).FirstOrDefault();
+    var practitioner = _context.tblPractitioner.Where(p => p.UserId == user.Id).FirstOrDefault();
+    var receptionist = _context.tblReceptionist.Where(p => p.UserId == user.Id).FirstOrDefault();
     var medicalHistory = _context.tblMedicalHistory.Where(p => p.Patient.UserId == user.Id).FirstOrDefault();
     var generalAppointments = _context.tblGeneralAppointment.Where(p => p.Patient.UserId == user.Id).FirstOrDefault();
     var counsellingAppointments = _context.tblCounsellingAppointment.Where(p => p.Patient.UserId == user.Id).FirstOrDefault();
     var familyPlanningAppointments = _context.tblFamilyPlanningAppointment.Where(p => p.Patient.UserId == user.Id).FirstOrDefault();
     var vaccinationAppointments = _context.tblVaccinationAppointment.Where(p => p.Patient.UserId == user.Id).FirstOrDefault();
 
-    var dayOfLastLogin = (DateTime.UtcNow - user.LastLogin).Days;
-    var patientAge = 0;
+    var dayOfLastLogin = (DateTime.UtcNow - user.CreatedOn).Days;
+    var userTypeAge = 0;
 
     if (User.IsInRole(RoleConstants.Patient))
     {
@@ -38,7 +41,7 @@
         {
             profilePicture = "~/img/uploads/DefaultProfilePicture.png";
         }
-        patientAge = (DateTime.Now.Subtract(Convert.ToDateTime(patient.DOB)).Days) / 365;
+        userTypeAge = (DateTime.Now.Subtract(Convert.ToDateTime(patient.DOB)).Days) / 365;
     }
     else if (User.IsInRole(RoleConstants.Admin))
     {
@@ -50,6 +53,7 @@
         {
             profilePicture = "~/img/uploads/DefaultProfilePicture.png";
         }
+        userTypeAge = (DateTime.Now.Subtract(Convert.ToDateTime(admin.DOB)).Days) / 365;
     }
     else if (User.IsInRole(RoleConstants.Practitioner))
     {
@@ -61,6 +65,7 @@
         {
             profilePicture = "~/img/uploads/DefaultProfilePicture.png";
         }
+        userTypeAge = (DateTime.Now.Subtract(Convert.ToDateTime(practitioner.DOB)).Days) / 365;
     }
     else if (User.IsInRole(RoleConstants.Receptionist))
     {
@@ -73,6 +78,7 @@
 
             profilePicture = "~/img/uploads/DefaultProfilePicture.png";
         }
+        userTypeAge = (DateTime.Now.Subtract(Convert.ToDateTime(receptionist.DOB)).Days) / 365;
 
     }
 }
@@ -99,18 +105,18 @@
                                 }
                                 else
                                 {
-                                    <img src="@("~/img/uploads/"+profilePicture)" asp-append-version="true" class="rounded-circle me-2" style="width:200px;" />
+                                    <img src="@("~/img/uploads/"+profilePicture)" asp-append-version="true" class="rounded-circle me-2" style="width:200px; object-fit:cover;" />
                                 }
                             </span>
                         </th>
                         <th colspan="3">
-                            <h4>Patient</h4>
+                            <h4>@UserManager.GetUserAsync(User).Result.UserRole</h4>
                         </th>
                     </tr>
                     <tr>
                         <td>@UserManager.GetUserAsync(User).Result.IdNumber</td>
                         <td>@UserManager.GetUserAsync(User).Result.PhoneNumber</td>
-                        <td>Last Visit</td>
+                        <td>Days Since Account Created</td>
                     </tr>
                     <tr>
                         <td>@fullname</td>
@@ -119,7 +125,7 @@
                     </tr>
                     <tr>
                         <td>@_context.tblPersonalDetails.Where(p=>p.Patient.UserId == UserManager.GetUserAsync(User).Result.Id).FirstOrDefault().Gender</td>
-                        <td colspan="2">@patientAge</td>
+                        <td colspan="2">@userTypeAge</td>
                     </tr>
                     <tr><td colspan="4"><!--Just for empty Space between header and body--></td></tr>
                     <tr><td colspan="4"><!--Just for empty Space between header and body--></td></tr>
@@ -226,18 +232,18 @@
                                 }
                                 else
                                 {
-                                    <img src="@("~/img/uploads/"+profilePicture)" asp-append-version="true" class="rounded-circle me-2" style="width:175px;" />
+                                    <img src="@("~/img/uploads/"+profilePicture)" asp-append-version="true" class="rounded-circle me-2" style="width:175px; object-fit:cover;" />
                                 }
                             </span>
                         </th>
                         <th colspan="3">
-                            <h4>Admin</h4>
+                            <h4>@UserManager.GetUserAsync(User).Result.UserRole</h4>
                         </th>
                     </tr>
                     <tr>
                         <td>@UserManager.GetUserAsync(User).Result.IdNumber</td>
                         <td>@UserManager.GetUserAsync(User).Result.PhoneNumber</td>
-                        <td>Last Visit</td>
+                        <td>Days Since Account Created</td>
                     </tr>
                     <tr>
                         <td>@fullname</td>
@@ -245,8 +251,8 @@
                         <td>@dayOfLastLogin days ago</td>
                     </tr>
                     <tr>
-                        <td>Gender?</td>
-                        <td colspan="2">Age?</td>
+                        <td>@admin.Gender</td>
+						<td colspan="2">@userTypeAge</td>
                     </tr>
                     <tr><td colspan="4"><!--Just for empty Space between header and body--></td></tr>
                     <tr><td colspan="4"><!--Just for empty Space between header and body--></td></tr>
@@ -255,6 +261,133 @@
                 <tbody>
                     <tr>
                         <td></td>
+                    </tr>
+                </tbody>
+            </table>
+
+        }
+        else if (User.IsInRole(RoleConstants.Practitioner))
+        {
+            <table class="table table-borderless">
+                <thead style="font-size: 1.125rem;" class="table">
+                    <tr><td colspan="4"><!--Just for empty Space between header and body--></td></tr>
+                    <tr><td colspan="4"><!--Just for empty Space between header and body--></td></tr>
+                    <tr>
+                        <th rowspan="4">
+                            <span class="d-flex justify-content-center align-items-center">
+                                @if (profilePicture == "~/img/uploads/DefaultProfilePicture.png" || profilePicture == null || profilePicture == "")
+                                {
+                                    <img src="~/img/uploads/DefaultProfilePicture.png" style="width:200px;" class="rounded-circle me-2">
+                                }
+                                else
+                                {
+                                    <img src="@("~/img/uploads/"+profilePicture)" asp-append-version="true" class="rounded-circle me-2" style="width:200px; object-fit:cover;" />
+                                }
+                            </span>
+                        </th>
+                        <th colspan="3">
+                            <h4>@UserManager.GetUserAsync(User).Result.UserRole</h4>
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>@UserManager.GetUserAsync(User).Result.IdNumber</td>
+                        <td>@UserManager.GetUserAsync(User).Result.PhoneNumber</td>
+                        <td>Days Since Account Created</td>
+                    </tr>
+                    <tr>
+                        <td>@fullname</td>
+                        <td>@UserManager.GetUserAsync(User).Result.Email</td>
+                        <td>@dayOfLastLogin days ago</td>
+                    </tr>
+                    <tr>
+                        <td>@practitioner.Gender</td>
+                        <td colspan="2">@userTypeAge</td>
+                    </tr>
+                    <tr><td colspan="4"><!--Just for empty Space between header and body--></td></tr>
+                    <tr><td colspan="4"><!--Just for empty Space between header and body--></td></tr>
+                </thead>
+                <tbody>
+                    <tr><td colspan="4"><!--Just for empty Space between header and body--></td></tr>
+                    <tr><td colspan="4"><!--Just for empty Space between header and body--></td></tr>
+                    <tr>
+                        <td colspan="2">
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th colspan="2">Personal Details</th>
+                                    </tr>
+                                </thead>
+                                @*<tbody>
+                                    <tr><td>Full Name: </td><td>@fullname</td></tr>
+                                    <tr><td>Date of Birth: </td><td>@Convert.ToDateTime(patient.DOB).ToString("dd MMM yyyy")</td></tr>
+                                    <tr>
+                                        @if (patient.Employed == true)
+                                        {
+                                            <td>Employment Status: </td>
+                                            <td>Employed</td>
+                                        }
+                                        else
+                                        {
+                                            <td>Employment Status: </td>
+                                            <td>Unemployed</td>
+                                        }
+                                    </tr>
+                                    @if (patient.WorkEmail != null)
+                                    {
+                                        <tr><td>Work Email: </td><td>@patient.WorkEmail</td></tr>
+                                    }
+                                    @if (patient.WorkTel != null)
+                                    {
+                                        <tr><td>Work Tel: </td><td>@patient.WorkTel</td></tr>
+                                    }
+                                </tbody>*@
+                            </table>
+                        </td>
+                        <td colspan="2">
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th colspan="2">Medical History</th>
+                                    </tr>
+                                </thead>
+                                @*<tbody>
+                                    <tr><td>Previous Diagnosis</td><td>@medicalHistory.PreviousDiagnoses</td></tr>
+                                    <tr><td>Previous Medication</td><td>@medicalHistory.PreviousMedication</td></tr>
+                                    <tr><td>General Allergies</td><td>@medicalHistory.GeneralAllergies</td></tr>
+                                    <tr><td>Medical Allergies</td><td>@medicalHistory.MedicationAllergies</td></tr>
+                                </tbody>*@
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th colspan="2">Appointment History</th>
+                                    </tr>
+                                </thead>
+                                @*<tbody>
+                                    <tr>
+                                        <td></td>
+                                    </tr>
+                                </tbody>*@
+                            </table>
+                        </td>
+                        <td colspan="2">
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th colspan="2">Diagnosis & Medication</th>
+                                    </tr>
+                                </thead>
+                                @*<tbody>
+                                    <tr>
+                                        <td></td>
+                                    </tr>
+                                </tbody>*@
+                            </table>
+                        </td>
                     </tr>
                 </tbody>
             </table>

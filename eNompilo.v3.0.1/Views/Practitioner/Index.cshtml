@@ -1,13 +1,19 @@
 ﻿@using Microsoft.AspNetCore.Identity;
 @using eNompilo.v3._0._1.Constants;
 @using eNompilo.v3._0._1.Models.SystemUsers;
+@using System.Threading.Tasks;
 @inject SignInManager<ApplicationUser> SignInManager;
+@inject eNompilo.v3._0._1.Areas.Identity.Data.ApplicationDbContext _context
 
 @model IEnumerable<eNompilo.v3._0._1.Models.SystemUsers.Practitioner>
 
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+    var counsellor = new Practitioner();
+    var doctor = new Practitioner();
+    var nurse = new Practitioner();
+    var receptionist = new Practitioner();
 }
 
 <div id="example" > 
@@ -23,7 +29,7 @@
         }
 
     }
-    <table id="dtPractitioner" class="table table-striped" style="margin-left:auto;margin-right:auto;">
+@*     <table id="dtPractitioner" class="table table-striped" style="margin-left:auto;margin-right:auto;">
         <thead>
             <tr>
                 <th>
@@ -39,8 +45,9 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model)
+            @foreach (var item in Model.Where(x=>x.PractitionerType == PractitionerType.Counsellor))
             {
+
                 <tr>
                     <td>
                         @Html.DisplayFor(modelItem => item.Users.Titles) @Html.DisplayFor(modelItem => item.Users.FirstName) @Html.DisplayFor(modelItem => item.Users.MiddleName) @Html.DisplayFor(modelItem => item.Users.LastName)
@@ -58,6 +65,165 @@
                     </td>
                 </tr>
             }
+        </tbody>
+    </table> *@
+
+
+
+    <table id="dtPractitioner" class="table table-striped" style="margin-left:auto;margin-right:auto;">
+        <thead>
+            <tr>
+                <th>Full Staff Table</th>
+            </tr>
+        </thead>
+        <tbody>
+            @*COUNSELLOR DETAILS*@
+            <tr>
+                <td>
+                    <table>
+                        <thead>
+                            <tr><th>Counsellor Details</th></tr>
+                            <tr>
+                                <th>
+                                    Full Name
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.CounsellorType)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Users.Email)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Users.PhoneNumber)
+                                </th>
+                            </tr>
+                        </thead>
+                        @foreach (var item in Model.Where(x => x.PractitionerType == PractitionerType.Counsellor))
+                        {
+                            <tr>
+                                @counsellor = @_context.tblPractitioner.Where(x=>x.UserId == item.UserId).FirstOrDefault();
+                                <td>
+                                    @counsellor.Users.FirstName @try { @counsellor.Users.MiddleName} catch (NullReferenceException) { } @counsellor.Users.LastName (@counsellor.Users.Titles)
+                                </td>
+                                <td>
+                                    @item.CounsellorType
+                                </td>
+                                <td>
+                                    @counsellor.Users.Email
+                                </td>
+                                <td>
+                                    @counsellor.Users.PhoneNumber
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                </td>
+            </tr>
+            @*NURSE DETAILS*@
+            <tr>
+                <td>
+                    <table>
+                        <thead>
+                            <tr><th>Nurse Details</th></tr>
+                            <tr>
+                                <th>
+                                    Full Name
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Users.Email)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Users.PhoneNumber)
+                                </th>
+                            </tr>
+                        </thead>
+                        @foreach (var item in Model.Where(x => x.PractitionerType == PractitionerType.Nurse))
+                        {
+                            <tr>
+                                <td>
+                                    @item.Users.FirstName @try { @item.Users.MiddleName} catch (NullReferenceException) { } @item.Users.LastName (@item.Users.Titles)
+                                </td>
+                                <td>
+                                    @item.Users.Email
+                                </td>
+                                <td>
+                                    @item.Users.PhoneNumber
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                </td>
+            </tr>
+            @*DOCTOR DETAILS*@
+            <tr>
+                <td>
+                    <table>
+                        <thead>
+                            <tr><th>Doctor Details</th></tr>
+                            <tr>
+                                <th>
+                                    Full Name
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Users.Email)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Users.PhoneNumber)
+                                </th>
+                            </tr>
+                        </thead>
+                        @foreach (var item in Model.Where(x => x.PractitionerType == PractitionerType.Doctor))
+                        {
+                            <tr>
+                                <td>
+                                    @item.Users.FirstName @try { @item.Users.MiddleName} catch (NullReferenceException) { } @item.Users.LastName (@item.Users.Titles)
+                                </td>
+                                <td>
+                                    @item.Users.Email
+                                </td>
+                                <td>
+                                    @item.Users.PhoneNumber
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                </td>
+            </tr>
+            @*RECEPTIONIST DETAILS*@
+            <tr>
+                <td>
+                    <table>
+                        <thead>
+                            <tr><th>Receptionist Details</th></tr>
+                            <tr>
+                                <th>
+                                    Full Name
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Users.Email)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Users.PhoneNumber)
+                                </th>
+                            </tr>
+                        </thead>
+                        @foreach (var item in Model.Where(x => x.PractitionerType == PractitionerType.Counsellor))
+                        {
+                            <tr>
+                                <td>
+                                    @item.Users.FirstName @try { @item.Users.MiddleName} catch (NullReferenceException) { } @item.Users.LastName (@item.Users.Titles)
+                                </td>
+                                <td>
+                                    @item.Users.Email
+                                </td>
+                                <td>
+                                    @item.Users.PhoneNumber
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                </td>
+            </tr>
         </tbody>
     </table>
 

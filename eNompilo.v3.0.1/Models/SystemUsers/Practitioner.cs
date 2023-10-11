@@ -96,6 +96,6 @@ namespace eNompilo.v3._0._1.Models.SystemUsers
 
         [Required]
         public bool Archived { get; set; }
-        public ApplicationUser Users { get; set; }
+        public virtual ApplicationUser? Users { get; set; }
     }
 }

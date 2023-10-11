@@ -75,16 +75,19 @@
         <tbody>
             @*COUNSELLOR DETAILS*@
             <tr>
-                <td>
-                    <table>
+                <td colspan="3">
+                    <table class="table" width="100%">
                         <thead>
-                            <tr><th>Counsellor Details</th></tr>
+							<tr><th><h5>Counsellor Details</h5></th></tr>
                             <tr>
                                 <th>
                                     Full Name
                                 </th>
                                 <th>
                                     @Html.DisplayNameFor(model => model.CounsellorType)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.PractitionerType)
                                 </th>
                                 <th>
                                     @Html.DisplayNameFor(model => model.Users.Email)
@@ -94,20 +97,23 @@
                                 </th>
                             </tr>
                         </thead>
-                        @foreach (var item in Model.Where(x => x.PractitionerType == PractitionerType.Counsellor))
-                        {
+                        @foreach (var item in Model@* .Where(x => x.PractitionerType == PractitionerType.Counsellor) *@)
+                        {   
                             <tr>
                                 <td>
-                                    @item.Users.FirstName @item.Users.MiddleName @item.Users.LastName (@item.Users.Titles))
+                                    @Html.DisplayFor(modelItem => item.Users.FirstName) @Html.DisplayFor(modelItem => item.Users.MiddleName) @Html.DisplayFor(modelItem => item.Users.LastName) (@Html.DisplayFor(modelItem => item.Users.Titles))
                                 </td>
                                 <td>
-                                    @item.CounsellorType
+                                    @item.PractitionerType
                                 </td>
                                 <td>
-                                    @item.Users.Email)
+                                    @if (item.PractitionerType != PractitionerType.Counsellor) { <span>Is not a Counsellor</span>}else {@item.CounsellorType}
                                 </td>
                                 <td>
-                                    @item.Users.PhoneNumber)
+                                    @Html.DisplayFor(modelItem => item.Users.Email)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Users.PhoneNumber)
                                 </td>
                             </tr>
                         }
@@ -115,13 +121,13 @@
                 </td>
             </tr>
             @*NURSE DETAILS*@
-            <tr>
-                <td>
-                    <table>
+            @* <tr>
+                <td colspan="3">
+                    <table class="table" width="100%">
                         <thead>
-                            <tr><th>Nurse Details</th></tr>
+							<tr><th><h5>Nurse Details</h5></th></tr>
                             <tr>
-                                <th>
+                                <th colspan="2">
                                     Full Name
                                 </th>
                                 <th>
@@ -135,7 +141,7 @@
                         @foreach (var item in Model.Where(x => x.PractitionerType == PractitionerType.Nurse))
                         {
                             <tr>
-                                <td>
+                                <td colspan="2">
                                     @Html.DisplayFor(modelItem => item.Users.FirstName) @Html.DisplayFor(modelItem => item.Users.MiddleName) @Html.DisplayFor(modelItem => item.Users.LastName) (@Html.DisplayFor(modelItem => item.Users.Titles))
                                 </td>
                                 <td>
@@ -150,13 +156,13 @@
                 </td>
             </tr>
             @*DOCTOR DETAILS*@
-            <tr>
-                <td>
-                    <table>
+            @*<tr>
+                <td colspan="3">
+                    <table class="table" width="100%">
                         <thead>
-                            <tr><th>Doctor Details</th></tr>
+							<tr><th><h5>Doctor Details</h5></th></tr>
                             <tr>
-                                <th>
+                                <th colspan="2">
                                     Full Name
                                 </th>
                                 <th>
@@ -170,7 +176,7 @@
                         @foreach (var item in Model.Where(x => x.PractitionerType == PractitionerType.Doctor))
                         {
                             <tr>
-                                <td>
+                                <td colspan="2">
                                     @Html.DisplayFor(modelItem => item.Users.FirstName) @Html.DisplayFor(modelItem => item.Users.MiddleName) @Html.DisplayFor(modelItem => item.Users.LastName) (@Html.DisplayFor(modelItem => item.Users.Titles))
                                 </td>
                                 <td>
@@ -183,42 +189,7 @@
                         }
                     </table>
                 </td>
-            </tr>
-            @*RECEPTIONIST DETAILS*@
-            <tr>
-                <td>
-                    <table>
-                        <thead>
-                            <tr><th>Receptionist Details</th></tr>
-                            <tr>
-                                <th>
-                                    Full Name
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.Users.Email)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.Users.PhoneNumber)
-                                </th>
-                            </tr>
-                        </thead>
-                        @foreach (var item in Model.Where(x => x.PractitionerType == PractitionerType.Counsellor))
-                        {
-                            <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Users.FirstName) @Html.DisplayFor(modelItem => item.Users.MiddleName) @Html.DisplayFor(modelItem => item.Users.LastName) (@Html.DisplayFor(modelItem => item.Users.Titles))
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Users.Email)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Users.PhoneNumber)
-                                </td>
-                            </tr>
-                        }
-                    </table>
-                </td>
-            </tr>
+            </tr> *@
         </tbody>
     </table>
 

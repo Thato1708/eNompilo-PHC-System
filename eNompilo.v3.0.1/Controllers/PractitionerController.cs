@@ -1,6 +1,7 @@
 ﻿using eNompilo.v3._0._1.Areas.Identity.Data;
 using eNompilo.v3._0._1.Models;
 using eNompilo.v3._0._1.Models.SystemUsers;
+using eNompilo.v3._0._1.Models.ViewModels;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -21,7 +22,7 @@ namespace eNompiloCounselling.Controllers
         }
         public IActionResult Index()
         {
-            var objList = dbContext.tblPractitioner.Include(x=>x.Users).Where(x=>x.Users.Id == x.UserId).ToList();
+            IEnumerable<Practitioner> objList = dbContext.tblPractitioner.Include(c=>c.Users);
             return View(objList);
         }
 

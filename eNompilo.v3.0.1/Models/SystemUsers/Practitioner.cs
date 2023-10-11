@@ -12,7 +12,7 @@ namespace eNompilo.v3._0._1.Models.SystemUsers
         public int Id { get; set; }
 
         [Required]
-        [ForeignKey("User")]
+        [ForeignKey("Users")]
         public string UserId { get; set; }
 
         [PersonalData]

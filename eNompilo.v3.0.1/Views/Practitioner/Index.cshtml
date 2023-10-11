@@ -10,10 +10,6 @@
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_DashboardLayout.cshtml";
-    var counsellor = new Practitioner();
-    var doctor = new Practitioner();
-    var nurse = new Practitioner();
-    var receptionist = new Practitioner();
 }
 
 <div id="example" > 
@@ -101,18 +97,17 @@
                         @foreach (var item in Model.Where(x => x.PractitionerType == PractitionerType.Counsellor))
                         {
                             <tr>
-                                @counsellor = @_context.tblPractitioner.Where(x=>x.UserId == item.UserId).FirstOrDefault();
                                 <td>
-                                    @counsellor.Users.FirstName @try { @counsellor.Users.MiddleName} catch (NullReferenceException) { } @counsellor.Users.LastName (@counsellor.Users.Titles)
+                                    @item.Users.FirstName @item.Users.MiddleName @item.Users.LastName (@item.Users.Titles))
                                 </td>
                                 <td>
                                     @item.CounsellorType
                                 </td>
                                 <td>
-                                    @counsellor.Users.Email
+                                    @item.Users.Email)
                                 </td>
                                 <td>
-                                    @counsellor.Users.PhoneNumber
+                                    @item.Users.PhoneNumber)
                                 </td>
                             </tr>
                         }
@@ -141,13 +136,13 @@
                         {
                             <tr>
                                 <td>
-                                    @item.Users.FirstName @try { @item.Users.MiddleName} catch (NullReferenceException) { } @item.Users.LastName (@item.Users.Titles)
+                                    @Html.DisplayFor(modelItem => item.Users.FirstName) @Html.DisplayFor(modelItem => item.Users.MiddleName) @Html.DisplayFor(modelItem => item.Users.LastName) (@Html.DisplayFor(modelItem => item.Users.Titles))
                                 </td>
                                 <td>
-                                    @item.Users.Email
+                                    @Html.DisplayFor(modelItem => item.Users.Email)
                                 </td>
                                 <td>
-                                    @item.Users.PhoneNumber
+                                    @Html.DisplayFor(modelItem => item.Users.PhoneNumber)
                                 </td>
                             </tr>
                         }
@@ -176,13 +171,13 @@
                         {
                             <tr>
                                 <td>
-                                    @item.Users.FirstName @try { @item.Users.MiddleName} catch (NullReferenceException) { } @item.Users.LastName (@item.Users.Titles)
+                                    @Html.DisplayFor(modelItem => item.Users.FirstName) @Html.DisplayFor(modelItem => item.Users.MiddleName) @Html.DisplayFor(modelItem => item.Users.LastName) (@Html.DisplayFor(modelItem => item.Users.Titles))
                                 </td>
                                 <td>
-                                    @item.Users.Email
+                                    @Html.DisplayFor(modelItem => item.Users.Email)
                                 </td>
                                 <td>
-                                    @item.Users.PhoneNumber
+                                    @Html.DisplayFor(modelItem => item.Users.PhoneNumber)
                                 </td>
                             </tr>
                         }
@@ -211,13 +206,13 @@
                         {
                             <tr>
                                 <td>
-                                    @item.Users.FirstName @try { @item.Users.MiddleName} catch (NullReferenceException) { } @item.Users.LastName (@item.Users.Titles)
+                                    @Html.DisplayFor(modelItem => item.Users.FirstName) @Html.DisplayFor(modelItem => item.Users.MiddleName) @Html.DisplayFor(modelItem => item.Users.LastName) (@Html.DisplayFor(modelItem => item.Users.Titles))
                                 </td>
                                 <td>
-                                    @item.Users.Email
+                                    @Html.DisplayFor(modelItem => item.Users.Email)
                                 </td>
                                 <td>
-                                    @item.Users.PhoneNumber
+                                    @Html.DisplayFor(modelItem => item.Users.PhoneNumber)
                                 </td>
                             </tr>
                         }

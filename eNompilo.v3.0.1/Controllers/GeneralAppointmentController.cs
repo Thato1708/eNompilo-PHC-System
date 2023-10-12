@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace eNompiloCounselling.Controllers
 {
+    [Authorize]
     public class GeneralAppointmentController : Controller
     {
         private readonly ApplicationDbContext dbContext;

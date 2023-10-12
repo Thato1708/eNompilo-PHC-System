@@ -15,7 +15,10 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.R
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews().AddRazorPagesOptions(options =>
+{
+    options.Conventions.AddAreaPageRoute("","/Login/AppUser", "");
+});
 
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
@@ -43,6 +46,11 @@ catch (Exception ex)
     var logger = loggerFactory.CreateLogger<Program>();
     logger.LogError(ex, "An error occured seeding the DB.");
 }
+
+//builder.Services.ConfigureApplicationCookie(options =>
+//{
+//    options.LoginPath = "~/Login/AppUser";
+//});
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

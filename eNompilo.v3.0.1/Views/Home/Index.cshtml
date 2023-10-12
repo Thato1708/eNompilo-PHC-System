@@ -32,7 +32,7 @@
                     <img src="~/img/carousel/carousel-3.jpg" class="caro-img d-block w-100" alt="..." loading="lazy">
                 </div>
                 <div class="carousel-caption d-none d-md-block" style="z-index: 1; font-size: 32px;">
-                    @if (SignInManager.IsSignedIn(User) && User.IsInRole(RoleConstants.Patient))
+                    @if (!SignInManager.IsSignedIn(User) || User.IsInRole(RoleConstants.Patient))
                     {
                         <a asp-area="" asp-controller="GeneralAppointment" asp-action="Book" class="btn btn-primary" style="font-size: 24px;">Book Now</a>
                     }
@@ -40,10 +40,10 @@
                     {
                         //Should be nothing
                     }
-                    else
+                    @* else
                     {
                         <a asp-controller="Register" asp-action="Patient" class="btn btn-primary" role="button" aria-pressed="true" style="font-size: 24px;">Register</a>
-                    }
+                    } *@
                 </div>
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">

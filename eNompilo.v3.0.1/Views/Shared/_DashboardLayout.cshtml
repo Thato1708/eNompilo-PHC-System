@@ -3,6 +3,7 @@
 @using eNompilo.v3._0._1.Models.SystemUsers;
 @using eNompilo.v3._0._1.Constants;
 @using eNompilo.v3._0._1.Models.ViewModels;
+@inject eNompilo.v3._0._1.Areas.Identity.Data.ApplicationDbContext _context
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 @inject IHttpContextAccessor contextAccessor;
@@ -27,8 +28,19 @@
     <div>
         <div class='dashboard'>
             @{
-                int? patientId = contextAccessor.HttpContext.Session.GetInt32("PatientFileId");
-                int? adminId = contextAccessor.HttpContext.Session.GetInt32("AdminId");
+
+                var user = _context.Users.Where(u => u.Id == UserManager.GetUserAsync(User).Result.Id).FirstOrDefault();
+                int? adminId = null;
+                int? patientId = null;
+                if (User.IsInRole(RoleConstants.Admin) == true)
+                {
+                    adminId = _context.tblAdmin.Where(a => a.UserId == user.Id).FirstOrDefault().Id;
+                }
+                else if(User.IsInRole(RoleConstants.Patient) == true)
+                {
+                    patientId = _context.tblPatient.Where(p=>p.UserId == user.Id).FirstOrDefault().Id;
+                }
+                
             }
             @if (User.IsInRole(RoleConstants.Patient))
             {
@@ -171,7 +183,7 @@
                                 <a asp-controller="Users" asp-action="CreateUser" class="dashboard-nav-dropdown-item">Create User</a>
                                 <a asp-controller="Users" asp-action="Index" class="dashboard-nav-dropdown-item">All System Users</a>
                                 <a asp-controller="Patient" asp-action="Index" class="dashboard-nav-dropdown-item">Patient Users</a>
-                                <a asp-controller="Practitoner" asp-action="Index" class="dashboard-nav-dropdown-item">Practitioner Users</a>
+                                <a asp-controller="Practitioner" asp-action="Index" class="dashboard-nav-dropdown-item">Practitioner Users</a>
                             </div>
                         </div>
 

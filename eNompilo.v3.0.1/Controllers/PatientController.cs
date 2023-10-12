@@ -117,7 +117,7 @@ namespace eNompiloCounselling.Controllers
                 //string fileName = Path.GetFileNameWithoutExtension(model.ProfilePictureImageFile.FileName);
                 string fileName = _userManager.GetUserAsync(User).Result.FirstName.ToLower() + "_" + _userManager.GetUserAsync(User).Result.FirstName.ToLower();
                 string ext = Path.GetExtension(model.ProfilePictureImageFile.FileName);
-                model.ProfilePicture = fileName = fileName + "_" + DateTime.Now.ToString("ddMMMyyyyHHmmss") + ext;
+                model.ProfilePicture = fileName = fileName + "_" + DateTime.Now.ToString("ddMMyyyyHHmmss") + ext;
                 string path = Path.Combine(wwwRootPath + "/img/uploads/", fileName);
                 using (var fileStream = new FileStream(path, FileMode.Create))
                 {

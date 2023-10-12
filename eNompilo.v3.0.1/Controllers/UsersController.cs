@@ -75,7 +75,7 @@ namespace eNompilo.v3._0._1.Controllers
 				//string fileName = Path.GetFileNameWithoutExtension(model.ProfilePictureImageFile.FileName);
 				string fileName = model.FirstName.ToLower().ToString() + "_" + model.LastName.ToLower().ToString();
 				string ext = Path.GetExtension(model.ProfilePictureImageFile.FileName);
-				model.ProfilePicture = fileName = fileName + "_" + DateTime.Now.ToString("ddMMMyyyyHHmmss") + ext;
+				model.ProfilePicture = fileName = fileName + "_" + DateTime.Now.ToString("ddMMyyyyHHmmss") + ext;
 				string path = Path.Combine(wwwRootPath + "/img/uploads", fileName);
 				using (var fileStream = new FileStream(path, FileMode.Create))
 				{
@@ -88,7 +88,7 @@ namespace eNompilo.v3._0._1.Controllers
 				//string fileName = Path.GetFileNameWithoutExtension(model.ProfilePictureImageFile.FileName);
 				string fileName = model.FirstName.ToLower().ToString() + "_" + model.LastName.ToLower().ToString();
 				string ext = Path.GetExtension(model.ProfilePictureImageFile.FileName);
-				model.ProfilePicture = fileName = fileName + "_" + DateTime.Now.ToString("ddMMMyyyyHHmmss") + ext;
+				model.ProfilePicture = fileName = fileName + "_" + DateTime.Now.ToString("ddMMyyyyHHmmss") + ext;
 				string path = Path.Combine(wwwRootPath + "/img/uploads", fileName);
 				using (var fileStream = new FileStream(path, FileMode.Create))
 				{
@@ -101,7 +101,7 @@ namespace eNompilo.v3._0._1.Controllers
 				//string fileName = Path.GetFileNameWithoutExtension(model.ProfilePictureImageFile.FileName);
 				string fileName = model.FirstName.ToLower().ToString() + "_" + model.LastName.ToLower().ToString();
 				string ext = Path.GetExtension(model.ProfilePictureImageFile.FileName);
-				model.ProfilePicture = fileName = fileName + "_" + DateTime.Now.ToString("ddMMMyyyyHHmmss") + ext;
+				model.ProfilePicture = fileName = fileName + "_" + DateTime.Now.ToString("ddMMyyyyHHmmss") + ext;
 				string path = Path.Combine(wwwRootPath + "/img/uploads", fileName);
 				using (var fileStream = new FileStream(path, FileMode.Create))
 				{
@@ -114,7 +114,7 @@ namespace eNompilo.v3._0._1.Controllers
 				//string fileName = Path.GetFileNameWithoutExtension(model.ProfilePictureImageFile.FileName);
 				string fileName = model.FirstName.ToLower().ToString() + "_" + model.LastName.ToLower().ToString();
 				string ext = Path.GetExtension(model.ProfilePictureImageFile.FileName);
-				model.ProfilePicture = fileName = fileName + "_" + DateTime.Now.ToString("ddMMMyyyyHHmmss") + ext;
+				model.ProfilePicture = fileName = fileName + "_" + DateTime.Now.ToString("ddMMyyyyHHmmss") + ext;
 				string path = Path.Combine(wwwRootPath + "/img/uploads", fileName);
 				using (var fileStream = new FileStream(path, FileMode.Create))
 				{

@@ -129,7 +129,8 @@
         <li class="nav-item dropdown btn-group d-xs-flex justify-content-center">
             <a class="nav-link text-dark dropdown-toggle" id="navbarDropdownMenuLink" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user-circle-o font-a-icon" style="font-size:30px; color:#1e36cc;" aria-hidden="true"></i></a>
             <ul class="dropdown-menu position-absolute user-dropdown border-0" style="right:0;left:auto;">
-                <li><a class="dropdown-item" asp-area="Identity" asp-page="/Account/Login"><i class="fa fa-sign-in nav-link nav-link-2" style="color:#1e36cc;" aria-hidden="true"></i><strong>Login</strong> </a></li>
+                @*<li><a class="dropdown-item" asp-area="Identity" asp-page="/Account/Login"><i class="fa fa-sign-in nav-link nav-link-2" style="color:#1e36cc;" aria-hidden="true"></i><strong>Login</strong> </a></li>*@
+                <li><a class="dropdown-item" asp-controller="Login" asp-action="AppUser"><i class="fa fa-sign-in nav-link nav-link-2" style="color:#1e36cc;" aria-hidden="true"></i><strong>Login</strong> </a></li>
                 <li><a class="dropdown-item" asp-controller="Register" asp-action="Patient"><i class="fa fa-user-plus nav-link nav-link-2" style="color:#1e36cc;" aria-hidden="true"></i><strong>Register</strong> </a></li>
             </ul>
         </li>

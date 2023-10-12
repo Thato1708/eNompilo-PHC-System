@@ -15,10 +15,11 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.R
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
 // Add services to the container.
-builder.Services.AddControllersWithViews().AddRazorPagesOptions(options =>
-{
-    options.Conventions.AddAreaPageRoute("","/Login/AppUser", "");
-});
+builder.Services.AddControllersWithViews();
+//builder.Services.AddControllersWithViews().AddRazorPagesOptions(options =>
+//{
+//    options.Conventions.AddPageRoute("/Login/AppUser","/Login/AppUser");
+//});
 
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 

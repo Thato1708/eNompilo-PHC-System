@@ -5,6 +5,7 @@
 *, *::before, *::after {
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
+    /*outline: 3px solid red !important;*/
 }
 
 html {
@@ -71,7 +72,7 @@ h1, .h1 {
     font-weight: normal;
 }
 
-.card {
+.dash-card {
     position: relative;
     display: -webkit-box;
     display: -webkit-flex;
@@ -90,7 +91,7 @@ h1, .h1 {
     border-radius: 0;
 }
 
-.card-body {
+.dash-card-body {
     -webkit-box-flex: 1;
     -webkit-flex: 1 1 auto;
     -ms-flex: 1 1 auto;
@@ -98,7 +99,7 @@ h1, .h1 {
     padding: 1.25rem;
 }
 
-.card-header {
+.dash-card-header {
     padding: 0.75rem 1.25rem;
     margin-bottom: 0;
     background-color: rgba(0, 0, 0, 0.03);
@@ -140,7 +141,7 @@ h1, .h1 {
 }
 
 .dashboard-nav {
-    min-width: 238px;
+    min-width: 245px;
     position: fixed;
     left: 0;
     top: 0;
@@ -171,7 +172,6 @@ h1, .h1 {
 }
 
     .dashboard-nav header .menu-toggle {
-        display: none;
         margin-right: auto;
     }
 
@@ -352,7 +352,10 @@ h1, .h1 {
     -webkit-justify-content: center;
     -ms-flex-pack: center;
     justify-content: center;
-    color: #443ea2;
+    padding: 8px 27px;
+    position: fixed;
+    top: 0;
+    left: 19%;
 }
 
     .menu-toggle:hover, .menu-toggle:active, .menu-toggle:focus {
@@ -362,11 +365,13 @@ h1, .h1 {
 
     .menu-toggle i {
         font-size: 20px;
+        color: #443ea2 !important;
+        z-index: 1001 !important;
     }
 
 .dashboard-toolbar {
     min-height: 84px;
-    background-color: #dfdfdf;
+    background-color: #443ea2;
     display: -webkit-box;
     display: -webkit-flex;
     display: -ms-flexbox;
@@ -375,12 +380,6 @@ h1, .h1 {
     -webkit-align-items: center;
     -ms-flex-align: center;
     align-items: center;
-    padding: 8px 27px;
-    position: fixed;
-    top: 0;
-    right: 0;
-    left: 0;
-    z-index: 1000;
 }
 
 .nav-item-divider {
@@ -441,4 +440,3 @@ h1, .h1 {
         left: 0;
     }
 }
-

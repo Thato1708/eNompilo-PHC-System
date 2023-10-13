@@ -35,19 +35,18 @@ namespace eNompilo.v3._0._1.Models
         public DateTime? PreferredTime { get; set; }
 
         [Required]
+        [ForeignKey("Patient")]
         public int PatientId { get; set; }
-        [ForeignKey("PatientId")]
-        public Patient Patient { get; set; }
 
-        [Required]
-        public int PatientFileId { get; set; }
-        [ForeignKey("PatientFileId")]
-        public PatientFile PatientFile { get; set; }
+        [ForeignKey("Practitioner")]
+        public int? PractitionerId { get; set; }
 
         [Required]
         public bool SessionConfirmed { get; set; } = false;
 
         [Required]
         public bool Archived { get; set; }
+        public virtual Patient? Patient { get; set; }
+        public virtual Practitioner? Practitioner { get; set; }
     }
 }

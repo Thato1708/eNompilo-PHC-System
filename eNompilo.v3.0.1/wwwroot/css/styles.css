@@ -353,9 +353,9 @@ h1, .h1 {
     -ms-flex-pack: center;
     justify-content: center;
     padding: 8px 27px;
-    position: fixed;
-    top: 0;
-    left: 19%;
+    top: -75px;
+    left: 150px;
+    color: #443ea2;
 }
 
     .menu-toggle:hover, .menu-toggle:active, .menu-toggle:focus {
@@ -364,9 +364,8 @@ h1, .h1 {
     }
 
     .menu-toggle i {
-        font-size: 20px;
+        font-size: 40px;
         color: #443ea2 !important;
-        z-index: 1001 !important;
     }
 
 .dashboard-toolbar {
@@ -415,6 +414,7 @@ h1, .h1 {
         left: 0;
         bottom: 0;
         z-index: 1070;
+        width: 85%;
     }
 
         .dashboard-nav.mobile-show {
@@ -423,11 +423,16 @@ h1, .h1 {
 }
 
 @media (max-width: 992px) {
-    .dashboard-nav header .menu-toggle {
+    .menu-toggle {
         display: -webkit-box;
         display: -webkit-flex;
         display: -ms-flexbox;
         display: flex;
+        position: fixed;
+        top: 0;
+        right: 0;
+        left: auto;
+        z-index: 9999;
     }
 }
 

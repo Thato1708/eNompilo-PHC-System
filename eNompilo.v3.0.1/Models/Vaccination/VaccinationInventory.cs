@@ -10,6 +10,14 @@ namespace eNompilo.v3._0._1.Models.Vaccination
         public int ID { get; set; }
 
         [Required]
+        [DisplayName("Batch number")]
+        public int BatchNo { get; set; }
+
+        [Required]
+        [DisplayName("Manufacturer")]
+        public string Manufacturer { get; set; }
+
+        [Required]
         [DisplayName("Vaccine for: ")]
         public VaccinableDiseases Diseases { get; set; }
 

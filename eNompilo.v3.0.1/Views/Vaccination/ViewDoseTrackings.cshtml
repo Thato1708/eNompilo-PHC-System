@@ -37,10 +37,10 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.PatientId)
+                    @item.Patient.FirstName + " " + @item.Patient.LastName
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.VaccineInventoryId)
+                    @item.VaccinationInventory.VaccineName
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.DateAdministered)

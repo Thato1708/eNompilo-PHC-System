@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using eNompilo.v3._0._1.Areas.Identity.Data;
 
@@ -11,9 +12,10 @@ using eNompilo.v3._0._1.Areas.Identity.Data;
 namespace eNompilo.v3._0._1.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231014190909_updatedCerc")]
+    partial class updatedCerc
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -565,6 +567,9 @@ namespace eNompilo.v3._0._1.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("DoseTrackingID")
+                        .HasColumnType("int");
+
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
@@ -600,6 +605,8 @@ namespace eNompilo.v3._0._1.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("DoseTrackingID");
 
                     b.HasIndex("UserId");
 
@@ -952,7 +959,6 @@ namespace eNompilo.v3._0._1.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("PatientId")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("SecondDose")
@@ -967,10 +973,6 @@ namespace eNompilo.v3._0._1.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("ID");
-
-                    b.HasIndex("PatientId");
-
-                    b.HasIndex("VaccineInventoryId");
 
                     b.ToTable("DoseTracking");
                 });
@@ -1038,6 +1040,9 @@ namespace eNompilo.v3._0._1.Migrations
                     b.Property<int>("Diseases")
                         .HasColumnType("int");
 
+                    b.Property<int?>("DoseTrackingID")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("ExpirationDate")
                         .HasColumnType("datetime2");
 
@@ -1053,6 +1058,8 @@ namespace eNompilo.v3._0._1.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
+
+                    b.HasIndex("DoseTrackingID");
 
                     b.ToTable("VaccinationInventory");
                 });
@@ -1335,6 +1342,10 @@ namespace eNompilo.v3._0._1.Migrations
 
             modelBuilder.Entity("eNompilo.v3._0._1.Models.SystemUsers.Patient", b =>
                 {
+                    b.HasOne("eNompilo.v3._0._1.Models.Vaccination.DoseTracking", null)
+                        .WithMany("Patient")
+                        .HasForeignKey("DoseTrackingID");
+
                     b.HasOne("eNompilo.v3._0._1.Models.SystemUsers.ApplicationUser", "Users")
                         .WithMany()
                         .HasForeignKey("UserId")
@@ -1419,25 +1430,6 @@ namespace eNompilo.v3._0._1.Migrations
                     b.Navigation("Users");
                 });
 
-            modelBuilder.Entity("eNompilo.v3._0._1.Models.Vaccination.DoseTracking", b =>
-                {
-                    b.HasOne("eNompilo.v3._0._1.Models.SystemUsers.Patient", "Patient")
-                        .WithMany()
-                        .HasForeignKey("PatientId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("eNompilo.v3._0._1.Models.Vaccination.VaccinationInventory", "VaccinationInventory")
-                        .WithMany()
-                        .HasForeignKey("VaccineInventoryId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Patient");
-
-                    b.Navigation("VaccinationInventory");
-                });
-
             modelBuilder.Entity("eNompilo.v3._0._1.Models.Vaccination.VaccinationAppointment", b =>
                 {
                     b.HasOne("eNompilo.v3._0._1.Models.SystemUsers.PatientFile", "PatientFile")
@@ -1455,6 +1447,13 @@ namespace eNompilo.v3._0._1.Migrations
                     b.Navigation("Patient");
 
                     b.Navigation("PatientFile");
+                });
+
+            modelBuilder.Entity("eNompilo.v3._0._1.Models.Vaccination.VaccinationInventory", b =>
+                {
+                    b.HasOne("eNompilo.v3._0._1.Models.Vaccination.DoseTracking", null)
+                        .WithMany("VaccinationInventory")
+                        .HasForeignKey("DoseTrackingID");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -1511,6 +1510,13 @@ namespace eNompilo.v3._0._1.Migrations
             modelBuilder.Entity("eNompilo.v3._0._1.Models.SessionNotes", b =>
                 {
                     b.Navigation("PrescriptionMeds");
+                });
+
+            modelBuilder.Entity("eNompilo.v3._0._1.Models.Vaccination.DoseTracking", b =>
+                {
+                    b.Navigation("Patient");
+
+                    b.Navigation("VaccinationInventory");
                 });
 #pragma warning restore 612, 618
         }

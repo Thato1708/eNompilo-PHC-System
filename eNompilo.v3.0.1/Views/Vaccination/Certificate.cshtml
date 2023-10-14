@@ -1,6 +1,22 @@
-﻿@{
-    ViewData["Title"] = "Certificate";
+﻿@model eNompilo.v3._0._1.Models.Vaccination.DoseTracking
+
+
+@{
+    ViewData["Title"] = "Cerificate";
     Layout = "~/Views/Shared/_DashboardLayout.cshtml";
 }
 
-<h3>Vaccination Certificate</h3>
+
+<div class="margined-page">
+    <h3>Certificate</h3>
+
+    <div class="row">
+        <form asp-action="Certificate">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+
+        </form>
+    </div>
+</div>
+
+

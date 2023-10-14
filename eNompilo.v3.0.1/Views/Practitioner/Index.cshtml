@@ -10,6 +10,8 @@
 @{
 	ViewData["Title"] = "Index";
 	Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+
+	
 }
 
 <div id="example">
@@ -104,9 +106,24 @@
 						{
 							<span>Is not a Counsellor</span>
 						}
-						else
+						else if(item.PractitionerType == PractitionerType.Counsellor)
 						{
-							@item.CounsellorType
+							try
+							{
+								//item.CounsellorType
+							}
+							catch (NullReferenceException)
+							{
+								<span></span>
+							}
+							catch (ArgumentNullException)
+							{
+								<span></span>
+							}
+							catch (InvalidOperationException)
+							{
+								<span></span>
+							}
 						}
 					</td>
 					<td>

@@ -41,17 +41,14 @@
 				<thead>
 					<tr>
 						<th>
-							Patient Issues/Struggles
-						</th>
-						<th>
 							Preferred Date
 						</th>
 						<th>
 							Preferred Time
 						</th>
-						<th>
+						@* <th>
 							@Html.DisplayNameFor(model => model.Patient)
-						</th>
+						</th> *@
 						@*<th>
 				@Html.DisplayNameFor(model => model.PatientFile)
 				</th>
@@ -62,21 +59,18 @@
 					</tr>
 				</thead>
 				<tbody>
-					@foreach (var item in Model.Where(p => p.PatientId == patientId).ToList())
+					@foreach (var item in Model.Where(p => p.PatientId == patientId && p.Archived == false).ToList())
 					{
 					<tr>
 						<td>
-							@Html.DisplayFor(modelItem => item.PatientIssues)
+							@Convert.ToDateTime(item.PreferredDate).ToString("dd/MMM/yyyy")
 						</td>
 						<td>
-							@Html.DisplayFor(modelItem => item.PreferredDate)
+							@Convert.ToDateTime(item.PreferredTime).ToString("HH:mm")
 						</td>
-						<td>
-							@Html.DisplayFor(modelItem => item.PreferredTime)
-						</td>
-						<td>
+						@* <td>
 							@Html.DisplayFor(modelItem => item.Patient.FirstName) @Html.DisplayFor(modelItem => item.Patient.LastName)
-						</td>
+						</td> *@
 						@*<td>
 				@Html.DisplayFor(modelItem => item.PatientFile.Id)
 				</td>
@@ -128,17 +122,17 @@
 					</tr>
 				</thead>
 				<tbody>
-					@foreach (var item in Model.Where(p => p.PractitionerId == practitionerId).ToList())
+					@foreach (var item in Model.Where(p => p.PractitionerId == practitionerId && p.Archived == false && p.SessionConfirmed == true).ToList())
 					{
 						<tr>
 							<td>
 								@Html.DisplayFor(modelItem => item.PatientIssues)
 							</td>
 							<td>
-								@Html.DisplayFor(modelItem => item.PreferredDate)
+								@Convert.ToDateTime(item.PreferredDate).ToString("dd/MMM/yyyy")
 							</td>
 							<td>
-								@Html.DisplayFor(modelItem => item.PreferredTime)
+								@Convert.ToDateTime(item.PreferredTime).ToString("HH:mm")
 							</td>
 							<td>
 								@Html.DisplayFor(modelItem => item.Patient.FirstName) @Html.DisplayFor(modelItem => item.Patient.LastName)

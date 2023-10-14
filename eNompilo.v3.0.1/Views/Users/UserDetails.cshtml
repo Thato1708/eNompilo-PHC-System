@@ -1,50 +1,166 @@
-﻿@model eNompilo.v3._0._1.Models.SystemUsers.ApplicationUser
+﻿@using Microsoft.AspNetCore.Identity;
+@using eNompilo.v3._0._1.Models.SystemUsers;
+@using eNompilo.v3._0._1.Constants;
+@model eNompilo.v3._0._1.Models.SystemUsers.ApplicationUser
+@inject eNompilo.v3._0._1.Areas.Identity.Data.ApplicationDbContext _context
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
 
 @{
     ViewData["Title"] = "UserDetails";
     Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+
+    //string userId = _context.Users.Where(u => u.Id == UserManager.GetUserAsync(User).Result.Id).FirstOrDefault().Id;
+    // int userTypeId = 0;
+
+    // if (User.IsInRole(RoleConstants.Patient))
+    // {
+    //     userTypeId = _context.tblPatient.Where(u => u.UserId == userId).FirstOrDefault().Id;
+    //     userTypeId = _context.tblPersonalDetails.Where(u => u.PatientId == userTypeId).FirstOrDefault().Id;
+    // }
+    // else if (User.IsInRole(RoleConstants.Admin))
+    // {
+    //     userTypeId = _context.tblAdmin.Where(u => u.UserId == userId).FirstOrDefault().Id;
+    // }
+    // else if (User.IsInRole(RoleConstants.Practitioner))
+    // {
+    //     userTypeId = _context.tblPractitioner.Where(u => u.UserId == userId).FirstOrDefault().Id;
+    // }
+    // else if (User.IsInRole(RoleConstants.Receptionist))
+    // {
+    //     userTypeId = _context.tblReceptionist.Where(u => u.UserId == userId).FirstOrDefault().Id;
+    //}
+
+    string profilePicture = "DefaultProfilePicture.png";
+    string userId = Model.Id;
+    int userTypeId = 0;
+    if (Model.UserRole == UserRole.Admin)
+    {
+        var user = _context.tblAdmin.Where(d => d.UserId == userId).FirstOrDefault();
+        userTypeId = user.Id;
+        try
+        {
+            if (user.ProfilePicture != null)
+            { profilePicture = user.ProfilePicture; }
+            else
+            { profilePicture = "DefaultProfilePicture.png"; }
+        }
+        catch (NullReferenceException)
+        {
+            profilePicture = "DefaultProfilePicture.png";
+        }
+    }
+    else if (Model.UserRole == UserRole.Patient)
+    {
+        var user = _context.tblPersonalDetails.Where(d => d.Patient.UserId == userId).FirstOrDefault();
+        userTypeId = user.Id;
+        try
+        {
+            if (user.ProfilePicture != null)
+            { profilePicture = user.ProfilePicture; }
+            else
+            { profilePicture = "DefaultProfilePicture.png"; }
+        }
+        catch (NullReferenceException)
+        {
+            profilePicture = "DefaultProfilePicture.png";
+        }
+    }
+    else if (Model.UserRole == UserRole.Practitioner)
+    {
+        var user = _context.tblPractitioner.Where(d => d.UserId == userId).FirstOrDefault();
+        userTypeId = user.Id;
+        try
+        {
+            if (user.ProfilePicture != null)
+            { profilePicture = user.ProfilePicture; }
+            else
+            { profilePicture = "DefaultProfilePicture.png"; }
+        }
+        catch (NullReferenceException)
+        {
+            profilePicture = "DefaultProfilePicture.png";
+        }
+    }
+    else if (Model.UserRole == UserRole.Receptionist)
+    {
+        var user = _context.tblReceptionist.Where(d => d.UserId == userId).FirstOrDefault();
+        userTypeId = user.Id;
+        try
+        {
+            if (user.ProfilePicture != null)
+            { profilePicture = user.ProfilePicture; }
+            else
+            { profilePicture = "DefaultProfilePicture.png"; }
+        }
+        catch (NullReferenceException)
+        {
+            profilePicture = "DefaultProfilePicture.png";
+        }
+    }
+    string currentUser = "";
+    if(UserManager.GetUserAsync(User).Result.Id == userId)
+    {
+        currentUser = "You!";
+    }
+    else
+    {
+        currentUser = Model.FirstName + " " + Model.LastName;
+    }
 }
 
 <div class="margined-page pt-4">
     <div>
-        <h2>User Details (@Html.DisplayFor(model => model.FirstName) @Html.DisplayFor(model => model.LastName))</h2>
+        <h2>User Details (@currentUser)</h2>
         <hr />
-        <dl class="row" style="margin-left:auto;margin-right:auto;">
-            <dt class="col-sm-2 mb-4">
-                @Html.DisplayNameFor(model => model.IdNumber)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.IdNumber)
-            </dd>
+        <table class="table table-responsive" style="width: 100%;">
+            <tbody>
+                <tr>
+                    <td>
+                        <img src="@("~/img/uploads/"+profilePicture)" asp-append-version="true" class="rounded-circle me-2" style="width:200px; object-fit:cover;" />
+                    </td>
+                    <td>
+                        <dl class="row" style="margin-left:auto;margin-right:auto;">
+                            <dt class="col-sm-2 mb-4">
+                                @Html.DisplayNameFor(model => model.IdNumber)
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.DisplayFor(model => model.IdNumber)
+                            </dd>
 
-            <dt class="col-sm-2 mb-4">
-                Full Name
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Titles). @Html.DisplayFor(model => model.FirstName) @Html.DisplayFor(model => model.LastName)
-            </dd>
+                            <dt class="col-sm-2 mb-4">
+                                Full Name
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.DisplayFor(model => model.Titles). @Html.DisplayFor(model => model.FirstName) @Html.DisplayFor(model => model.LastName)
+                            </dd>
 
-            <dt class="col-sm-2 mb-4">
-                @Html.DisplayNameFor(model => model.PhoneNumber)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.PhoneNumber)
-            </dd>
+                            <dt class="col-sm-2 mb-4">
+                                @Html.DisplayNameFor(model => model.PhoneNumber)
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.DisplayFor(model => model.PhoneNumber)
+                            </dd>
 
-            <dt class="col-sm-2 mb-4">
-                @Html.DisplayNameFor(model => model.Email)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Email)
-            </dd>
+                            <dt class="col-sm-2 mb-4">
+                                @Html.DisplayNameFor(model => model.Email)
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.DisplayFor(model => model.Email)
+                            </dd>
 
-            <dt class="col-sm-2 mb-4">
-                @Html.DisplayNameFor(model => model.CreatedOn)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.CreatedOn)
-            </dd>
-        </dl>
+                            <dt class="col-sm-2 mb-4">
+                                @Html.DisplayNameFor(model => model.CreatedOn)
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.DisplayFor(model => model.CreatedOn)
+                            </dd>
+                        </dl>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
     </div>
     <div>
         <a asp-action="EditUser" asp-route-id="@Model?.Id">Edit</a> |

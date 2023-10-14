@@ -15,7 +15,9 @@ namespace eNompilo.v3._0._1.Models.ViewModels
 
         [Required]
         [Display(Name = "Password")]
-        public string Password { get; set; }
+		[DataType(DataType.Password)]
+		[RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*]).{8,}$", ErrorMessage = "Password must have at least:\n8 characters in length\n1 lowercase character\n1 uppercase letter\na numerical value\na special character")]
+		public string Password { get; set; }
 
         [Display(Name = "Remember me?")]
         public bool RememberMe { get; set; }

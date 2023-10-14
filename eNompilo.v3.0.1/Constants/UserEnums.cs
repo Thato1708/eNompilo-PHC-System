@@ -107,13 +107,13 @@ namespace eNompilo.v3._0._1.Constants
 
 	public enum CounsellorType
 	{
-		[Display(Name = "Marriage and family counsellor")]
+		[Display(Name = "Marriage and Family Counsellor")]
 		FamilyCounsellor,
-        [Display(Name = "Mental health counsellor")]
+        [Display(Name = "Mental Health Counsellor")]
         MentalHealthCounsellor,
-        [Display(Name = "General counsellor")]
+        [Display(Name = "General Counsellor")]
         GeneralCounsellor,
-		[Display(Name = "Trauma counsellor")]
+		[Display(Name = "Trauma Counsellor")]
 		TraumaCounsellor
 	}
 

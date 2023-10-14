@@ -1,0 +1,94 @@
+﻿@model eNompilo.v3._0._1.Models.GBV.ReportGBV
+
+@{
+    ViewData["Title"] = "Cancel";
+}
+
+<div class="margined-page pt-4">
+    <h1>Cancel</h1>
+
+    <div>
+        <h2>Are you sure you want to cancel</h2>
+        <hr />
+        <dl class="row" style="margin-left:auto;margin-right:auto;">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.PatientId)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.PatientId)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.PatientFileId)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.PatientFileId)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Role)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Role)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.IdentityType)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.IdentityType)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.IncidentType)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.IncidentType)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.CommunicationType)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.CommunicationType)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.CounsellingBooking)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.CounsellingBooking)
+            </dd>
+        </dl>
+
+        <form asp-action="Cancel" method="post">
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group form-check mb-4">
+                <label class="form-check-label">
+                    Tick the checkbox to confirm you are cancelling
+                    <input class="form-check-input" id="archiveElmnt" asp-for="Archived" />
+                </label>
+            </div>
+            <input type="submit" id="btnSubmit" value="Cancel" class="btn btn-danger" /> |
+            <a asp-action="Index">Back to List</a>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        window.onload = function () {
+            var checkbox = document.getElementById('archiveElmnt');
+            var button = document.getElementById('btnSubmit');
+
+            checkbox.addEventListener('change', function () {
+                if (checkbox.checked) {
+                    button.disabled = false;
+                } else {
+                    button.disabled = true;
+                }
+            });
+
+            // Trigger change event to set initial visibility
+            checkbox.dispatchEvent(new Event('change'));
+        };
+    </script>
+}
+

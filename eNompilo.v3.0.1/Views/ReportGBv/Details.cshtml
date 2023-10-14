@@ -1,0 +1,63 @@
+﻿@model eNompilo.v3._0._1.Models.GBV.ReportGBV
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="margined-page pt-4">
+    <h1>Details</h1>
+
+    <div>
+        <h2>Report GBV Details</h2>
+        <hr />
+        <dl class="row" style="margin-left:auto;margin-right:auto;">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.PatientId)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.PatientId)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.PatientFileId)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.PatientFileId)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Role)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Role)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.IdentityType)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.IdentityType)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.IncidentType)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.IncidentType)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.CommunicationType)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.CommunicationType)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.CounsellingBooking)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.CounsellingBooking)
+            </dd>
+        </dl>
+    </div>
+    <div>
+        <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+        <a asp-action="Index">Back to List</a>
+    </div>
+</div>
+         

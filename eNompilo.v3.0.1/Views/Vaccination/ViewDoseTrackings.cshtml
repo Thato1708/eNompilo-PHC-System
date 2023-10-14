@@ -1,0 +1,62 @@
+﻿@model IEnumerable<eNompilo.v3._0._1.Models.Vaccination.DoseTracking>
+@inject eNompilo.v3._0._1.Areas.Identity.Data.ApplicationDbContext dbContext
+
+@{
+    ViewData["Title"] = "ViewDoseTrackings";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+<h1>ViewDoseTrackings</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table" id="dtViewDoses">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.PatientId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VaccineInventoryId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateAdministered)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SecondDose)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SiteAddress)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PatientId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.VaccineInventoryId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateAdministered)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SecondDose)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SiteAddress)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

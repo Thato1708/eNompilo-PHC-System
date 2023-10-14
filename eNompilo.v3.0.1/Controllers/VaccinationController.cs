@@ -47,25 +47,35 @@ namespace eNompilo.v3._0._1.Controllers
             return View();
         }
 
+        public IActionResult ViewDoseTrackings()
+        {
+            if (User.IsInRole(RoleConstants.Practitioner))
+            {
+                IEnumerable<DoseTracking> doses = _context.tblDoseTracking;
+                return View(doses);
+            }
+            return View();
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult DoseTracking(DoseTracking model)
         {
 
-            if (ModelState.IsValid)
+            if (model.PatientId != null && model.VaccineInventoryId != null && model.DateAdministered != null && model.SiteAddress != null)
             {
-                DoseTracking doseTracking = new DoseTracking 
-                {
-                    PatientId = model.PatientId,
-                    VaccineInventoryId = model.VaccineInventoryId,
-                    DateAdministered = model.DateAdministered,
-                    SecondDose = model.SecondDose,
-                    SiteAddress = model.SiteAddress,
-                };
+                //DoseTracking doseTracking = new DoseTracking 
+                //{
+                //    PatientId = model.PatientId,
+                //    VaccineInventoryId = model.VaccineInventoryId,
+                //    DateAdministered = model.DateAdministered,
+                //    SecondDose = model.SecondDose,
+                //    SiteAddress = model.SiteAddress,
+                //};
 
-                _context.tblDoseTracking.Add(doseTracking);
+                _context.tblDoseTracking.Add(model);
                 _context.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("ViewDoseTrackings");
             }
             return View();
         }
@@ -169,6 +179,11 @@ namespace eNompilo.v3._0._1.Controllers
 
                 return View(viewModel);
             }
+            return View();
+        }
+
+        public IActionResult Certificate()
+        {
             return View();
         }
     }

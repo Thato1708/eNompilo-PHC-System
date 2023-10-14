@@ -10,12 +10,12 @@
     var patient = dbContext.tblPatient.Select(p => new SelectListItem
             {
                 Value = p.Id.ToString(),
-                Text = p.FirstName + " " + p.LastName,
+                Text = p.FirstName + " " + p.LastName + " (" + p.IdNumber + ")",
             }).ToList();
 
     var vaccines = dbContext.tblVaccinationInventory.Select(v => new SelectListItem
             {
-                Value = v.VaccineName,
+                Value = v.ID.ToString(),
                 Text = v.VaccineName,
             }).ToList();
 }
@@ -28,25 +28,17 @@
             <form asp-action="DoseTracking">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group mb-4">
-                    <label asp-for="PatientId" class="control-label"></label>
-                    <select asp-for="PatientId" class="form-control" id="roleChanged" name="patient" asp-items="@patient">
+                    <label asp-for="Patient" class="control-label"></label>
+                    <select asp-for="PatientId" class="form-control" asp-items="@(new SelectList(patient, "Value", "Text"))">
                         <option disabled selected hidden>Please select an option</option>
-                        @*@foreach (var item in rolesList)
-                        {
-                        <option value="@item.Text" id="@item.Text">@item.Text</option>
-                        }*@
-					</select>
-					<span asp-validation-for="PatientId" class="text-danger"></span>
-
+                    </select>
+                    <span asp-validation-for="PatientId" class="text-danger"></span>
                 </div>
+
                 <div class="form-group mb-4">
                     <label asp-for="VaccineInventoryId" class="control-label"></label>
-                    <select asp-for="VaccineInventoryId" class="form-control" id="roleChanged" name="patient" asp-items="@vaccines">
+                    <select asp-for="VaccineInventoryId" class="form-control" id="roleChanged" asp-items="@(new SelectList(vaccines, "Value", "Text"))">
                         <option disabled selected hidden>Please select an option</option>
-                        @*@foreach (var item in rolesList)
-                        {
-                        <option value="@item.Text" id="@item.Text">@item.Text</option>
-                        }*@
                     </select>
                     <span asp-validation-for="VaccineInventoryId" class="text-danger"></span>
                 </div>
@@ -65,15 +57,35 @@
                     <input asp-for="SiteAddress" class="form-control" />
                     <span asp-validation-for="SiteAddress" class="text-danger"></span>
                 </div>
-                <div class="form-group">
-                    <input type="submit" value="Create" class="btn btn-primary" />
+
+                <span class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#doseTracking">Book appointment</span>
+
+                <div class="modal fade" id="doseTracking" tabindex="-1">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="text-danger">Dose Tracking</h5>
+                            </div>
+                            <div class="modal-body">
+                                <p>
+                                    Are you sure of the details of the details you provided?
+                                </p>
+                            </div>
+                            <div class="modal-footer">
+                                <input type="submit" value="Submit" class="btn btn-primary" />
+                                <span class="btn btn-secondary" data-bs-dismiss="modal">Close</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
+
             </form>
         </div>
     </div>
 </div>
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="ViewDoseTrackings">Back to List</a>
 </div>
 
 @section Scripts {

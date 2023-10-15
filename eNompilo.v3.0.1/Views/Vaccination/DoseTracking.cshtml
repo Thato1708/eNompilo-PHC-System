@@ -21,7 +21,7 @@
 }
 
 <div class="margined-page">
-    <h2>DoseTracking</h2>
+    <h2>Dose Tracking</h2>
     <hr />
     <div class="row">
         <div class="col-md-4" style="margin-left:auto;margin-right:auto;">
@@ -58,7 +58,9 @@
                     <span asp-validation-for="SiteAddress" class="text-danger"></span>
                 </div>
 
-                <span class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#doseTracking">Book appointment</span>
+                <span class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#doseTracking">Add Dose</span>
+
+                @if 
 
                 <div class="modal fade" id="doseTracking" tabindex="-1">
                     <div class="modal-dialog">

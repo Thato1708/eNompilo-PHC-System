@@ -15,12 +15,12 @@ namespace eNompilo.v3._0._1.Models.Vaccination
         [PersonalData]
         [DisplayName("Patients")]
         [ForeignKey("Patient")]
-        public int? PatientId { get; set; }
+        public int PatientId { get; set; }
         
 
         [Required][DisplayName("Recieved vaccine")]
         [ForeignKey("VaccinationInventory")]
-        public int? VaccineInventoryId { get; set; }
+        public int VaccineInventoryId { get; set; }
 
         [Required]
         [DisplayName("Date Administered")]
@@ -34,7 +34,8 @@ namespace eNompilo.v3._0._1.Models.Vaccination
         [DisplayName("Site Address")]
         public string SiteAddress { get; set; }
 
-        public virtual Patient Patient { get; set; }
-        public virtual VaccinationInventory VaccinationInventory { get; set; }
+
+        public virtual Patient? Patient { get; set; }
+        public virtual VaccinationInventory? VaccinationInventory { get; set; }
     }
 }

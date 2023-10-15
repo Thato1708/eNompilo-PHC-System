@@ -23,7 +23,7 @@ namespace eNompiloCounselling.Controllers
 		public IActionResult Index()
 		{
 			var patientId = _contextAccessor.HttpContext.Session.GetInt32("PatientId");
-			IEnumerable<GeneralAppointment> objList = dbContext.tblGeneralAppointment;
+			IEnumerable<GeneralAppointment> objList = dbContext.tblGeneralAppointment.Include(pr=>pr.Practitioner).ThenInclude(u=>u.Users).Include(p=>p.Patient).ThenInclude(u => u.Users);
 
 			//var patient = dbContext.tblPatient.Select(p => new SelectListItem
 			//{
@@ -83,11 +83,35 @@ namespace eNompiloCounselling.Controllers
 		[ValidateAntiForgeryToken]
 		public IActionResult Update(GeneralAppointment model)
 		{
-			if (!ModelState.IsValid)
-			{
+			if (model.PatientIssues == null && model.PatientId == null)
 				return View(model);
+
+			var obj = dbContext.tblGeneralAppointment.Where(va => va.Id == model.Id).FirstOrDefault();
+
+            if (obj == null)
+            {
+                return NotFound();
+            }
+
+			if(model.PreferredDate == null)
+			{
+				model.PreferredDate = obj.PreferredDate;
 			}
-			dbContext.tblGeneralAppointment.Update(model);
+			if(model.PreferredTime == null)
+			{
+				model.PreferredTime = obj.PreferredTime;
+			}
+
+			obj.Id = model.Id;
+			obj.PatientIssues = model.PatientIssues;
+			obj.PreferredDate = model.PreferredDate;
+			obj.PreferredTime = model.PreferredTime;
+			obj.PatientId = model.PatientId;
+			obj.PractitionerId = model.PractitionerId;
+			if (obj.PractitionerId != null)
+				obj.SessionConfirmed = true;
+
+            dbContext.tblGeneralAppointment.Update(obj);
 			dbContext.SaveChanges();
 			return RedirectToAction("Index");
 		}

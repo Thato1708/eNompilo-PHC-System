@@ -91,7 +91,32 @@ namespace eNompiloCounselling.Controllers
             {
                 return View(model);
             }
-            dbContext.tblCounsellingAppointment.Update(model);
+            var obj = dbContext.tblCounsellingAppointment.Where(va => va.Id == model.Id).FirstOrDefault();
+
+            if (obj == null)
+            {
+                return NotFound();
+            }
+
+            if (model.PreferredDate == null)
+            {
+                model.PreferredDate = obj.PreferredDate;
+            }
+            if (model.PreferredTime == null)
+            {
+                model.PreferredTime = obj.PreferredTime;
+            }
+
+            obj.Id = model.Id;
+            obj.SessionPreference = model.SessionPreference;
+            obj.BookingReasons = model.BookingReasons;
+            obj.ChallengesSpecific = model.ChallengesSpecific;
+            obj.PreferredDate = model.PreferredDate;
+            obj.PreferredTime = model.PreferredTime;
+            obj.PatientId = model.PatientId;
+            obj.SessionConfirmed = model.SessionConfirmed;
+
+            dbContext.tblCounsellingAppointment.Update(obj);
             dbContext.SaveChanges();
             return RedirectToAction("Index");
         }

@@ -286,7 +286,15 @@
                             </span>
                         </th>
                         <th colspan="3">
-                            <h4>@UserManager.GetUserAsync(User).Result.UserRole</h4>
+                            @if(practitioner.PractitionerType != PractitionerType.Counsellor)
+                            {
+                                <h4>@practitioner.PractitionerType</h4>
+                            }
+                            else
+                            {
+                                <h4>@practitioner.PractitionerType (@practitioner.CounsellorType.GetDisplayName())</h4>
+                            }
+
                         </th>
                     </tr>
                     <tr>

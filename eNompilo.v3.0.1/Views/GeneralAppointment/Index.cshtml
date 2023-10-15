@@ -9,151 +9,164 @@
 @inject eNompilo.v3._0._1.Areas.Identity.Data.ApplicationDbContext _context
 
 @{
-	ViewData["Title"] = "Index";
-	Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
 
-	var user = _context.Users.Where(u => u.Id == UserManager.GetUserAsync(User).Result.Id).FirstOrDefault();
-	int patientId = 0;
-	int practitionerId = 0;
-	if (User.IsInRole(RoleConstants.Patient))
-	{
-		patientId = _context.tblPatient.Where(p => p.UserId == user.Id).FirstOrDefault().Id;
-	}
-	else if(User.IsInRole(RoleConstants.Patient))
-	{
-		practitionerId = _context.tblPractitioner.Where(p => p.UserId == user.Id).FirstOrDefault().Id;
-	}
-	
+    var user = _context.Users.Where(u => u.Id == UserManager.GetUserAsync(User).Result.Id).FirstOrDefault();
+    int patientId = 0;
+    int practitionerId = 0;
+    if (User.IsInRole(RoleConstants.Patient))
+    {
+        patientId = _context.tblPatient.Where(p => p.UserId == user.Id).FirstOrDefault().Id;
+    }
+    else if (User.IsInRole(RoleConstants.Practitioner))
+    {
+        practitionerId = _context.tblPractitioner.Where(p => p.UserId == user.Id).FirstOrDefault().Id;
+    }
+
 }
 
 @if (SignInManager.IsSignedIn(User))
 {
 
-	@if (User.IsInRole(RoleConstants.Patient))
-	{
-		<div>
-			<h1>Index</h1>
+    @if (User.IsInRole(RoleConstants.Patient))
+    {
+        <div>
+            <h1>Index</h1>
 
-			<p>
-				<a asp-action="Book">Create New</a>
-			</p>
-			<table id="dtGenApp" class="table table-striped" style="margin-left:auto;margin-right:auto;">
-				<thead>
-					<tr>
-						<th>
-							Preferred Date
-						</th>
-						<th>
-							Preferred Time
-						</th>
-						@* <th>
-							@Html.DisplayNameFor(model => model.Patient)
-						</th> *@
-						@*<th>
-				@Html.DisplayNameFor(model => model.PatientFile)
-				</th>
-				<th>
-				@Html.DisplayNameFor(model => model.Archived)
-				</th>*@
-						<th></th>
-					</tr>
-				</thead>
-				<tbody>
-					@foreach (var item in Model.Where(p => p.PatientId == patientId && p.Archived == false).ToList())
-					{
-					<tr>
-						<td>
-							@Convert.ToDateTime(item.PreferredDate).ToString("dd/MMM/yyyy")
-						</td>
-						<td>
-							@Convert.ToDateTime(item.PreferredTime).ToString("HH:mm")
-						</td>
-						@* <td>
-							@Html.DisplayFor(modelItem => item.Patient.FirstName) @Html.DisplayFor(modelItem => item.Patient.LastName)
-						</td> *@
-						@*<td>
-				@Html.DisplayFor(modelItem => item.PatientFile.Id)
-				</td>
-				<td>
-				@Html.DisplayFor(modelItem => item.Archived)
-				</td>*@
-						<td>
-							<a asp-action="Update" asp-route-id="@item.Id">Update</a> |
-							<a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-							<a asp-action="Cancel" asp-route-id="@item.Id">Cancel</a>
-						</td>
-					</tr>
-					}
-				</tbody>
-			</table>
+            <p>
+                <a asp-action="Book">Create New</a>
+            </p>
+            <table id="dtGenApp" class="table table-striped" style="margin-left:auto;margin-right:auto;">
+                <thead>
+                    <tr>
+                        <th>
+                            Preferred Date
+                        </th>
+                        <th>
+                            Preferred Time
+                        </th>
+                        <th>
+                            Appointment State
+                        </th>
+                        @* <th>
+                @Html.DisplayNameFor(model => model.Patient)
+                </th> *@
+                        @*<th>
+                @Html.DisplayNameFor(model => model.PatientFile)
+                </th>
+                <th>
+                @Html.DisplayNameFor(model => model.Archived)
+                </th>*@
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Where(p => p.PatientId == patientId && p.Archived == false).ToList())
+                    {
+                        <tr>
+                            <td>
+                                @Convert.ToDateTime(item.PreferredDate).ToString("dd/MMM/yyyy")
+                            </td>
+                            <td>
+                                @Convert.ToDateTime(item.PreferredTime).ToString("HH:mm")
+                            </td>
+                            <td>
+                                @if (item.SessionConfirmed)
+                                {
+                                    <span class="text-success">Booking confirmed with @item.Practitioner.Users.Titles. @item.Practitioner.Users.FirstName @item.Practitioner.Users.LastName</span>
+                                }
+                                else
+                                {
+                                    <span>Booking Pending</span>
+                                }
+                            </td>
+                            @* <td>
+                @Html.DisplayFor(modelItem => item.Patient.FirstName) @Html.DisplayFor(modelItem => item.Patient.LastName)
+                </td> *@
+                            @*<td>
+                @Html.DisplayFor(modelItem => item.PatientFile.Id)
+                </td>
+                <td>
+                @Html.DisplayFor(modelItem => item.Archived)
+                </td>*@
+                            <td>
+                                <a asp-action="Update" asp-route-id="@item.Id"><i class="bi bi-pencil-fill"></i></a> |
+                                <a asp-action="Details" asp-route-id="@item.Id"><i class="bi bi-info-square-fill text-secondary"></i></a> |
+                                <a asp-action="Cancel" asp-route-id="@item.Id"><i class="bi bi-trash-fill text-danger"></i></a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
 
-		</div>
-	}
-	else if (User.IsInRole(RoleConstants.Practitioner))
-	{
-		<div>
-			<h1>Index</h1>
+        </div>
+    }
+    else if (User.IsInRole(RoleConstants.Practitioner))
+    {
+        <div>
+            <h1>Index</h1>
 
-			<p>
-				<a asp-action="Book">Create New</a>
-			</p>
-			<table id="dtGenApp" class="table table-striped" style="margin-left:auto;margin-right:auto;">
-				<thead>
-					<tr>
-						<th>
-							Patient Issues/Struggles
-						</th>
-						<th>
-							Preferred Date
-						</th>
-						<th>
-							Preferred Time
-						</th>
-						<th>
-							@Html.DisplayNameFor(model => model.Patient)
-						</th>
-						@*<th>
-				@Html.DisplayNameFor(model => model.PatientFile)
-				</th>
-				<th>
-				@Html.DisplayNameFor(model => model.Archived)
-				</th>*@
-						<th></th>
-					</tr>
-				</thead>
-				<tbody>
-					@foreach (var item in Model.Where(p => p.PractitionerId == practitionerId && p.Archived == false && p.SessionConfirmed == true).ToList())
-					{
-						<tr>
-							<td>
-								@Html.DisplayFor(modelItem => item.PatientIssues)
-							</td>
-							<td>
-								@Convert.ToDateTime(item.PreferredDate).ToString("dd/MMM/yyyy")
-							</td>
-							<td>
-								@Convert.ToDateTime(item.PreferredTime).ToString("HH:mm")
-							</td>
-							<td>
-								@Html.DisplayFor(modelItem => item.Patient.FirstName) @Html.DisplayFor(modelItem => item.Patient.LastName)
-							</td>
-							@*<td>
-				@Html.DisplayFor(modelItem => item.PatientFile.Id)
-				</td>
-				<td>
-				@Html.DisplayFor(modelItem => item.Archived)
-				</td>*@
-							<td>
-								<a asp-action="Update" asp-route-id="@item.Id">Update</a> |
-								<a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-								<a asp-action="Cancel" asp-route-id="@item.Id">Cancel</a>
-							</td>
-						</tr>
-					}
-				</tbody>
-			</table>
+            <p>
+                <a asp-action="Book">Create New</a>
+            </p>
+            <table id="dtGenApp" class="table table-striped" style="margin-left:auto;margin-right:auto;">
+                <thead>
+                    <tr>
+                        <th>
+                            Patient Issues/Struggles
+                        </th>
+                        <th>
+                            Preferred Date
+                        </th>
+                        <th>
+                            Preferred Time
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Patient)
+                        </th>
+                        @*<th>
+                @Html.DisplayNameFor(model => model.PatientFile)
+                </th>
+                <th>
+                @Html.DisplayNameFor(model => model.Archived)
+                </th>*@
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Where(p => p.PractitionerId == practitionerId && p.Archived == false && p.SessionConfirmed == true).ToList())
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PatientIssues)
+                            </td>
+                            <td>
+                                @Convert.ToDateTime(item.PreferredDate).ToString("dd/MMM/yyyy")
+                            </td>
+                            <td>
+                                @Convert.ToDateTime(item.PreferredTime).ToString("HH:mm")
+                            </td>
+                            <td>
+                                @item.Patient.FirstName @item.Patient.LastName
+                            </td>
+                            @*<td>
+                @Html.DisplayFor(modelItem => item.PatientFile.Id)
+                </td>
+                <td>
+                @Html.DisplayFor(modelItem => item.Archived)
+                </td>*@
+                            <td>
+                                <a asp-action="Update" asp-route-id="@item.Id">Update</a> |
+                                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                                <a asp-action="Cancel" asp-route-id="@item.Id">Cancel</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
 
-		</div>
-	}
+        </div>
+    }
 }
 

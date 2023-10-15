@@ -4,54 +4,114 @@
 
 @{
     ViewData["Title"] = "Update";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+
 }
 
 <div class="margined-page pt-4">
 
-<h2>Need to Update Your Appointment?</h2>
-<hr />
-<div class="row">
+    <h2>Need to Update Your Appointment?</h2>
+    <hr />
+    @if (User.IsInRole(RoleConstants.Practitioner))
+    {
+        <div class="row">
         <div class="col-md-4" style="margin-left:auto;margin-right:auto;">
-        <form asp-action="Update">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
-            <div class="form-group mb-4">
-                <label asp-for="PatientIssues" class="control-label"></label>
-                <textarea asp-for="PatientIssues" class="form-control"></textarea> />
-                <span asp-validation-for="PatientIssues" class="text-danger"></span>
-            </div>
-            <div class="form-group mb-4">
-                <label asp-for="PreferredDate" class="control-label"></label>
-                <input asp-for="PreferredDate" class="form-control" />
-                <span asp-validation-for="PreferredDate" class="text-danger"></span>
-            </div>
-            <div class="form-group mb-4">
-                <label asp-for="PreferredTime" class="control-label"></label>
-                <input asp-for="PreferredTime" class="form-control" />
-                <span asp-validation-for="PreferredTime" class="text-danger"></span>
-            </div>
-            <div class="form-group mb-4">
-                <label asp-for="PatientId" class="control-label"></label>
-                <select asp-for="PatientId" class="form-control" asp-items="ViewBag.PatientId"></select>
-                <span asp-validation-for="PatientId" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check mb-4">
+            <form asp-action="Update">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Id" />
+                <div class="form-group mb-4">
+                    <label asp-for="PatientIssues" class="control-label"></label>
+                    <textarea asp-for="PatientIssues" class="form-control"></textarea>
+                    <span asp-validation-for="PatientIssues" class="text-danger"></span>
+                </div>
                 <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Archived" /> @Html.DisplayNameFor(model => model.Archived)
+                    Are you updating the date and time of your appointment?
+                    <input type="checkbox" class="form-check-input" id="checkBool" />
                 </label>
-            </div>
-            <div class="form-group mb-4">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+
+                <div class="date-time-stuff" id="dateTimeDiv">
+                    <div class="form-group mb-4">
+                        <label asp-for="PreferredDate" class="control-label"></label>
+                        <input asp-for="PreferredDate" type="date" class="form-control" />
+                        <span asp-validation-for="PreferredDate" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-4">
+                        <label asp-for="PreferredTime" class="control-label"></label>
+                        <input asp-for="PreferredTime" type="time" class="form-control" />
+                        <span asp-validation-for="PreferredTime" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="date-time-stuff" id="dateTimeDiv2">
+                    <div class="form-group mb-4">
+                        <label asp-for="PreferredDate" class="control-label"></label>
+                        <input asp-for="PreferredDate.Value" disabled type="date" class="form-control" />
+                        <span asp-validation-for="PreferredDate" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-4">
+                        <label asp-for="PreferredTime" class="control-label"></label>
+                        <input asp-for="PreferredTime.Value" disabled type="time" class="form-control" />
+                        <span asp-validation-for="PreferredTime" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-group mb-4">
+                    <input type="hidden" asp-for="PatientId" />
+                    <span asp-validation-for="PatientId" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-4">
+                    <input type="hidden" asp-for="PractitionerId" />
+                    <span asp-validation-for="PractitionerId" class="text-danger"></span>
+                </div>
+                <div class="form-group form-check mb-4">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="Archived" /> @Html.DisplayNameFor(model => model.Archived)
+                    </label>
+                </div>
+                <div class="form-group mb-4">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+        </div>
+    }
+    else if (User.IsInRole(RoleConstants.Patient))
+    {
+        //Patient can only update Date and Time
+    }
+
+
+    <div>
+        <a asp-controller="Home" asp-action="Index">Home</a>
     </div>
 </div>
 
-<div>
-        <a asp-controller="Home" asp-action="Index">Home</a>
-</div>
-</div>
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        window.onload = function () {
+            var checkbox = document.querySelector('#checkBool');
+            var dTDiv = document.querySelector('#dateTimeDiv');
+            var dTDiv2 = document.querySelector('#dateTimeDiv2');
+
+            checkbox.addEventListener('change', function () {
+                if (checkbox.checked) {
+                    dTDiv.style.display = 'block';
+                    dTDiv.disabled = false;
+                    dTDiv2.style.display = 'none';
+                    dTDiv2.disabled = true;
+                } else {
+                    dTDiv.style.display = 'none';
+                    dTDiv2.style.display = 'block';
+                    dTDiv2.disabled = true;
+                }
+            });
+
+            // Trigger change event to set initial visibility
+            checkbox.dispatchEvent(new Event('change'));
+        };
+    </script>
 }

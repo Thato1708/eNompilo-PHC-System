@@ -4,9 +4,11 @@
 @{
     ViewData["Title"] = "ViewDoseTrackings";
     Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+
+    string patientName = "";
 }
 
-<h1>ViewDoseTrackings</h1>
+<h1>View Dose Trackings</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -37,7 +39,7 @@
         {
             <tr>
                 <td>
-                    @item.Patient.FirstName + " " + @item.Patient.LastName
+                    @item.Patient.FirstName @item.Patient.LastName
                 </td>
                 <td>
                     @item.VaccinationInventory.VaccineName
@@ -52,7 +54,7 @@
                     @Html.DisplayFor(modelItem => item.SiteAddress)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                    <a asp-action="Certificate" asp-route-id="@item.ID">Certificate</a> |
                     <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
                     <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
                 </td>

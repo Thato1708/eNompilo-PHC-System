@@ -51,7 +51,7 @@ namespace eNompilo.v3._0._1.Controllers
         {
             if (User.IsInRole(RoleConstants.Practitioner))
             {
-                IEnumerable<DoseTracking> doses = _context.tblDoseTracking;
+                IEnumerable<DoseTracking> doses = _context.tblDoseTracking.Include(d=>d.Patient).Include(d=>d.VaccinationInventory);
                 return View(doses);
             }
             return View();
@@ -182,9 +182,28 @@ namespace eNompilo.v3._0._1.Controllers
             return View();
         }
 
-        public IActionResult Certificate()
+        public IActionResult Certificate(int? Id)
         {
-            return View();
+            if (Id == 0 || Id == null)
+                return NotFound();
+            var obj = _context.tblDoseTracking.Where(d=>d.ID == Id).Include(d => d.Patient).Include(d => d.VaccinationInventory).FirstOrDefault();
+            if (obj == null)
+                return NotFound();
+            return View(obj);
+        }
+
+        public IActionResult Remove(int? id)
+        {
+            if (id == 0 || id == null)
+            {
+                return NotFound();
+            }
+
+            var obj = _context.tblDoseTracking.Find(id);
+            if (obj == null)
+            {
+                return NotFound();
+            }
         }
     }
 }

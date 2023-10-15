@@ -1,22 +1,47 @@
 ﻿@model eNompilo.v3._0._1.Models.Vaccination.DoseTracking
 
-
 @{
-    ViewData["Title"] = "Cerificate";
+    ViewData["Title"] = "Certificate";
     Layout = "~/Views/Shared/_DashboardLayout.cshtml";
 }
 
+<div>
+    <h2>Certificate</h2>
 
-<div class="margined-page">
-    <h3>Certificate</h3>
-
-    <div class="row">
-        <form asp-action="Certificate">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-
-        </form>
-    </div>
+    <dl class="row">
+        <dt class = "col-sm-2 mb-4">
+            @Html.DisplayNameFor(model => model.DateAdministered)
+        </dt>
+        <dd class="col-sm-10 mb-4">
+            @Html.DisplayFor(model => model.DateAdministered)
+        </dd>
+        <dt class="col-sm-2 mb-4">
+            @Html.DisplayNameFor(model => model.SecondDose)
+        </dt>
+        <dd class="col-sm-10 mb-4">
+            @Html.DisplayFor(model => model.SecondDose)
+        </dd>
+        <dt class="col-sm-2 mb-4">
+            @Html.DisplayNameFor(model => model.SiteAddress)
+        </dt>
+        <dd class="col-sm-10 mb-4">
+            @Html.DisplayFor(model => model.SiteAddress)
+        </dd>
+        <dt class="col-sm-2 mb-4">
+            @Html.DisplayNameFor(model => model.Patient)
+        </dt>
+        <dd class="col-sm-10 mb-4">
+            @Model.Patient.FirstName @Model.Patient.LastName
+        </dd>
+        <dt class="col-sm-2 mb-4">
+            @Html.DisplayNameFor(model => model.VaccinationInventory)
+        </dt>
+        <dd class="col-sm-10 mb-4">
+            @Model.VaccinationInventory.VaccineName
+        </dd>
+    </dl>
 </div>
-
-
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.ID">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

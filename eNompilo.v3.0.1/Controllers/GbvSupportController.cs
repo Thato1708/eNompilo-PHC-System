@@ -7,15 +7,17 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using eNompilo.v3._0._1.Models.ViewModels;
 
+
 namespace eNompilo.v3._0._1.Controllers
 {
-	public class GbvQuestionnaireController : Controller
-	{
+    public class GbvSupportController : Controller
+    {
+
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
 
-        public GbvQuestionnaireController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+        public GbvSupportController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
         {
             _context = context;
             _userManager = userManager;
@@ -23,35 +25,43 @@ namespace eNompilo.v3._0._1.Controllers
         }
 
 
-
         public IActionResult Index()
-		{
-            if (_signInManager.IsSignedIn(User))
+        {
+            if(_signInManager.IsSignedIn(User))
             {
                 if (User.IsInRole(RoleConstants.Patient))
                 {
-                    IEnumerable<Questionnaire> objList = _context.tblQuestionnaire.Where(va => va.Archived == false).ToList();
-                    return View (objList);
+                    IEnumerable<SupportMembership> objList = _context.tblSupportGroup;
+                    return View(objList);
                 }
                 else if (User.IsInRole(RoleConstants.Admin))
                 {
-                    IEnumerable<Questionnaire> objList = _context.tblQuestionnaire;
+                    IEnumerable<SupportMembership> objList = _context.tblSupportGroup;
                     return View(objList);
-
                 }
+
             }
             return NotFound();
-		}
+        }
 
-       public IActionResult Questionnaire()
+        public IActionResult Create()
         {
             return View();
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create(SupportMembership model)
+        {
+            if(model.Name != null  && model.Surname != null && model.Cell != null && model.Email !=null && model.gender != null && model.Reported != null)
+            {
+                _context.tblSupportGroup.Add(model);
+                _context.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(model);
+        }
 
 
-
-
-
-	}
+    }
 }

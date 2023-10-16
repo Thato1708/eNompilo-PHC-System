@@ -1,5 +1,73 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model IEnumerable<eNompilo.v3._0._1.Models.GBV.Questionnaire>
+
 @{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
 }
+
+<div class="margined-page pt-4">
+    <h1>Index</h1>
+
+    <p>
+        <a asp-action="Questionnaire">GBV Questionnaire</a>
+    </p>
+    <table id="dtRepGbv" class="table table-striped" style="margin-left:auto;margin-right:auto;">
+        <thead>
+            <tr>
+                <th>Do you stay with your immediate family members: </th>
+                <th>
+                    Have you ever been exposed to violence where you stay:
+                </th>
+                <th>
+                    Do you depend on someone financially: 
+                </th>
+                <th>
+                    Are there any people you extremely fear: 
+                </th>
+                <th>
+                    Have you ever been physically abused: 
+                </th>
+                <th>
+                    Have you ever been sexually abused: 
+                </th>
+                <th>
+                    Is there a person in which you confide in: 
+                </th>
+                <th>
+                    If you have ever experienced physical abuse, do you have any physical evidence: 
+                </th>
+                <th>
+                    Are you comfortable in taking a lie detector test: 
+                </th>
+                <th>
+                    Have you ever contacted law enforcement regarding GBV: 
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem=>item.familyOption )</td>              
+                    <td>@Html.DisplayFor(modelItem=>item.Violence )</td>              
+                    <td>@Html.DisplayFor(modelItem=>item.dependency )</td>                         
+                    <td>@Html.DisplayFor(modelItem=>item.Fear)</td>        
+                    <td>@Html.DisplayFor(modelItem=>item.PhysAbuse )</td>
+                    <td>@Html.DisplayFor(modelItem=>item.Abuse )</td>
+                    <td>@Html.DisplayFor(modelItem=>item.Confide )</td>
+                    <td>@Html.DisplayFor(modelItem=>item.EvidenceType )</td>
+                    <td>@Html.DisplayFor(modelItem=>item.DetectorTest )</td>
+                    <td>@Html.DisplayFor(modelItem=>item.ContactLawEnforcement )</td>
+                    <td>
+                        <a asp-action="Update" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-action="Cancel" asp-route-id="@item.Id">Cancel</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+                    
+            }
+

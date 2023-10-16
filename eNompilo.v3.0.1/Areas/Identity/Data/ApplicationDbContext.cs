@@ -50,7 +50,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
         builder.Entity<IdentityRoleClaim<string>>().ToTable("RoleClaims");
         builder.Entity<IdentityUserToken<string>>().ToTable("UserTokens");
 
-        builder.Entity<Certification>().Property(c => c.CertificateNo).ValueGeneratedNever();
+        builder.Entity<DoseTracking>().Property(c => c.CertificateNo).ValueGeneratedNever();
     }
     public DbSet<Patient> tblPatient { get; set; }
     public DbSet<Practitioner> tblPractitioner { get; set; }
@@ -72,6 +72,5 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<ReportGBV> tblReportGBV { get; set; }
     public DbSet<eNompilo.v3._0._1.Models.Vaccination.DoseTracking>? DoseTracking { get; set; }
     public DbSet<eNompilo.v3._0._1.Models.Vaccination.VaccinationInventory>? VaccinationInventory { get; set; }
-    public DbSet<Certification> tblCertification { get; set; }
 
 }

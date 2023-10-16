@@ -19,6 +19,7 @@
 
     var user = _context.Users.Where(u => u.Id == UserManager.GetUserAsync(User).Result.Id).FirstOrDefault();
     var patient = _context.tblPersonalDetails.Where(p => p.Patient.UserId == user.Id).FirstOrDefault();
+    
     var admin = _context.tblAdmin.Where(p => p.UserId == user.Id).FirstOrDefault();
     var practitioner = _context.tblPractitioner.Where(p => p.UserId == user.Id).FirstOrDefault();
     var receptionist = _context.tblReceptionist.Where(p => p.UserId == user.Id).FirstOrDefault();
@@ -134,75 +135,85 @@
                     <tr><td colspan="4"><!--Just for empty Space between header and body--></td></tr>
                     <tr><td colspan="4"><!--Just for empty Space between header and body--></td></tr>
                     <tr>
-                        <td colspan="2">
+                        <td colspan="4">
                             <table class="table table-striped table-hover">
                                 <thead>
                                     <tr>
-                                        <th colspan="2">Personal Details</th>
+										<th colspan="4"><h4>Personal Details</h4></th>
+									<tr><th colspan="2" width="50%">Personal Bio</th><th colspan="2" width="50%">Additional Details</th></tr>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr><td>Full Name: </td><td>@fullname</td></tr>
-                                    <tr><td>Date of Birth: </td><td>@Convert.ToDateTime(patient.DOB).ToString("dd MMM yyyy")</td></tr>
-                                    <tr>
+                                    <tr><th>Full Name: </th><td>@fullname</td><th>Emergency Contact Person: </th><td>@patient.EmergencyPerson</td></tr>
+                                    <tr><th>Date of Birth: </th><td>@Convert.ToDateTime(patient.DOB).ToString("dd MMM yyyy")</td><th>Emergency Contact Nr: </th><td>@patient.EmergenyContactNr</td></tr>
+									<tr>
+										<th>Weight: </th>
+										<td>@patient.Weight</td>
                                         @if (patient.Employed == true)
                                         {
-                                            <td>Employment Status: </td>
+                                            <th>Employment Status: </th>
                                             <td>Employed</td>
                                         }
                                         else
                                         {
-                                            <td>Employment Status: </td>
+                                            <th>Employment Status: </th>
                                             <td>Unemployed</td>
-                                        }
+										}
+									</tr>
+									<tr>
+										<th>Height: </th><td>@patient.Height</td><th>Work Email: </th><td>@patient.WorkEmail</td>
+                                        </tr>
+									<tr>
+										<th>Blood Type: </th><td>@patient.BloodType</td><th>Work Tel: </th><td>@patient.WorkTel</td>
                                     </tr>
-                                    @if (patient.WorkEmail != null)
-                                    {
-                                        <tr><td>Work Email: </td><td>@patient.WorkEmail</td></tr>
-                                    }
-                                    @if (patient.WorkTel != null)
-                                    {
-                                        <tr><td>Work Tel: </td><td>@patient.WorkTel</td></tr>
-                                    }
-                                </tbody>
-                            </table>
-                        </td>
-                        <td colspan="2">
-                            <table class="table table-striped table-hover">
-                                <thead>
-                                    <tr>
-                                        <th colspan="2">Medical History</th>
+									<tr>
+										<th>Citizenship: </th><td>@patient.Citizenship.GetDisplayName()</td><th>Home Tel: </th><td>@patient.HomeTel</td>
                                     </tr>
-                                </thead>
-                                <tbody>
-                                    <tr><td>Previous Diagnosis</td><td>@medicalHistory.PreviousDiagnoses</td></tr>
-                                    <tr><td>Previous Medication</td><td>@medicalHistory.PreviousMedication</td></tr>
-                                    <tr><td>General Allergies</td><td>@medicalHistory.GeneralAllergies</td></tr>
-                                    <tr><td>Medical Allergies</td><td>@medicalHistory.MedicationAllergies</td></tr>
+									<tr>
+										<th>Marital Status: </th><td>@patient.MaritalStatus.GetDisplayName()</td><th>Address Tel: </th><td>@patient.AddressLine1, @patient.AddressLine2, @patient.Suburb, @patient.City, @patient.Province.GetDisplayName(), @patient.ZipCode</td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </td>
                     </tr>
                     <tr>
+						<td colspan="4">
+							<table class="table table-striped table-hover">
+								<thead>
+									<tr>
+										<th colspan="4"><h4>Appointment History</h4></th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td></td>
+									</tr>
+								</tbody>
+							</table>
+						</td>
+                    </tr>
+                    <tr>
+
+						<td colspan="2">
+							<table class="table table-striped table-hover">
+								<thead>
+									<tr>
+										<th colspan="2"><h4>Medical History</h4></th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr><td>Previous Diagnosis</td><td>@medicalHistory.PreviousDiagnoses</td></tr>
+									<tr><td>Previous Medication</td><td>@medicalHistory.PreviousMedication</td></tr>
+									<tr><td>General Allergies</td><td>@medicalHistory.GeneralAllergies</td></tr>
+									<tr><td>Medical Allergies</td><td>@medicalHistory.MedicationAllergies</td></tr>
+								</tbody>
+							</table>
+						</td>
                         <td colspan="2">
                             <table class="table table-striped table-hover">
                                 <thead>
                                     <tr>
-                                        <th colspan="2">Appointment History</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </td>
-                        <td colspan="2">
-                            <table class="table table-striped table-hover">
-                                <thead>
-                                    <tr>
-                                        <th colspan="2">Diagnosis & Medication</th>
+                                        <th colspan="2"><h4>Diagnosis & Medication</h4></th>
                                     </tr>
                                 </thead>
                                 <tbody>

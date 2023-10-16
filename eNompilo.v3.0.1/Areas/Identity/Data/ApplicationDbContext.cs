@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using eNompilo.v3._0._1.Models.Family_Planning;
 using eNompilo.v3._0._1.Models.GBV;
 using System.Reflection.Emit;
+using eNompilo.v3._0._1.Models.ViewModels;
 
 namespace eNompilo.v3._0._1.Areas.Identity.Data;
 
@@ -73,5 +74,6 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<eNompilo.v3._0._1.Models.Vaccination.DoseTracking>? DoseTracking { get; set; }
     public DbSet<eNompilo.v3._0._1.Models.Vaccination.VaccinationInventory>? VaccinationInventory { get; set; }
     public DbSet<Certification> tblCertification { get; set; }
+    public DbSet<eNompilo.v3._0._1.Models.ViewModels.AppointmentsViewModel>? AppointmentsViewModel { get; set; }
 
 }

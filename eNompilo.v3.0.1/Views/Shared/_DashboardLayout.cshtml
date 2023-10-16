@@ -32,6 +32,7 @@
 				var user = _context.Users.Where(u => u.Id == UserManager.GetUserAsync(User).Result.Id).FirstOrDefault();
 				int? adminId = null;
 				int? patientId = null;
+				int? practitionerId = null;
 				if (User.IsInRole(RoleConstants.Admin) == true)
 				{
 					adminId = _context.tblAdmin.Where(a => a.UserId == user.Id).FirstOrDefault().Id;
@@ -39,6 +40,10 @@
 				else if (User.IsInRole(RoleConstants.Patient) == true)
 				{
 					patientId = _context.tblPatient.Where(p => p.UserId == user.Id).FirstOrDefault().Id;
+				}
+				else if (User.IsInRole(RoleConstants.Practitioner) == true)
+				{
+					practitionerId = _context.tblPractitioner.Where(p => p.UserId == user.Id).FirstOrDefault().Id;
 				}
 
 			}
@@ -107,11 +112,11 @@
 						@*<a asp-controller="Home" asp-action="Index" class="dashboard-nav-item mt-4">
 							<i class="bi bi-house-door-fill me-2" style="font-size:1.5rem;"></i> Home
 						</a>*@
-						<a asp-controller="Home" asp-action="PractitionerDashboard" class="dashboard-nav-item active">
+						@*<a asp-controller="Home" asp-action="PractitionerDashboard" class="dashboard-nav-item">
 							<i class="bi bi-speedometer me-2" style="font-size:1.5rem;"></i> Dashboard
-						</a>
+						</a>*@
 
-						<a asp-controller="Users" asp-action="UserProfile" class="dashboard-nav-item active">
+						<a asp-controller="Users" asp-action="UserProfile" asp-route-id="@practitionerId" class="dashboard-nav-item mt-4">
 							<i class="bi bi-person-circle me-2" style="font-size:1.5rem;"></i> Profile
 						</a>
 						@* <a href="#" class="dashboard-nav-item"><i class="bi bi-calendar-check-fill"></i> Appointment </a> *@

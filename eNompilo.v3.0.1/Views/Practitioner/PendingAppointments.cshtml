@@ -1,0 +1,54 @@
+﻿@model eNompilo.v3._0._1.Models.ViewModels.AppointmentsViewModel
+
+@{
+    ViewData["Title"] = "PendingAppointments";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+<h1>PendingAppointments</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Patient Issues
+            </th>
+            <th>
+                Appointment Date
+            </th>
+            <th>
+                Appointment Time
+            </th>
+            <th>
+                Patient
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.GenAppointment) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.PatientIssues)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PreferredDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PreferredTime)
+            </td>
+            <td>
+                @item.Patient.FirstName @item.Patient.LastName (@item.Patient.IdNumber)
+            </td>
+            <td>
+                <a asp-action="ConfirmGeneralAppointments" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="ConfirmGeneralAppointments" asp-route-id="@item.Id">Details</a> |
+                @*<a asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

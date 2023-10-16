@@ -10,11 +10,24 @@ namespace eNompilo.v3._0._1.Constants
         //CALLING THIS ALLOWS YOU TO DISPLAY THE SPECIFIED DISPLAY NAME ON YOUR ENUM INSTEAD OF ITS DEFAULT NAME!
         public static string? GetDisplayName(this Enum enumValue)
         {
-            return enumValue.GetType()
+            if (enumValue == null)
+                return "";
+
+            try
+            {
+                var returnValue = enumValue.GetType()
                             .GetMember(enumValue.ToString())
-							.First()
+                            .First()
                             .GetCustomAttribute<DisplayAttribute>()
                             .GetName();
+                return returnValue;
+            }
+            catch (NullReferenceException)
+            {
+                return enumValue.GetType()
+                            .GetMember(enumValue.ToString())
+                            .First().Name.ToString();
+            }
         }
     }
 }

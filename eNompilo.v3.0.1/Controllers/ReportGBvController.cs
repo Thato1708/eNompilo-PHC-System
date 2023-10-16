@@ -86,42 +86,22 @@ namespace eNompilo.v3._0._1.Controllers
             _context.SaveChanges();
             return RedirectToAction("Index");
         }
+          
 
-        public IActionResult Details(int? Id)
+        public IActionResult Cancel(int Id)
         {
-            var obj = _context.tblReportGBV.Find(Id);
-            if (obj == null)
-                return View("PageNotFound", "Home");
-            return View(obj);
-        }
-
-        public IActionResult Cancel(int? Id)
-        {
-            if (Id == null || Id == 0)
-            {
-                return NotFound();
-            }
             var obj = _context.tblReportGBV.Find(Id);
             if (obj == null)
             {
                 return NotFound();
             }
-            return View(obj);
-        }
 
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Cancel(ReportGBV model)
-        {
-            if (ModelState.IsValid)
-            {
-                return View(model);
-            }
-            _context.tblReportGBV.Remove(model);
-            _context.SaveChanges();
+            _context.tblReportGBV.Remove(obj);
+            _context.SaveChanges(true);
             return RedirectToAction("Index");
         }
+
+
 
 
 

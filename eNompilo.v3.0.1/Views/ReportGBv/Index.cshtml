@@ -11,7 +11,7 @@
     <p>
         <a asp-action="report">Report GBV</a>
     </p>
-    <table id="dtCouApp" class="table table-striped" style="margin-left:auto;margin-right:auto;">
+    <table id="dtRepGbv" class="table table-striped" style="margin-left:auto;margin-right:auto;">
         <thead>
             <tr>
                 <th>I am the: </th>
@@ -47,18 +47,14 @@
                         @Html.DisplayFor(modelItem => item.CommunicationType)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.CounsellingBooking)
-                    </td>
-                    <td>
                         @Html.DisplayFor(modelItem => item.Patient.FirstName)
                         </td>
                         <td>
                         @Html.DisplayFor(modelItem => item.Patient.LastName)
                     </td>
                     <td>
-                        <a asp-action="Update" asp-route-id="@item.Id">Edit</a>
-                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                        <a asp-action="Cancel" asp-route-id="@item.Id">Cancel</a>|
+                        <a asp-action="Update" asp-route-id="@item.Id">Edit</a> |                      
+                        <a asp-action="Cancel" asp-route-id="@item.Id">Cancel</a>
                     </td>
                 </tr>
             }

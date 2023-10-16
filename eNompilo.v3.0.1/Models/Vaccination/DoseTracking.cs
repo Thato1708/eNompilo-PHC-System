@@ -34,6 +34,8 @@ namespace eNompilo.v3._0._1.Models.Vaccination
         [DisplayName("Site Address")]
         public string SiteAddress { get; set; }
 
+        [Required]
+        public bool Archived { get; set; }
 
         public virtual Patient? Patient { get; set; }
         public virtual VaccinationInventory? VaccinationInventory { get; set; }

@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using eNompilo.v3._0._1.Models.Family_Planning;
 using eNompilo.v3._0._1.Models.GBV;
 using System.Reflection.Emit;
+using eNompilo.v3._0._1.Models.ViewModels;
 
 namespace eNompilo.v3._0._1.Areas.Identity.Data;
 
@@ -50,7 +51,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
         builder.Entity<IdentityRoleClaim<string>>().ToTable("RoleClaims");
         builder.Entity<IdentityUserToken<string>>().ToTable("UserTokens");
 
-        builder.Entity<Certification>().Property(c => c.CertificateNo).ValueGeneratedNever();
+        builder.Entity<DoseTracking>().Property(c => c.CertificateNo).ValueGeneratedNever();
     }
     public DbSet<Patient> tblPatient { get; set; }
     public DbSet<Practitioner> tblPractitioner { get; set; }
@@ -74,6 +75,5 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<SupportMembership> tblSupportGroup { get; set; }
     public DbSet<eNompilo.v3._0._1.Models.Vaccination.DoseTracking>? DoseTracking { get; set; }
     public DbSet<eNompilo.v3._0._1.Models.Vaccination.VaccinationInventory>? VaccinationInventory { get; set; }
-    public DbSet<Certification> tblCertification { get; set; }
 
 }

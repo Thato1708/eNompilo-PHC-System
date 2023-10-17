@@ -8,45 +8,71 @@
 }
 
 <div class="margined-page pt-4">
-    <h2>Register for the GBV Support Group</h2>
-    <hr />
-    <div class="row align-items-center">
+    <h2>Register For The GBV Support Group</h2>
+
+    <div class="row align-items-centre">
         <div class="col-md-4" style="margin-left:auto;margin-right:auto;">
-            <form asp-action="Create">
+            <form asp-action="create">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="form-group mb-4" hidden>
+                <div class="form-group mb-4">
                     <label asp-for="Name" class="control-label"></label>
-                    <input asp-for="Name" class="form-control" />
+                    <input asp-for="Name" class="form-control"  />
                     <span asp-validation-for="Name" class="text-danger"></span>
                 </div>
-                <div class="form-group mb-4" hidden>
+                <div class="form-group mb-4">
                     <label asp-for="Surname" class="control-label"></label>
                     <input asp-for="Surname" class="form-control" />
                     <span asp-validation-for="Surname" class="text-danger"></span>
                 </div>
-                <div class="form-group mb-4" hidden>
+                <div class="form-group mb-4">
                     <label asp-for="Cell" class="control-label"></label>
                     <input asp-for="Cell" class="form-control" />
                     <span asp-validation-for="Cell" class="text-danger"></span>
                 </div>
-                <div class="form-group mb-4" hidden>
+                <div class="form-group mb-4">
                     <label asp-for="Email" class="control-label"></label>
                     <input asp-for="Email" class="form-control" />
                     <span asp-validation-for="Email" class="text-danger"></span>
                 </div>
-                <div class="form-group mb-4" hidden>
+                <div class="form-group mb-4">
                     <label asp-for="gender" class="control-label"></label>
                     <input asp-for="gender" class="form-control" />
                     <span asp-validation-for="gender" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-4">
+                    <label asp-for="Reported" class="control-label"></label>
+                    <input asp-for="Reported" class="form-control" />
+                    <span asp-validation-for="Reported" class="text-danger"></span>
+                </div>
+                <span class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmBookingModal">Register</span>
+
+                <div class="modal fade" id="confirmBookingModal" tabindex="-1">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="text-danger">Confirm </h5>
+                            </div>
+                            <div class="modal-body">
+                                <p>
+                                    Are you sure want to register for the GBV Support Group
+                                </p>
+                            </div>
+                            <div class="modal-footer">
+                                <input type="submit" value="Submit" class="btn btn-primary" />
+                                <span class="btn btn-secondary" data-bs-dismiss="modal">Close</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
                 </div>
             </form>
         </div>
     </div>
 </div>
-
 <div>
-    <a asp-controller="Home" asp-action="Index">Back to Home</a>
-</div>
+		<a asp-controller="Home" asp-action="Index">Back to Home</a>
+	</div>
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
@@ -54,5 +80,7 @@
     <script>
     </script>
 }
+
+
 
 

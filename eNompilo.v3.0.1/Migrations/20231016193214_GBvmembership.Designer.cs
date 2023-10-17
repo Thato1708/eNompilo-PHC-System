@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using eNompilo.v3._0._1.Areas.Identity.Data;
 
@@ -11,9 +12,10 @@ using eNompilo.v3._0._1.Areas.Identity.Data;
 namespace eNompilo.v3._0._1.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231016193214_GBvmembership")]
+    partial class GBvmembership
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -984,6 +986,43 @@ namespace eNompilo.v3._0._1.Migrations
                     b.ToTable("Receptionist");
                 });
 
+            modelBuilder.Entity("eNompilo.v3._0._1.Models.Vaccination.Certification", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
+
+                    b.Property<int>("CertificateNo")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DoseTrackingId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("DosesId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("IssuedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("PatientId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("DoseTrackingId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Certification");
+                });
+
             modelBuilder.Entity("eNompilo.v3._0._1.Models.Vaccination.DoseTracking", b =>
                 {
                     b.Property<int>("ID")
@@ -995,14 +1034,7 @@ namespace eNompilo.v3._0._1.Migrations
                     b.Property<bool>("Archived")
                         .HasColumnType("bit");
 
-                    b.Property<string>("CertificateNo")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("DateAdministered")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("IssuedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("PatientId")
@@ -1450,6 +1482,23 @@ namespace eNompilo.v3._0._1.Migrations
                     b.HasOne("eNompilo.v3._0._1.Models.SystemUsers.ApplicationUser", "Users")
                         .WithMany()
                         .HasForeignKey("UsersId");
+
+                    b.Navigation("Users");
+                });
+
+            modelBuilder.Entity("eNompilo.v3._0._1.Models.Vaccination.Certification", b =>
+                {
+                    b.HasOne("eNompilo.v3._0._1.Models.Vaccination.DoseTracking", "DoseTrackings")
+                        .WithMany()
+                        .HasForeignKey("DoseTrackingId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("eNompilo.v3._0._1.Models.SystemUsers.ApplicationUser", "Users")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("DoseTrackings");
 
                     b.Navigation("Users");
                 });

@@ -8,10 +8,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Extensions\**" />
+    <Content Remove="Extensions\**" />
+    <EmbeddedResource Remove="Extensions\**" />
+    <None Remove="Extensions\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <_ContentIncludedByDefault Remove="wwwroot\img\Screenshot %28200%29.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="EntityFramework" Version="6.4.4" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.21" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.21" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.21" />
@@ -24,7 +32,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Extensions\" />
     <Folder Include="Models\Counselling\Booking\" />
     <Folder Include="Views\Home\EmptyPages\" />
     <Folder Include="wwwroot\img\NewFolder\" />

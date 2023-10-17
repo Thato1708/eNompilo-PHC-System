@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 using System.Reflection.Metadata.Ecma335;
+using eNompilo.v3._0._1.Models.ViewModels;
 
 namespace eNompiloCounselling.Controllers
 {
@@ -36,6 +37,72 @@ namespace eNompiloCounselling.Controllers
             }
             var obj = dbContext.tblPractitioner.Find(Id);
             if (obj == null)
+            {
+                return NotFound();
+            }
+            return View(obj);
+        }
+
+        public IActionResult PendingAppointments()
+        {
+            var model = new AppointmentsViewModel();
+            model.GenAppointment = dbContext.tblGeneralAppointment.Where(ga => ga.Archived == false && ga.SessionConfirmed == false).Include(p=>p.Patient).Include(pr=>pr.Practitioner).ToList();
+            model.CounsAppointment = dbContext.tblCounsellingAppointment.Where(ga => ga.Archived == false && ga.SessionConfirmed == false).Include(p => p.Patient).ToList();
+            model.FPAppointment = dbContext.tblFamilyPlanningAppointment.Where(ga => ga.Archived == false && ga.SessionConfirmed == false).Include(p => p.Patient).ToList();
+            model.VaxAppointment = dbContext.tblVaccinationAppointment.Where(ga => ga.Archived == false && ga.SessionConfirmed == false).Include(p => p.Patient).ToList();
+            return View(model);
+        }
+
+        public IActionResult ConfirmGeneralAppointments(int? Id)
+        {
+            if(Id == null || Id == 0)
+            {
+                return NotFound();
+            }
+            var obj = dbContext.tblGeneralAppointment.Find(Id);
+            if(obj == null)
+            {
+                return NotFound();
+            }
+            return View(obj);
+        }
+
+        public IActionResult ConfirmCounsellingAppointments(int? Id)
+        {
+            if(Id == null || Id == 0)
+            {
+                return NotFound();
+            }
+            var obj = dbContext.tblCounsellingAppointment.Find(Id);
+            if(obj == null)
+            {
+                return NotFound();
+            }
+            return View(obj);
+        }
+
+        public IActionResult ConfirmFamilyPlanningAppointments(int? Id)
+        {
+            if(Id == null || Id == 0)
+            {
+                return NotFound();
+            }
+            var obj = dbContext.tblFamilyPlanningAppointment.Find(Id);
+            if(obj == null)
+            {
+                return NotFound();
+            }
+            return View(obj);
+        }
+
+        public IActionResult ConfirmVaccinationAppointments(int? Id)
+        {
+            if(Id == null || Id == 0)
+            {
+                return NotFound();
+            }
+            var obj = dbContext.tblVaccinationAppointment.Find(Id);
+            if(obj == null)
             {
                 return NotFound();
             }

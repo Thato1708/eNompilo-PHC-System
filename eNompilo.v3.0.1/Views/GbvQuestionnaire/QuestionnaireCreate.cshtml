@@ -1,0 +1,86 @@
+﻿@model eNompilo.v3._0._1.Models.GBV.Questionnaire
+@using eNompilo.v3._0._1.Constants;
+@inject IHttpContextAccessor contextAccessor
+
+@{
+    ViewData["Title"] = "Questionnaire";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+<div class="margined-page pt-4">
+<h2>Take the GBV Questionnaire now</h2>
+<hr />
+<div class="row align-items-center">
+    <div class="col-md-4" style="margin-left:auto;margin-right:auto;">
+        <form asp-action="Questionnaire">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group mb-4" hidden>
+                    <label asp-for="familyOption" class="control-label"></label>
+                    <input asp-for="familyOption" type="text" class="form-control"/>
+                    <span asp-validation-for="familyOption" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-4" hidden>
+                    <label asp-for="Violence" class="control-label"></label>
+                    <input asp-for="Violence" type="text" class="form-control" />
+                    <span asp-validation-for="Violence" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-4" hidden>
+                    <label asp-for="dependency" class="control-label"></label>
+                    <input asp-for="dependency" type="text" class="form-control" />
+                    <span asp-validation-for="dependency" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-4" hidden>
+                    <label asp-for="Fear" class="control-label"></label>
+                    <input asp-for="Fear" type="text" class="form-control" />
+                    <span asp-validation-for="Fear" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-4" hidden>
+                    <label asp-for="PhysAbuse" class="control-label"></label>
+                    <input asp-for="PhysAbuse" type="text" class="form-control" />
+                    <span asp-validation-for="PhysAbuse" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-4" hidden>
+                    <label asp-for="Abuse" class="control-label"></label>
+                    <input asp-for="Abuse" type="text" class="form-control" />
+                    <span asp-validation-for="Abuse" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-4" hidden>
+                    <label asp-for="Confide" class="control-label"></label>
+                    <input asp-for="Confide" type="text" class="form-control" />
+                    <span asp-validation-for="Confide" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-4" hidden>
+                    <label asp-for="EvidenceType" class="control-label"></label>
+                    <input asp-for="EvidenceType" type="text" class="form-control" />
+                    <span asp-validation-for="EvidenceType" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-4" hidden>
+                    <label asp-for="DetectorTest" class="control-label"></label>
+                    <input asp-for="DetectorTest" type="text" class="form-control" />
+                    <span asp-validation-for="DetectorTest" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-4" hidden>
+                    <label asp-for="ContactLawEnforcement" class="control-label"></label>
+                    <input asp-for="ContactLawEnforcement" type="text" class="form-control" />
+                    <span asp-validation-for="ContactLawEnforcement" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-4">
+                    <input type="submit" value="Submit" class="btn btn-primary" />
+                </div>
+                <div class="form-group">
+                </div>
+            </form>
+        </div>
+    </div>
+    </div>
+
+    <div>
+		<a asp-controller="Home" asp-action="Index">Back to Home</a>
+	</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+    </script>
+}

@@ -1,0 +1,68 @@
+﻿@model IEnumerable<eNompilo.v3._0._1.Models.GBV.SupportMembership>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+<div class="margined-page pt-4">
+    <h1>Index</h1>
+
+    <p>
+        <a asp-action="Membership">GBV Support Group Membership</a>
+    </p>
+    <table id="dtRepGbv" class="table table-striped" style="margin-left:auto;margin-right:auto;">
+        <thead>
+            <tr>
+                <th>
+                    Please enter your first name: 
+                </th>
+                <th>
+                    Please enter your surname:
+                </th>
+                <th>
+                    Enter Cell Phone number:
+                </th>
+                <th>
+                    Enter your Email Address:
+                </th>
+                <th>
+                    Enter your gender:
+                </th>
+                <th>
+                    Have you ever Reported GBV:
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.Name) </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Surname)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Cell)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.gender)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Reported)
+                    </td>
+                    <td>
+                        <a asp-action="Update" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-action="Cancel" asp-route-id="@item.Id">Cancel</a>
+                    </td>
+                </tr>
+                
+            }
+        </tbody>
+    </table>
+</div>
+

@@ -1,64 +1,138 @@
 ﻿@model eNompilo.v3._0._1.Models.Family_Planning.FamilyPlanningAppointment
-@inject IHttpContextAccessor contextAccessor
-
+@using Microsoft.AspNetCore.Identity;
+@using System.Collections;
 @using eNompilo.v3._0._1.Constants;
+@using eNompilo.v3._0._1.Models.SystemUsers;
+@inject UserManager<ApplicationUser> UserManager
+@inject SignInManager<ApplicationUser> SignInManager
+@inject IHttpContextAccessor contextAccessor
+@inject eNompilo.v3._0._1.Areas.Identity.Data.ApplicationDbContext _context
 
 @{
 	ViewData["Title"] = "Book";
 	Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+
+	var patient = _context.tblPatient.Select(p => new SelectListItem
+			{
+				Value = p.Id.ToString(),
+				Text = p.FirstName + " " + p.LastName + " (" + p.IdNumber + ")",
+			}).ToList();
+	var practitioner = _context.tblPractitioner.Select(p => new SelectListItem
+			{
+				Value = p.Id.ToString(),
+				Text = p.Users.FirstName + " " + p.Users.LastName,
+				/*Text = "(" + Enum.GetName(typeof(Titles), p.Users.Titles) + ".) " + p.Users.FirstName + " " + p.Users.LastName,*/
+			}).ToList();
 }
 
-<div class="margined-page pt-4">
+@if (SignInManager.IsSignedIn(User))
+{
+	<div class="margined-page pt-4">
 
-	<h2>Book an Appointment</h2>
-	<hr />
-	<div class="row">
-		<div class="col-md-4" style="margin-left:auto;margin-right:auto;">
-			<form asp-action="Book">
-				<div asp-validation-summary="ModelOnly" class="text-danger"></div>
-				<div class="form-group mb-4">
-					<label asp-for="BookingReasons" class="control-label"></label>
-					<select asp-for="BookingReasons" class="form-control" asp-items="Html.GetEnumSelectList<BookingReasons>()">
-						<option disabled selected hidden>Please select an option</option>
-					</select>
-					<span asp-validation-for="BookingReasons" class="text-danger"></span>
+		<h2>Book an Appointment</h2>
+		<hr />
+		<div class="row d-flex align-items-center">
+			@if (User.IsInRole(RoleConstants.Patient))
+			{
+				<div class="col-md-4" style="margin-left:auto;margin-right:auto;">
+					<form asp-action="Book">
+						<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+						<div class="form-group mb-4">
+							<label asp-for="BookingReasons" class="control-label"></label>
+							<select asp-for="BookingReasons" class="form-control" asp-items="Html.GetEnumSelectList<BookingReasons>()">
+								<option disabled selected hidden>Please select an option</option>
+							</select>
+							<span asp-validation-for="BookingReasons" class="text-danger"></span>
+						</div>
+						<div class="form-group mb-4">
+							<label asp-for="PreferredDate" class="control-label"></label>
+							<input id="dateof" asp-for="PreferredDate" type="date" class="form-control" />
+							<span asp-validation-for="PreferredDate" class="text-danger"></span>
+						</div>
+						<div class="form-group mb-4">
+							<label asp-for="PreferredTime" class="control-label"></label>
+							<input id="timeof" asp-for="PreferredTime" type="time" class="form-control" min="08:00" max="15:00" />
+							<span asp-validation-for="PreferredTime" class="text-danger"></span>
+						</div>
+						<div class="form-group mb-4" hidden>
+							<label asp-for="PatientId" class="control-label"></label>
+							<input asp-for="PatientId" class="form-control" value="@contextAccessor.HttpContext.Session.GetInt32("PatientId")" />
+						</div>
+						<div class="form-group form-check mb-4">
+							<label class="form-check-label">
+								<input class="form-check-input" asp-for="Archived" /> @Html.DisplayNameFor(model => model.Archived)
+							</label>
+						</div>
+						<div class="form-group mb-4">
+							<input type="submit" value="Create" class="btn btn-primary" />
+						</div>
+					</form>
 				</div>
-				<div class="form-group mb-4">
-					<label asp-for="PreferredDate" class="control-label"></label>
-					<input asp-for="PreferredDate" class="form-control" />
-					<span asp-validation-for="PreferredDate" class="text-danger"></span>
+			}
+			else if (User.IsInRole(RoleConstants.Practitioner))
+			{
+				<div class="col-md-4" style="margin-left:auto;margin-right:auto;">
+					<form asp-action="Book">
+						<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+						<div class="form-group mb-4">
+							<label asp-for="BookingReasons" class="control-label"></label>
+							<select asp-for="BookingReasons" class="form-control" asp-items="Html.GetEnumSelectList<BookingReasons>()">
+								<option disabled selected hidden>Please select an option</option>
+							</select>
+							<span asp-validation-for="BookingReasons" class="text-danger"></span>
+						</div>
+						<div class="form-group mb-4">
+							<label asp-for="PreferredDate" class="control-label"></label>
+							<input id="dateof" asp-for="PreferredDate" type="date" class="form-control" />
+							<span asp-validation-for="PreferredDate" class="text-danger"></span>
+						</div>
+						<div class="form-group mb-4">
+							<label asp-for="PreferredTime" class="control-label"></label>
+							<input id="timeof" asp-for="PreferredTime" type="time" class="form-control" min="08:00" max="15:00" />
+							<span asp-validation-for="PreferredTime" class="text-danger"></span>
+						</div>
+						<div class="form-group mb-4">
+							<label asp-for="Patient" class="control-label"></label>
+							<select asp-for="PatientId" id="selectedPatient" class="form-control" asp-items="@(new SelectList(patient, "Value", "Text"))">
+								<option disabled selected hidden>Please select an option</option>
+							</select>
+							<span asp-validation-for="PatientId" class="text-danger"></span>
+						</div>
+						<div class="form-group mb-4">
+							<label asp-for="Practitioner" class="control-label"></label>
+							<select asp-for="PractitionerId" class="form-control" asp-items="@(new SelectList(practitioner, "Value","Text"))">
+								<option disabled selected hidden>Please select an option</option>
+							</select>
+							<span asp-validation-for="PractitionerId" class="text-danger"></span>
+						</div>
+						<div class="form-group form-check mb-4">
+							<label class="form-check-label">
+								Are you confirming this session with your patient <span id="patientName"></span>?
+								<input class="form-check-input" asp-for="SessionConfirmed" />
+							</label>
+						</div>
+						<div class="form-group mb-4">
+							<input type="submit" value="Create" class="btn btn-primary" />
+						</div>
+					</form>
 				</div>
-				<div class="form-group mb-4">
-					<label asp-for="PreferredTime" class="control-label"></label>
-					<input asp-for="PreferredTime" class="form-control" />
-					<span asp-validation-for="PreferredTime" class="text-danger"></span>
-				</div>
-				<div class="form-group mb-4" hidden>
-					<label asp-for="PatientId" class="control-label"></label>
-					<input asp-for="PatientId" class="form-control" value="@contextAccessor.HttpContext.Session.GetInt32("PatientId")" />
-				</div>
-				<div class="form-group mb-4" hidden>
-					<label asp-for="PatientFileId" class="control-label"></label>
-					<input asp-for="PatientFileId" class="form-control" value="@contextAccessor.HttpContext.Session.GetInt32("PatientFileId")" />
-				</div>
-				<div class="form-group form-check mb-4">
-					<label class="form-check-label">
-						<input class="form-check-input" asp-for="Archived" /> @Html.DisplayNameFor(model => model.Archived)
-					</label>
-				</div>
-				<div class="form-group mb-4">
-					<input type="submit" value="Create" class="btn btn-primary" />
-				</div>
-			</form>
+			} 
+		</div>
+
+		<div>
+			<a asp-action="Index">Back to List</a>
 		</div>
 	</div>
-
-	<div>
-		<a asp-action="Index">Back to List</a>
-	</div>
-</div>
+}
 @section Scripts {
 	@{
 		await Html.RenderPartialAsync("_ValidationScriptsPartial");
-	}
+    }
+    <script>
+        document.getElementById('selectedPatient').addEventListener('change', function () {
+            var selectedText = this.options[this.selectedIndex].text;
+            // Display the selected text somewhere in your view
+            document.getElementById('patientName').textContent = selectedText;
+        });
+    </script>
 }

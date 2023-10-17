@@ -37,6 +37,11 @@ namespace eNompilo.v3._0._1.Models.Vaccination
         [Required]
         public bool Archived { get; set; }
 
+        [Required]
+        public string CertificateNo { get; set; }
+
+        public DateTime IssuedDate { get; set; } = DateTime.Now;
+
         public virtual Patient? Patient { get; set; }
         public virtual VaccinationInventory? VaccinationInventory { get; set; }
     }

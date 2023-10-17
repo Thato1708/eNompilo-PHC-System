@@ -37,9 +37,8 @@ namespace eNompilo.v3._0._1.Models.Vaccination
         [Required]
         public bool Archived { get; set; }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Required]
-        public int CertificateNo { get; set; }
+        public string CertificateNo { get; set; }
 
         public DateTime IssuedDate { get; set; } = DateTime.Now;
 

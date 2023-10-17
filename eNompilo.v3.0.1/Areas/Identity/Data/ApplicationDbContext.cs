@@ -51,7 +51,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
         builder.Entity<IdentityRoleClaim<string>>().ToTable("RoleClaims");
         builder.Entity<IdentityUserToken<string>>().ToTable("UserTokens");
 
-        builder.Entity<DoseTracking>().Property(c => c.CertificateNo).ValueGeneratedNever();
+        //builder.Entity<DoseTracking>().Property(c => c.CertificateNo).ValueGeneratedNever();
     }
     public DbSet<Patient> tblPatient { get; set; }
     public DbSet<Practitioner> tblPractitioner { get; set; }

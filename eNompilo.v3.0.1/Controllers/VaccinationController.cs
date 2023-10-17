@@ -51,7 +51,7 @@ namespace eNompilo.v3._0._1.Controllers
         {
             if (User.IsInRole(RoleConstants.Practitioner))
             {
-                IEnumerable<DoseTracking> doses = _context.tblDoseTracking.Include(d=>d.Patient).Include(d=>d.VaccinationInventory);
+                IEnumerable<DoseTracking> doses = _context.tblDoseTracking.Include(d => d.Patient).Include(d => d.VaccinationInventory);
                 return View(doses);
             }
             return View();
@@ -61,6 +61,17 @@ namespace eNompilo.v3._0._1.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult DoseTracking(DoseTracking model)
         {
+            Random rnd = new Random();
+            int randomNo = rnd.Next(1000, 100000);
+            string formattedNo = "";
+
+            bool isUnique = !_context.tblDoseTracking.Any(item => item.CertificateNo == randomNo.ToString());
+            if (isUnique)
+            {
+                formattedNo = string.Format("GRP-03-28-{0:D5}$", randomNo);
+                model.CertificateNo = formattedNo;
+            }
+
 
             if (model.PatientId != null && model.VaccineInventoryId != null && model.DateAdministered != null && model.SiteAddress != null)
             {
@@ -186,12 +197,14 @@ namespace eNompilo.v3._0._1.Controllers
         {
             if (Id == 0 || Id == null)
                 return NotFound();
-            var obj = _context.tblDoseTracking.Where(d=>d.ID == Id).Include(d => d.Patient).Include(d => d.VaccinationInventory).FirstOrDefault();
+            var obj = _context.tblDoseTracking.Where(d => d.ID == Id).Include(d => d.Patient).Include(d => d.VaccinationInventory).FirstOrDefault();
             if (obj == null)
                 return NotFound();
             return View(obj);
         }
 
+
+        //Remove
         public IActionResult Remove(int? id)
         {
             if (id == 0 || id == null)
@@ -207,7 +220,7 @@ namespace eNompilo.v3._0._1.Controllers
 
             var model = new ArchiveItemViewModel
             {
-                Id = obj.ID, 
+                Id = obj.ID,
                 DoseTrackingID = obj.ID,
                 Archived = obj.Archived,
             };

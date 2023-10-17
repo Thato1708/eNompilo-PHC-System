@@ -8,6 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Extensions\**" />
+    <Content Remove="Extensions\**" />
+    <EmbeddedResource Remove="Extensions\**" />
+    <None Remove="Extensions\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <_ContentIncludedByDefault Remove="wwwroot\img\Screenshot %28200%29.png" />
   </ItemGroup>
 
@@ -25,7 +32,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Extensions\" />
     <Folder Include="Models\Counselling\Booking\" />
     <Folder Include="Models\SMP\" />
     <Folder Include="Views\Home\EmptyPages\" />

@@ -10,6 +10,7 @@ using eNompilo.v3._0._1.Models.Family_Planning;
 using eNompilo.v3._0._1.Models.GBV;
 using System.Reflection.Emit;
 using eNompilo.v3._0._1.Models.ViewModels;
+using eNompilo.v3._0._1.Models.SMP;
 
 namespace eNompilo.v3._0._1.Areas.Identity.Data;
 
@@ -75,5 +76,6 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<SupportMembership> tblSupportGroup { get; set; }
     public DbSet<eNompilo.v3._0._1.Models.Vaccination.DoseTracking>? DoseTracking { get; set; }
     public DbSet<eNompilo.v3._0._1.Models.Vaccination.VaccinationInventory>? VaccinationInventory { get; set; }
+    public DbSet<SMPAppointment> tblMedicalProcedureAppointment { get; set; }
 
 }

@@ -1,0 +1,61 @@
+﻿@model eNompilo.v3._0._1.Models.SMP.SMPAppointment
+
+@*@{
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}*@
+
+<div class="margined-page pt-4">
+    <div class="form-check-inline">
+    <p>Have you or a family member ever had a serious reaction to anesthesia (other than nausea and vomiting)?</p>
+    </div>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" name="inlineCheckOptions" id="inlineCheck1" value="option1">
+        <label class="form-check-label" for="inlineCheck1">Yes</label>
+    </div>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" name="inlineRadioOptions" id="inlineCheck2" value="option2">
+        <label class="form-check-label" for="inlineCheck2">No</label>
+    </div>
+    <br/>
+    <div class="form-check-inline">
+        <p>If you have had surgery, were you told that it was to put in a breathing tube?</p>
+    </div>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" name="inlineRadioOptions" id="inlineRadio3" value="option3">
+        <label class="form-check-label" for="inlineRadio1">Yes</label>
+    </div>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" name="inlineRadioOptions" id="inlineRadio4" value="option4">
+        <label class="form-check-label" for="inlineRadio2">No</label>
+    </div>
+    <br/>
+    <div class="form-check-inline">
+        <p>Do you have any difficulty opening your mouth or moving your head or neck?</p>
+    </div>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" name="inlineRadioOptions" id="inlineRadio5" value="option1">
+        <label class="form-check-label" for="inlineRadio1">Yes</label>
+    </div>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" name="inlineRadioOptions" id="inlineRadio6" value="option2">
+        <label class="form-check-label" for="inlineRadio2">No</label>
+    </div>
+    <br/>
+    <div class="form-check-inline">
+        <p>Have you ever had a heartattack or a myocardial infarction?</p>
+    </div>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" name="inlineRadioOptions" id="inlineRadio7" value="option1">
+        <label class="form-check-label" for="inlineRadio1">Yes</label>
+    </div>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" name="inlineRadioOptions" id="inlineRadio8" value="option2">
+        <label class="form-check-label" for="inlineRadio2">No</label>
+    </div>
+    <br/>
+    <div class="form-group mb-4">
+		<label asp-for="PreferredDate" class="control-label"></label>
+		<input id="dateof" asp-for="PreferredDate" type="date" class="form-control" />
+		<span asp-validation-for="PreferredDate" class="text-danger"></span>
+	</div>
+</div>

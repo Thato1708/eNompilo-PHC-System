@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using eNompilo.v3._0._1.Areas.Identity.Data;
 
@@ -11,9 +12,10 @@ using eNompilo.v3._0._1.Areas.Identity.Data;
 namespace eNompilo.v3._0._1.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231017124338_SMPAppointment")]
+    partial class SMPAppointment
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -407,53 +409,6 @@ namespace eNompilo.v3._0._1.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("SessionNotes");
-                });
-
-            modelBuilder.Entity("eNompilo.v3._0._1.Models.SMP.SMPAppointment", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<bool>("AnaesthesiaReaction")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("BreathingtubeSurgery")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("DiabetesQuestion")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("HeartAttack")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("HeartAttackDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("InsulinQuestion")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Movement")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("NatureOfReaction")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("PatientFileId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PatientId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PatientFileId");
-
-                    b.HasIndex("PatientId");
-
-                    b.ToTable("SMPAppointment");
                 });
 
             modelBuilder.Entity("eNompilo.v3._0._1.Models.SystemUsers.Admin", b =>
@@ -1406,25 +1361,6 @@ namespace eNompilo.v3._0._1.Migrations
                     b.Navigation("Practitioner");
 
                     b.Navigation("SessionNotes");
-                });
-
-            modelBuilder.Entity("eNompilo.v3._0._1.Models.SMP.SMPAppointment", b =>
-                {
-                    b.HasOne("eNompilo.v3._0._1.Models.SystemUsers.PatientFile", "PatientFile")
-                        .WithMany()
-                        .HasForeignKey("PatientFileId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("eNompilo.v3._0._1.Models.SystemUsers.Patient", "Patient")
-                        .WithMany()
-                        .HasForeignKey("PatientId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Patient");
-
-                    b.Navigation("PatientFile");
                 });
 
             modelBuilder.Entity("eNompilo.v3._0._1.Models.SystemUsers.Admin", b =>

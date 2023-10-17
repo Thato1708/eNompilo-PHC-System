@@ -47,9 +47,9 @@ namespace eNompiloCounselling.Controllers
         {
             var model = new AppointmentsViewModel();
             model.GenAppointment = dbContext.tblGeneralAppointment.Where(ga => ga.Archived == false && ga.SessionConfirmed == false).Include(p=>p.Patient).Include(pr=>pr.Practitioner).ToList();
-            model.CounsAppointment = dbContext.tblCounsellingAppointment.Where(ga => ga.Archived == false && ga.SessionConfirmed == false).Include(p => p.Patient).ToList();
-            model.FPAppointment = dbContext.tblFamilyPlanningAppointment.Where(ga => ga.Archived == false && ga.SessionConfirmed == false).Include(p => p.Patient).ToList();
-            model.VaxAppointment = dbContext.tblVaccinationAppointment.Where(ga => ga.Archived == false && ga.SessionConfirmed == false).Include(p => p.Patient).ToList();
+            model.CounsAppointment = dbContext.tblCounsellingAppointment.Where(ga => ga.Archived == false && ga.SessionConfirmed == false).Include(p => p.Patient).Include(pr=>pr.Practitioner).ToList();
+            model.FPAppointment = dbContext.tblFamilyPlanningAppointment.Where(ga => ga.Archived == false && ga.SessionConfirmed == false).Include(p => p.Patient).Include(pr=>pr.Practitioner).ToList();
+            model.VaxAppointment = dbContext.tblVaccinationAppointment.Where(ga => ga.Archived == false && ga.SessionConfirmed == false).Include(p => p.Patient).Include(pr=>pr.Practitioner).ToList();
             return View(model);
         }
 

@@ -3,121 +3,166 @@
 @using eNompilo.v3._0._1.Constants;
 
 @{
-    ViewData["Title"] = "PendingAppointments";
-    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+	ViewData["Title"] = "PendingAppointments";
+	Layout = "~/Views/Shared/_DashboardLayout.cshtml";
 }
 
-<h1>PendingAppointments</h1>
+<h1>Pending Appointments</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+	<a asp-action="Create">Create New</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th width="25%">
-                Patient Issues
-            </th>
-			<th width="20%">
-                Appointment Date
-            </th>
+<table id="dtPendingApps" class="table table-striped">
+	<thead>
+		<tr>
+			<th width="25%">
+				Patient Issues
+			</th>
 			<th width="15%">
-                Appointment Time
-            </th>
-            <th>
-                Patient
-            </th width="20%">
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr><th colspan="5">General Appointment</th></tr>
-@foreach (var item in Model.GenAppointment) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.PatientIssues)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PreferredDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PreferredTime)
-            </td>
-            <td>
-                @item.Patient.FirstName @item.Patient.LastName (@item.Patient.IdNumber)
-            </td>
-            <td>
-                <a asp-action="ConfirmGeneralAppointments" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="ConfirmGeneralAppointments" asp-route-id="@item.Id">Details</a> |
-                @*<a asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
-            </td>
-        </tr>
-}
-        <tr><th colspan="5">Counselling Appointment</th></tr>
-@foreach (var item in Model.CounsAppointment.Where(gp=>gp.Practitioner.PractitionerType == PractitionerType.Counsellor)) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.BookingReasons)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PreferredDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PreferredTime)
-            </td>
-            <td>
-                @item.Patient.FirstName @item.Patient.LastName (@item.Patient.IdNumber)
-            </td>
-            <td>
-                <a asp-action="ConfirmGeneralAppointments" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="ConfirmGeneralAppointments" asp-route-id="@item.Id">Details</a> |
-                @*<a asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
-            </td>
-        </tr>
-}
-        <tr><th colspan="5">Family Planning Appointment</th></tr>
-@foreach (var item in Model.FPAppointment) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.BookingReasons)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PreferredDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PreferredTime)
-            </td>
-            <td>
-                @item.Patient.FirstName @item.Patient.LastName (@item.Patient.IdNumber)
-            </td>
-            <td>
-                <a asp-action="ConfirmGeneralAppointments" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="ConfirmGeneralAppointments" asp-route-id="@item.Id">Details</a> |
-                @*<a asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
-            </td>
-        </tr>
-}
-        <tr><th colspan="5">Vaccination Appointment</th></tr>
-@foreach (var item in Model.VaxAppointment) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.VaccinableDiseases)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PreferredDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PreferredTime)
-            </td>
-            <td>
-                @item.Patient.FirstName @item.Patient.LastName (@item.Patient.IdNumber)
-            </td>
-            <td>
-                <a asp-action="ConfirmGeneralAppointments" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="ConfirmGeneralAppointments" asp-route-id="@item.Id">Details</a> |
-                @*<a asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
-            </td>
-        </tr>
-}
-    </tbody>
+				Appointment Date
+			</th>
+			<th width="15%">
+				Appointment Time
+			</th>
+			<th width="20%">
+				Appointment Type
+			</th>
+			<th width="15%">
+				Patient
+			</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var item in Model.GenAppointment)
+		{
+			<tr>
+				<td>
+					@Html.DisplayFor(modelItem => item.PatientIssues)
+				</td>
+				<td>
+					@if (item.PreferredDate == DateTime.Now.Date)
+					{
+						@Html.DisplayFor(modelItem => item.PreferredDate) <span class="text-warning">(Due Today!)</span>
+					}
+					else if (item.PreferredDate < DateTime.Now.Date )
+					{
+						@Html.DisplayFor(modelItem => item.PreferredDate) <span class="text-danger">(Past Due!)</span>
+					}
+				</td>
+				<td>
+
+					@Html.DisplayFor(modelItem => item.PreferredTime)
+
+				</td>
+				<td>
+					General Appointment
+				</td>
+				<td>
+					@item.Patient.FirstName @item.Patient.LastName (@item.Patient.IdNumber)
+				</td>
+				<td>
+					<a asp-action="ConfirmGeneralAppointments" asp-route-id="@item.Id">Edit</a> |
+					<a asp-action="ConfirmGeneralAppointments" asp-route-id="@item.Id">Details</a> |
+					@*<a asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
+				</td>
+			</tr>
+		}
+		@foreach (var item in Model.CounsAppointment.Where(gp => gp.Practitioner.PractitionerType == PractitionerType.Counsellor))
+		{
+			<tr>
+				<td>
+					@Html.DisplayFor(modelItem => item.BookingReasons)
+				</td>
+				<td>
+					@if (item.PreferredDate == DateTime.Now.Date)
+					{
+						@Html.DisplayFor(modelItem => item.PreferredDate) <span class="text-warning">(Due Today!)</span>
+					}
+					else if (item.PreferredDate < DateTime.Now.Date)
+					{
+						@Html.DisplayFor(modelItem => item.PreferredDate) <span class="text-danger">(Past Due!)</span>
+					}
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.PreferredTime)
+				</td>
+				<td>
+					Counselling Appointment
+				</td>
+				<td>
+					@item.Patient.FirstName @item.Patient.LastName (@item.Patient.IdNumber)
+				</td>
+				<td>
+					<a asp-action="ConfirmGeneralAppointments" asp-route-id="@item.Id">Edit</a> |
+					<a asp-action="ConfirmGeneralAppointments" asp-route-id="@item.Id">Details</a> |
+					@*<a asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
+				</td>
+			</tr>
+		}
+		@foreach (var item in Model.FPAppointment)
+		{
+			<tr>
+				<td>
+					@Html.DisplayFor(modelItem => item.BookingReasons)
+				</td>
+				<td>
+					@if (item.PreferredDate == DateTime.Now.Date)
+					{
+						@Html.DisplayFor(modelItem => item.PreferredDate) <span class="text-warning">(Due Today!)</span>
+					}
+					else if (item.PreferredDate < DateTime.Now.Date)
+					{
+						@Html.DisplayFor(modelItem => item.PreferredDate) <span class="text-danger">(Past Due!)</span>
+					}
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.PreferredTime)
+				</td>
+				<td>
+					Family Planning
+				</td>
+				<td>
+					@item.Patient.FirstName @item.Patient.LastName (@item.Patient.IdNumber)
+				</td>
+				<td>
+					<a asp-action="ConfirmGeneralAppointments" asp-route-id="@item.Id">Edit</a> |
+					<a asp-action="ConfirmGeneralAppointments" asp-route-id="@item.Id">Details</a> |
+					@*<a asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
+				</td>
+			</tr>
+		}
+		@foreach (var item in Model.VaxAppointment)
+		{
+			<tr>
+				<td>
+					@Html.DisplayFor(modelItem => item.VaccinableDiseases)
+				</td>
+				<td>
+					@if (item.PreferredDate == DateTime.Now.Date)
+					{
+						@Html.DisplayFor(modelItem => item.PreferredDate) <span class="text-warning">(Due Today!)</span>
+					}
+					else if (item.PreferredDate < DateTime.Now.Date)
+					{
+						@Html.DisplayFor(modelItem => item.PreferredDate) <span class="text-danger">(Past Due!)</span>
+					}
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.PreferredTime)
+				</td>
+				<td>
+					Vaccination Appointment
+				</td>
+				<td>
+					@item.Patient.FirstName @item.Patient.LastName (@item.Patient.IdNumber)
+				</td>
+				<td>
+					<a asp-action="ConfirmGeneralAppointments" asp-route-id="@item.Id">Edit</a> |
+					<a asp-action="ConfirmGeneralAppointments" asp-route-id="@item.Id">Details</a> |
+					@*<a asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
+				</td>
+			</tr>
+		}
+	</tbody>
 </table>

@@ -1,69 +1,69 @@
 ﻿@model eNompilo.v3._0._1.Models.Counselling.CounsellingAppointment
 
 @{
-    ViewData["Title"] = "Details";
+	ViewData["Title"] = "Details";
 }
 
 <div class="margined-page pt-4">
 
-<h1>Details</h1>
+	<h1>Details</h1>
 
-<div>
-    <h4>Your Upcoming Appointment</h4>
-    <hr />
-    <dl class="row" style="margin-left:auto;margin-right:auto;">
-        <dt class = "col-sm-2 mb-4">
-            Preferred Attendance
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.SessionPreference)
-        </dd>
-        <dt class = "col-sm-2 mb-4">
-            Booking Reasons
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.BookingReasons)
-        </dd>
-        <dt class = "col-sm-2 mb-4">
-            Reasons Specified
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ChallengesSpecific)
-        </dd>
-        <dt class = "col-sm-2 mb-4">
-            Preferred Date
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PreferredDate)
-        </dd>
-        <dt class = "col-sm-2 mb-4">
-            Preferred Time
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PreferredTime)
-        </dd>
-        <dt class = "col-sm-2 mb-4">
-            Patient
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Patient.FirstName) @Html.DisplayFor(model => model.Patient.LastName)
-        </dd>
-        @*<dt class = "col-sm-2 mb-4">
-            @Html.DisplayNameFor(model => model.PatientFile)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PatientFile.Id)
-        </dd>
-        <dt class = "col-sm-2 mb-4">
-            @Html.DisplayNameFor(model => model.Archived)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Archived)
-        </dd>*@
-    </dl>
-</div>
-<div>
-    <a asp-action="Update" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+	<div>
+		<h4>Your Upcoming Appointment</h4>
+		<hr />
+		<dl class="row" style="margin-left:auto;margin-right:auto;">
+			<dt class="col-sm-2 mb-4">
+				Preferred Attendance
+			</dt>
+			<dd class="col-sm-10">
+				@Html.DisplayFor(model => model.SessionPreference)
+			</dd>
+			<dt class="col-sm-2 mb-4">
+				Booking Reasons
+			</dt>
+			<dd class="col-sm-10">
+				@Html.DisplayFor(model => model.BookingReasons)
+			</dd>
+			<dt class="col-sm-2 mb-4">
+				Reasons Specified
+			</dt>
+			<dd class="col-sm-10">
+				@Html.DisplayFor(model => model.ChallengesSpecific)
+			</dd>
+			<dt class="col-sm-2 mb-4">
+				Preferred Date
+			</dt>
+			<dd class="col-sm-10">
+				@Html.DisplayFor(model => model.PreferredDate)
+			</dd>
+			<dt class="col-sm-2 mb-4">
+				Preferred Time
+			</dt>
+			<dd class="col-sm-10">
+				@Html.DisplayFor(model => model.PreferredTime)
+			</dd>
+			<dt class="col-sm-2 mb-4">
+				Patient
+			</dt>
+			<dd class="col-sm-10">
+				@Model.Patient.FirstName @Model.Patient.MiddleName @Model.Patient.LastName (@Model.Patient.IdNumber)
+			</dd>
+			@*<dt class = "col-sm-2 mb-4">
+			@Html.DisplayNameFor(model => model.PatientFile)
+			</dt>
+			<dd class = "col-sm-10">
+			@Html.DisplayFor(model => model.PatientFile.Id)
+			</dd>
+			<dt class = "col-sm-2 mb-4">
+			@Html.DisplayNameFor(model => model.Archived)
+			</dt>
+			<dd class = "col-sm-10">
+			@Html.DisplayFor(model => model.Archived)
+			</dd>*@
+		</dl>
+	</div>
+	<div>
+		<a asp-action="Update" asp-route-id="@Model?.Id">Edit</a> |
+		<a asp-action="Index">Back to List</a>
+	</div>
 </div>

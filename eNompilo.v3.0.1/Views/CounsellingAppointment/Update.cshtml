@@ -167,5 +167,30 @@
 
 </div>
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+	<script>
+		window.onload = function () {
+			var checkbox = document.querySelector('#checkBool');
+			var dTDiv = document.querySelector('#dateTimeDiv');
+			var dTDiv2 = document.querySelector('#dateTimeDiv2');
+
+			checkbox.addEventListener('change', function () {
+				if (checkbox.checked) {
+					dTDiv.style.display = 'block';
+					dTDiv.disabled = false;
+					dTDiv2.style.display = 'none';
+					dTDiv2.disabled = true;
+				} else {
+					dTDiv.style.display = 'none';
+					dTDiv2.style.display = 'block';
+					dTDiv2.disabled = true;
+				}
+			});
+
+			// Trigger change event to set initial visibility
+			checkbox.dispatchEvent(new Event('change'));
+		};
+	</script>
 }

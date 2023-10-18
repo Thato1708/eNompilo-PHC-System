@@ -8,12 +8,9 @@
 @inject IHttpContextAccessor contextAccessor
 @inject eNompilo.v3._0._1.Areas.Identity.Data.ApplicationDbContext _context
 
-@*Enum.IsDefined(typeof(Status), "OK")*@
 @{
 	ViewData["Title"] = "Book";
 	Layout = "~/Views/Shared/_DashboardLayout.cshtml";
-
-
 
 	var patient = _context.tblPatient.Select(p => new SelectListItem
 			{

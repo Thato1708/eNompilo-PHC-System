@@ -32,7 +32,7 @@ namespace eNompiloCounselling.Controllers
             {
                 if (User.IsInRole(RoleConstants.Patient))
                 {
-                    IEnumerable<CounsellingAppointment> objList = dbContext.tblCounsellingAppointment.Where(va => va.Archived == false).ToList(); ;
+                    IEnumerable<CounsellingAppointment> objList = dbContext.tblCounsellingAppointment.Where(va => va.Archived == false).Include(pr => pr.Practitioner).ThenInclude(u => u.Users).Include(p => p.Patient).ThenInclude(u => u.Users).ToList(); ;
                     return View(objList);
                 }
             else if (User.IsInRole(RoleConstants.Admin))
@@ -60,7 +60,7 @@ namespace eNompiloCounselling.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Book(CounsellingAppointment model)
         {
-            if(model.BookingReasons != null && model.ChallengesSpecific != null && model.SessionPreference != null && model.PatientId != null)
+            if(model.BookingReasons != null && model.ChallengesSpecific != null && model.SessionPreference != null && model.PreferredDate != null && model.PreferredTime != null && model.PatientId != null)
             {
                 dbContext.tblCounsellingAppointment.Add(model);
                 dbContext.SaveChanges();

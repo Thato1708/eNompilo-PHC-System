@@ -89,7 +89,7 @@
         </div>
 
     }
-    else if ((User.IsInRole(RoleConstants.Practitioner) || User.IsInRole(RoleConstants.Receptionist)) && (_context.tblPractitioner.Where(p => p.UserId == user.Id).FirstOrDefault().PractitionerType == PractitionerType.Counsellor || _context.tblPractitioner.Where(p => p.UserId == user.Id).FirstOrDefault().PractitionerType == PractitionerType.Nurse))
+    else if ((User.IsInRole(RoleConstants.Practitioner) || User.IsInRole(RoleConstants.Receptionist)) && _context.tblPractitioner.Where(p => p.UserId == user.Id).FirstOrDefault().PractitionerType == PractitionerType.Counsellor)
     {
         <div class="margined-page pt-4">
             <h1>Index</h1>

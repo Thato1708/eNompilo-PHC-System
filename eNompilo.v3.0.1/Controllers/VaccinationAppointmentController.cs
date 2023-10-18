@@ -27,7 +27,7 @@ namespace eNompilo.v3._0._1Controllers
             {
                 if (User.IsInRole(RoleConstants.Patient))
                 {
-                    IEnumerable<VaccinationAppointment> objList = dbContext.tblVaccinationAppointment.Where(va=>va.Archived == false).ToList();
+                    IEnumerable<VaccinationAppointment> objList = dbContext.tblVaccinationAppointment.Where(va=>va.Archived == false).Include(pr => pr.Practitioner).ThenInclude(u => u.Users).Include(p => p.Patient).ThenInclude(u => u.Users).ToList();
 			        return View(objList);
                 }
                 else if (User.IsInRole(RoleConstants.Admin))
@@ -42,7 +42,7 @@ namespace eNompilo.v3._0._1Controllers
         public IActionResult Book()
         {
             var bookedAppointments = dbContext.tblVaccinationAppointment
-                .Select(a => new { a.PractitionerDiaryId, a.PreferredDate, a.PreferredTime })
+                .Select(a => new { a.PractitionerId, a.PreferredDate, a.PreferredTime })
                 .ToList();
 
             ViewBag.BookedAppointments = bookedAppointments;
@@ -53,7 +53,7 @@ namespace eNompilo.v3._0._1Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Book(VaccinationAppointment model)
         {
-            if(ModelState.IsValid)
+            if(model.PreviousVaccine != null && model.VaccinableDiseases != null && model.PreferredDate != null && model.PreferredTime != null && model.PatientId != null)
             {
                 dbContext.tblVaccinationAppointment.Add(model);
                 dbContext.SaveChanges();

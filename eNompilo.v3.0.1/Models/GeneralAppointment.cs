@@ -16,12 +16,6 @@ namespace eNompilo.v3._0._1.Models
         [Display(Name = "Please tell us in as much detail as you can about your issue.")]
         public string PatientIssues { get; set; }
 
-        [NotMapped]
-        public int PractitionerDiaryId { get; set; }
-        [NotMapped]
-        [ForeignKey("PractitionerDiaryId")]
-        public PractitionerDiary PractitionerDiary { get; set; }
-
         [Required]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MM-yyyy}")]
         [DataType(DataType.Date)]

@@ -29,7 +29,7 @@ namespace eNompilo.v3._0._1.Controllers
             {
                 if (User.IsInRole(RoleConstants.Patient))
                 {
-                    IEnumerable<FamilyPlanningAppointment> objList = dbContext.tblFamilyPlanningAppointment.Where(va=>va.Archived == false).ToList();
+                    IEnumerable<FamilyPlanningAppointment> objList = dbContext.tblFamilyPlanningAppointment.Where(va=>va.Archived == false).Include(pr => pr.Practitioner).ThenInclude(u => u.Users).Include(p => p.Patient).ThenInclude(u => u.Users).ToList();
                     return View(objList);
                 }
                 else if (User.IsInRole(RoleConstants.Admin))
@@ -44,7 +44,7 @@ namespace eNompilo.v3._0._1.Controllers
         public IActionResult Book()
         {
             var bookedAppointments = dbContext.tblFamilyPlanningAppointment
-                .Select(a => new { a.PractitionerDiaryId, a.PreferredDate, a.PreferredTime })
+                .Select(a => new { a.PractitionerId, a.PreferredDate, a.PreferredTime })
                 .ToList();
 
             ViewBag.BookedAppointments = bookedAppointments;
@@ -55,7 +55,7 @@ namespace eNompilo.v3._0._1.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Book(FamilyPlanningAppointment model)
         {
-            if (ModelState.IsValid)
+            if (model.BookingReasons != null && model.PreferredDate != null && model.PreferredTime != null && model.PatientId != null)
             {
                 dbContext.tblFamilyPlanningAppointment.Add(model);
                 dbContext.SaveChanges();

@@ -23,8 +23,68 @@
                 Text = p.Users.FirstName + " " + p.Users.LastName,
             }).ToList();
 }
-
-<div class="margined-page pt-4">
+@if (SignInManager.IsSignedIn(User))
+{
+    <div class="margined-page pt-4">
+        <h2>Book An Appointment</h2>
+            <hr />
+            <div class="row d-flex align-items-center">
+                @if (User.IsInRole(RoleConstants.Patient))
+                {
+                    <div class="col-md-4" style="margin-left:auto; margin-right:auto;">
+                        <form asp-action="=Book">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-check form-check-inline">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" asp-for="AnaesthesiaReaction" /> @Html.DisplayNameFor(model => model.AnaesthesiaReaction)
+                                </label>
+                            </div>
+                            <div class="form-group mb-4">
+                                <label asp-for="NatureOfReaction" class="control-label"></label>
+                                <textarea asp-for="NatureOfReaction" class="form-control"></textarea>
+                                <span asp-validation-for="NatureOfReaction" class="text-danger"></span>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" asp-for="BreathingtubeSurgery" /> @Html.DisplayNameFor(model => model.BreathingtubeSurgery)
+                                </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" asp-for="Movement" /> @Html.DisplayNameFor(model => model.Movement)
+                                </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" asp-for="HeartAttack" /> @Html.DisplayNameFor(model => model.HeartAttack)
+                                </label>
+                            </div>
+                            <div class="form-group mb-4">
+                                <label asp-for="HeartAttackDate" class="control-label"></label>
+                                <input id="dateof" asp-for="HeartAttackDate" type="date" class="form-control" />
+                                <span asp-validation-for="HeartAttackDate" class="text-danger"></span>
+                            </div>
+                        <div class="form-check form-check-inline">
+                            <label class="form-check-label">
+                                <input class="form-check-input" asp-for="DiabetesQuestion" /> @Html.DisplayNameFor(model => model.DiabetesQuestion)
+                            </label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <label class="form-check-label">
+                                <input class="form-check-input" asp-for="InsulinQuestion" /> @Html.DisplayNameFor(model => model.InsulinQuestion)
+                            </label>
+                        </div>
+                        <div class="form-group mb-4" hidden>
+                            <label asp-for="PatientId" class="control-label"></label>
+                            <input asp-for="PatientId" class="form-control" value="@contextAccessor.HttpContext.Session.GetInt32("PatientId")" />
+                        </div>
+                        </form>
+                    </div>
+                }
+            </div>
+    </div>
+}
+@*<div class="margined-page pt-4">
     <div class="form-check-inline">
     <p>Have you or a family member ever had a serious reaction to anesthesia (other than nausea and vomiting)?</p>
     </div>
@@ -72,7 +132,7 @@
         <input class="form-check-input" type="checkbox" name="inlineRadioOptions" id="inlineRadio8" value="option2">
         <label class="form-check-label" for="inlineRadio2">No</label>
     </div>
-    <br/>@*
+    <br/>
     <div class="form-group mb-4">
 		<label asp-for="HeartAttackDate" class="control-label"></label>
 		<input id="date" asp-for="HeartAttackDate" type="date" class="form-control" />
@@ -103,3 +163,4 @@
         <label class="form-check-label" for="inlineRadio2">No</label>
     </div>
 </div>
+*@

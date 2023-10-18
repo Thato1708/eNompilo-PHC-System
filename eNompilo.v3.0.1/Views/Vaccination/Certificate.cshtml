@@ -5,7 +5,7 @@
 	Layout = "~/Views/Shared/_DashboardLayout.cshtml";
 }
 
-<div>
+<div class="margined-page">
 	<img src="~/img/Adobe_Express_20230527_0911500_1_4494_-removebg-preview.png" height="70" alt="e-Nompilo" /><br />
 	<h2>Certificate for @Model.Patient.FirstName @Model.Patient.LastName</h2><br />
 
@@ -83,6 +83,5 @@
 	</dl>
 </div>
 <div>
-	<a asp-action="Edit" asp-route-id="@Model?.ID">Edit</a> |
 	<a asp-action="Index">Back to List</a>
 </div>

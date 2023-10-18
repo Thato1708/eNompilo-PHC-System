@@ -51,7 +51,7 @@ namespace eNompilo.v3._0._1.Controllers
         {
             if (User.IsInRole(RoleConstants.Practitioner))
             {
-                IEnumerable<DoseTracking> doses = _context.tblDoseTracking.Include(d => d.Patient).Include(d => d.VaccinationInventory);
+                IEnumerable<DoseTracking> doses = _context.tblDoseTracking.Where(ds=>ds.Archived == false).Include(d => d.Patient).Include(d => d.VaccinationInventory);
                 return View(doses);
             }
             return View();

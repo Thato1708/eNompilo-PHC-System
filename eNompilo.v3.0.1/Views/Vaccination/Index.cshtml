@@ -45,9 +45,9 @@
                 @Html.DisplayFor(modelItem => item.ExpirationDate)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.ID"><i class="bi bi-pencil-fill text-secondary"></i></a> |
+                <a asp-action="Details" asp-route-id="@item.ID"><i class="bi bi-info-square-fill"></i></a> |
+                <a asp-action="Delete" asp-route-id="@item.ID"><i class="bi bi-trash-fill text-danger"></i></a>
             </td>
         </tr>
 }

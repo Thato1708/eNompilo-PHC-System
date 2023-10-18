@@ -1,8 +1,28 @@
 ﻿@model eNompilo.v3._0._1.Models.SMP.SMPAppointment
+@using Microsoft.AspNetCore.Identity;
+@using eNompilo.v3._0._1.Constants;
+@using eNompilo.v3._0._1.Models.SystemUsers;
+@inject UserManager<ApplicationUser> UserManager
+@inject SignInManager<ApplicationUser> SignInManager
+@inject IHttpContextAccessor contextAccessor
+@inject eNompilo.v3._0._1.Areas.Identity.Data.ApplicationDbContext _context
 
-@*@{
-    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
-}*@
+
+
+@{
+    //Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+
+    var patient = _context.tblPatient.Select(p => new SelectListItem
+            {
+                Value = p.Id.ToString(),
+                Text = p.FirstName + " " + p.LastName + "(" + p.IdNumber + ")",
+            }).ToList();
+    var practitioner = _context.tblPractitioner.Select(p => new SelectListItem
+            {
+                Value = p.Id.ToString(),
+                Text = p.Users.FirstName + " " + p.Users.LastName,
+            }).ToList();
+}
 
 <div class="margined-page pt-4">
     <div class="form-check-inline">
@@ -54,8 +74,32 @@
     </div>
     <br/>@*
     <div class="form-group mb-4">
-		<label asp-for="PreferredDate" class="control-label"></label>
-		<input id="dateof" asp-for="PreferredDate" type="date" class="form-control" />
-		<span asp-validation-for="PreferredDate" class="text-danger"></span>
-	</div>*@
+		<label asp-for="HeartAttackDate" class="control-label"></label>
+		<input id="date" asp-for="HeartAttackDate" type="date" class="form-control" />
+		<span asp-validation-for="HeartAttackDate" class="text-danger"></span>
+	</div>
+    <br />
+    <div class="form-check-inline">
+        <p>Do you have diabetes or a problem with high blood sugars?</p>
+    </div>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" name="inlineRadioOptions" id="inlineRadio9" value="option1" />
+        <label class="form-check-label" for="inlineRadio1">Yes</label>
+    </div>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" name="inlineRadioOptions" id="inlineRadio10" value="option2">
+        <label class="form-check-label" for="inlineRadio2">No</label>
+    </div>
+    <br />
+    <div class="form-check-inline">
+        <p>If you have diabetes, are you taking insulin?</p>
+    </div>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" name="inlineRadioOptions" id="inlineRadio11" value="option1" />
+        <label class="form-check-label" for="inlineRadio1">Yes</label>
+    </div>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" name="inlineRadioOptions" id="inlineRadio12" value="option2">
+        <label class="form-check-label" for="inlineRadio2">No</label>
+    </div>
 </div>

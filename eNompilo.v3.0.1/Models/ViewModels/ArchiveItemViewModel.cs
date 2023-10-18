@@ -2,6 +2,7 @@
 using eNompilo.v3._0._1.Models.Counselling;
 using eNompilo.v3._0._1.Models.Family_Planning;
 using System.ComponentModel.DataAnnotations.Schema;
+using eNompilo.v3._0._1.Migrations;
 
 namespace eNompilo.v3._0._1.Models.ViewModels
 {
@@ -29,5 +30,9 @@ namespace eNompilo.v3._0._1.Models.ViewModels
         [ForeignKey("DoseTracking")]
         public int? DoseTrackingID { get; set; }
         public virtual DoseTracking? DoseTracking { get; set; }
+
+        [ForeignKey("ProcedureAppointment")]
+        public int? ProcedureAppointmentId { get; set; }
+        public virtual MedicalProceduresAppointment? ProceduresAppointment { get; set; }
     }
 }

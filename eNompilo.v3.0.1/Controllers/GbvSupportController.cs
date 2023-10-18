@@ -63,6 +63,51 @@ namespace eNompilo.v3._0._1.Controllers
             return View(model);
         }
 
+        public IActionResult Update(int? Id)
+        {
+            if(Id == null || Id == 0)
+            {
+                return NotFound();
+            }
+            var obj = _context.tblSupportGroup.Find(Id);
+            if(obj == null)
+            {
+                return NotFound();
+            }
+            return View(obj);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Update(SupportMembership model)
+        {
+            if (ModelState.IsValid)
+            {
+                return View(model);
+            }
+            _context.tblSupportGroup.Update(model);
+            _context.SaveChanges();
+            return RedirectToAction("Index");
+
+        }
+
+        public IActionResult Cancel(int Id)
+        {
+            var obj = _context.tblSupportGroup.Find(Id);
+            if (obj == null)
+            {
+                return NotFound();
+            }
+            _context.tblSupportGroup.Remove(obj);
+            _context.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+
+
+
+
+
         
         
         

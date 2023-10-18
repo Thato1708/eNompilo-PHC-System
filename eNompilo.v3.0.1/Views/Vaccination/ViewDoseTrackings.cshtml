@@ -54,9 +54,9 @@
                     @Html.DisplayFor(modelItem => item.SiteAddress)
                 </td>
                 <td>
-                    <a asp-action="Certificate" asp-route-id="@item.ID">Certificate</a> |
-                    <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                    <a asp-action="Remove" asp-route-id="@item.ID">Delete</a>
+                    <a asp-action="Certificate" asp-route-id="@item.ID" data-bs-toggle="tooltip" data-bs-placement="top" title="Certificate"><i class="bi bi-file-earmark-person-fill"></i></a> |
+                    <a asp-action="Details" asp-route-id="@item.ID"><i class="bi bi-pencil-fill text-secondary"></i></a> |
+                    <a asp-action="Remove" asp-route-id="@item.ID"><i class="bi bi-trash-fill text-danger"></i></a>
                 </td>
             </tr>
         }

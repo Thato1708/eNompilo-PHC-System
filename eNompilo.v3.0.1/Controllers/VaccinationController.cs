@@ -84,6 +84,7 @@ namespace eNompilo.v3._0._1.Controllers
                 //    SiteAddress = model.SiteAddress,
                 //};
 
+
                 _context.tblDoseTracking.Add(model);
                 _context.SaveChanges();
                 return RedirectToAction("ViewDoseTrackings");
@@ -212,7 +213,7 @@ namespace eNompilo.v3._0._1.Controllers
                 return NotFound();
             }
 
-            var obj = _context.tblDoseTracking.Find(id);
+            var obj = _context.tblDoseTracking.Where(va => va.ID == id).Include(d => d.Patient).Include(d => d.VaccinationInventory).FirstOrDefault();
             if (obj == null)
             {
                 return NotFound();

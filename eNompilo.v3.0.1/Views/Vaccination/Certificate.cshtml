@@ -10,77 +10,75 @@
 	<h2>Certificate for @Model.Patient.FirstName @Model.Patient.LastName</h2><br />
 
 	<dl class="row">
-		<dt class="col-sm-2 mb-4">
+		<dt class="col-sm-4 mb-4">
 			@Html.DisplayNameFor(model => model.CertificateNo)
 		</dt>
-		<dd class="col-sm-10 mb-4">
+		<dd class="col-sm-8 mb-4">
 			@Model.CertificateNo
 		</dd>
 
-		<dt class="col-sm-2 mb-4">
+		<dt class="col-sm-4 mb-4">
 			Certificate Issue date
 		</dt>
-		<dd class="col-sm-10 mb-4">
+		<dd class="col-sm-8 mb-4">
 			@Model.IssuedDate 
 		</dd>
 
-		<dt class="col-sm-2 mb-4">
+		<dt class="col-sm-4 mb-4">
 			Health Care Provider
 		</dt>
-		<dd class="col-sm-10 mb-4">
+		<dd class="col-sm-8 mb-10">
 			e-Nompilo Primary Health Care Clinic
 		</dd>
 
+		<dt class="col-sm-4 mb-4">
+			@Html.DisplayNameFor(model => model.VaccinationInventory.BatchNo)
+		</dt>
+		<dd class="col-sm-8 mb-10">
+			@Model.VaccinationInventory.BatchNo
+		</dd>
 
-		<dt class="col-sm-2 mb-4">
+		<dt class="col-sm-4 mb-4">
+			@Html.DisplayNameFor(model => model.VaccinationInventory.Manufacturer)
+		</dt>
+		<dd class="col-sm-8 mb-10">
+			@Model.VaccinationInventory.Manufacturer
+		</dd>
+
+
+		<dt class="col-sm-4 mb-4 mt-5">
 			@Html.DisplayNameFor(model => model.Patient)
 		</dt>
-		<dd class="col-sm-10 mb-4">
+		<dd class="col-sm-8 mb-4 mt-5">
 			@Model.Patient.FirstName @Model.Patient.LastName 
 		</dd>
-		<dt class="col-sm-2 mb-4">
+		<dt class="col-sm-4 mb-4">
 			Vaccine Name
 		</dt>
-		<dd class="col-sm-10 mb-4">
+		<dd class="col-sm-8 mb-4">
 			@Model.VaccinationInventory.VaccineName
 		</dd>
-		<dt class="col-sm-2 mb-4">
+		<dt class="col-sm-4 mb-4">
 			Vaccination First Dose
 		</dt>
-		<dd class="col-sm-10 mb-4">
+		<dd class="col-sm-8 mb-4">
 			@Html.DisplayFor(model => model.DateAdministered)
 		</dd>
-		<dt class="col-sm-2 mb-4">
+		<dt class="col-sm-4 mb-4">
 			Second Dose(if applicable)
 		</dt>
-		<dd class="col-sm-10 mb-4">
+		<dd class="col-sm-8 mb-4">
 			@Html.DisplayFor(model => model.SecondDose)
 		</dd>
-		<dt class="col-sm-2 mb-4">
+		<dt class="col-sm-4 mb-4">
 			@Html.DisplayNameFor(model => model.SiteAddress)
 		</dt>
-		<dd class="col-sm-10 mb-4">
+		<dd class="col-sm-8 mb-4">
 			@Html.DisplayFor(model => model.SiteAddress)
 		</dd>
 
-		<dt>This is to certify that @Model.Patient.FirstName @Model.Patient.LastName has recieved the @Model.VaccinationInventory.VaccineName vaccinations(s) as indicated. <br /></dt>
-		<dt style="color: red;">This certificate is not transferable and is for the individual named.</dt>
-
-
-		<dt class="col-sm-2 mb-4">
-			Name of Healthcare Provider
-		</dt>
-		<dd class="col-sm-10 mb-4">
-			e-Nompilo Primary HealthCare 
-		</dd>
-
-		<dt class="col-sm-2 mb-4">
-			Contact Information
-		</dt>
-		<dd class="col-sm-10 mb-4">
-			e-Nompilo Primary HealthCare
-		</dd>
-		
+		<dt class="mt-5">This is to certify that @Model.Patient.FirstName @Model.Patient.LastName has recieved the @Model.VaccinationInventory.VaccineName vaccinations(s) as indicated. <br /></dt>
+		<dt style="color: red;">This certificate is not transferable and is for the individual named.</dt>		
 		
 	</dl>
 </div>

@@ -44,6 +44,9 @@ namespace eNompilo.v3._0._1.Models.SMP
 		public bool InsulinQuestion { get; set; }
 
 		[Required]
+		public bool Archived { get; set; }
+
+		[Required]
 		public int PatientId { get; set; }
 		[ForeignKey("PatientId")]
 		public Patient Patient { get; set; }

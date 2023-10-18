@@ -24,12 +24,6 @@ namespace eNompilo.v3._0._1.Models.Counselling
         [Display(Name = "Can you please provide specific details on these challenges? This will help determine how best we can help you.")]
         public string ChallengesSpecific { get; set; }
 
-        [NotMapped]
-        public int PractitionerDiaryId { get; set; }
-        [NotMapped]
-        [ForeignKey("PractitionerDiaryId")]
-        public PractitionerDiary PractitionerDiary { get; set; }
-
         [Required]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MM-yyyy}")]
         [DataType(DataType.Date)]
@@ -42,7 +36,6 @@ namespace eNompilo.v3._0._1.Models.Counselling
         [Display(Name = "Please choose an available time you'd prefer")]
         public DateTime? PreferredTime { get; set; }
 
-        [Required]
         [ForeignKey("Patient")]
         public int PatientId { get; set; }
 

@@ -1,4 +1,7 @@
-﻿using eNompilo.v3._0._1.Models.SystemUsers;
+﻿using eNompilo.v3._0._1.Models.Counselling;
+using eNompilo.v3._0._1.Models.Family_Planning;
+using eNompilo.v3._0._1.Models.SystemUsers;
+using eNompilo.v3._0._1.Models.Vaccination;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -24,6 +27,18 @@ namespace eNompilo.v3._0._1.Models.ViewModels
         [ForeignKey("PersonalDetails")]
         public int? PersonalDetailsId { get; set; }
 
+        [ForeignKey("CounsellingAppointment")]
+        public int? CounsellingAppointmentId { get; set; }
+
+        [ForeignKey("GeneralAppointment")]
+        public int? GeneralAppointmentId { get; set; }
+
+        [ForeignKey("FPAppointment")]
+        public int? FPAppointmentId { get; set; }
+
+        [ForeignKey("VaccinationAppointment")]
+        public int? VaccinationAppointmentId { get; set; }
+
         public DateTime LastLogin { get; set; }
 
         public virtual ApplicationUser ApplicationUsers { get; set; }
@@ -32,6 +47,16 @@ namespace eNompilo.v3._0._1.Models.ViewModels
         public virtual PersonalDetails PersonalDetails { get; set; }
         public virtual Practitioner Practitioners { get; set; }
         public virtual Receptionist Receptionists { get; set; }
+
+
+        public List<GeneralAppointment>? GeneralAppointment { get; set; }
+
+        public List<CounsellingAppointment>? CounsellingAppointment { get; set; }
+
+        public List<FamilyPlanningAppointment>? FPAppointment { get; set; }
+
+        public List<VaccinationAppointment>? VaccinationAppointment { get; set; }
+
 
     }
 }

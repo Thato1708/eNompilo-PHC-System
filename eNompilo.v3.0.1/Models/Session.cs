@@ -61,5 +61,7 @@ namespace eNompilo.v3._0._1.Models
         [Required]
         public bool Archived { get; set; }
 
+        public string? Status { get; set; }
+
     }
 }

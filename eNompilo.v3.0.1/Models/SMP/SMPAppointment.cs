@@ -44,13 +44,10 @@ namespace eNompilo.v3._0._1.Models.SMP
 		public bool InsulinQuestion { get; set; }
 
 		[Required]
+		[ForeignKey("Patient")]
 		public int PatientId { get; set; }
-		[ForeignKey("PatientId")]
-		public Patient Patient { get; set; }
 
-		[Required]
-		public int PatientFileId { get; set; }
-		[ForeignKey("PatientFileId")]
-		public PatientFile PatientFile { get; set; }
-	}
+        public bool Archived { get; set; }
+		public virtual Patient? Patient { get; set; }
+    }
 }

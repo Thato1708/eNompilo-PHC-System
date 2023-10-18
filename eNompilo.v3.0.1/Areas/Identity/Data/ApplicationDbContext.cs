@@ -74,9 +74,6 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<ReportGBV> tblReportGBV { get; set; }
     public DbSet<Questionnaire> tblQuestionnaire { get; set; }
     public DbSet<SupportMembership> tblSupportGroup { get; set; }
-    public DbSet<eNompilo.v3._0._1.Models.Vaccination.DoseTracking>? DoseTracking { get; set; }
-    public DbSet<eNompilo.v3._0._1.Models.Vaccination.VaccinationInventory>? VaccinationInventory { get; set; }
     public DbSet<SMPAppointment> tblMedicalProcedureAppointment { get; set; }
-    public DbSet<eNompilo.v3._0._1.Models.ViewModels.ArchiveItemViewModel>? ArchiveItemViewModel { get; set; }
 
 }

@@ -1,0 +1,62 @@
+﻿@model Contraceptive
+@using eNompilo.v3._0._1.Models.Family_Planning;
+@{
+    Layout = "_DashboardLayout";
+}
+<br />
+<br />
+@if(TempData["r"] != null)
+{
+    <div class="alert alert-danger">
+        <p>@TempData["r"]</p>
+    </div>
+}
+<br />
+<div class="card-container" style="display:flex;justify-content:center">
+    <div class="card login-logout-card" style="width:30%;border-radius:40px;">
+        <div class="card-img" style="text-align:center; padding-top:20px">
+            <a asp-controller="Home" asp-action="Index"><img src="~/img/Adobe_Express_20230527_0911500_1[4494].png" style="width:150px;" class="auth-image" /></a>
+        </div>
+        <div class="card-body">
+            <div class="row justify-content-center">
+                <div class="col-10 my-4">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="text-center">
+                                <p>Add new contraceptive</p>
+                            </div>
+                            <section>
+                                <form asp-action="AddContraceptive" method="post">
+                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                    <div class="form-floating">
+                                        <input asp-for="ContraceptiveName" type="text" class="form-control border-effect"  />
+                                        <label asp-for="ContraceptiveName" class="form-label text-primary"></label>
+                                        <span asp-validation-for="ContraceptiveName" class="text-danger"></span>
+                                    </div>
+                                    <br />
+                                    <div class="form-floating">
+                                        <input asp-for="ContraceptiveDescription" type="text" class="form-control border-effect"  />
+                                        <label asp-for="ContraceptiveDescription" class="form-label text-primary"></label>
+                                        <span asp-validation-for="ContraceptiveDescription" class="text-danger"></span>
+                                    </div>
+                                    <br />
+                                    <div class="form-floating">
+                                        <input asp-for="ContraceptiveDuration" type="number" class="form-control border-effect"  />
+                                        <label asp-for="ContraceptiveDuration" class="form-label text-primary"></label>
+                                        <span asp-validation-for="ContraceptiveDuration" class="text-danger"></span>
+                                    </div>
+                                    <br />
+                                    <input asp-for="IsActive" value="1" hidden/>
+                                    <div>
+                                        <button type="submit" class="w-100 btn btn-lg btn-primary">Add Contraceptive</button>
+                                    </div>
+
+                                </form>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using eNompilo.v3._0._1.Areas.Identity.Data;
 
@@ -11,9 +12,10 @@ using eNompilo.v3._0._1.Areas.Identity.Data;
 namespace eNompilo.v3._0._1.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231019211700_Xoliswa2")]
+    partial class Xoliswa2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -184,52 +186,6 @@ namespace eNompilo.v3._0._1.Migrations
                     b.HasIndex("PractitionerId");
 
                     b.ToTable("FamilyPlanningAppointment");
-                });
-
-            modelBuilder.Entity("eNompilo.v3._0._1.Models.Family_Planning.FamilyPlanningMedicalRecord", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("BookingTypeID")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("DateOfVisit")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DoctorId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("DosageAmount")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DosageDuration")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("EndDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDiscontinued")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("MedicalNotes")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BookingTypeID");
-
-                    b.HasIndex("DoctorId");
-
-                    b.ToTable("FamilyPlanningMedicalRecord");
                 });
 
             modelBuilder.Entity("eNompilo.v3._0._1.Models.Family_Planning.SelectDates", b =>
@@ -1571,25 +1527,6 @@ namespace eNompilo.v3._0._1.Migrations
                     b.Navigation("Patient");
 
                     b.Navigation("Practitioner");
-                });
-
-            modelBuilder.Entity("eNompilo.v3._0._1.Models.Family_Planning.FamilyPlanningMedicalRecord", b =>
-                {
-                    b.HasOne("eNompilo.v3._0._1.Models.Family_Planning.FamilyPlanningAppointment", "FamilyPlanningAppointment")
-                        .WithMany()
-                        .HasForeignKey("BookingTypeID")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("eNompilo.v3._0._1.Models.SystemUsers.ApplicationUser", "User")
-                        .WithMany()
-                        .HasForeignKey("DoctorId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("FamilyPlanningAppointment");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("eNompilo.v3._0._1.Models.GBV.ReportGBV", b =>

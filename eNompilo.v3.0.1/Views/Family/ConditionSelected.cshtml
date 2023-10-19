@@ -1,0 +1,17 @@
+﻿
+@model List<SelectedCondition>
+@using eNompilo.v3._0._1.Models.Family_Planning;
+
+@if(Model != null && Model.Count() > 0){
+    foreach (var item in Model)
+    {
+        <li class="list-group-item">
+            <p>@item.ConditionDescription</p>
+        </li>
+    }
+}
+else{
+    <li class="list-group-item">
+        <p>Nothing has been selected</p>
+    </li>
+}

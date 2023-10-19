@@ -37,10 +37,11 @@ namespace eNompilo.v3._0._1.Models.Family_Planning
 
         [Required]
         public bool SessionConfirmed { get; set; } = false;
-
+        public bool? IsCollected { get; set; }
         [Required]
         public bool Archived { get; set; }
         public virtual Patient? Patient { get; set; }
         public virtual Practitioner? Practitioner { get; set; }
+        public string? ResponsiblePractitionerId { get; set; }
     }
 }

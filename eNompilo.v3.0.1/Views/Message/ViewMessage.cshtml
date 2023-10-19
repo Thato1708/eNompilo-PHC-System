@@ -1,0 +1,21 @@
+﻿@model eNompilo.v3._0._1.Models.Message.ViewMessageViewModel
+
+@{
+    ViewData["Title"] = "View Message";
+    Layout = "_DashboardLayout";
+}
+
+<h1>View Message</h1>
+
+<<p>From: @(Model != null && Model.Message.Content != null && Model.Message.SenderUser != null ? Model.Message.SenderUser : "Unknown Sender")</p>
+
+<p>Message Subject: @(Model != null && Model.Message != null ? Model.Message.Content : "No message content available")</p>
+
+
+<h2>Reply to Message</h2>
+
+<form asp-action="ReplyToMessage" asp-controller="Message">
+    <input type="hidden" asp-for="SenderId" value="@Model.SenderId" />
+    <textarea asp-for="ReplyContent" class="form-control" rows="4"></textarea>
+    <button type="submit" class="btn btn-primary">Send Reply</button>
+</form>

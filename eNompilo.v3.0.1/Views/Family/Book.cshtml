@@ -1,0 +1,61 @@
+﻿@model eNompilo.v3._0._1.Models.Family_Planning.FamilyPlanningAppointment
+@inject IHttpContextAccessor contextAccessor
+@using eNompilo.v3._0._1.Models.Family_Planning;
+@using eNompilo.v3._0._1.Constants;
+
+@{
+	ViewData["Title"] = "Book";
+	Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+<div class="margined-page pt-4">
+
+	<h2>Book an Appointment for a contraceptive</h2>
+	<hr />
+	<div class="row">
+		<div class="col-md-4" style="margin-left:auto;margin-right:auto;">
+			<form asp-action="Book" method="post">
+				<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+				<div class="form-group mb-4">
+					<label asp-for="BookingReasons" class="control-label"></label>
+					<select asp-for="BookingReasons" class="form-control" asp-items="Html.GetEnumSelectList<BookingReasons>()">
+						<option disabled selected hidden>Please select an option</option>
+					</select>
+					<span asp-validation-for="BookingReasons" class="text-danger"></span>
+				</div>
+				<div class="form-group mb-4">
+					<label asp-for="PreferredDate" class="control-label"></label>
+					<input asp-for="PreferredDate" class="form-control" />
+					<span asp-validation-for="PreferredDate" class="text-danger"></span>
+				</div>
+				<div class="form-group mb-4">
+					<label asp-for="PreferredTime" class="control-label"></label>
+					<input asp-for="PreferredTime" class="form-control" />
+					<span asp-validation-for="PreferredTime" class="text-danger"></span>
+				</div>
+				<div class="form-group mb-4" hidden>
+					<label asp-for="PatientId" class="control-label"></label>
+					<input asp-for="PatientId" class="form-control" value="@contextAccessor.HttpContext.Session.GetInt32("PatientId")" />
+				</div>
+				
+				<div class="form-group form-check mb-4">
+					<label class="form-check-label">
+						<input class="form-check-input" asp-for="Archived" /> @Html.DisplayNameFor(model => model.Archived)
+					</label>
+				</div>
+				<div class="form-group mb-4">
+					<input type="submit" value="Create" class="btn btn-primary" />
+				</div>
+			</form>
+		</div>
+	</div>
+
+	<div>
+		<a asp-action="Index">Back to List</a>
+	</div>
+</div>
+@section Scripts {
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+}

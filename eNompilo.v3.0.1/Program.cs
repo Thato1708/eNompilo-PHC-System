@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using eNompilo.v3._0._1.Areas.Identity.Data;
 using eNompilo.v3._0._1.Models.SystemUsers;
 using eNompilo.v3._0._1.Data;
+using eNompilo.v3._0._1.Models.Message;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
@@ -23,6 +24,7 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
+builder.Services.AddSignalR();
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(option =>
 {
@@ -74,7 +76,22 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=SplashScreen}/{id?}");
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapHub<ChatHub>("/chatHub"); // Replace MessageHub with your actual hub class name
+    endpoints.MapControllerRoute(
+        name: "default",
+        pattern: "{controller=Home}/{action=Index}/{id?}");
 
+    endpoints.MapControllerRoute(
+        name: "api",
+        pattern: "api/message/view/{messageId}",
+        defaults: new { controller = "Message", action = "ViewMessage" });
+    endpoints.MapControllerRoute(
+        name: "area",
+        pattern: "{area:exists}/{controller=Home}/{action=index}/{id?}"
+        );
+});
 app.MapRazorPages();
 
 app.Run();

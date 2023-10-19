@@ -11,6 +11,7 @@ using eNompilo.v3._0._1.Models.GBV;
 using System.Reflection.Emit;
 using eNompilo.v3._0._1.Models.ViewModels;
 using eNompilo.v3._0._1.Models.SMP;
+using eNompilo.v3._0._1.Models.Message;
 
 namespace eNompilo.v3._0._1.Areas.Identity.Data;
 
@@ -76,4 +77,14 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<SupportMembership> tblSupportGroup { get; set; }
     public DbSet<SMPAppointment> tblMedicalProcedureAppointment { get; set; }
 
+
+    //Xoliswa Tables
+    public DbSet<Message> Messages { get; set; }
+    public DbSet<Condition> Conditions { get; set; }
+    public DbSet<Contraceptive> Contraceptives { get; set; }
+    public DbSet<SelectedCondition> SelectedConditions { get; set; }
+    public DbSet<SelectDates> SelectDates { get; set; }
+    public DbSet<ContraceptiveBooking> ContraceptiveBookings { get; set; }
+    public DbSet<Replay> Replay { get; set; }
+    public DbSet<FamilyPlanningMedicalRecord> FamilyPlanningMedicalRecords { get; set; }
 }

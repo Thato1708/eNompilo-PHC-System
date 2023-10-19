@@ -1,0 +1,40 @@
+﻿@using eNompilo.v3._0._1.Models.Family_Planning;
+
+<br />
+<br />
+@if (TempData["Result"] != null)
+{
+    <div class="card-container" style="display:flex;justify-content:center">
+        <div class="card login-logout-card" style="width:25%;border-radius:40px;">
+            <div class="card-img" style="text-align:center; padding-top:20px">
+                <a asp-controller="Home" asp-action="Index"><img src="~/img/Adobe_Express_20230527_0911500_1[4494].png" style="width:150px;" class="auth-image" /></a>
+            </div>
+            <div class="card-body">
+                <div class="row justify-content-center">
+                    <div class="col-10 my-4">
+                        <p>@TempData["Result"]</p>
+                        <p><a asp-action="Index" asp-controller="Family">Click here</a> to go back</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="card-container" style="display:flex;justify-content:center">
+        <div class="card login-logout-card alert-danger" style="width:25%;border-radius:40px;">
+            <div class="card-img" style="text-align:center; padding-top:20px">
+                <a asp-controller="Home" asp-action="Index"><img src="~/img/Adobe_Express_20230527_0911500_1[4494].png" style="width:150px;" class="auth-image" /></a>
+            </div>
+            <div class="card-body">
+                <div class="row justify-content-center">
+                    <div class="col-10 my-4">
+                        <p>Something went wrong</p>
+                        <p><a asp-action="Index" asp-controller="Family">Click here</a> to go back</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

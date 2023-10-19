@@ -1,0 +1,43 @@
+﻿@model eNompilo.v3._0._1.Models.Family_Planning.FamilyPlanningAppointment
+
+@{
+    ViewData["Title"] = "Appointment Details";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+<h1>Details For Your Booking</h1>
+
+<div>
+    <h4>Family Planning Appointment</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.BookingReasons)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.BookingReasons)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PreferredDate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PreferredDate)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PreferredTime)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PreferredTime)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.IsCollected)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IsCollected)
+        </dd>
+    </dl>
+</div>
+<div>
+    
+    <a asp-action="Index">Back to List</a>
+</div>

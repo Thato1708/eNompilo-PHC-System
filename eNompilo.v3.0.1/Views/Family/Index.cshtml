@@ -1,0 +1,98 @@
+﻿@model IEnumerable<eNompilo.v3._0._1.Models.Family_Planning.FamilyPlanningAppointment>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+<div class="margined-page pt-4" style="margin-left:auto;margin-right:auto;">
+
+    <p>
+        <a asp-action="Book">Make a new booking</a>
+        <a asp-action="PatientRecords">User Reports</a>
+    </p>
+    <table id="dtFamPlanApp" class="table table-striped" style="margin-left:auto;margin-right:auto;">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.BookingReasons)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PreferredDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PreferredTime)
+                </th>
+                @*<th>
+                    @Html.DisplayNameFor(model => model.Patient)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PatientFile)
+                </th>*@
+                <th>
+                    @Html.DisplayNameFor(model => model.Practitioner)
+                </th>
+                <th>
+                    Collection Status
+
+                </th>
+                <th>Action</th>
+                <th>Message</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BookingReasons)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PreferredDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PreferredTime)
+                    </td>
+                    @*<td>
+                        @Html.DisplayFor(modelItem => item.Patient.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PatientFile.Id)
+                    </td>*@
+                    <td>
+                        @if (item.ResponsiblePractitionerId != null)
+                        {
+                            <a asp-action="Detail" asp-route-id="@item.ResponsiblePractitionerId">View your doctor</a>
+                        }
+                    </td>
+                    <td>
+                        @if (item.IsCollected == true)
+                        {
+                            <span>Collected</span>
+                        }
+                        else if (item.IsCollected == false)
+                        {
+                            <span>Pending</span>
+                        }
+                        else
+                        {
+                            <span>N/A</span> <!-- Display "N/A" for null values -->
+                        }
+                    </td>
+
+                    
+                    <td>
+                        <a asp-controller="Family" asp-action="Edit" asp-route-id="@item.Id">Change Date</a> |
+                        <a asp-controller="Family" asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                        <a asp-controller="Family" asp-action="Delete" asp-route-id="@item.Id">Cancel</a>|
+                        
+                    </td>
+                    <td>
+                        <a asp-controller="Message" asp-action="Index" asp-route-id="@item.Id">Send Message</a>|
+                        <a asp-controller="Message" asp-action="PatientInbox" asp-route-id="@item.Id">View Message</a>|
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

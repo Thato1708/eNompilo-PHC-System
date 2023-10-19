@@ -1,0 +1,29 @@
+﻿@model eNompilo.v3._0._1.Models.Message.Message ;
+
+@{
+    ViewData["Title"] = "Message-Index";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <div id="chat-area">
+                <div class="card">
+                    <div class="card-header">Send Message</div>
+                    <div class="card-body">
+                        <form asp-controller="Message" asp-action="SendMessage" method="post">
+                            <input type="hidden" asp-for="ReceiverId" value="@Model.ReceiverId" />
+                            <div class="form-group">
+                                <label for="content">Message Content</label>
+                                <input type="text" id="content" name="Content" asp-for="Content" class="form-control" />
+                            </div>
+                            <button type="submit" class="btn btn-primary">Send</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

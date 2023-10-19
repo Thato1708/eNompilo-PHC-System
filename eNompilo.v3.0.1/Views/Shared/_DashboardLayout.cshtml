@@ -74,8 +74,17 @@
 							<div class='dashboard-nav-dropdown-menu'>
 								<a asp-controller="GeneralAppointment" asp-action="Book" class="dashboard-nav-dropdown-item">Book an Appointment</a>
 								<a asp-controller="CounsellingAppointment" asp-action="Book" class="dashboard-nav-dropdown-item">Book to See a Counsellor</a>
-								<a asp-controller="FamilyPlanningAppointment" asp-action="Book" class="dashboard-nav-dropdown-item">Book for Family Planning</a>
-								<a asp-controller="VaccinationAppointment" asp-action="Book" class="dashboard-nav-dropdown-item">Book to Get Vaccinated</a>
+								<div class='dashboard-nav-dropdown'>
+									<a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle">
+										@* <i class="bi bi-calendar-plus-fill me-2" style="font-size:1.5rem;"></i> *@ Book for family planning
+									</a>
+									<div class='dashboard-nav-dropdown-menu'>
+										<a asp-controller="Family" asp-action="RecommendContraceptive" class="dashboard-nav-dropdown-item">+ Recommend Contraceptive</a>
+										<a asp-controller="Family" asp-action="Info" class="dashboard-nav-dropdown-item">+ Contraceptive Info</a>
+										<a asp-controller="Family" asp-action="Index" class="dashboard-nav-dropdown-item">+ Booking</a>
+										@*  Give feedback about the contracptive, change the action from info to feedback*@
+									</div>
+								</div><a asp-controller="VaccinationAppointment" asp-action="Book" class="dashboard-nav-dropdown-item">Book to Get Vaccinated</a>
 								<a asp-controller="SMPAppointment" asp-action="SMPBookAppointment" class="dashboard-nav-dropdown-item">Book for a Medical Procedure</a>
 							</div>
 						</div>
@@ -159,7 +168,15 @@
 						</div>
 
 
-
+						<div class="dashboard-nav-dropdown">
+							<a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle">
+								<i class="bi bi-people" style="font-size:1.5rem;"></i> Family planning
+							</a>
+							<div class="dashboard-nav-dropdown-menu">
+								<a asp-controller="Family" asp-action="IndexList" class="dashboard-nav-dropdown-item">Booking list</a>
+								
+							</div>
+						</div>
 
 						<div class="nav-item-divider"></div>
 						<a href="#" class="dashboard-nav-item" data-bs-toggle="modal" data-bs-target="#myModal"><i class="bi bi-door-open-fill me-2" style="color:red; font-size:1.5rem;"></i> Logout</a>

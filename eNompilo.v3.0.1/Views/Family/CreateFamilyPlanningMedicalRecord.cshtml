@@ -1,0 +1,57 @@
+﻿@model eNompilo.v3._0._1.Models.Family_Planning.FamilyPlanningMedicalRecord
+
+@{
+    ViewData["Title"] = "Create Record";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+<h2 class="text-center">Create Family Planning Medical Record</h2>
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <form asp-controller="Family" asp-action="CreateFamilyPlanningMedicalRecord" method="post">
+            @Html.AntiForgeryToken()
+
+            <input type="hidden" asp-for="BookingTypeID" />
+
+            
+            <div class="form-group">
+                <label asp-for="MedicalNotes"></label>
+                <textarea asp-for="MedicalNotes" class="form-control"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="StartDate"></label>
+                <input asp-for="StartDate" class="form-control" type="date" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="EndDate"></label>
+                <input asp-for="EndDate" class="form-control" type="date" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="IsDiscontinued"></label>
+                <div class="form-check">
+                    <input asp-for="IsDiscontinued" class="form-check-input" />
+                    <label class="form-check-label" asp-for="IsDiscontinued"></label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="DosageAmount"></label>
+                <input asp-for="DosageAmount" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="DosageDuration"></label>
+                <input asp-for="DosageDuration" class="form-control" />
+            </div>
+
+            <button type="submit" class="btn btn-primary">Add Record</button>
+        </form>
+    </div>
+</div>
+
+<div class="text-center mt-3">
+    <a asp-action="YourPreviousAction" class="btn btn-secondary">Back to Previous Page</a>
+</div>

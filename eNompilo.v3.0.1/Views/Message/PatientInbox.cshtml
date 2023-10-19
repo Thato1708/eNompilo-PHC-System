@@ -1,0 +1,33 @@
+﻿@model List<eNompilo.v3._0._1.Models.Message.Message>
+
+@{
+    ViewData["Title"] = "Inbox";
+    Layout = "_DashboardLayout";
+}
+
+<div class="margined-page pt-4">
+    <h2>Inbox</h2>
+    <hr />
+    <div class="row">
+        <ul class="list-group">
+            @foreach (var message in Model)
+            {
+                <li class="list-group-item">
+                    <a asp-action="PatientCreate" asp-route-id="@message.Id">
+                        From: @message.SenderUser - @message.Timestamp.ToString("yyyy-MM-dd HH:mm:ss")
+                    </a>
+                </li>
+            }
+        </ul>
+    </div>
+
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -65,5 +65,9 @@ public class ApplicationUser : IdentityUser
     public DateTime LastLogin { get; set; }
 
     public bool Archived { get; set; }
+    public string FullName
+    {
+        get { return $"{FirstName} {LastName}"; }
+    }
 }
 

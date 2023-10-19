@@ -19,7 +19,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="EntityFramework" Version="6.4.4" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.21" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.21" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.21" />
@@ -38,6 +37,38 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="..\.editorconfig" Link=".editorconfig" />
+    <None Include="Views\Family\AddContraceptive.cshtml" />
+    <None Include="Views\Family\Book.cshtml" />
+    <None Include="Views\Family\Booking.cshtml" />
+    <None Include="Views\Family\ConditionSelected.cshtml" />
+    <None Include="Views\Family\Delete.cshtml" />
+    <None Include="Views\Family\Detail.cshtml" />
+    <None Include="Views\Family\Details.cshtml" />
+    <None Include="Views\Family\Detailz.cshtml" />
+    <None Include="Views\Family\Edit.cshtml" />
+    <None Include="Views\Family\Index.cshtml" />
+    <None Include="Views\Family\IndexList.cshtml" />
+    <None Include="Views\Family\Info.cshtml" />
+    <None Include="Views\Family\ManageContraceptive.cshtml" />
+    <None Include="Views\Family\PatientDetails.cshtml" />
+    <None Include="Views\Family\PatientRecords.cshtml" />
+    <None Include="Views\Family\PatientSymptom.cshtml" />
+    <None Include="Views\Family\RecommendContraceptive.cshtml" />
+    <None Include="Views\Family\RecommendResult.cshtml" />
+    <None Include="Views\Family\RecommendSelected.cshtml" />
+    <None Include="Views\Family\Result.cshtml" />
+    <None Include="Views\Family\SelectContraceptive.cshtml" />
+    <None Include="Views\Family\SelectDate.cshtml" />
+    <None Include="Views\Family\Update.cshtml" />
+    <None Include="Views\Message\Create.cshtml" />
+    <None Include="Views\Message\Inbox.cshtml" />
+    <None Include="Views\Message\Index.cshtml" />
+    <None Include="Views\Message\MessageSent.cshtml" />
+    <None Include="Views\Message\PatientCreate.cshtml" />
+    <None Include="Views\Message\PatientInbox.cshtml" />
+    <None Include="Views\Message\ReplyToMessage.cshtml" />
+    <None Include="Views\Message\ViewMessage.cshtml" />
     <None Include="wwwroot\css\flatline2.gif" />
   </ItemGroup>
 

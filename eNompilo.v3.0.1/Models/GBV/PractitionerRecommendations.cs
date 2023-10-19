@@ -13,7 +13,7 @@ namespace eNompilo.v3._0._1.Models.GBV
         public int Id { get; set; }
 
         [System.ComponentModel.DataAnnotations.Required]
-        [Display(Name ="Name of Practitioner")]
+        [Display(Name ="Name of the Practitioner")]
         public string Name { get; set; }
 
         [System.ComponentModel.DataAnnotations.Required]
@@ -34,6 +34,7 @@ namespace eNompilo.v3._0._1.Models.GBV
         [DataType(DataType.Date)]
         public DateTime? Date { get; set; }
 
+        [System.ComponentModel.DataAnnotations.Required]
         [ForeignKey("Practitioner")]
         public int? PractitionerId { get; set; }
 

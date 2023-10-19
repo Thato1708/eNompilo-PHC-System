@@ -82,6 +82,8 @@
 		userTypeAge = (DateTime.Now.Subtract(Convert.ToDateTime(receptionist.DOB)).Days) / 365;
 
 	}
+
+	var currentTime = TimeOnly.FromDateTime(DateTime.Now);
 }
 
 
@@ -199,21 +201,23 @@
 						</thead>
 						<tbody>
 							<tr><th colspan="3"><center>General Appointments</center></th></tr>
-									@foreach (var item in Model.GeneralAppointment)
+									@foreach (var item in Model.GeneralAppointment.OrderBy(ga=>ga.PreferredDate).OrderBy(ga=>ga.PreferredTime).ToList())
 									{
 								<tr>
 									<td>
 
-												@if (item.PreferredDate == DateTime.Now.Date)
+												@if ((item.PreferredDate == DateTime.Now.Date && TimeOnly.FromDateTime(Convert.ToDateTime(item.PreferredTime)) == currentTime) || (item.PreferredDate == DateTime.Now.Date && TimeOnly.FromDateTime(Convert.ToDateTime(item.PreferredTime)) > currentTime))
 												{
 													@Html.DisplayFor(modelItem => item.PreferredDate) <span class="text-warning"><strong>(Due Today!)</strong></span>
 												}
-												else if (item.PreferredDate < DateTime.Now.Date)
+												else if (item.PreferredDate < DateTime.Now.Date || (item.PreferredDate == DateTime.Now.Date && TimeOnly.FromDateTime(Convert.ToDateTime(item.PreferredTime)) < currentTime))
 												{
+													@Html.DisplayFor(modelItem => item.PreferredDate) <span class="text-danger"><strong>(Passed Appointment!)</strong></span>
 												}
 												else
 												{
-													@Html.DisplayFor(modelItem => item.PreferredDate) <span class="text-success"><strong>(Upcoming!)</strong></span>												}
+													@Html.DisplayFor(modelItem => item.PreferredDate) <span class="text-success"><strong>(Upcoming!)</strong></span>
+												}
 											</td>
 									<td>
 												@Convert.ToDateTime(item.PreferredTime).ToString("HH:mm")
@@ -231,17 +235,17 @@
 								</tr>
 									}
 							<tr><th colspan="3"><center>Counselling Appointments</center></th></tr>
-									@foreach (var item in Model.CounsellingAppointment)
+									@foreach (var item in Model.CounsellingAppointment.OrderBy(ga => ga.PreferredDate).OrderBy(ga => ga.PreferredTime).ToList())
 									{
 								<tr>
 									<td>
-
-												@if (item.PreferredDate == DateTime.Now.Date)
+												@if ((item.PreferredDate == DateTime.Now.Date && TimeOnly.FromDateTime(Convert.ToDateTime(item.PreferredTime)) == currentTime) || (item.PreferredDate == DateTime.Now.Date && TimeOnly.FromDateTime(Convert.ToDateTime(item.PreferredTime)) > currentTime))
 												{
 													@Html.DisplayFor(modelItem => item.PreferredDate) <span class="text-warning"><strong>(Due Today!)</strong></span>
 												}
-												else if (item.PreferredDate < DateTime.Now.Date)
+												else if (item.PreferredDate < DateTime.Now.Date || (item.PreferredDate == DateTime.Now.Date && TimeOnly.FromDateTime(Convert.ToDateTime(item.PreferredTime)) < currentTime))
 												{
+													@Html.DisplayFor(modelItem => item.PreferredDate) <span class="text-danger"><strong>(Passed Appointment!)</strong></span>
 												}
 												else
 												{
@@ -264,17 +268,17 @@
 								</tr>
 									}
 							<tr><th colspan="3"><center>Family Planning Appointments</center></th></tr>
-									@foreach (var item in Model.FPAppointment)
+									@foreach (var item in Model.FPAppointment.OrderBy(ga => ga.PreferredDate).OrderBy(ga => ga.PreferredTime).ToList())
 									{
 								<tr>
 									<td>
-
-												@if (item.PreferredDate == DateTime.Now.Date)
+												@if ((item.PreferredDate == DateTime.Now.Date && TimeOnly.FromDateTime(Convert.ToDateTime(item.PreferredTime)) == currentTime) || (item.PreferredDate == DateTime.Now.Date && TimeOnly.FromDateTime(Convert.ToDateTime(item.PreferredTime)) > currentTime))
 												{
 													@Html.DisplayFor(modelItem => item.PreferredDate) <span class="text-warning"><strong>(Due Today!)</strong></span>
 												}
-												else if (item.PreferredDate < DateTime.Now.Date)
+												else if (item.PreferredDate < DateTime.Now.Date || (item.PreferredDate == DateTime.Now.Date && TimeOnly.FromDateTime(Convert.ToDateTime(item.PreferredTime)) < currentTime))
 												{
+													@Html.DisplayFor(modelItem => item.PreferredDate) <span class="text-danger"><strong>(Passed Appointment!)</strong></span>
 												}
 												else
 												{
@@ -297,17 +301,17 @@
 								</tr>
 									}
 							<tr><th colspan="3"><center>Vaccination Appointments</center></th></tr>
-									@foreach (var item in Model.VaccinationAppointment)
+									@foreach (var item in Model.VaccinationAppointment.OrderBy(ga => ga.PreferredDate).OrderBy(ga => ga.PreferredTime).ToList())
 									{
 								<tr>
 									<td>
-
-												@if (item.PreferredDate == DateTime.Now.Date)
+												@if ((item.PreferredDate == DateTime.Now.Date && TimeOnly.FromDateTime(Convert.ToDateTime(item.PreferredTime)) == currentTime) || (item.PreferredDate == DateTime.Now.Date && TimeOnly.FromDateTime(Convert.ToDateTime(item.PreferredTime)) > currentTime))
 												{
 													@Html.DisplayFor(modelItem => item.PreferredDate) <span class="text-warning"><strong>(Due Today!)</strong></span>
 												}
-												else if (item.PreferredDate < DateTime.Now.Date)
+												else if (item.PreferredDate < DateTime.Now.Date || (item.PreferredDate == DateTime.Now.Date && TimeOnly.FromDateTime(Convert.ToDateTime(item.PreferredTime)) < currentTime))
 												{
+													@Html.DisplayFor(modelItem => item.PreferredDate) <span class="text-danger"><strong>(Passed Appointment!)</strong></span>
 												}
 												else
 												{

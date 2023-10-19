@@ -42,7 +42,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.GenAppointment)
+        @foreach (var item in Model.GenAppointmentList)
         {
             <tr>
                 <td>
@@ -82,7 +82,7 @@
         }
         @if (User.IsInRole(RoleConstants.Practitioner) && _context.tblPractitioner.Where(p => p.UserId == UserManager.GetUserAsync(User).Result.Id).FirstOrDefault().PractitionerType == PractitionerType.Counsellor)
         {
-            @foreach (var item in Model.CounsAppointment)
+            @foreach (var item in Model.CounsAppointmentList)
             {
                 <tr>
                     <td>
@@ -119,8 +119,9 @@
                 </tr>
             }
         }
-
-        @foreach (var item in Model.FPAppointment)
+        @if (User.IsInRole(RoleConstants.Practitioner) && _context.tblPractitioner.Where(p => p.UserId == UserManager.GetUserAsync(User).Result.Id).FirstOrDefault().PractitionerType != PractitionerType.Counsellor)
+        {
+            @foreach (var item in Model.FPAppointmentList)
         {
             <tr>
                 <td>
@@ -156,7 +157,7 @@
                 </td>
             </tr>
         }
-        @foreach (var item in Model.VaxAppointment)
+        @foreach (var item in Model.VaxAppointmentList)
         {
             <tr>
                 <td>
@@ -192,5 +193,7 @@
                 </td>
             </tr>
         }
+        }
+        
     </tbody>
 </table>

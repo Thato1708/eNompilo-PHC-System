@@ -23,6 +23,7 @@
 				Text = p.Users.FirstName + " " + p.Users.LastName,
 				/*Text = "(" + Enum.GetName(typeof(Titles), p.Users.Titles) + ".) " + p.Users.FirstName + " " + p.Users.LastName,*/
 			}).ToList();
+	var practitionerValue = _context.tblPractitioner.Where(p => p.UserId == UserManager.GetUserAsync(User).Result.Id).FirstOrDefault().Id;
 }
 
 @if(SignInManager.IsSignedIn(User))
@@ -109,27 +110,31 @@
 						<label asp-for="PreferredTime" class="control-label"></label>
 						<input id="timeof" asp-for="PreferredTime" type="time" class="form-control" min="08:00" max="15:00" />
 						<span asp-validation-for="PreferredTime" class="text-danger"></span>
-					</div>
-					<div class="form-group mb-4">
-						<label asp-for="Patient" class="control-label"></label>
-						<select asp-for="PatientId" id="selectedPatient" class="form-control" asp-items="@(new SelectList(patient, "Value", "Text"))">
-							<option disabled selected hidden>Please select an option</option>
-						</select>
-						<span asp-validation-for="PatientId" class="text-danger"></span>
-					</div>
-					<div class="form-group mb-4">
-						<label asp-for="Practitioner" class="control-label"></label>
-						<select asp-for="PractitionerId" class="form-control" asp-items="@(new SelectList(practitioner, "Value","Text"))">
-							<option disabled selected hidden>Please select an option</option>
-						</select>
-						<span asp-validation-for="PractitionerId" class="text-danger"></span>
-					</div>
-					<div class="form-group form-check mb-4">
-						<label class="form-check-label">
-							Are you confirming this session with your patient <span id="patientName"></span>?
-							<input class="form-check-input" asp-for="SessionConfirmed" />
-						</label>
-					</div>
+						</div>
+						<div class="form-group mb-4">
+							<label asp-for="Patient" class="control-label"></label>
+							<select asp-for="PatientId" id="selectedPatient" class="form-control" asp-items="@(new SelectList(patient, "Value", "Text"))">
+								<option disabled selected hidden>Please select an option</option>
+							</select>
+							<span asp-validation-for="PatientId" class="text-danger"></span>
+						</div>
+						<div class="form-group mb-4">
+							<label asp-for="Practitioner" class="control-label"></label>
+							<select asp-for="PractitionerId" id="selectedPractitioner" class="form-control" asp-items="@(new SelectList(practitioner, "Value","Text"))">
+								<option disabled selected hidden>Please select an option</option>
+							</select>
+							<span asp-validation-for="PractitionerId" class="text-danger"></span>
+						</div>
+
+						<span hidden id="practIdVal">@practitionerValue</span>
+
+						<div class="form-group form-check mb-4" id="confirm" style="display:none;">
+							<label class="form-check-label">
+
+								Are you confirming this session with your patient <span id="patientName"></span>?
+								<input class="form-check-input" asp-for="SessionConfirmed" />
+							</label>
+						</div>
 					<div class="form-group mb-4">
 						<input type="submit" value="Create" class="btn btn-primary" />
 					</div>
@@ -146,12 +151,31 @@
 @section Scripts {
 	@{
 		await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
-    <script>
-        document.getElementById('selectedPatient').addEventListener('change', function () {
-            var selectedText = this.options[this.selectedIndex].text;
-            // Display the selected text somewhere in your view
-            document.getElementById('patientName').textContent = selectedText;
-        });
-    </script>
+	}
+	<script>
+
+		window.onload = function () {
+			var patientDdl = document.getElementById('selectedPatient')
+			var practitionerDdl = document.getElementById('selectedPractitioner')
+
+
+			patientDdl.addEventListener('change', function () {
+				var selectedText = this.options[this.selectedIndex].text;
+				document.getElementById('patientName').textContent = selectedText;
+			});
+
+			practitionerDdl.addEventListener('change', function () {
+				var selectedValue = this.options[this.selectedIndex].value.toString();
+				var practValue = document.getElementById('practIdVal').innerText
+				//alert(selectedValue + " " + practValue); //here for debugging purposes
+				if (selectedValue === practValue) {
+					document.getElementById('confirm').style.display = "block";
+				}
+				else {
+					document.getElementById('confirm').style.display = "none";
+				}
+			});
+			practitionerDdl.dispatchEvent(new Event('change'));
+		}
+	</script>
 }

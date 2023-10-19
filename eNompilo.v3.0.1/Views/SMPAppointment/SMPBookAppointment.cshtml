@@ -10,7 +10,8 @@
 
 
 @{
-    //Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+    ViewData["Title"] = "SMPBookAppointment";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
 
     var patient = _context.tblPatient.Select(p => new SelectListItem
             {
@@ -32,9 +33,9 @@
                 @if (User.IsInRole(RoleConstants.Patient))
                 {
                     <div class="col-md-4" style="margin-left:auto; margin-right:auto;">
-                        <form asp-action="=Book">
+                        <form asp-action="SMPBookAppointment">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                            <div class="form-check form-check-inline">
+                            <div class="form-check form-check-inline mb-4">
                                 <label class="form-check-label">
                                     <input class="form-check-input" asp-for="AnaesthesiaReaction" /> @Html.DisplayNameFor(model => model.AnaesthesiaReaction)
                                 </label>
@@ -44,17 +45,27 @@
                                 <textarea asp-for="NatureOfReaction" class="form-control"></textarea>
                                 <span asp-validation-for="NatureOfReaction" class="text-danger"></span>
                             </div>
-                            <div class="form-check form-check-inline">
+                            <div class="form-check form-check-inline mb-4">
                                 <label class="form-check-label">
                                     <input class="form-check-input" asp-for="BreathingtubeSurgery" /> @Html.DisplayNameFor(model => model.BreathingtubeSurgery)
                                 </label>
                             </div>
-                            <div class="form-check form-check-inline">
+                            <div class="form-check form-check-inline mb-4">
                                 <label class="form-check-label">
                                     <input class="form-check-input" asp-for="Movement" /> @Html.DisplayNameFor(model => model.Movement)
                                 </label>
                             </div>
-                            <div class="form-check form-check-inline">
+                        <div class="form-group mb-4">
+                            <label asp-for="PreferredDate" class="control-label"></label>
+                            <input id="dateof" asp-for="PreferredDate" type="date" class="form-control" />
+                            <span asp-validation-for="PreferredDate" class="text-danger"></span>
+                        </div>
+                        <div class="form-group mb-4">
+                            <label asp-for="PreferredTime" class="control-label"></label>
+                            <input id="timeof" asp-for="PreferredTime" type="time" class="form-control" min="08:00" max="15:00" />
+                            <span asp-validation-for="PreferredTime" class="text-danger"></span>
+                        </div>
+                            <div class="form-check form-check-inline mb-4">
                                 <label class="form-check-label">
                                     <input class="form-check-input" asp-for="HeartAttack" /> @Html.DisplayNameFor(model => model.HeartAttack)
                                 </label>
@@ -64,12 +75,12 @@
                                 <input id="dateof" asp-for="HeartAttackDate" type="date" class="form-control" />
                                 <span asp-validation-for="HeartAttackDate" class="text-danger"></span>
                             </div>
-                        <div class="form-check form-check-inline">
+                        <div class="form-check form-check-inline mb-4">
                             <label class="form-check-label">
                                 <input class="form-check-input" asp-for="DiabetesQuestion" /> @Html.DisplayNameFor(model => model.DiabetesQuestion)
                             </label>
                         </div>
-                        <div class="form-check form-check-inline">
+                        <div class="form-check form-check-inline mb-4">
                             <label class="form-check-label">
                                 <input class="form-check-input" asp-for="InsulinQuestion" /> @Html.DisplayNameFor(model => model.InsulinQuestion)
                             </label>
@@ -78,11 +89,105 @@
                             <label asp-for="PatientId" class="control-label"></label>
                             <input asp-for="PatientId" class="form-control" value="@contextAccessor.HttpContext.Session.GetInt32("PatientId")" />
                         </div>
+                        <div class="form-group mb-4">
+                            <input type="submit" value="Submit" class="btn btn-primary" />
+                        </div>
                         </form>
-                    </div>
-                }
+                </div>
+            }
+
+            else if (User.IsInRole(RoleConstants.Practitioner))
+            {
+                <div class="col-md-4" style="margin-left:auto;margin-right:auto;">
+                    <form asp-action="SMPBookAppointment">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-check form-check-inline mb-4">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" asp-for="AnaesthesiaReaction" /> @Html.DisplayNameFor(model => model.AnaesthesiaReaction)
+                                </label>
+                            </div>
+                            <div class="form-group mb-4">
+                                <label asp-for="NatureOfReaction" class="control-label"></label>
+                                <textarea asp-for="NatureOfReaction" class="form-control"></textarea>
+                                <span asp-validation-for="NatureOfReaction" class="text-danger"></span>
+                            </div>
+                            <div class="form-check form-check-inline mb-4">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" asp-for="BreathingtubeSurgery" /> @Html.DisplayNameFor(model => model.BreathingtubeSurgery)
+                                </label>
+                            </div>
+                            <div class="form-check form-check-inline mb-4">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" asp-for="Movement" /> @Html.DisplayNameFor(model => model.Movement)
+                                </label>
+                            </div>
+                            <div class="form-check form-check-inline mb-4">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" asp-for="HeartAttack" /> @Html.DisplayNameFor(model => model.HeartAttack)
+                                </label>
+                            </div>
+                            <div class="form-group mb-4">
+                                <label asp-for="HeartAttackDate" class="control-label"></label>
+                                <input id="dateof" asp-for="HeartAttackDate" type="date" class="form-control" />
+                                <span asp-validation-for="HeartAttackDate" class="text-danger"></span>
+                            </div>
+                        <div class="form-check form-check-inline mb-4">
+                            <label class="form-check-label">
+                                <input class="form-check-input" asp-for="DiabetesQuestion" /> @Html.DisplayNameFor(model => model.DiabetesQuestion)
+                            </label>
+                        </div>
+                        <div class="form-check form-check-inline mb-4">
+                            <label class="form-check-label">
+                                <input class="form-check-input" asp-for="InsulinQuestion" /> @Html.DisplayNameFor(model => model.InsulinQuestion)
+                            </label>
+                        </div>
+                        <div class="form-group mb-4" hidden>
+                            <label asp-for="PatientId" class="control-label"></label>
+                            <input asp-for="PatientId" class="form-control" value="@contextAccessor.HttpContext.Session.GetInt32("PatientId")" />
+                        </div>
+                        <div class="form-group mb-4">
+                            <label asp-for="Patient" class="control-label"></label>
+                            <select asp-for="PatientId" id="selectedPatient" class="form-control" asp-items="@(new SelectList(patient, "Value","Text"))">
+                                <option disabled selected hidden>Please select an option</option>
+                            </select>
+                            <span asp-validation-for="PatientId" class="text-danger"></span>
+                        </div>
+                        <div class="form-group mb-4">
+                            <label asp-for="Practitioner" class="control-label"></label>
+                            <select asp-for="PractitionerId" class="form-control" asp-items="@(new SelectList(practitioner, "Value","Text"))">
+                                <option disabled selected hidden>Please select an option</option>
+                            </select>
+                            <span asp-validation-for="PractitionerId" class="text-danger"></span>
+                        </div>
+                        <div class="form-group form-check mb-4">
+                            <label class="form-check-label">
+                                Are you confirming this session with your patient <span id="patientName"></span>
+                                <input class="form-check-input" asp-for="SessionConfirmed" />
+                            </label>
+                        </div>
+                        <div class="for-group mb-4">
+                            <input type="submit" value="Submit" class="btn btn-outline-primary" />
+                        </div>
+                    </form>    
+                </div>
+            }
+
+            </div>
+            <div>
+                <a asp-action="Index">Back to List</a>
             </div>
     </div>
+}
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        document.getElementById('selectedPatient').addEventListener('change', function(){
+            var selectedText=this.options[this.selectedIndex].text;
+            document.getElementById('patientName').textContent= selectedText;
+        });
+    </script>
 }
 @*<div class="margined-page pt-4">
     <div class="form-check-inline">

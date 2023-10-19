@@ -44,10 +44,32 @@ namespace eNompilo.v3._0._1.Models.SMP
 		public bool InsulinQuestion { get; set; }
 
 		[Required]
+		[DisplayFormat(ApplyFormatInEditMode =true, DataFormatString = "{0:dd-MM-yyyy}")]
+		[DataType(DataType.Date)]
+		[Display(Name ="Appointment Date")]
+		public DateTime? PreferredDate { get; set; }
+
+		[Required]
+		[DisplayFormat(ApplyFormatInEditMode =true,
+			DataFormatString ="{0:HH:mm}")]
+		[DataType(DataType.Time)]
+		[Display(Name ="Appointment Time")]
+		public DateTime? PreferredTime { get; set; }
+
+		[ForeignKey("Practitioner")]
+		public int? PractitionerId { get; set; }
+
+		[Required]
+		public bool SessionConfirmed { get; set; } = false;
+
+		[Required]
+		public bool Archived { get; set; }
+
+		[Required]
 		[ForeignKey("Patient")]
 		public int PatientId { get; set; }
 
-        public bool Archived { get; set; }
 		public virtual Patient? Patient { get; set; }
+		public virtual Practitioner? Practitioner { get; set; }
     }
 }

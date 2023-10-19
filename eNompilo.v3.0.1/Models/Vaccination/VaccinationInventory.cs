@@ -31,5 +31,8 @@ namespace eNompilo.v3._0._1.Models.Vaccination
         [Required]
         [DisplayName("Expiration Date")]
         public DateTime ExpirationDate { get; set; }
+
+        [Required]
+        public bool Archived { get; set; }
     }
 }

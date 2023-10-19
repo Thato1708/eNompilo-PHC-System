@@ -1,5 +1,87 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model eNompilo.v3._0._1.Models.ViewModels.ArchiveItemViewModel
+@using eNompilo.v3._0._1.Constants;
+@using eNompilo.v3._0._1.Areas.Identity.Data;
+@using eNompilo.v3._0._1.Models;
+@inject ApplicationDbContext _context
+
 @{
+    ViewData["Title"] = "Remove";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+
+    var doses = _context.tblVaccinationInventory.Where(va => va.ID == Model.VaxInventoryID).FirstOrDefault();
 }
+
+<h1>Remove</h1>
+<div class="margined-page pt-4">
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2 mb-4">
+            @Html.DisplayNameFor(model => model.VaccinationInventory.BatchNo)
+        </dt>
+        <dd class="col-sm-10 mb-4">
+            @doses.BatchNo
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.VaccinationInventory.Manufacturer)
+        </dt>
+        <dd class="col-sm-10 mb-4">
+            @doses.Manufacturer
+        </dd>
+        <dt class="col-sm-2 mb-4">
+            @Html.DisplayNameFor(model => model.VaccinationInventory.VaccineName)
+        </dt>
+        <dd class="col-sm-10 mb-4">
+            @doses.VaccineName
+        </dd>
+        <dt class="col-sm-2 mb-4">
+            @Html.DisplayNameFor(model => model.VaccinationInventory.Quantity)
+        </dt>
+        <dd class="col-sm-10 mb-4">
+            @doses.Quantity
+        </dd>
+        <dt class="col-sm-2 mb-4">
+            @Html.DisplayNameFor(model => model.VaccinationInventory.ExpirationDate)
+        </dt>
+        <dd class="col-sm-10 mb-4">
+            @doses.ExpirationDate
+        </dd>
+
+    </dl>
+
+    <form asp-action="RemoveVax">
+        <input type="hidden" asp-for="Id" />
+        <div class="form-group form-check mb-4">
+            <label class="form-check-label">
+                Tick the checkbox to confirm you are deleting this record.
+                <input class="form-check-input" id="archiveElmnt" asp-for="Archived" />
+            </label>
+        </div>
+        <input type="submit" id="btnSubmit" value="Delete" class="btn btn-danger" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        window.onload = function () {
+            var checkbox = document.getElementById('archiveElmnt');
+            var button = document.getElementById('btnSubmit');
+
+            checkbox.addEventListener('change', function () {
+                if (checkbox.checked) {
+                    button.disabled = false;
+                } else {
+                    button.disabled = true;
+                }
+            });
+
+            // Trigger change event to set initial visibility
+            checkbox.dispatchEvent(new Event('change'));
+        };
+    </script>
+}
+

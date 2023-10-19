@@ -268,7 +268,7 @@ namespace eNompilo.v3._0._1.Controllers
 			var model = new ArchiveItemViewModel
 			{
 				Id = obj.ID,
-				DoseTrackingID = obj.ID,
+				VaxInventoryID = obj.ID,
 				Archived = obj.Archived,
 			};
 
@@ -293,7 +293,7 @@ namespace eNompilo.v3._0._1.Controllers
 
 			obj.Archived = model.Archived;
 
-			_context.tblDoseTracking.Update(obj);
+			_context.tblVaccinationInventory.Update(obj);
 			_context.SaveChanges();
 			return RedirectToAction("Index");
 		}

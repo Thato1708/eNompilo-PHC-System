@@ -31,6 +31,10 @@ namespace eNompilo.v3._0._1.Models.ViewModels
         public int? DoseTrackingID { get; set; }
         public virtual DoseTracking? DoseTracking { get; set; }
 
+        [ForeignKey("VaccinationInventory")]
+        public int? VaxInventoryID { get; set; }
+        public virtual VaccinationInventory? VaccinationInventory { get; set; }
+
         [ForeignKey("ProcedureAppointment")]
         public int? ProcedureAppointmentId { get; set; }
         public virtual MedicalProceduresAppointment? ProceduresAppointment { get; set; }

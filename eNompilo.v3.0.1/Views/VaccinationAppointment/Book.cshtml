@@ -12,6 +12,13 @@
 	ViewData["Title"] = "Book";
 	Layout = "~/Views/Shared/_DashboardLayout.cshtml";
 
+	var currentPatient = new Patient();
+
+	if (User.IsInRole(RoleConstants.Patient))
+	{
+		currentPatient = _context.tblPatient.Where(p => p.UserId == UserManager.GetUserAsync(User).Result.Id).FirstOrDefault();
+	}
+
 	var patient = _context.tblPatient.Select(p => new SelectListItem
 			{
 				Value = p.Id.ToString(),
@@ -39,7 +46,8 @@
 						<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 						<div class="form-group form-check mb-4">
 							<label class="form-check-label">
-								<input class="form-check-input" asp-for="BeenVaccinated" /> @Html.DisplayNameFor(model => model.BeenVaccinated)
+								Have you ever been vaccinated before?
+								<input class="form-check-input" asp-for="BeenVaccinated" />
 							</label>
 						</div>
 						<div class="form-group mb-4">
@@ -47,11 +55,16 @@
 							<textarea asp-for="PreviousVaccine" class="form-control"></textarea>
 							<span asp-validation-for="PreviousVaccine" class="text-danger"></span>
 						</div>
-						<div class="form-group form-check mb-4">
+						@if(_context.tblPersonalDetails.Where(p=>p.PatientId == currentPatient.Id).FirstOrDefault().Gender == Gender.Female)
+						{
+							<div class="form-group form-check mb-4">
 							<label class="form-check-label">
-								<input class="form-check-input" asp-for="IsPregnant" /> @Html.DisplayNameFor(model => model.IsPregnant)
+								Are you pregnant? <br/>
+								<input class="form-check-input" asp-for="IsPregnant" />
 							</label>
 						</div>
+						}
+						
 						<div class="form-group mb-4">
 							<label asp-for="VaccinableDiseases" class="control-label"></label>
 							<select asp-for="VaccinableDiseases" class="form-control" asp-items="Html.GetEnumSelectList<VaccinableDiseases>()">
@@ -86,7 +99,8 @@
 						<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 						<div class="form-group form-check mb-4">
 							<label class="form-check-label">
-								<input class="form-check-input" asp-for="BeenVaccinated" /> @Html.DisplayNameFor(model => model.BeenVaccinated)
+								Has patient been vaccinated before?<br/>
+								<input class="form-check-input" asp-for="BeenVaccinated" />
 							</label>
 						</div>
 						<div class="form-group mb-4">
@@ -96,7 +110,8 @@
 						</div>
 						<div class="form-group form-check mb-4">
 							<label class="form-check-label">
-								<input class="form-check-input" asp-for="IsPregnant" /> @Html.DisplayNameFor(model => model.IsPregnant)
+								Is patient Pregnant? <br/>
+								<input class="form-check-input" asp-for="IsPregnant" />
 							</label>
 						</div>
 						<div class="form-group mb-4">

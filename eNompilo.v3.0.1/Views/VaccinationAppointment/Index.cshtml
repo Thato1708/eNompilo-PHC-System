@@ -1,73 +1,167 @@
 ﻿@model IEnumerable<eNompilo.v3._0._1.Models.Vaccination.VaccinationAppointment>
+@using Microsoft.AspNetCore.Identity;
+@using System.Collections;
+@using eNompilo.v3._0._1.Constants;
+@using eNompilo.v3._0._1.Models.SystemUsers;
+@inject UserManager<ApplicationUser> UserManager
+@inject SignInManager<ApplicationUser> SignInManager
+@inject IHttpContextAccessor contextAccessor
+@inject eNompilo.v3._0._1.Areas.Identity.Data.ApplicationDbContext _context
 
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+
+    var user = _context.Users.Where(u => u.Id == UserManager.GetUserAsync(User).Result.Id).FirstOrDefault();
+    int patientId = 0;
+    int practitionerId = 0;
+    if (User.IsInRole(RoleConstants.Patient))
+    {
+        patientId = _context.tblPatient.Where(p => p.UserId == user.Id).FirstOrDefault().Id;
+    }
+    else if (User.IsInRole(RoleConstants.Practitioner))
+    {
+        practitionerId = _context.tblPractitioner.Where(p => p.UserId == user.Id).FirstOrDefault().Id;
+    }
 }
 
-<div class="margined-page pt-4" >
-    <h1>Index</h1>
+@if (SignInManager.IsSignedIn(User))
+{
 
-    <p>
-        <a asp-action="Book">Create New</a>
-    </p>
-    <table id="dtVacApp" class="table table-striped" style="margin-left:auto;margin-right:auto;">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.BeenVaccinated)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.PreviousVaccine)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.IsPregnant)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.VaccinableDiseases)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.PreferredDate)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.PreferredTime)
-                </th>
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @if(item.BeenVaccinated == true){<span>Yes</span>}else{<span>No</span>}
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.PreviousVaccine)
-                    </td>
-                    <td>
-                        @if(item.IsPregnant == true){<span>Pregnant</span>}else{<span>Not Pregnant</span>}
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.VaccinableDiseases)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.PreferredDate)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.PreferredTime)
-                    </td>
-                    <td>
-                        <a asp-action="Update" asp-route-id="@item.Id">Edit</a> |
-                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                        <a asp-action="Cancel" asp-route-id="@item.Id">Cancel</a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-</div>
+    @if (User.IsInRole(RoleConstants.Patient))
+    {
+        <div class="margined-page pt-4">
+            <h1>Index</h1>
+
+            <p>
+                <a asp-action="Book">Book New Vaccination Appointment</a>
+            </p>
+            <table id="dtVacApp" class="table table-striped" style="margin-left:auto;margin-right:auto;">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.PreferredDate)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.PreferredTime)
+                        </th>
+                        <th>
+                            Appointment State
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Where(p => p.PatientId == patientId && p.Archived == false).ToList())
+                    {
+                        <tr>
+                            <td>
+                                @Convert.ToDateTime(item.PreferredDate).ToString("dd/MMM/yyyy")
+                            </td>
+                            <td>
+                                @Convert.ToDateTime(item.PreferredTime).ToString("HH:mm")
+                            </td>
+                            <td>
+                                @if (item.SessionConfirmed)
+                                {
+                                    <span class="text-success">Booking confirmed with @item.Practitioner.Users.Titles. @item.Practitioner.Users.FirstName @item.Practitioner.Users.LastName</span>
+                                }
+                                else
+                                {
+                                    <span>Booking Pending</span>
+                                }
+                            </td>
+                            <td>
+                                <a asp-action="Update" asp-route-id="@item.Id"><i class="bi bi-pencil-fill"></i></a> |
+                                <a asp-action="Details" asp-route-id="@item.Id"><i class="bi bi-info-square-fill text-secondary"></i></a> |
+                                <a asp-action="Cancel" asp-route-id="@item.Id"><i class="bi bi-trash-fill text-danger"></i></a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else if ((User.IsInRole(RoleConstants.Practitioner) || User.IsInRole(RoleConstants.Receptionist)) && (_context.tblPractitioner.Where(p => p.UserId == user.Id).FirstOrDefault().PractitionerType == PractitionerType.Doctor || _context.tblPractitioner.Where(p => p.UserId == user.Id).FirstOrDefault().PractitionerType == PractitionerType.Nurse))
+    {
+        <div class="margined-page pt-4">
+            <h1>Index</h1>
+
+            <p>
+                <a asp-action="Book">Book New Family Vaccination</a>
+            </p>
+            <table id="dtVacApp" class="table table-striped" style="margin-left:auto;margin-right:auto;">
+                <thead>
+                    <tr>
+                        <th>
+                            Previous Vaccination Status
+                        </th>
+                        <th>
+                            Previous Vaccine
+                        </th>
+                        <th>
+                            Pregnancy Status
+                        </th>
+                        <th>
+                            Vaccination For
+                        </th>
+                        <th>
+                            Preferred Date
+                        </th>
+                        <th>
+                            Preferred Time
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Patient)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Where(p => p.PatientId == patientId && p.Archived == false).ToList())
+                    {
+                        <tr>
+                            <td>
+                                @if(item.BeenVaccinated){<span>Vaccinated</span>}else{<span>Never Vaccinated</span>}
+                            </td>
+                            <td>
+                                @if(item.PreviousVaccine != null){ <span>item.PreviousVaccine</span> }else{<span><em>No Previous Vaccine</em></span>
+                                }
+                            </td>
+                            <td>
+                                @if(item.IsPregnant){<span>Pregnant</span>}else{<span><em>Not Pregnant</em></span>}
+                            </td>
+                            <td>
+                                @item.VaccinableDiseases
+                            </td>
+                            <td>
+                                @Convert.ToDateTime(item.PreferredDate).ToString("dd/MMM/yyyy")
+                            </td>
+                            <td>
+                                @Convert.ToDateTime(item.PreferredTime).ToString("HH:mm")
+                            </td>
+                            <td>
+                                @if (item.SessionConfirmed)
+                                {
+                                    <span class="text-success">Booking confirmed with @item.Practitioner.Users.Titles. @item.Practitioner.Users.FirstName @item.Practitioner.Users.LastName</span>
+                                }
+                                else
+                                {
+                                    <span>Booking Pending</span>
+                                }
+                            </td>
+                            <td>
+                                <a asp-action="Update" asp-route-id="@item.Id"><i class="bi bi-pencil-fill"></i></a> |
+                                <a asp-action="Details" asp-route-id="@item.Id"><i class="bi bi-info-square-fill text-secondary"></i></a> |
+                                <a asp-action="Cancel" asp-route-id="@item.Id"><i class="bi bi-trash-fill text-danger"></i></a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+}
 
 
 

@@ -9,55 +9,54 @@
     <h1>Index</h1>
 
     <p>
-        <a asp-action="report">Report GBV</a>
+        <a asp-action="report">Report GBV Now</a>
     </p>
     <table id="dtRepGbv" class="table table-striped" style="margin-left:auto;margin-right:auto;">
         <thead>
             <tr>
-                <th>I am the: </th>
                 <th>
-                   Would you like to stay anonymous:
+                    I am the:
+                </th>
+                <th>
+                    Would you like to stay anonymous:
                 </th>
                 <th>
                     Incident Type:
                 </th>
                 <th>
-                    Preferred method of communication:
+                    Preferred method of comunication:
                 </th>
                 <th>
                     Would you like to be booked for counselling:
-                </th>               
-                <th></th>
+                </th>
             </tr>
         </thead>
         <tbody>
-            @foreach(var item in Model)
+            @foreach (var item in Model)
             {
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Role)
+                        @Html.DisplayFor(ModelItem => item.Role)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.IdentityType)
+                        @Html.DisplayFor(ModelItem => item.IdentityType)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.IncidentType)
+                        @Html.DisplayFor(ModelItem => item.IncidentType)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.CommunicationType)
+                        @Html.DisplayFor(ModelItem => item.CommunicationType)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Patient.FirstName)
-                        </td>
-                        <td>
-                        @Html.DisplayFor(modelItem => item.Patient.LastName)
+                        @Html.DisplayFor(ModelItem => item.CounsellingBooking)
                     </td>
                     <td>
-                        <a asp-action="Update" asp-route-id="@item.Id">Edit</a> |                      
+                        <a asp-action="Update" asp-route-id="@item.Id">Update</a> |
                         <a asp-action="Cancel" asp-route-id="@item.Id">Cancel</a>
                     </td>
                 </tr>
             }
         </tbody>
     </table>
-    </div>
+
+</div>

@@ -45,7 +45,7 @@ namespace eNompiloCounselling.Controllers
 		public IActionResult Book()
 		{
 			var bookedAppointments = dbContext.tblGeneralAppointment
-				.Select(a => new { a.PractitionerDiaryId, a.PreferredDate, a.PreferredTime })
+				.Select(a => new { a.PractitionerId, a.PreferredDate, a.PreferredTime })
 				.ToList();
 
 			ViewBag.BookedAppointments = bookedAppointments;

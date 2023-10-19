@@ -16,12 +16,6 @@ namespace eNompilo.v3._0._1.Models.Family_Planning
         [Display(Name = "Booking Reason")]
         public BookingReasons BookingReasons { get; set; }
 
-        [NotMapped]
-        public int PractitionerDiaryId { get; set; }
-        [NotMapped]
-        [ForeignKey("PractitionerDiaryId")]
-        public PractitionerDiary PractitionerDiary { get; set; }
-
         [Required]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MM-yyyy}")]
         [DataType(DataType.Date)]

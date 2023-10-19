@@ -251,5 +251,51 @@ namespace eNompilo.v3._0._1.Controllers
             _context.SaveChanges();
             return RedirectToAction("Index");
         }
-    }
+
+		public IActionResult RemoveVax(int? id)
+		{
+			if (id == 0 || id == null)
+			{
+				return NotFound();
+			}
+
+			var obj = _context.tblVaccinationInventory.Where(va => va.ID == id).FirstOrDefault();
+			if (obj == null)
+			{
+				return NotFound();
+			}
+
+			var model = new ArchiveItemViewModel
+			{
+				Id = obj.ID,
+				DoseTrackingID = obj.ID,
+				Archived = obj.Archived,
+			};
+
+			return View(model);
+		}
+
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public IActionResult RemoveVax(ArchiveItemViewModel model)
+		{
+			if (!ModelState.IsValid)
+			{
+				return View(model);
+			}
+
+			var obj = _context.tblVaccinationInventory.Where(va => va.ID == model.Id).FirstOrDefault();
+
+			if (obj == null)
+			{
+				return NotFound();
+			}
+
+			obj.Archived = model.Archived;
+
+			_context.tblDoseTracking.Update(obj);
+			_context.SaveChanges();
+			return RedirectToAction("Index");
+		}
+	}
 }

@@ -36,7 +36,7 @@ namespace eNompilo.v3._0._1.Controllers
         {
             if (User.IsInRole(RoleConstants.Practitioner))
             {
-                IEnumerable<VaccinationInventory> objList = _context.tblVaccinationInventory;
+                IEnumerable<VaccinationInventory> objList = _context.tblVaccinationInventory.Where(ds => ds.Archived == false);
                 return View(objList);
             }
             return View();

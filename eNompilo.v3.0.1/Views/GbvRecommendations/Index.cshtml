@@ -1,0 +1,63 @@
+﻿@model IEnumerable<eNompilo.v3._0._1.Models.GBV.PractitionerRecommendations>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+<div class="margined-page pt-4">
+    <h1>Index</h1>
+
+    <p>
+        <a asp-action="Recommendations">Practitioner Recommendations</a>
+    </p>
+    <table id="dtRepGbv" class="table table-striped" style="margin-left:auto;margin-right:auto;">
+        <thead>
+            <tr>
+                <th>Name of the Practitioner:</th>
+                <th>Surname of the Practitioner:</th>
+                <th>Practitioner's Email Address: </th>
+                <th>Practitioner's Cell Number:</th>
+                <th>Date:</th>
+                <th>Practitioner ID:</th>
+                <th>Patient ID:</th>
+                <th>Practitioner Recommendation:</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(ModelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(ModelItem => item.Surname)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(ModelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(ModelItem => item.Cell)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(ModelItem => item.Date)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(ModelItem => item.PractitionerId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(ModelItem => item.PatientId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(ModelItem => item.PractitionerRecommendation)
+                    </td>
+                    <td>
+                        <a asp-action="Update" asp-route-id="@item.Id">Update</a> |
+                        <a asp-action="Cancel" asp-route-id="@item.Id">Cancel</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+ </div>

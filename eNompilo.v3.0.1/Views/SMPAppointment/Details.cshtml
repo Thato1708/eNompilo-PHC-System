@@ -1,0 +1,63 @@
+﻿@model eNompilo.v3._0._1.Models.SMP.SMPAppointment
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+<div class="margined-page pt-4">
+    <div>
+        <h2>Your Upcoming Appointments(s)</h2>
+        <hr />
+        <dl class="row" style="margin-left:auto; margin-right:auto;">
+            <dt class="col-sm-2 mb-4">
+                Reaction To Anaesthesia
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(Model=>Model.NatureOfReaction)
+            </dd>
+            <dt class="col-sm-2 mb-4">
+                Breathing Tube Surgery
+            </dt>
+            <dd class="col-sm-10">
+                <input class="form-check-input" asp-for="BreathingtubeSurgery" />
+            </dd>
+            <dt class="col-sm-2 mb-4">
+                Movement Difficulties
+            </dt>
+            <dd class="col-sm-10">
+                <input class="form-check-input" asp-for="Movement" />
+            </dd>
+            <dt class="col-sm-2 mb-4">
+                Has had a heart attack
+            </dt>
+            <dd class="col-sm-10">
+                <input class="form-check-input" asp-for="HeartAttack" />
+            </dd>
+            <dt class="col-sm-2 mb-4">
+                Date Of Heart Attack
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(Model=>Model.HeartAttackDate)
+            </dd>
+            <dt class="col-sm-2 mb-4">
+                Preferred Date
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(Model=>Model.PreferredDate)
+            </dd>
+            <dt class="col-sm-2 mb-4">
+                Preferred Time
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(Model=>Model.PreferredTime)
+            </dd>
+            @*<dt class="col-sm-2 mb-4">
+                Patient Name(s)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Patient.FirstName) @Html.DisplayFor(model => model.Patient.LastName)
+            </dd>*@
+        </dl>
+    </div>
+</div>

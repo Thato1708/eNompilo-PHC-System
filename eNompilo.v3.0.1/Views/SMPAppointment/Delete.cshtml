@@ -1,1 +1,108 @@
-﻿
+﻿@model eNompilo.v3._0._1.Models.ViewModels.ArchiveItemViewModel
+
+@using eNompilo.v3._0._1.Constants;
+@using eNompilo.v3._0._1.Areas.Identity.Data;
+@using eNompilo.v3._0._1.Models.SMP;
+
+@inject ApplicationDbContext _context
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+
+    var smp = _context.tblMedicalProcedureAppointment.Where(va => va.Id == Model.Id).FirstOrDefault();
+}
+
+<div class="margined-page pt-4">
+    <h1>Cancel Appointment</h1>
+    <h2>Are you sure you want to cancel this appointment?</h2>
+    <div>
+        <hr/>
+        <dl class="row" style="margin-left:auto;margin-right:auto;">
+            <dt class="col-sm-2 mb-4">
+                Reaction To Anaesthesia
+            </dt>
+            <dd class="col-sm-10">
+                @smp.NatureOfReaction
+            </dd>
+            <dt class="col-sm-2 mb-4">
+                Breathing Tube Surgery
+            </dt>
+            <dd class="col-sm-10">
+                @smp.BreathingtubeSurgery
+            </dd>
+            <dt class="col-sm-2 mb-4">
+                Movement Difficulties
+            </dt>
+            <dd class="col-sm-10">
+                @smp.Movement
+            </dd>
+            <dt class="col-sm-2 mb-4">
+                Has had a heart attack
+            </dt>
+            <dd class="col-sm-10">
+                @smp.HeartAttack
+            </dd>
+            <dt class="col-sm-2 mb-4">
+                Date Of Heart Attack
+            </dt>
+            <dd class="col-sm-10">
+                @Convert.ToDateTime(smp.HeartAttackDate).ToString("dd MM yyyy")
+            </dd>
+            <dt class="col-sm-2 mb-4">
+                Preferred Date
+            </dt>
+            <dd class="col-sm-10">
+                @Convert.ToDateTime(smp.PreferredDate).ToString("dd MM yyyy")
+            </dd>
+            <dt class="col-sm-2 mb-4">
+                Preferred Time
+            </dt>
+            <dd class="col-sm-10">
+                @Convert.ToDateTime(smp.PreferredTime).ToString("HH:mm")
+            </dd>
+            @*<dt class="col-sm-2 mb-4">
+                Patient Name(s)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Patient.FirstName) @Html.DisplayFor(model => model.Patient.LastName)
+            </dd>*@
+        </dl>
+
+        <form asp-action="Delete" method="post">
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group form-check mb-4">
+                <label class="form-check-label">
+                    Tick the checkbox to confirm you are cancelling this appointment
+                    <input class="form-check-input" id="archiveElmnt" asp-for="Archived" />
+                </label>
+            </div>
+            <input type="submit" id="btnSubmit" value="Cancel" class="btn btn-danger" />
+            <a asp-action="Index">Back To List</a>
+        </form>
+
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        window.onload = function () {
+            var checkbox = document.getElementById('archiveElmnt');
+            var button = document.getElementById('btnSubmit');
+
+            checkbox.addEventListener('change', function () {
+                if (checkbox.checked) {
+                    button.disabled = false;
+                } else {
+                    button.disabled = true;
+                }
+            });
+
+            // Trigger change event to set initial visibility
+            checkbox.dispatchEvent(new Event('change'));
+        };
+    </script>
+}

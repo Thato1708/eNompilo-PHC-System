@@ -126,6 +126,11 @@
                             <input class="form-check-input" asp-for="HeartAttack" /> @Html.DisplayNameFor(model => model.HeartAttack)
                         </label>
                     </div>
+                    <div class="form-group mb-4">
+                        <label asp-for="HeartAttackDate" class="control-label"></label>
+                        <input id="dateof" asp-for="HeartAttackDate" type="date" class="form-control" />
+                        <span asp-validation-for="HeartAttackDate" class="text-danger"></span>
+                    </div>
                     <label class="form-check-label">
                         Are you updating the date and time of your appointment?
                         <input type="checkbox" class="form-check-input" id="checkBool" />
@@ -168,6 +173,9 @@
                         <label class="form-check-label">
                             <input class="form-check-input" asp-for="Archived" /> @Html.DisplayNameFor(model => model.Archived)
                         </label>
+                    </div>
+                    <div class="form-group mb-4">
+                        <input type="submit" value="Save" class="btn btn-primary" />
                     </div>
                 </form>
             </div>

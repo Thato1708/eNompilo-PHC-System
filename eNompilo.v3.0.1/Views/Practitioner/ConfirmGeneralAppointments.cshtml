@@ -1,0 +1,84 @@
+﻿@model eNompilo.v3._0._1.Models.ViewModels.AppointmentsViewModel
+@using Microsoft.AspNetCore.Identity;
+@using System.Collections;
+@using eNompilo.v3._0._1.Constants;
+@using eNompilo.v3._0._1.Models.SystemUsers;
+@inject UserManager<ApplicationUser> UserManager
+@inject SignInManager<ApplicationUser> SignInManager
+@inject eNompilo.v3._0._1.Areas.Identity.Data.ApplicationDbContext _context
+
+@{
+	ViewData["Title"] = "ConfirmGeneralAppointments";
+	Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+<h1>Confirm General Appointments</h1>
+<hr />
+<div class="row">
+	<div class="col-md-4">
+		<form asp-action="ConfirmGeneralAppointments" method="post">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<div class="form-group" hidden>
+				<label asp-for="PractitionerId" class="control-label"></label>
+				<input asp-for="PractitionerId" value="@_context.tblPractitioner.Where(p=>p.UserId == UserManager.GetUserAsync(User).Result.Id).FirstOrDefault().Id" class="form-control" />
+				<span asp-validation-for="PractitionerId" class="text-danger"></span>
+			</div>
+			<div class="form-group" hidden>
+				<label asp-for="PatientId" class="control-label"></label>
+				<input asp-for="PatientId" class="form-control" />
+				<span asp-validation-for="PatientId" class="text-danger"></span>
+			</div>
+
+			<dl>
+				<dt class="col-sm-2 mb-4"> Appointment</dt>
+				<dd class="col-sm-10">@_context.tblGeneralAppointment.Where(a=>a.Id==Model.GenAppointmentId).FirstOrDefault().PatientIssues</dd>
+
+				<dt class="col-sm-2 mb-4"> Patient</dt>
+				<dd class="col-sm-10">@_context.tblGeneralAppointment.Where(a=>a.Id==Model.GenAppointmentId).FirstOrDefault().Patient.Titles. @_context.tblGeneralAppointment.Where(a=>a.Id==Model.GenAppointmentId).FirstOrDefault().Patient.FirstName @_context.tblGeneralAppointment.Where(a=>a.Id==Model.GenAppointmentId).FirstOrDefault().Patient.MiddleName @_context.tblGeneralAppointment.Where(a=>a.Id==Model.GenAppointmentId).FirstOrDefault().Patient.LastName</dd>
+
+
+				<dt class="col-sm-2 mb-4"> Practitioner</dt>
+				<dd class="col-sm-10">@_context.tblPractitioner.Where(p=>p.UserId == UserManager.GetUserAsync(User).Result.Id).FirstOrDefault().Users.Titles. @_context.tblPractitioner.Where(p=>p.UserId == UserManager.GetUserAsync(User).Result.Id).FirstOrDefault().Users.FirstName @_context.tblPractitioner.Where(p=>p.UserId == UserManager.GetUserAsync(User).Result.Id).FirstOrDefault().Users.MiddleName @_context.tblPractitioner.Where(p=>p.UserId == UserManager.GetUserAsync(User).Result.Id).FirstOrDefault().Users.LastName</dd>
+
+				@*<div class="form-group">
+				<label asp-for="CounsAppointmentId" class="control-label"></label>
+				<input asp-for="CounsAppointmentId" class="form-control" />
+				<span asp-validation-for="CounsAppointmentId" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+				<label asp-for="FPAppointmentId" class="control-label"></label>
+				<input asp-for="FPAppointmentId" class="form-control" />
+				<span asp-validation-for="FPAppointmentId" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+				<label asp-for="VaxAppointmentId" class="control-label"></label>
+				<input asp-for="VaxAppointmentId" class="form-control" />
+				<span asp-validation-for="VaxAppointmentId" class="text-danger"></span>
+				</div>*@
+
+
+			</dl>
+			<div class="form-group">
+
+				<label class="form-check-label">
+					Are you confirming this patient's booking?
+					<input class="form-check-input" asp-for="SessionConfirmed" />
+				</label>
+
+			</div>
+			<div class="form-group">
+				<input type="submit" value="Save" class="btn btn-primary" />
+			</div>
+		</form>
+	</div>
+</div>
+
+<div>
+	<a asp-action="PendingAppointments">Back to List</a>
+</div>
+
+@section Scripts {
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+}

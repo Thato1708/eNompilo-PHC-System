@@ -76,6 +76,7 @@
 								<a asp-controller="CounsellingAppointment" asp-action="Book" class="dashboard-nav-dropdown-item">Book to See a Counsellor</a>
 								<a asp-controller="FamilyPlanningAppointment" asp-action="Book" class="dashboard-nav-dropdown-item">Book for Family Planning</a>
 								<a asp-controller="VaccinationAppointment" asp-action="Book" class="dashboard-nav-dropdown-item">Book to Get Vaccinated</a>
+								<a asp-controller="SMPAppointment" asp-action="SMPBookAppointment" class="dashboard-nav-dropdown-item">Book for a Medical Procedure</a>
 							</div>
 						</div>
 
@@ -128,7 +129,7 @@
 							<div class='dashboard-nav-dropdown-menu'>
 								<a asp-controller="Practitioner" asp-action="PendingAppointments" class="dashboard-nav-dropdown-item" style="text-align:center;">Pending Patient<br/>Appointments</a>
 								<a asp-controller="GeneralAppointment" asp-action="Index" class="dashboard-nav-dropdown-item">Confirmed Bookings</a>
-								<a asp-controller="GeneralAppointment" asp-action="Book" class="dashboard-nav-dropdown-item">Book A Patient In</a>
+								
 							</div>
 						</div>
 						
@@ -139,6 +140,7 @@
 							</a>
 							<div class="dashboard-nav-dropdown-menu">
 								<a asp-controller="Home" asp-action="ProcedureVideos" class="dashboard-nav-dropdown-item">Procedure Videos</a>
+								<a asp-controller="SMPAppointment" asp-action="SMPBookAppointment" class="dashboard-nav-dropdown-item">Book A Patient In</a>
 							</div>
 						</div>
 

@@ -183,7 +183,7 @@
 					<tr>
 						<th>Marital Status: </th>
 						<td>@patient.MaritalStatus.GetDisplayName()</td>
-						<th>Address Tel: </th>
+						<th>Address: </th>
 						<td>@patient.AddressLine1, @if(@patient.AddressLine2 != null){@patient.AddressLine2<span>,</span>} @if(@patient.Suburb != null) {@patient.Suburb<span>,</span>} @patient.City, @patient.Province.GetDisplayName(), @patient.ZipCode</td>
 					</tr>
 				</tbody>

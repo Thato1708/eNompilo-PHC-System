@@ -12,456 +12,474 @@
 @inject eNompilo.v3._0._1.Areas.Identity.Data.ApplicationDbContext dbContext
 
 @{
-    ViewData["Title"] = "Add New User";
-    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
-    //var rolesList = ViewBag.roleOptions;
-    //var practitionerTypes = Html.GetEnumSelectList<PractitionerType>();
+	ViewData["Title"] = "Add New User";
+	Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+	//var rolesList = ViewBag.roleOptions;
+	//var practitionerTypes = Html.GetEnumSelectList<PractitionerType>();
 }
 
 <div class="margined-page pt-4">
 
-    @if (SignInManager.IsSignedIn(User))
-    {
-        @if (User.IsInRole(RoleConstants.Receptionist) || User.IsInRole(RoleConstants.Admin))
-        {
+	@if (SignInManager.IsSignedIn(User))
+	{
+		@if (User.IsInRole(RoleConstants.Receptionist) || User.IsInRole(RoleConstants.Admin))
+		{
 
-            <h2 id="userHeader"></h2>
-            <hr />
-            <div class="row d-flex align-items-center">
-                <div class="col-md-10" style="margin-left:auto;margin-right:auto;">
-                    <form asp-action="CreateUser" enctype="multipart/form-data" method="post">
-                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                        <div class="general-form">
-                            <div class="form-group mb-4">
-                                <label asp-for="IdNumber" class="control-label"></label>
-                                <input asp-for="IdNumber" class="form-control" />
-                                <span asp-validation-for="IdNumber" class="text-danger"></span>
-                            </div>
-                            <div class="row mb-4">
-                                <div class="form-group mb-4 col">
-                                    <label asp-for="Titles" class="control-label"></label>
-                                    <select asp-for="Titles" class="form-control" asp-items="Html.GetEnumSelectList<Titles>()">
-                                        <option disabled selected hidden>Please select an option</option>
-                                    </select>
-                                    <span asp-validation-for="Titles" class="text-danger"></span>
-                                </div>
-                                <div class="mb-4 form-group col">
-                                    <label asp-for="FirstName" class="control-label"></label>
-                                    <input asp-for="FirstName" class="form-control" placeholder="Enter your first name" />
-                                    <span asp-validation-for="FirstName" class="text-danger"></span>
-                                </div>
-                            </div>
+			<h2 id="userHeader"></h2>
+			<hr />
+			<div class="row d-flex align-items-center">
+				<div class="col-md-10" style="margin-left:auto;margin-right:auto;">
+					<form asp-action="CreateUser" enctype="multipart/form-data" method="post">
+						<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+						<div class="general-form">
+							<div class="form-group mb-4">
+								<label asp-for="IdNumber" class="control-label"></label>
+								<input asp-for="IdNumber" id="idNumber" class="form-control" />
+								<span asp-validation-for="IdNumber" class="text-danger"></span>
+							</div>
+							<div class="row mb-4">
+								<div class="form-group mb-4 col">
+									<label asp-for="Titles" class="control-label"></label>
+									<select asp-for="Titles" class="form-control" asp-items="Html.GetEnumSelectList<Titles>()">
+										<option disabled selected hidden>Please select an option</option>
+									</select>
+									<span asp-validation-for="Titles" class="text-danger"></span>
+								</div>
+								<div class="mb-4 form-group col">
+									<label asp-for="FirstName" class="control-label"></label>
+									<input asp-for="FirstName" class="form-control" placeholder="Enter your first name" />
+									<span asp-validation-for="FirstName" class="text-danger"></span>
+								</div>
+							</div>
 
-                            <div class="row mb-4">
-                                <div class="form-group mb-4 col">
-                                    <label asp-for="MiddleName" class="control-label"></label>
-                                    <input asp-for="MiddleName" class="form-control" placeholder="Enter your middle name" />
-                                    <span asp-validation-for="MiddleName" class="text-danger"></span>
-                                </div>
+							<div class="row mb-4">
+								<div class="form-group mb-4 col">
+									<label asp-for="MiddleName" class="control-label"></label>
+									<input asp-for="MiddleName" class="form-control" placeholder="Enter your middle name" />
+									<span asp-validation-for="MiddleName" class="text-danger"></span>
+								</div>
 
-                                <div class="form-group mb-4 col">
-                                    <label asp-for="LastName" class="control-label"></label>
-                                    <input asp-for="LastName" class="form-control" placeholder="Enter your last name" />
-                                    <span asp-validation-for="LastName" class="text-danger"></span>
-                                </div>
-                            </div>
+								<div class="form-group mb-4 col">
+									<label asp-for="LastName" class="control-label"></label>
+									<input asp-for="LastName" class="form-control" placeholder="Enter your last name" />
+									<span asp-validation-for="LastName" class="text-danger"></span>
+								</div>
+							</div>
 
-                            <div class="row mb-4">
-                                <div class="form-group mb-4 col">
-                                    <label asp-for="Email" class="control-label"></label>
-                                    <input asp-for="Email" class="form-control" placeholder="Enter your email address" />
-                                    <span asp-validation-for="Email" class="text-danger"></span>
-                                </div>
+							<div class="row mb-4">
+								<div class="form-group mb-4 col">
+									<label asp-for="Email" class="control-label"></label>
+									<input asp-for="Email" class="form-control" placeholder="Enter your email address" />
+									<span asp-validation-for="Email" class="text-danger"></span>
+								</div>
 
-                                <div class="form-group mb-4 col">
-                                    <label asp-for="PhoneNumber" class="control-label"></label>
-                                    <input asp-for="PhoneNumber" type="number" class="form-control" placeholder="Enter your phone number" />
-                                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
-                                </div>
-                            </div>
+								<div class="form-group mb-4 col">
+									<label asp-for="PhoneNumber" class="control-label"></label>
+									<input asp-for="PhoneNumber" type="number" class="form-control" placeholder="Enter your phone number" />
+									<span asp-validation-for="PhoneNumber" class="text-danger"></span>
+								</div>
+							</div>
 
-                            <div class="row mb-4">
-                                <div class="form-group mb-4 col">
-                                    <label asp-for="Password" class="control-label"></label>
-                                    <input asp-for="Password" class="form-control" placeholder="Enter your password" />
-                                    <span asp-validation-for="Password" class="text-danger"></span>
-                                </div>
+							<div class="row mb-4">
+								<div class="form-group mb-4 col">
+									<label asp-for="Password" class="control-label"></label>
+									<input asp-for="Password" class="form-control" placeholder="Enter your password" />
+									<span asp-validation-for="Password" class="text-danger"></span>
+								</div>
 
-                                <div class="form-group mb-4 col">
-                                    <label asp-for="ConfirmPassword" class="control-label"></label>
-                                    <input asp-for="ConfirmPassword" class="form-control" placeholder="Confirm your password" />
-                                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-                                </div>
-                            </div>
+								<div class="form-group mb-4 col">
+									<label asp-for="ConfirmPassword" class="control-label"></label>
+									<input asp-for="ConfirmPassword" class="form-control" placeholder="Confirm your password" />
+									<span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+								</div>
+							</div>
 
-                            <div class="form-group mb-4">
-                                <label asp-for="UserRole" class="control-label"></label>
-                                <select asp-for="UserRole" class="form-control" id="roleChanged" name="userRole" asp-items="Html.GetEnumSelectList<UserRole>()" onchange="showDiv()">
-                                    <option disabled selected hidden>Please select an option</option>
-                                    @*@foreach (var item in rolesList)
-                            {
-                            <option value="@item.Text" id="@item.Text">@item.Text</option>
-                            }*@
-                                </select>
-                                <span asp-validation-for="UserRole" class="text-danger"></span>
-                                <!--See this link for potential solution: https://stackoverflow.com/questions/34541081/how-access-selected-value-drop-down-list-in-asp-net-mvc-->
-                            </div>
-                        </div>
-
-
-                        <div id="user_group" style="display: none;">
-                            <h3 id="userHeader2"></h3>
-                            <div class="peronal-details">
-                                <div class="form-group mb-4">
-                                    <label asp-for="ProfilePictureImageFile" class="control-label"></label>
-                                    <input asp-for="ProfilePictureImageFile" class="form-control" type="file" id="formFile" accept="image/*" />
-                                    <span asp-validation-for="ProfilePictureImageFile" class="text-danger"></span>
-                                </div>
-                                <div class="form-group mb-4 practitionerStuff">
-                                    <label asp-for="PractitionerType" class="control-label">Practitioner Type (If user is a practitioner)</label>
-                                    <select asp-for="PractitionerType" class="form-control" id="typeChanged" asp-items="Html.GetEnumSelectList<PractitionerType>()">
-                                        <option disabled selected hidden>Please select an option</option>
-                                    </select>
-                                    <span asp-validation-for="PractitionerType" class="text-danger"></span>
-                                </div>
-                                <div id="counsellorTypeDiv" class="form-group mb-4">
-                                    <label asp-for="CounsellorType" class="control-label">Counsellor Type (If counsellor)</label>
-                                    <select asp-for="CounsellorType" class="form-control" id="roleChanged" asp-items="Html.GetEnumSelectList<CounsellorType>()">
-                                        <option disabled selected hidden>Please select an option</option>
-                                    </select>
-                                    <span asp-validation-for="CounsellorType" class="text-danger"></span>
-                                </div>
-
-                                <div class="row mb-4">
-                                    <div class="form-group mb-4 col">
-                                        <label asp-for="Gender" class="control-label"></label>
-                                        <select asp-for="Gender" class="form-control" id="roleChanged" asp-items="Html.GetEnumSelectList<Gender>()">
-                                            <option disabled selected hidden>Please select an option</option>
-                                        </select>
-                                        <span asp-validation-for="Gender" class="text-danger"></span>
-                                    </div>
-
-                                    <div class="form-group mb-4 col">
-                                        <label asp-for="DOB" class="control-label"></label>
-                                        <input asp-for="DOB" class="form-control" />
-                                        <span asp-validation-for="DOB" class="text-danger"></span>
-                                    </div>
-
-                                </div>
-
-                                <div class="row mb-4 personalStuff">
-                                    <div class="form-group mb-4 col">
-                                        <label asp-for="Height" class="control-label"></label>
-                                        <input asp-for="Height" class="form-control" />
-                                        <span asp-validation-for="Height" class="text-danger"></span>
-                                    </div>
-                                    <div class="form-group mb-4 col">
-                                        <label asp-for="Weight" class="control-label"></label>
-                                        <input asp-for="Weight" class="form-control" />
-                                        <span asp-validation-for="Weight" class="text-danger"></span>
-                                    </div>
-
-                                </div>
-
-                                <div class="row mb-4">
-                                    <div class="form-group mb-4 col personalStuff">
-                                        <label asp-for="BloodType" class="control-label"></label>
-                                        <input asp-for="BloodType" class="form-control" />
-                                        <span asp-validation-for="BloodType" class="text-danger"></span>
-                                    </div>
-                                    <div class="form-group mb-4 col">
-                                        <label asp-for="HomeTel" class="control-label"></label>
-                                        <input asp-for="HomeTel" type="number" class="form-control" />
-                                        <span asp-validation-for="HomeTel" class="text-danger"></span>
-                                    </div>
-                                </div>
+							<div class="form-group mb-4">
+								<label asp-for="UserRole" class="control-label"></label>
+								<select asp-for="UserRole" class="form-control" id="roleChanged" name="userRole" asp-items="Html.GetEnumSelectList<UserRole>()" onchange="showDiv()">
+									<option disabled selected hidden>Please select an option</option>
+									@*@foreach (var item in rolesList)
+							{
+							<option value="@item.Text" id="@item.Text">@item.Text</option>
+							}*@
+								</select>
+								<span asp-validation-for="UserRole" class="text-danger"></span>
+								<!--See this link for potential solution: https://stackoverflow.com/questions/34541081/how-access-selected-value-drop-down-list-in-asp-net-mvc-->
+							</div>
+						</div>
 
 
-                                <div class="row mb-4">
+						<div id="user_group" style="display: none;">
+							<h3 id="userHeader2"></h3>
+							<div class="peronal-details">
+								<div class="form-group mb-4">
+									<label asp-for="ProfilePictureImageFile" class="control-label"></label>
+									<input asp-for="ProfilePictureImageFile" class="form-control" type="file" id="formFile" accept="image/*" />
+									<span asp-validation-for="ProfilePictureImageFile" class="text-danger"></span>
+								</div>
+								<div class="form-group mb-4 practitionerStuff">
+									<label asp-for="PractitionerType" class="control-label">Practitioner Type (If user is a practitioner)</label>
+									<select asp-for="PractitionerType" class="form-control" id="typeChanged" asp-items="Html.GetEnumSelectList<PractitionerType>()">
+										<option disabled selected hidden>Please select an option</option>
+									</select>
+									<span asp-validation-for="PractitionerType" class="text-danger"></span>
+								</div>
+								<div id="counsellorTypeDiv" class="form-group mb-4">
+									<label asp-for="CounsellorType" class="control-label">Counsellor Type (If counsellor)</label>
+									<select asp-for="CounsellorType" class="form-control" asp-items="Html.GetEnumSelectList<CounsellorType>()">
+										<option disabled selected hidden>Please select an option</option>
+									</select>
+									<span asp-validation-for="CounsellorType" class="text-danger"></span>
+								</div>
 
-                                    <div class="form-group mb-4 col">
-                                        <label asp-for="EmergencyPerson" class="control-label"></label>
-                                        <input asp-for="EmergencyPerson" class="form-control" />
-                                        <span asp-validation-for="EmergencyPerson" class="text-danger"></span>
-                                    </div>
-                                    <div class="form-group mb-4 col">
-                                        <label asp-for="EmergenyContactNr" class="control-label"></label>
-                                        <input asp-for="EmergenyContactNr" class="form-control" />
-                                        <span asp-validation-for="EmergenyContactNr" class="text-danger"></span>
-                                    </div>
+								<div class="row mb-4">
+									<div class="form-group mb-4 col">
+										<label asp-for="Gender" class="control-label"></label>
+										<select asp-for="Gender" class="form-control" id="gender" asp-items="Html.GetEnumSelectList<Gender>()">
+											<option disabled selected hidden>Please select an option</option>
+										</select>
+										<span asp-validation-for="Gender" class="text-danger"></span>
+									</div>
 
-                                </div>
+									<div class="form-group mb-4 col">
+										<label asp-for="DOB" class="control-label"></label>
+										<input asp-for="DOB" id="dob" class="form-control" />
+										<span asp-validation-for="DOB" class="text-danger"></span>
+									</div>
 
-                                <div class="form-group form-check personalStuff">
-                                    <label class="form-check-label"> Are you Employed (If yes, tick the checkbox)</label>
-                                    <input id="employedCheckbox" class="form-check-input" asp-for="Employed" />
-                                </div>
+								</div>
 
-                                <div class="row mb-4">
+								<div class="row mb-4 personalStuff">
+									<div class="form-group mb-4 col">
+										<label asp-for="Height" class="control-label"></label>
+										<input asp-for="Height" class="form-control" />
+										<span asp-validation-for="Height" class="text-danger"></span>
+									</div>
+									<div class="form-group mb-4 col">
+										<label asp-for="Weight" class="control-label"></label>
+										<input asp-for="Weight" class="form-control" />
+										<span asp-validation-for="Weight" class="text-danger"></span>
+									</div>
 
-                                    <div class="form-group mb-4 col" id="workTelDiv">
-                                        <label asp-for="WorkTel" class="control-label"></label>
-                                        <input asp-for="WorkTel" class="form-control" />
-                                        <span asp-validation-for="WorkTel" class="text-danger"></span>
-                                    </div>
-                                    <div class="form-group mb-4 col" id="workEmailDiv">
-                                        <label asp-for="WorkEmail" class="control-label"></label>
-                                        <input asp-for="WorkEmail" class="form-control" />
-                                        <span asp-validation-for="WorkEmail" class="text-danger"></span>
-                                    </div>
+								</div>
 
-                                </div>
+								<div class="row mb-4">
+									<div class="form-group mb-4 col personalStuff">
+										<label asp-for="BloodType" class="control-label"></label>
+										<input asp-for="BloodType" class="form-control" />
+										<span asp-validation-for="BloodType" class="text-danger"></span>
+									</div>
+									<div class="form-group mb-4 col">
+										<label asp-for="HomeTel" class="control-label"></label>
+										<input asp-for="HomeTel" type="number" class="form-control" />
+										<span asp-validation-for="HomeTel" class="text-danger"></span>
+									</div>
+								</div>
 
-                                <div class="form-group mb-4 col staffStuff">
-                                    <label asp-for="LineManager" class="control-label"></label>
-                                    <input asp-for="LineManager" class="form-control" />
-                                    <span asp-validation-for="LineManager" class="text-danger"></span>
-                                </div>
 
-                                <div class="row mb-4">
-                                    <div class="form-group mb-4 col">
-                                        <label asp-for="Citizenship" class="control-label"></label>
-                                        <select asp-for="Citizenship" class="form-control" id="roleChanged" asp-items="Html.GetEnumSelectList<Citizenship>()">
-                                            <option disabled selected hidden>Please select an option</option>
-                                        </select>
-                                        <span asp-validation-for="Citizenship" class="text-danger"></span>
-                                    </div>
+								<div class="row mb-4">
 
-                                    <div class="form-group mb-4 col">
-                                        <label asp-for="MaritalStatus" class="control-label"></label>
-                                        <select asp-for="MaritalStatus" class="form-control" id="roleChanged" asp-items="Html.GetEnumSelectList<MaritalStatus>()">
-                                            <option disabled selected hidden>Please select an option</option>
-                                        </select>
-                                        <span asp-validation-for="MaritalStatus" class="text-danger"></span>
-                                    </div>
+									<div class="form-group mb-4 col">
+										<label asp-for="EmergencyPerson" class="control-label"></label>
+										<input asp-for="EmergencyPerson" class="form-control" />
+										<span asp-validation-for="EmergencyPerson" class="text-danger"></span>
+									</div>
+									<div class="form-group mb-4 col">
+										<label asp-for="EmergenyContactNr" class="control-label"></label>
+										<input asp-for="EmergenyContactNr" class="form-control" />
+										<span asp-validation-for="EmergenyContactNr" class="text-danger"></span>
+									</div>
 
-                                </div>
+								</div>
 
-                                <div class="row mb-4">
-                                    <div class="form-group mb-4 col">
-                                        <label asp-for="AddressLine1" class="control-label"></label>
-                                        <input asp-for="AddressLine1" class="form-control" />
-                                        <span asp-validation-for="AddressLine1" class="text-danger"></span>
-                                    </div>
+								<div class="form-group form-check personalStuff">
+									<label class="form-check-label"> Are you Employed (If yes, tick the checkbox)</label>
+									<input id="employedCheckbox" class="form-check-input" asp-for="Employed" />
+								</div>
 
-                                    <div class="form-group mb-4 col">
-                                        <label asp-for="AddressLine2" class="control-label"></label>
-                                        <input asp-for="AddressLine2" class="form-control" />
-                                        <span asp-validation-for="AddressLine2" class="text-danger"></span>
-                                    </div>
+								<div class="row mb-4">
 
-                                </div>
+									<div class="form-group mb-4 col" id="workTelDiv">
+										<label asp-for="WorkTel" class="control-label"></label>
+										<input asp-for="WorkTel" class="form-control" />
+										<span asp-validation-for="WorkTel" class="text-danger"></span>
+									</div>
+									<div class="form-group mb-4 col" id="workEmailDiv">
+										<label asp-for="WorkEmail" class="control-label"></label>
+										<input asp-for="WorkEmail" class="form-control" />
+										<span asp-validation-for="WorkEmail" class="text-danger"></span>
+									</div>
 
-                                <div class="row mb-4">
-                                    <div class="form-group mb-4 col">
-                                        <label asp-for="Suburb" class="control-label"></label>
-                                        <input asp-for="Suburb" class="form-control" />
-                                        <span asp-validation-for="Suburb" class="text-danger"></span>
-                                    </div>
+								</div>
 
-                                    <div class="form-group mb-4 col">
-                                        <label asp-for="City" class="control-label"></label>
-                                        <input asp-for="City" class="form-control" />
-                                        <span asp-validation-for="City" class="text-danger"></span>
-                                    </div>
+								<div class="form-group mb-4 col staffStuff">
+									<label asp-for="LineManager" class="control-label"></label>
+									<input asp-for="LineManager" class="form-control" />
+									<span asp-validation-for="LineManager" class="text-danger"></span>
+								</div>
 
-                                </div>
+								<div class="row mb-4">
+									<div class="form-group mb-4 col">
+										<label asp-for="Citizenship" class="control-label"></label>
+										<select asp-for="Citizenship" class="form-control" id="roleChanged" asp-items="Html.GetEnumSelectList<Citizenship>()">
+											<option disabled selected hidden>Please select an option</option>
+										</select>
+										<span asp-validation-for="Citizenship" class="text-danger"></span>
+									</div>
 
-                                <div class="row mb-4">
-                                    <div class="form-group mb-4 col">
-                                        <label asp-for="Province" class="control-label"></label>
-                                        <select asp-for="Province" class="form-control" id="roleChanged" asp-items="Html.GetEnumSelectList<Provinces>()">
-                                            <option disabled selected hidden>Please select an option</option>
-                                        </select>
-                                        <span asp-validation-for="Province" class="text-danger"></span>
-                                    </div>
+									<div class="form-group mb-4 col">
+										<label asp-for="MaritalStatus" class="control-label"></label>
+										<select asp-for="MaritalStatus" class="form-control" id="roleChanged" asp-items="Html.GetEnumSelectList<MaritalStatus>()">
+											<option disabled selected hidden>Please select an option</option>
+										</select>
+										<span asp-validation-for="MaritalStatus" class="text-danger"></span>
+									</div>
 
-                                    <div class="form-group mb-4 col">
-                                        <label asp-for="ZipCode" class="control-label"></label>
-                                        <input asp-for="ZipCode" class="form-control" />
-                                        <span asp-validation-for="ZipCode" class="text-danger"></span>
-                                    </div>
+								</div>
 
-                                </div>
-                            </div>
+								<div class="row mb-4">
+									<div class="form-group mb-4 col">
+										<label asp-for="AddressLine1" class="control-label"></label>
+										<input asp-for="AddressLine1" class="form-control" />
+										<span asp-validation-for="AddressLine1" class="text-danger"></span>
+									</div>
 
-                            <div class="medical-history personalStuff">
-                                <h4>Medical Past</h4>
+									<div class="form-group mb-4 col">
+										<label asp-for="AddressLine2" class="control-label"></label>
+										<input asp-for="AddressLine2" class="form-control" />
+										<span asp-validation-for="AddressLine2" class="text-danger"></span>
+									</div>
 
-                                <div class="row mb-4">
-                                    <div class="form-group mb-4 ">
-                                        <label asp-for="PreviousDiagnoses" class="control-label"></label>
-                                        <textarea asp-for="PreviousDiagnoses" class="form-control"></textarea>
-                                        <span asp-validation-for="PreviousDiagnoses" class="text-danger"></span>
-                                    </div>
-                                    <div class="form-group mb-4 ">
-                                        <label asp-for="PreviousMedication" class="control-label"></label>
-                                        <textarea asp-for="PreviousMedication" class="form-control"></textarea>
-                                        <span asp-validation-for="PreviousMedication" class="text-danger"></span>
-                                    </div>
-                                </div>
+								</div>
 
-                                <div class="row mb-4">
-                                    <div class="form-group mb-4 ">
-                                        <label asp-for="GeneralAllergies" class="control-label"></label>
-                                        <textarea asp-for="GeneralAllergies" class="form-control"></textarea>
-                                        <span asp-validation-for="GeneralAllergies" class="text-danger"></span>
-                                    </div>
-                                    <div class="form-group mb-4 ">
-                                        <label asp-for="MedicationAllergies" class="control-label"></label>
-                                        <textarea asp-for="MedicationAllergies" class="form-control"></textarea>
-                                        <span asp-validation-for="MedicationAllergies" class="text-danger"></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <input type="submit" value="Create" class="btn btn-primary" />
-                        </div>
-                    </form>
-                </div>
-            </div>
-        }
-    }
+								<div class="row mb-4">
+									<div class="form-group mb-4 col">
+										<label asp-for="Suburb" class="control-label"></label>
+										<input asp-for="Suburb" class="form-control" />
+										<span asp-validation-for="Suburb" class="text-danger"></span>
+									</div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+									<div class="form-group mb-4 col">
+										<label asp-for="City" class="control-label"></label>
+										<input asp-for="City" class="form-control" />
+										<span asp-validation-for="City" class="text-danger"></span>
+									</div>
+
+								</div>
+
+								<div class="row mb-4">
+									<div class="form-group mb-4 col">
+										<label asp-for="Province" class="control-label"></label>
+										<select asp-for="Province" class="form-control" id="roleChanged" asp-items="Html.GetEnumSelectList<Provinces>()">
+											<option disabled selected hidden>Please select an option</option>
+										</select>
+										<span asp-validation-for="Province" class="text-danger"></span>
+									</div>
+
+									<div class="form-group mb-4 col">
+										<label asp-for="ZipCode" class="control-label"></label>
+										<input asp-for="ZipCode" class="form-control" />
+										<span asp-validation-for="ZipCode" class="text-danger"></span>
+									</div>
+
+								</div>
+							</div>
+
+							<div class="medical-history personalStuff">
+								<h4>Medical Past</h4>
+
+								<div class="row mb-4">
+									<div class="form-group mb-4 ">
+										<label asp-for="PreviousDiagnoses" class="control-label"></label>
+										<textarea asp-for="PreviousDiagnoses" class="form-control"></textarea>
+										<span asp-validation-for="PreviousDiagnoses" class="text-danger"></span>
+									</div>
+									<div class="form-group mb-4 ">
+										<label asp-for="PreviousMedication" class="control-label"></label>
+										<textarea asp-for="PreviousMedication" class="form-control"></textarea>
+										<span asp-validation-for="PreviousMedication" class="text-danger"></span>
+									</div>
+								</div>
+
+								<div class="row mb-4">
+									<div class="form-group mb-4 ">
+										<label asp-for="GeneralAllergies" class="control-label"></label>
+										<textarea asp-for="GeneralAllergies" class="form-control"></textarea>
+										<span asp-validation-for="GeneralAllergies" class="text-danger"></span>
+									</div>
+									<div class="form-group mb-4 ">
+										<label asp-for="MedicationAllergies" class="control-label"></label>
+										<textarea asp-for="MedicationAllergies" class="form-control"></textarea>
+										<span asp-validation-for="MedicationAllergies" class="text-danger"></span>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<input type="submit" value="Create" class="btn btn-primary" />
+						</div>
+					</form>
+				</div>
+			</div>
+		}
+	}
+
+	<div>
+		<a asp-action="Index">Back to List</a>
+	</div>
 </div>
 
 @section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-                /*var selectedRole = Request.Form["userRole"];
-                        if (!string.IsNullOrEmpty(selectedRole))
-        {
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+		/*var selectedRole = Request.Form["userRole"];
+																						if (!string.IsNullOrEmpty(selectedRole))
+		{
 
-        }*/
-    <script>
-                    window.onload = function () {
-                        var selectedOption = document.getElementById("roleChanged");
-                        var typeOption = document.getElementById("typeChanged");
-                        var userGroup = document.getElementById("user_group");
-                        var patientGroup = document.getElementById("patient_group");
-                        var practitionerGroup = document.getElementById("practitioner_group");
-                        var receptionistGroup = document.getElementById("receptionist_group");
-                        var receptionistGroup = document.getElementById("receptionist_group");
-                        var counsellorTypeDiv = document.getElementById("counsellorTypeDiv");
-                        var checkbox = document.getElementById('employedCheckbox');
-                        var workTelDiv = document.getElementById('workTelDiv');
-                        var workEmailDiv = document.getElementById('workEmailDiv');
+		}*/
+		<script>
+			window.onload = function () {
+				var selectedOption = document.getElementById("roleChanged");
+				var typeOption = document.getElementById("typeChanged");
+				var userGroup = document.getElementById("user_group");
+				var patientGroup = document.getElementById("patient_group");
+				var practitionerGroup = document.getElementById("practitioner_group");
+				var receptionistGroup = document.getElementById("receptionist_group");
+				var receptionistGroup = document.getElementById("receptionist_group");
+				var counsellorTypeDiv = document.getElementById("counsellorTypeDiv");
+				var checkbox = document.getElementById('employedCheckbox');
+				var workTelDiv = document.getElementById('workTelDiv');
+				var workEmailDiv = document.getElementById('workEmailDiv');
 
-                        var personalThings = document.querySelectorAll(".personalStuff")
-                        var practitionerThings = document.querySelectorAll(".practitionerStuff")
-                        var staffThings = document.querySelectorAll(".staffStuff")
+				var personalThings = document.querySelectorAll(".personalStuff")
+				var practitionerThings = document.querySelectorAll(".practitionerStuff")
+				var staffThings = document.querySelectorAll(".staffStuff")
 
-                        checkbox.addEventListener('change', function () {
-                            if (checkbox.checked) {
-                                workTelDiv.style.display = 'block';
-                                workEmailDiv.style.display = 'block';
-                            } else {
-                                workTelDiv.style.display = 'none';
-                                workEmailDiv.style.display = 'none';
-                            }
-                        });
+				checkbox.addEventListener('change', function () {
+					if (checkbox.checked) {
+						workTelDiv.style.display = 'block';
+						workEmailDiv.style.display = 'block';
+					} else {
+						workTelDiv.style.display = 'none';
+						workEmailDiv.style.display = 'none';
+					}
+				});
 
-                        selectedOption.addEventListener('change', function () {
-                            if (selectedOption.value == "0") {
-                                for (stuff of personalThings) {
-                                    stuff.style.display = "none"
-                                }
-                                for (stuff of practitionerThings) {
-                                    stuff.style.display = "none"
-                                }
-                                for (stuff of staffThings) {
-                                    stuff.style.display = "block"
-                                }
-                                userHeader.innerText = "Add a new Admin"
-                                userHeader2.innerText = "Admin Personal Details"
-                                userGroup.style.display = "block";
-                                userGroup.disabled = false;
-                                workTelDiv.style.display = 'block';
-                                workEmailDiv.style.display = 'block';
-                                counsellorTypeDiv.style.display = "none"
-                            } else if (selectedOption.value == "1") {
-                                for (stuff of personalThings) {
-                                    stuff.style.display = "block"
-                                }
-                                for (stuff of practitionerThings) {
-                                    stuff.style.display = "none"
-                                }
-                                for (stuff of staffThings) {
-                                    stuff.style.display = "none"
-                                }
-                                userHeader.innerText = "Add a new Patient"
-                                userHeader2.innerText = "Patient Personal Details"
-                                userGroup.style.display = "block";
-                                userGroup.disabled = false;
-                                checkbox.checked = false;
-                                workTelDiv.style.display = 'none';
-                                workEmailDiv.style.display = 'none';
-                                counsellorTypeDiv.style.display = "none"
-                            } else if (selectedOption.value == "2") {
-                                for (stuff of personalThings) {
-                                    stuff.style.display = "none"
-                                }
-                                for (stuff of practitionerThings) {
-                                    stuff.style.display = "block"
-                                }
-                                for (stuff of staffThings) {
-                                    stuff.style.display = "block"
-                                }
-                                userHeader.innerText = "Add a new Practitioner"
-                                userHeader2.innerText = "Practitioner Personal Details"
-                                userGroup.style.display = "block";
-                                userGroup.disabled = false;
-                                workTelDiv.style.display = 'block';
-                                workEmailDiv.style.display = 'block';
-                            } else if (selectedOption.value == "3") {
-                                for (stuff of personalThings) {
-                                    stuff.style.display = "none"
-                                }
-                                for (stuff of practitionerThings) {
-                                    stuff.style.display = "none"
-                                }
-                                for (stuff of staffThings) {
-                                    stuff.style.display = "block"
-                                }
-                                userHeader.innerText = "Add a new Receptionist"
-                                userHeader2.innerText = "Receptionist Personal Details"
-                                userGroup.style.display = "block";
-                                userGroup.disabled = false;
-                                workTelDiv.style.display = 'block';
-                                workEmailDiv.style.display = 'block';
-                                counsellorTypeDiv.style.display = "none"
-                            } else {
-                                userHeader.innerText = "Add a new User"
-                                userHeader2.innerText = "Personal Details"
-                                userGroup.style.display = "none";
-                                userGroup.disabled = true;
-                                workTelDiv.style.display = 'none';
-                                workEmailDiv.style.display = 'none';
-                                counsellorTypeDiv.style.display = "none"
-                            }
-                        });
+				selectedOption.addEventListener('change', function () {
+					if (selectedOption.value == "0") {
+						for (stuff of personalThings) {
+							stuff.style.display = "none"
+						}
+						for (stuff of practitionerThings) {
+							stuff.style.display = "none"
+						}
+						for (stuff of staffThings) {
+							stuff.style.display = "block"
+						}
+						userHeader.innerText = "Add a new Admin"
+						userHeader2.innerText = "Admin Personal Details"
+						userGroup.style.display = "block";
+						userGroup.disabled = false;
+						workTelDiv.style.display = 'block';
+						workEmailDiv.style.display = 'block';
+						counsellorTypeDiv.style.display = "none"
+					} else if (selectedOption.value == "1") {
+						for (stuff of personalThings) {
+							stuff.style.display = "block"
+						}
+						for (stuff of practitionerThings) {
+							stuff.style.display = "none"
+						}
+						for (stuff of staffThings) {
+							stuff.style.display = "none"
+						}
+						userHeader.innerText = "Add a new Patient"
+						userHeader2.innerText = "Patient Personal Details"
+						userGroup.style.display = "block";
+						userGroup.disabled = false;
+						checkbox.checked = false;
+						workTelDiv.style.display = 'none';
+						workEmailDiv.style.display = 'none';
+						counsellorTypeDiv.style.display = "none"
+					} else if (selectedOption.value == "2") {
+						for (stuff of personalThings) {
+							stuff.style.display = "none"
+						}
+						for (stuff of practitionerThings) {
+							stuff.style.display = "block"
+						}
+						for (stuff of staffThings) {
+							stuff.style.display = "block"
+						}
+						userHeader.innerText = "Add a new Practitioner"
+						userHeader2.innerText = "Practitioner Personal Details"
+						userGroup.style.display = "block";
+						userGroup.disabled = false;
+						workTelDiv.style.display = 'block';
+						workEmailDiv.style.display = 'block';
+					} else if (selectedOption.value == "3") {
+						for (stuff of personalThings) {
+							stuff.style.display = "none"
+						}
+						for (stuff of practitionerThings) {
+							stuff.style.display = "none"
+						}
+						for (stuff of staffThings) {
+							stuff.style.display = "block"
+						}
+						userHeader.innerText = "Add a new Receptionist"
+						userHeader2.innerText = "Receptionist Personal Details"
+						userGroup.style.display = "block";
+						userGroup.disabled = false;
+						workTelDiv.style.display = 'block';
+						workEmailDiv.style.display = 'block';
+						counsellorTypeDiv.style.display = "none"
+					} else {
+						userHeader.innerText = "Add a new User"
+						userHeader2.innerText = "Personal Details"
+						userGroup.style.display = "none";
+						userGroup.disabled = true;
+						workTelDiv.style.display = 'none';
+						workEmailDiv.style.display = 'none';
+						counsellorTypeDiv.style.display = "none"
+					}
 
-                        typeOption.addEventListener('change', function () {
-                            if (typeOption.value == "0") {
-                                counsellorTypeDiv.style.display = "block"
-                            } else {
-                                counsellorTypeDiv.style.display = "none"
-                            }
-                        });
+				});
 
-                        selectedOption.dispatchEvent(new Event('change'));
-                        typeOption.dispatchEvent(new Event('change'));
-                        checkbox.dispatchEvent(new Event('change'));
-                    };
-    </script>
-        // }
-        // else
-        // {
-        // 	<script>alert("Is Null!");</script>
-        // }
-    }
+
+				selectedOption.addEventListener('change', function () {
+
+					var idNumber = document.getElementById('idNumber').value;
+					var dobString = idNumber.subString(0, 6);
+					var dob = new Date(
+						parseInt(dobString.substring(0, 2)) + 2000,
+						parseInt(dobString.substring(2, 4)) - 1,
+						parseInt(dobString.substring(4, 6))
+					);
+					document.getElementById('dob').value = dob.toISOString().split('T')[0];
+
+					var isMale = parseInt(idNumber.charAt(6)) % 2 !== 0;
+					document.getElementById('gender').value = isMale ? 1 : 0
+					
+				});
+
+				typeOption.addEventListener('change', function () {
+					if (typeOption.value == "0") {
+						counsellorTypeDiv.style.display = "block"
+					} else {
+						counsellorTypeDiv.style.display = "none"
+					}
+				});
+
+				selectedOption.dispatchEvent(new Event('change'));
+				typeOption.dispatchEvent(new Event('change'));
+				checkbox.dispatchEvent(new Event('change'));
+			};
+		</script>
+		// }
+		// else
+		// {
+		// 	<script>alert("Is Null!");</script>
+		// }
+	}
 }

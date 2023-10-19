@@ -23,7 +23,8 @@
 				Text = p.Users.FirstName + " " + p.Users.LastName,
 				/*Text = "(" + Enum.GetName(typeof(Titles), p.Users.Titles) + ".) " + p.Users.FirstName + " " + p.Users.LastName,*/
 			}).ToList();
-	var practitionerValue = _context.tblPractitioner.Where(p => p.UserId == UserManager.GetUserAsync(User).Result.Id).FirstOrDefault().Id;
+	var practitionerValue = 0;
+	@if (User.IsInRole(RoleConstants.Practitioner)) { practitionerValue = _context.tblPractitioner.Where(p => p.UserId == UserManager.GetUserAsync(User).Result.Id).FirstOrDefault().Id; }
 }
 
 @if(SignInManager.IsSignedIn(User))

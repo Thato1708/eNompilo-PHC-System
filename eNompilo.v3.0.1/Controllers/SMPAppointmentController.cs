@@ -41,7 +41,7 @@ namespace eNompilo.v3._0._1.Controllers
 
 		public IActionResult SMPBookAppointment()
 		{
-			var bookedAppointment = dbContext.tblMedicalProcedureAppointment.Select(a => new { a.AnaesthesiaReaction, a.BreathingtubeSurgery, a.DiabetesQuestion, a.HeartAttack, a.HeartAttackDate, a.InsulinQuestion, a.Movement, a.NatureOfReaction }).ToList();
+								var bookedAppointment = dbContext.tblMedicalProcedureAppointment.Select(a => new { a.AnaesthesiaReaction, a.BreathingtubeSurgery, a.DiabetesQuestion, a.HeartAttack, a.HeartAttackDate, a.InsulinQuestion, a.Movement, a.NatureOfReaction }).ToList();
 
 			ViewBag.BookedAppointments = bookedAppointment;
 			return View();

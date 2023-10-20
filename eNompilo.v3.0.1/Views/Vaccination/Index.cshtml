@@ -1,54 +1,68 @@
 ﻿@model IEnumerable<eNompilo.v3._0._1.Models.Vaccination.VaccinationInventory>
+@using eNompilo.v3._0._1.Areas.Identity.Data;
+@inject ApplicationDbContext _context
 
 @{
-    ViewData["Title"] = "Index";
-    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+	ViewData["Title"] = "Index";
+	Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+
 }
 
 <h1>Vaccine Inventory</h1>
-<hr/>
+<hr />
 
 <p>
-    <a asp-action="VaccinationInventory">Add to Inventory</a>
+	<a asp-action="VaccinationInventory">Add to Inventory</a>
 </p>
 <table id="dtVaxInventory" class="table table-striped" style="margin-left:auto;margin-right:auto;">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Diseases)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.VaccineName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Quantity)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ExpirationDate)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Diseases)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.VaccineName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Quantity)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ExpirationDate)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ID"><i class="bi bi-pencil-fill text-secondary"></i></a> |
-                <a asp-action="RemoveVax" asp-route-id="@item.ID"><i class="bi bi-trash-fill text-danger"></i></a>
-            </td>
-        </tr>
-}
-    </tbody>
+	<thead>
+		<tr>
+			<th>
+				@Html.DisplayNameFor(model => model.Diseases)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.VaccineName)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.Quantity)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.ExpirationDate)
+			</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var item in Model)
+		{
+			<tr>
+				<td>
+					@Html.DisplayFor(modelItem => item.Diseases)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.VaccineName)
+				</td>
+				@if (item.Quantity > 0)
+				{
+					<td>
+						@Html.DisplayFor(modelItem => item.Quantity)
+					</td>
+				}
+				else
+				{
+					<td style="color:red;">
+						Out of Stock!
+					</td>
+				}
+
+				<td>
+					@Html.DisplayFor(modelItem => item.ExpirationDate)
+				</td>
+				<td>
+					<a asp-action="UpdateVax" asp-route-id="@item.ID"><i class="bi bi-pencil-fill text-secondary"></i></a> |
+					<a asp-action="RemoveVax" asp-route-id="@item.ID"><i class="bi bi-trash-fill text-danger"></i></a>
+				</td>
+			</tr>
+		}
+	</tbody>
 </table>

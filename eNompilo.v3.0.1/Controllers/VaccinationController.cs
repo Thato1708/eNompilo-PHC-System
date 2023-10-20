@@ -84,6 +84,21 @@ namespace eNompilo.v3._0._1.Controllers
                 //    SiteAddress = model.SiteAddress,
                 //};
 
+                VaccinationInventory vaxInv = _context.tblVaccinationInventory.Where(x=>x.ID == model.VaccineInventoryId).FirstOrDefault();
+                
+                if (vaxInv != null && model.SecondDose == null && vaxInv.Quantity > 0)
+                {
+                    vaxInv.Quantity = vaxInv.Quantity - 1;
+                }
+                else if(vaxInv != null && model.SecondDose != null && vaxInv.Quantity > 0)
+                {
+                    vaxInv.Quantity = vaxInv.Quantity - 2;
+                }
+                else
+                {
+                    return NotFound();
+                }
+
 
                 _context.tblDoseTracking.Add(model);
                 _context.SaveChanges();
@@ -110,6 +125,40 @@ namespace eNompilo.v3._0._1.Controllers
             return View();
         }
 
+
+        public IActionResult UpdateVax(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+            var obj = _context.tblVaccinationInventory.Find(id);
+            if (obj == null)
+            {
+                return NotFound();
+            }
+            return View(obj);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult UpdateVax(VaccinationInventory model)
+        {
+            if (model.Quantity == null && model.ExpirationDate == null)
+                return View(model);
+
+            var obj = _context.tblVaccinationInventory.Where(vi => vi.ID == model.ID).FirstOrDefault();
+
+            if (obj == null)
+                return NotFound();
+
+            obj.Quantity = model.Quantity;
+            obj.ExpirationDate = model.ExpirationDate;
+
+            _context.tblVaccinationInventory.Update(obj);
+            _context.SaveChanges();
+            return RedirectToAction("Index");
+        }
 
         public IActionResult PrivacyandSecurity()
         {

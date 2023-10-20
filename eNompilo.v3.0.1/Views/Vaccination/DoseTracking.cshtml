@@ -13,7 +13,7 @@
                 Text = p.FirstName + " " + p.LastName + " (" + p.IdNumber + ")",
             }).ToList();
 
-    var vaccines = dbContext.tblVaccinationInventory.Select(v => new SelectListItem
+    var vaccines = dbContext.tblVaccinationInventory.Where(ds => ds.Archived == false).Select(v => new SelectListItem
             {
                 Value = v.ID.ToString(),
                 Text = v.VaccineName,

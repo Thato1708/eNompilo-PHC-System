@@ -1,0 +1,73 @@
+﻿@model eNompilo.v3._0._1.Models.GBV.PractitionerRecommendations
+@using eNompilo.v3._0._1.Constants;
+@inject IHttpContextAccessor contextAccessor
+
+@{
+    ViewData["Title"] = "Update";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+<div class="margined-page pt-4">
+    <h2>Doctor Recommendation</h2>
+    <hr />
+    <div class="row align-items-center">
+        <div class="col-md-4" style="margin-left:auto;margin-right:auto;">
+            <form asp-action="Update">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group mb-4">
+                    <label asp-for="Name" class="control-label"></label>
+                    <input asp-for="Name" class="form-control" />
+                </div>
+                <div class="form-group mb-4">
+                    <label asp-for="Surname" class="control-label"></label>
+                    <input asp-for="Surname" class="form-control" />
+                </div>
+                <div class="form-group mb-4">
+                    <label asp-for="Email" class="control-label"></label>
+                    <input asp-for="Email" class="form-control" />
+                </div>
+                <div class="form-group mb-4">
+                    <label asp-for="Cell" class="control-label"></label>
+                    <input asp-for="Cell" class="form-control" />
+                </div>
+                <div class="form-group mb-4">
+                    <label asp-for="Date" class="control-label"></label>
+                    <input asp-for="Date" class="form-control" />
+                </div>
+                <div class="form-group mb-4">
+                    <label asp-for="PractitionerId" class="control-label"></label>
+                    <input asp-for="PractitionerId" class="form-control" />
+                </div>
+                <div class="form-group mb-4">
+                    <label asp-for="PatientId" class="control-label"></label>
+                    <input asp-for="PatientId" class="form-control" />
+                </div>
+                <div class="form-group mb-4">
+                    <label asp-for="PractitionerRecommendation" class="control-label"></label>
+                    <input asp-for="PractitionerRecommendation" class="form-control" />
+                </div>
+                <div class="form-group mb-4">
+                    <input type="submit" value="Submit" class="btn btn-primary" />
+                </div>
+                <div class="form-group">
+                    </diV>
+                </form>
+        </div>
+    </div>
+    <div>
+    <a asp-controller="Home" asp-action="Index">Back to List</a>
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+    </script>
+
+
+
+
+
+}
+
+

@@ -12,85 +12,109 @@ using System.Security.Policy;
 
 namespace eNompilo.v3._0._1.Controllers
 {
-    public class LoginController : Controller
-    {
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly ApplicationDbContext _context;
-        private readonly ILogger<RegisterController> _logger;
-        private readonly IUserStore<ApplicationUser> _userStore;
-        private readonly IUserEmailStore<ApplicationUser> _emailStore;
-        private readonly IHttpContextAccessor _contextAccessor;
+	public class LoginController : Controller
+	{
+		private readonly UserManager<ApplicationUser> _userManager;
+		private readonly SignInManager<ApplicationUser> _signInManager;
+		private readonly ApplicationDbContext _context;
+		private readonly ILogger<RegisterController> _logger;
+		private readonly IUserStore<ApplicationUser> _userStore;
+		private readonly IUserEmailStore<ApplicationUser> _emailStore;
+		private readonly IHttpContextAccessor _contextAccessor;
 
-        public LoginController(UserManager<ApplicationUser> userManager, IUserStore<ApplicationUser> userStore, SignInManager<ApplicationUser> signInManager, ApplicationDbContext context, ILogger<RegisterController> logger, IHttpContextAccessor contextAccessor)
-        {
-            _userManager = userManager;
-            _userStore = userStore;
-            _signInManager = signInManager;
-            _context = context;
-            _logger = logger;
-            _contextAccessor = contextAccessor;
-        }
+		public LoginController(UserManager<ApplicationUser> userManager, IUserStore<ApplicationUser> userStore, SignInManager<ApplicationUser> signInManager, ApplicationDbContext context, ILogger<RegisterController> logger, IHttpContextAccessor contextAccessor)
+		{
+			_userManager = userManager;
+			_userStore = userStore;
+			_signInManager = signInManager;
+			_context = context;
+			_logger = logger;
+			_contextAccessor = contextAccessor;
+		}
 
-        [AllowAnonymous]
-        [HttpGet]
-        public async Task<IActionResult> AppUser()
-        {
-            // Clear the existing external cookie to ensure a clean login process
-            await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
-            return View();
-        }
+		[AllowAnonymous]
+		[HttpGet]
+		public async Task<IActionResult> AppUser()
+		{
+			// Clear the existing external cookie to ensure a clean login process
+			await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
+			return View();
+		}
 
-        [AllowAnonymous]
-        [HttpPost]
-        public async Task<IActionResult> AppUser(LoginViewModel model, string? returnUrl = null)
-        {
-            
-            if (ModelState.IsValid)
-            {
-                var user = _context.Users.Where(u=>u.IdNumber == model.IdNumber).FirstOrDefault();
-                var result = await _signInManager.PasswordSignInAsync(user.IdNumber, model.Password, model.RememberMe, false);
-                if (result.Succeeded)
-                {
-                    int userTypeId = 0;
-                    if(user.UserRole == UserRole.Patient)
-                    {
-                        userTypeId = _context.tblPatient.Where(p => p.UserId == user.Id).FirstOrDefault().Id;
-                    }
-                    else if(user.UserRole == UserRole.Admin)
-                    {
-                        userTypeId = _context.tblAdmin.Where(p => p.UserId == user.Id).FirstOrDefault().Id;
-                    }
-                    else if(user.UserRole == UserRole.Practitioner)
-                    {
-                        userTypeId = _context.tblPractitioner.Where(p => p.UserId == user.Id).FirstOrDefault().Id;
-                    }
-                    else if(user.UserRole == UserRole.Receptionist)
-                    {
-                        userTypeId = _context.tblReceptionist.Where(p => p.UserId == user.Id).FirstOrDefault().Id;
-                    }
-                    else
-                    {
-                        userTypeId = 999;
-                    }
+		[AllowAnonymous]
+		[HttpPost]
+		public async Task<IActionResult> AppUser(LoginViewModel model, string? returnUrl = null)
+		{
 
-                    if (string.IsNullOrEmpty(returnUrl) && user.UserRole == UserRole.Patient)
-                    {
-                        return RedirectToAction("Index", "Home");
-                    }
-                    else if (string.IsNullOrEmpty(returnUrl))
-                    {
-                        returnUrl="/Users/UserProfile/"+userTypeId;
-                        return Redirect(returnUrl);
-                    }
-                    else
-                    {
-                        return Redirect(returnUrl);
-                    }
-                }
-            }
-            ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-            return View(model);
-        }
-    }
+			if (ModelState.IsValid)
+			{
+				var user = _context.Users.Where(u => u.UserName == model.IdNumber).FirstOrDefault();
+				var result = await _signInManager.PasswordSignInAsync(user.IdNumber, model.Password, model.RememberMe, false);
+				int userTypeId = 0;
+				if (result.Succeeded && user.Archived == false)
+				{
+					if (user.UserRole == UserRole.Patient)
+					{
+						userTypeId = _context.tblPatient.Where(p => p.UserId == user.Id).FirstOrDefault().Id;
+					}
+					else if (user.UserRole == UserRole.Admin)
+					{
+						userTypeId = _context.tblAdmin.Where(p => p.UserId == user.Id).FirstOrDefault().Id;
+					}
+					else if (user.UserRole == UserRole.Practitioner)
+					{
+						userTypeId = _context.tblPractitioner.Where(p => p.UserId == user.Id).FirstOrDefault().Id;
+					}
+					else if (user.UserRole == UserRole.Receptionist)
+					{
+						userTypeId = _context.tblReceptionist.Where(p => p.UserId == user.Id).FirstOrDefault().Id;
+					}
+					else
+					{
+						userTypeId = 999;
+					}
+
+					if (string.IsNullOrEmpty(returnUrl) && user.UserRole == UserRole.Patient)
+					{
+						return RedirectToAction("Index", "Home");
+					}
+					else if (string.IsNullOrEmpty(returnUrl))
+					{
+						returnUrl = "/Users/UserProfile/" + userTypeId;
+						return Redirect(returnUrl);
+					}
+					else
+					{
+						return Redirect(returnUrl);
+					}
+				}
+				if (user.Archived == true)
+				{
+					string userIdVal = user.Id.ToString();
+					//await _signInManager.SignOutAsync();
+					//_logger.LogInformation("User logged out.");
+					return BlockedUser(userIdVal);
+				}
+			}
+			ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+			return View(model);
+		}
+
+		[AllowAnonymous]
+		[HttpGet]
+		public IActionResult BlockedUser(string? Id)
+		{
+			if (Id == null || Id == "")
+			{
+				return NotFound();
+			}
+			var obj = _context.Users.Where(u => u.Id == Id).FirstOrDefault();
+			if (obj == null)
+			{
+				return NotFound();
+			}
+
+			return View(obj);
+		}
+	}
 }

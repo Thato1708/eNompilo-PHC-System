@@ -9,15 +9,13 @@ namespace eNompilo.v3._0._1.Models.ViewModels
         [ForeignKey("Users")]
         public string? UsersId { get; set; }
 
-        [Required]
         [Display(Name = "User Name")]
-        public string IdNumber { get; set; }
+        public string? IdNumber { get; set; }
 
-        [Required]
         [Display(Name = "Password")]
 		[DataType(DataType.Password)]
 		[RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*]).{8,}$", ErrorMessage = "Password must have at least:\n8 characters in length\n1 lowercase character\n1 uppercase letter\na numerical value\na special character")]
-		public string Password { get; set; }
+		public string? Password { get; set; }
 
         [Display(Name = "Remember me?")]
         public bool RememberMe { get; set; }

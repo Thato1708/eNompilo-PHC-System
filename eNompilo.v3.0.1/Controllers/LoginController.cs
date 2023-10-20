@@ -88,12 +88,12 @@ namespace eNompilo.v3._0._1.Controllers
 						return Redirect(returnUrl);
 					}
 				}
-				if (user.Archived == true)
+				else if (result.Succeeded && user.Archived == true)
 				{
-					string userIdVal = user.Id.ToString();
-					//await _signInManager.SignOutAsync();
-					//_logger.LogInformation("User logged out.");
-					return BlockedUser(userIdVal);
+					returnUrl = "/Login/BlockedUser/" + user.Id;
+					await _signInManager.SignOutAsync();
+					_logger.LogInformation("User logged out.");
+					return Redirect(returnUrl);
 				}
 			}
 			ModelState.AddModelError(string.Empty, "Invalid login attempt.");
@@ -113,8 +113,12 @@ namespace eNompilo.v3._0._1.Controllers
 			{
 				return NotFound();
 			}
-
-			return View(obj);
+			LoginViewModel model = new LoginViewModel()
+			{
+				UsersId = obj.Id,
+				Users = obj
+			};
+			return View(model);
 		}
 	}
 }

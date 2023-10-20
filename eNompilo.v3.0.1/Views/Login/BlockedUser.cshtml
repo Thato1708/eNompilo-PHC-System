@@ -1,18 +1,19 @@
 ﻿@using Microsoft.AspNetCore.Identity;
 @using eNompilo.v3._0._1.Models.SystemUsers;
 @using eNompilo.v3._0._1.Constants;
-@model eNompilo.v3._0._1.Models.SystemUsers.ApplicationUser
-@*@model eNompilo.v3._0._1.Models.ViewModels.LoginViewModel*@
+@* @model eNompilo.v3._0._1.Models.SystemUsers.ApplicationUser *@
+@model eNompilo.v3._0._1.Models.ViewModels.LoginViewModel
 @inject eNompilo.v3._0._1.Areas.Identity.Data.ApplicationDbContext _context
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 
 @{
-	ViewData["Title"] = "UserDetails";
+	ViewData["Title"] = "User Account Disabled";
 	Layout = "~/Views/Shared/_AuthenticationLayout.cshtml";
 
 }
 
+<a asp-action="Index" asp-controller="Home" style="display:flex;align-items: center; text-decoration:none; color: #1e36cc; font-weight: 500;"><i class="bi bi-arrow-left-square-fill" style="color: #1e36cc; font-size:25px;"></i> &nbsp; <span>Back to Home</span></a>
 <div class="margined-page pt-4" id="Landing">
 	<div>
 		<h2 class="text-danger">Disabled User Account</h2>
@@ -23,38 +24,38 @@
 					<td>
 						<dl class="row" style="margin-left:auto;margin-right:auto;">
 							<dt class="col-sm-2 mb-4">
-								@Html.DisplayNameFor(model => model.IdNumber)
+								Username:
 							</dt>
 							<dd class="col-sm-10">
-								@Html.DisplayFor(model => model.IdNumber)
+								@Html.DisplayFor(model => model.Users.IdNumber)
 							</dd>
 
 							<dt class="col-sm-2 mb-4">
-								Full Name
+								Full Name:
 							</dt>
 							<dd class="col-sm-10">
-								@Html.DisplayFor(model => model.Titles). @Html.DisplayFor(model => model.FirstName) @Html.DisplayFor(model => model.LastName)
+								@Html.DisplayFor(model => model.Users.Titles). @Html.DisplayFor(model => model.Users.FirstName) @Html.DisplayFor(model => model.Users.LastName)
 							</dd>
 
 							<dt class="col-sm-2 mb-4">
-								@Html.DisplayNameFor(model => model.PhoneNumber)
+								@Html.DisplayNameFor(model => model.Users.PhoneNumber):
 							</dt>
 							<dd class="col-sm-10">
-								@Html.DisplayFor(model => model.PhoneNumber)
+								@Html.DisplayFor(model => model.Users.PhoneNumber)
 							</dd>
 
 							<dt class="col-sm-2 mb-4">
-								@Html.DisplayNameFor(model => model.Email)
+								@Html.DisplayNameFor(model => model.Users.Email):
 							</dt>
 							<dd class="col-sm-10">
-								@Html.DisplayFor(model => model.Email)
+								@Html.DisplayFor(model => model.Users.Email)
 							</dd>
 
 							<dt class="col-sm-2 mb-4">
-								@Html.DisplayNameFor(model => model.CreatedOn)
+								@Html.DisplayNameFor(model => model.Users.CreatedOn):
 							</dt>
 							<dd class="col-sm-10">
-								@Html.DisplayFor(model => model.CreatedOn)
+								@Html.DisplayFor(model => model.Users.CreatedOn)
 							</dd>
 						</dl>
 					</td>

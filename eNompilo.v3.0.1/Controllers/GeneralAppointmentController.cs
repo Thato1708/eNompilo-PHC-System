@@ -23,7 +23,7 @@ namespace eNompiloCounselling.Controllers
 		public IActionResult Index()
 		{
 			var patientId = _contextAccessor.HttpContext.Session.GetInt32("PatientId");
-			IEnumerable<GeneralAppointment> objList = dbContext.tblGeneralAppointment.Include(pr=>pr.Practitioner).ThenInclude(u=>u.Users).Include(p=>p.Patient).ThenInclude(u => u.Users);
+			IEnumerable<GeneralAppointment> objList = dbContext.tblGeneralAppointment.Where(x=>x.Archived == false).Include(pr=>pr.Practitioner).ThenInclude(u=>u.Users).Include(p=>p.Patient).ThenInclude(u => u.Users);
 
 			//var patient = dbContext.tblPatient.Select(p => new SelectListItem
 			//{
@@ -58,7 +58,16 @@ namespace eNompiloCounselling.Controllers
 		{
 			if (model.PatientIssues != null && model.PreferredDate != null && model.PreferredTime != null && model.PatientId != null)
 			{
-				dbContext.tblGeneralAppointment.Add(model);
+				GeneralAppointment ga = new GeneralAppointment()
+				{
+					PatientIssues = model.PatientIssues,
+					PreferredDate = model.PreferredDate,
+					PreferredTime = model.PreferredTime,
+					PatientId = model.PatientId,
+					PractitionerId = model.PractitionerId,
+					SessionConfirmed = model.SessionConfirmed,
+				};
+				dbContext.tblGeneralAppointment.Add(ga);
 				dbContext.SaveChanges();
 				return RedirectToAction("Index");
 			}
@@ -71,7 +80,7 @@ namespace eNompiloCounselling.Controllers
 			{
 				return NotFound();
 			}
-			var obj = dbContext.tblGeneralAppointment.Find(Id);
+			var obj = dbContext.tblGeneralAppointment.Where(x=>x.Id == Id && x.Archived == false);
 			if (obj == null)
 			{
 				return NotFound();
@@ -118,7 +127,7 @@ namespace eNompiloCounselling.Controllers
 
 		public IActionResult Details(int? Id)
 		{
-			var obj = dbContext.tblGeneralAppointment.Find(Id);
+			var obj = dbContext.tblGeneralAppointment.Where(ga=>ga.Id == Id).Include(ga=>ga.Patient).ThenInclude(ga=>ga.Users).Include(ga=>ga.Patient).ThenInclude(ga=>ga.Users).FirstOrDefault();
 			if (obj == null)
 				return View("PageNotFound", "Home");
 			return View(obj);

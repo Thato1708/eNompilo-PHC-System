@@ -55,6 +55,10 @@ namespace eNompilo.v3._0._1.Controllers
             {
                 _context.tblReportGBV.Add(model);
                 _context.SaveChanges();
+                if(model.CounsellingBooking == CounsellingBooking.Yes)
+                {
+                    return RedirectToAction("Book", "CounsellingAppointment");
+                }
                 return RedirectToAction("Index");
             }
             return View(model);

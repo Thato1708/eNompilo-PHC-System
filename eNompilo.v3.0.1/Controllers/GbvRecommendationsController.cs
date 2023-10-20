@@ -29,7 +29,7 @@ namespace eNompilo.v3._0._1.Controllers
         {
             if (_signInManager.IsSignedIn(User))
             {
-                if (User.IsInRole(RoleConstants.Patient))
+                if (User.IsInRole(RoleConstants.Practitioner))
                 {
                     IEnumerable<PractitionerRecommendations> objList = _context.tblRecommendations;
                     return View(objList);

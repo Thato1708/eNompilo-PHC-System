@@ -1,4 +1,4 @@
-﻿@model eNompilo.v3._0._1.Models.GBV.PractitionerRecommendations
+﻿@model eNompilo.v3._0._1.Models.GBV.GbvRecommendations
 @using eNompilo.v3._0._1.Constants;
 @inject IHttpContextAccessor contextAccessor
 
@@ -15,32 +15,20 @@
             <form asp-action="Update">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group mb-4">
-                    <label asp-for="Name" class="control-label"></label>
-                    <input asp-for="Name" class="form-control" />
-                </div>
-                <div class="form-group mb-4">
-                    <label asp-for="Surname" class="control-label"></label>
-                    <input asp-for="Surname" class="form-control" />
-                </div>
-                <div class="form-group mb-4">
-                    <label asp-for="Email" class="control-label"></label>
-                    <input asp-for="Email" class="form-control" />
-                </div>
-                <div class="form-group mb-4">
-                    <label asp-for="Cell" class="control-label"></label>
-                    <input asp-for="Cell" class="form-control" />
-                </div>
-                <div class="form-group mb-4">
-                    <label asp-for="Date" class="control-label"></label>
-                    <input asp-for="Date" class="form-control" />
-                </div>
-                <div class="form-group mb-4">
                     <label asp-for="PractitionerId" class="control-label"></label>
                     <input asp-for="PractitionerId" class="form-control" />
                 </div>
                 <div class="form-group mb-4">
                     <label asp-for="PatientId" class="control-label"></label>
                     <input asp-for="PatientId" class="form-control" />
+                </div>
+                <div class="form-group mb-4">
+                    <label asp-for="Date" class="control-label"></label>
+                    <input asp-for="Date" class="form-control" />
+                </div>
+                <div class="form-group mb-4">
+                    <label asp-for="Reffered" class="control-label"></label>
+                    <input asp-for="Reffered" class="form-control" />
                 </div>
                 <div class="form-group mb-4">
                     <label asp-for="PractitionerRecommendation" class="control-label"></label>

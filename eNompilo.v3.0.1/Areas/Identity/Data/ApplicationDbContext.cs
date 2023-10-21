@@ -75,7 +75,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<ReportGBV> tblReportGBV { get; set; }
     public DbSet<Questionnaire> tblQuestionnaire { get; set; }
     public DbSet<SupportMembership> tblSupportGroup { get; set; }
-    public DbSet<PractitionerRecommendations> tblRecommendations { get; set; }
+    public DbSet<GbvRecommendations> tblRecommendations { get; set; }
     public DbSet<SMPAppointment> tblMedicalProcedureAppointment { get; set; }
 
 

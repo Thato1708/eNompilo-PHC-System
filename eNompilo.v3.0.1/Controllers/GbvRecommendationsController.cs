@@ -57,7 +57,7 @@ namespace eNompilo.v3._0._1.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Recommendations(GbvRecommendations model)
         {
-            if(model.PractitionerId !=  null && model.PatientId != null && model.Date != null && model.Reffered != null && model.PractitionerRecommendation != null && model.Practitioner!= null)
+            if(model.PractitionerId !=  null && model.PatientId != null && model.Date != null && model.Reffered != null && model.PractitionerRecommendation != null)
             {
                 _context.tblRecommendations.Add(model);
                 _context.SaveChanges();

@@ -31,12 +31,12 @@ namespace eNompilo.v3._0._1.Controllers
             {
                 if (User.IsInRole(RoleConstants.Practitioner))
                 {
-                    IEnumerable<PractitionerRecommendations> objList = _context.tblRecommendations;
+                    IEnumerable<GbvRecommendations> objList = _context.tblRecommendations;
                     return View(objList);
                 }
                 else if (User.IsInRole(RoleConstants.Admin))
                 {
-                    IEnumerable<PractitionerRecommendations> objList = _context.tblRecommendations;
+                    IEnumerable<GbvRecommendations> objList = _context.tblRecommendations;
                     return View(objList);
                 }
 
@@ -55,9 +55,9 @@ namespace eNompilo.v3._0._1.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Recommendations(PractitionerRecommendations model)
+        public IActionResult Recommendations(GbvRecommendations model)
         {
-            if(model.Name !=  null && model.Surname != null && model.Email != null && model.Cell != null && model.Date != null && model.PractitionerId != null && model.PatientId != null && model.PractitionerRecommendation != null)
+            if(model.PractitionerId !=  null && model.PatientId != null && model.Date != null && model.Reffered != null && model.PractitionerRecommendation != null && model.Practitioner!= null)
             {
                 _context.tblRecommendations.Add(model);
                 _context.SaveChanges();
@@ -83,26 +83,26 @@ namespace eNompilo.v3._0._1.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Update(ReportGBV model)
+        public IActionResult Update(GbvRecommendations model)
         {
             if (ModelState.IsValid)
             {
                 return View(model);
             }
-            _context.tblReportGBV.Update(model);
+            _context.tblRecommendations.Update(model);
             _context.SaveChanges();
             return RedirectToAction("Index");
         }
 
         public IActionResult Cancel(int Id)
         {
-            var obj = _context.tblReportGBV.Find(Id);
+            var obj = _context.tblRecommendations.Find(Id);
             if (obj == null)
             {
                 return NotFound();
             }
 
-            _context.tblReportGBV.Remove(obj);
+            _context.tblRecommendations.Remove(obj);
             _context.SaveChanges(true);
             return RedirectToAction("Index");
         }

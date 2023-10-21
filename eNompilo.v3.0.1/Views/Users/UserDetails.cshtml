@@ -112,6 +112,10 @@
 <div class="margined-page pt-4">
     <div>
         <h2>User Details (@currentUser)</h2>
+        @if (Model.Archived)
+        {
+            <h3 class="text-danger"><center>(Disabled Account)</center></h3>
+        }
         <hr />
         <table class="table table-responsive" style="width: 100%;">
             <tbody>

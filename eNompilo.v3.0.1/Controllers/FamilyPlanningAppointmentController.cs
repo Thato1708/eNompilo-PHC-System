@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using eNompilo.v3._0._1.Models.ViewModels;
 using eNompilo.v3._0._1.Models.Vaccination;
+using eNompilo.v3._0._1.Models.Counselling;
 
 namespace eNompilo.v3._0._1.Controllers
 {
@@ -27,14 +28,19 @@ namespace eNompilo.v3._0._1.Controllers
         {
             if (_signInManager.IsSignedIn(User))
             {
-                if (User.IsInRole(RoleConstants.Patient))
+                if (User.IsInRole(RoleConstants.Patient) || User.IsInRole(RoleConstants.Receptionist))
                 {
                     IEnumerable<FamilyPlanningAppointment> objList = dbContext.tblFamilyPlanningAppointment.Where(va=>va.Archived == false).Include(pr => pr.Practitioner).ThenInclude(u => u.Users).Include(p => p.Patient).ThenInclude(u => u.Users).ToList();
                     return View(objList);
                 }
                 else if (User.IsInRole(RoleConstants.Admin))
                 {
-                    IEnumerable<FamilyPlanningAppointment> objList = dbContext.tblFamilyPlanningAppointment;
+                    IEnumerable<FamilyPlanningAppointment> objList = dbContext.tblFamilyPlanningAppointment.Include(pr => pr.Practitioner).ThenInclude(u => u.Users).Include(p => p.Patient).ThenInclude(u => u.Users);
+                    return View(objList);
+                }
+                else if (User.IsInRole(RoleConstants.Practitioner))
+                {
+                    IEnumerable<FamilyPlanningAppointment> objList = dbContext.tblFamilyPlanningAppointment.Where(va => va.Archived == false).Include(pr => pr.Practitioner).ThenInclude(u => u.Users).Include(p => p.Patient).ThenInclude(u => u.Users).ToList();
                     return View(objList);
                 }
             }
@@ -56,8 +62,17 @@ namespace eNompilo.v3._0._1.Controllers
         public IActionResult Book(FamilyPlanningAppointment model)
         {
             if (model.BookingReasons != null && model.PreferredDate != null && model.PreferredTime != null && model.PatientId != null)
-            {
-                dbContext.tblFamilyPlanningAppointment.Add(model);
+			{
+				FamilyPlanningAppointment fpa = new FamilyPlanningAppointment()
+				{
+					BookingReasons = model.BookingReasons,
+					PreferredDate = model.PreferredDate,
+					PreferredTime = model.PreferredTime,
+					PatientId = model.PatientId,
+					PractitionerId = model.PractitionerId,
+					SessionConfirmed = model.SessionConfirmed,
+				};
+				dbContext.tblFamilyPlanningAppointment.Add(fpa);
                 dbContext.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -93,7 +108,7 @@ namespace eNompilo.v3._0._1.Controllers
 
         public IActionResult Details(int? Id)
         {
-            var obj = dbContext.tblFamilyPlanningAppointment.Find(Id);
+            var obj = dbContext.tblFamilyPlanningAppointment.Where(x => x.Id == Id).Include(x => x.Patient).ThenInclude(x => x.Users).Include(x => x.Practitioner).ThenInclude(x => x.Users).FirstOrDefault();
             if (obj == null)
                 return View("PageNotFound", "Home");
             return View(obj);

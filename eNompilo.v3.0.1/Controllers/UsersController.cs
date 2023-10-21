@@ -34,7 +34,7 @@ namespace eNompilo.v3._0._1.Controllers
 		}
 		public IActionResult Index()
 		{
-			IEnumerable<ApplicationUser> objList = _context.Users.Where(u => u.Archived == true || u.Archived == false);
+			IEnumerable<ApplicationUser> objList = _context.Users; //don't pull false arrchived as we need to confirm active and inactive accounts in the index
 			return View(objList);
 		}
 
@@ -401,7 +401,7 @@ namespace eNompilo.v3._0._1.Controllers
 				user.MiddleName = model.MiddleName;
 				user.LastName = model.LastName;
 				user.Email = model.Email;
-				user.UserRole = model.UserRole;
+				user.UserRole = user.UserRole;
 				user.PhoneNumber = model.PhoneNumber;
 				user.Archived = model.Archived;
 

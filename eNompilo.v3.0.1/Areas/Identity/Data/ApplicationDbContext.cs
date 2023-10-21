@@ -87,5 +87,5 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<SelectDates> SelectDates { get; set; }
     public DbSet<ContraceptiveBooking> ContraceptiveBookings { get; set; }
     public DbSet<Replay> Replay { get; set; }
-    public DbSet<FamilyPlanningMedicalRecord> FamilyPlanningMedicalRecords { get; set; }
+    public DbSet<FamilyPRecord> FamilyPRecords { get; set; }
 }

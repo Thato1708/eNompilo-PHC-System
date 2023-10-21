@@ -13,7 +13,8 @@ using Microsoft.AspNetCore.Identity;
 using eNompilo.v3._0._1.Constants;
 using eNompilo.v3._0._1.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
-
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.Net;
 
 namespace eNompilo.v3._0._1.Controllers
 {
@@ -735,46 +736,121 @@ namespace eNompilo.v3._0._1.Controllers
             }
             else { return View(); }
         }
+        // GET: FamilyPRecord/Details/5
+        public ActionResult RecordDetails(int? id)
+        {
+            if (id == null)
+            {
+                return View("FPRecord");
+            }
+
+            FamilyPRecord familyPRecord = _context.FamilyPRecords.Find(id);
+
+            if (familyPRecord != null)
+            {
+                return View(familyPRecord);
+            }
+            else 
+            {
+                return View("FPRecord");
+            }
+            
+        }
+
+        public ActionResult CreateRecord()
+        {
+            var availableAppointments = _context.tblFamilyPlanningAppointment
+                                             .Where(appointment => !_context.FamilyPRecords.Any(record => record.FamilyPlanningAppointmentId == appointment.Id))
+                                             .ToList();
+
+            // Populate the ViewBag with a MultiSelectList.
+            ViewBag.FamilyPlanningAppointmentId = new MultiSelectList(availableAppointments, "Id", "Id");
 
 
+            return View();
+        }
 
-		public IActionResult CreateFamilyPlanningMedicalRecord(int Id)
-		{
-			
-			var model = new FamilyPlanningMedicalRecord
-			{
-				BookingTypeID = Id ,
-			};
-
-			return View(model);
-		}
-
+        // POST: FamilyPRecord/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult CreateFamilyPlanningMedicalRecord(FamilyPlanningMedicalRecord model)
+        public ActionResult CreateRecord(FamilyPRecord familyPRecord)
         {
             if (ModelState.IsValid)
             {
                 var pts = _context.tblPractitioner.Where(p => p.UserId == _userManager.GetUserId(User)).FirstOrDefault();
-                if (pts != null)
-                {
-                    var ptsid = pts.UserId;
-                    model.DoctorId = ptsid;
-                    model.DateOfVisit = DateTime.Now;
-                    // Add the new Family Planning Medical Record to the database
-                    _context.FamilyPlanningMedicalRecords.Add(model);
-                    _context.SaveChanges();
+                familyPRecord.DoctorId = pts.UserId;
+                familyPRecord.IsDiscontinued = false;
+                familyPRecord.DateOfVisit = DateTime.Now;
+                _context.FamilyPRecords.Add(familyPRecord);
+                _context.SaveChanges();
+                return RedirectToAction("FPRecord"); // Redirect to the appropriate action.
+            }
 
-                    // Redirect to a success page or another action
-                    return RedirectToAction("IndexList");
-                }
-            }
-            else
-            {
-                return RedirectToAction("IndexList");
-            }
-            // If the model is not valid, return to the create view with validation errors
-            return View(model);
+            var availableAppointments = _context.tblFamilyPlanningAppointment
+                                       .Where(appointment => !_context.FamilyPRecords.Any(record => record.FamilyPlanningAppointmentId == appointment.Id))
+                                       .ToList();
+
+            // You can now use 'availableAppointments' to populate your dropdown list.
+            ViewBag.FamilyPlanningAppointmentId = new SelectList(availableAppointments, "Id", "Id");
+
+            return View(familyPRecord);
         }
+
+        // Dispose of the DbContext when it's no longer needed.
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _context.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+        public IActionResult RecordAppointmentDetails(int? Id)
+        {
+            var obj = _context.tblFamilyPlanningAppointment.Find(Id);
+            if (obj == null)
+                return View("PageNotFound", "Home");
+            return View(obj);
+        }
+
+        // GET: FamilyPlanningMedicalRecords
+        public IActionResult FPRecord()
+        {
+            var familyPlanningMedicalRecords = _context.FamilyPRecords.ToList();
+            return View(familyPlanningMedicalRecords);
+        }
+
+        // GET: FamilyPRecord/Edit/5
+        public ActionResult RecordEdited()
+        {
+
+            return View();
+        }
+
+        // POST: FamilyPRecord/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult RecordEdit(int? id)
+        {
+            if (id == null)
+            {
+                return View("FPRecord");
+            }
+
+           var familyPRecord = _context.FamilyPRecords.Find(id);
+            if (familyPRecord != null)
+            {
+                familyPRecord.IsDiscontinued = true;
+                _context.Entry(familyPRecord).State = EntityState.Modified;
+                _context.SaveChanges();
+
+                return RedirectToAction("RecordEdited"); // Redirect to the appropriate action.
+            }
+
+            // You may need to repopulate dropdown lists here, similar to the Create action.
+
+            return View(familyPRecord);
+        }
+
     }
 }

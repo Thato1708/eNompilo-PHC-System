@@ -16,8 +16,16 @@
 
                             <div class="margined-page pt-4" style="margin-left:auto;margin-right:auto;">
                                 <p>
-                                    <a asp-controller="Message" asp-action="Inbox">View Message</a>
+                                    <form asp-controller="Message" asp-action="Inbox" method="get">
+                                        <button type="submit" class="btn btn-primary" style="margin-bottom: 10px;">View Messages</button>
+                                    </form>
+
+                                   
+                                    <form asp-controller="Family" asp-action="fPRecord" method="get">
+                                        <button type="submit" class="btn btn-secondary" style="margin-top: 10px;">View Records</button>
+                                    </form>
                                 </p>
+
 
                                 <table id="dtFamPlanApp" class="table table-striped" style="margin-left:auto;margin-right:auto;">
                                     <thead>
@@ -83,13 +91,14 @@
 
                                                 <td>
                                                     <a asp-action="PatientDetails" asp-route-id="@item.ResponsiblePractitionerId">View Patient Details</a>
-                                                    <a asp-action="CreateFamilyPlanningMedicalRecord" asp-route-id="@item.ResponsiblePractitionerId">Add Record</a>
+                                                    <a asp-action="CreateFamilyPlanningMedicalRecord" asp-route-id="@item.Id">Add Record</a>
+                                                    <a asp-action="Createreacord" metode="post">Add Record</a>
                                                 </td>
                                                 <td>
                                                     <a asp-action="Detailz" asp-route-id="@item.Id">Details</a> |
                                                     @if (item.IsCollected == false )
                                                     {
-                                                        <form asp-action="Collect" asp-route-id="@item.Id" method="post">
+                                                        <form asp-action="Collect" asp-route-id="@item.Id" method="post" onsubmit="return confirm('Areyou sure the correct patient has collected the correct prescription?');">
                                                             <button type="submit" class="btn btn-primary">Collect</button>
                                                         </form>
                                                     }

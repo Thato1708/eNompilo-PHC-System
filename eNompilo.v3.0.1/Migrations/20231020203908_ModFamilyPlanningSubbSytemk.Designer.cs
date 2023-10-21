@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using eNompilo.v3._0._1.Areas.Identity.Data;
 
@@ -11,9 +12,10 @@ using eNompilo.v3._0._1.Areas.Identity.Data;
 namespace eNompilo.v3._0._1.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231020203908_ModFamilyPlanningSubbSytemk")]
+    partial class ModFamilyPlanningSubbSytemk
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -194,10 +196,14 @@ namespace eNompilo.v3._0._1.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<DateTime?>("DateOfVisit")
+                    b.Property<int>("BookingTypeID")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DateOfVisit")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("DoctorId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("DosageAmount")
@@ -206,26 +212,24 @@ namespace eNompilo.v3._0._1.Migrations
                     b.Property<string>("DosageDuration")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("EndDate")
+                    b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("FamilyPlanningAppointmentId")
-                        .HasColumnType("int");
-
-                    b.Property<bool?>("IsDiscontinued")
+                    b.Property<bool>("IsDiscontinued")
                         .HasColumnType("bit");
 
                     b.Property<string>("MedicalNotes")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("StartDate")
+                    b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DoctorId");
+                    b.HasIndex("BookingTypeID");
 
-                    b.HasIndex("FamilyPlanningAppointmentId");
+                    b.HasIndex("DoctorId");
 
                     b.ToTable("FamilyPRecord");
                 });
@@ -1620,19 +1624,21 @@ namespace eNompilo.v3._0._1.Migrations
 
             modelBuilder.Entity("eNompilo.v3._0._1.Models.Family_Planning.FamilyPRecord", b =>
                 {
-                    b.HasOne("eNompilo.v3._0._1.Models.SystemUsers.ApplicationUser", "Doctor")
-                        .WithMany()
-                        .HasForeignKey("DoctorId");
-
                     b.HasOne("eNompilo.v3._0._1.Models.Family_Planning.FamilyPlanningAppointment", "FamilyPlanningAppointment")
                         .WithMany()
-                        .HasForeignKey("FamilyPlanningAppointmentId")
+                        .HasForeignKey("BookingTypeID")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("Doctor");
+                    b.HasOne("eNompilo.v3._0._1.Models.SystemUsers.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("DoctorId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("FamilyPlanningAppointment");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("eNompilo.v3._0._1.Models.GBV.ReportGBV", b =>

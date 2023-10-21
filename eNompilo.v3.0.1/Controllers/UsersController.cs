@@ -554,6 +554,78 @@ namespace eNompilo.v3._0._1.Controllers
 			return NotFound();
 ;
 		}
+
+		//Edit Patient Details HERE!!!!
+		public IActionResult EditUserProfile(int? Id)
+		{
+			if(_signInManager.IsSignedIn(User) && User.IsInRole(RoleConstants.Patient))
+			{
+				var patient = _context.tblPatient.Where(u => u.Id == Id).FirstOrDefault();
+				if (patient == null)
+					return NotFound();
+				var generalApp = _context.tblGeneralAppointment.Where(ga=>ga.PatientId == patient.Id && ga.SessionConfirmed == true).Include(p=>p.Patient).Include(pr=>pr.Practitioner).ThenInclude(u=>u.Users).OrderBy(ga=>ga.PreferredDate).OrderBy(ga=>ga.PreferredTime).ToList();
+				var counsellinglApp = _context.tblCounsellingAppointment.Where(ga=>ga.PatientId == patient.Id && ga.SessionConfirmed == true).Include(p=>p.Patient).Include(pr=>pr.Practitioner).ThenInclude(u=>u.Users).OrderBy(ga=>ga.PreferredDate).OrderBy(ga=>ga.PreferredTime).ToList();
+				var fPApp = _context.tblFamilyPlanningAppointment.Where(ga=>ga.PatientId == patient.Id && ga.SessionConfirmed == true).Include(p=>p.Patient).Include(pr=>pr.Practitioner).ThenInclude(u=>u.Users).OrderBy(ga=>ga.PreferredDate).OrderBy(ga=>ga.PreferredTime).ToList();
+				var vaxApp = _context.tblVaccinationAppointment.Where(ga=>ga.PatientId == patient.Id && ga.SessionConfirmed == true).Include(p=>p.Patient).Include(pr=>pr.Practitioner).ThenInclude(u=>u.Users).OrderBy(ga=>ga.PreferredDate).OrderBy(ga=>ga.PreferredTime).ToList();
+				var model = new UserProfileViewModel
+				{
+					AppUserId = patient.UserId,
+					PatientId = patient.Id,
+					GeneralAppointment = generalApp,
+					CounsellingAppointment = counsellinglApp,
+					FPAppointment = fPApp,
+					VaccinationAppointment = vaxApp,
+				};
+
+				return View(model);
+
+            }
+			else if(_signInManager.IsSignedIn(User) && User.IsInRole(RoleConstants.Admin))
+			{
+				var admin = _context.tblAdmin.Where(u => u.Id == Id).FirstOrDefault();
+                if (admin == null)
+                    return NotFound();
+
+                var model = new UserProfileViewModel
+                {
+					AppUserId = admin.UserId,
+                    AdminId = admin.Id
+                };
+
+				return View(model);
+            }
+			else if(_signInManager.IsSignedIn(User) && User.IsInRole(RoleConstants.Practitioner))
+			{
+				var practitioner = _context.tblPractitioner.Where(u => u.Id == Id).FirstOrDefault();
+                if (practitioner == null)
+                    return NotFound();
+
+                var model = new UserProfileViewModel
+                {
+					AppUserId = practitioner.UserId,
+                    PractitionerId = practitioner.Id
+                };
+
+				return View(model);
+            }
+			else if(_signInManager.IsSignedIn(User) && User.IsInRole(RoleConstants.Receptionist))
+			{
+				var receptionist = _context.tblReceptionist.Where(u => u.Id == Id).FirstOrDefault();
+                if (receptionist == null)
+                    return NotFound();
+
+                var model = new UserProfileViewModel
+                {
+					AppUserId = receptionist.UserId,
+                    ReceptionistId = receptionist.Id
+                };
+
+				return View(model);
+            }
+
+			return NotFound();
+;
+		}
 	}
 }
 /*

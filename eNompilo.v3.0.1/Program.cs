@@ -50,10 +50,6 @@ catch (Exception ex)
     logger.LogError(ex, "An error occured seeding the DB.");
 }
 
-//builder.Services.ConfigureApplicationCookie(options =>
-//{
-//    options.LoginPath = "~/Login/AppUser";
-//});
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

@@ -13,6 +13,7 @@
 @{
     ViewData["Title"] = "PendingAppointments";
     Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+    var currentTime = TimeOnly.FromDateTime(DateTime.Now);
 }
 
 <h1>Pending Appointments</h1>
@@ -49,17 +50,17 @@
                     @Html.DisplayFor(modelItem => item.PatientIssues)
                 </td>
                 <td>
-                    @if (item.PreferredDate == DateTime.Now.Date)
+                    @if ((item.PreferredDate == DateTime.Now.Date && TimeOnly.FromDateTime(Convert.ToDateTime(item.PreferredTime)) == currentTime) || (item.PreferredDate == DateTime.Now.Date && TimeOnly.FromDateTime(Convert.ToDateTime(item.PreferredTime)) > currentTime))
                     {
-                        @Html.DisplayFor(modelItem => item.PreferredDate) <span class="text-warning">(Due Today!)</span>
+                        @Html.DisplayFor(modelItem => item.PreferredDate) <span class="text-warning"><strong>(Due Today!)</strong></span>
                     }
-                    else if (item.PreferredDate < DateTime.Now.Date)
+                    else if (item.PreferredDate < DateTime.Now.Date || (item.PreferredDate == DateTime.Now.Date && TimeOnly.FromDateTime(Convert.ToDateTime(item.PreferredTime)) < currentTime))
                     {
-                        @Html.DisplayFor(modelItem => item.PreferredDate) <span class="text-danger">(Past Due!)</span>
+                        @Html.DisplayFor(modelItem => item.PreferredDate) <span class="text-danger"><strong>(Passed Appointment!)</strong></span>
                     }
                     else
                     {
-                        <span>@Convert.ToDateTime(item.PreferredDate).ToString("dd-MM-yyyy")</span>
+                        @Html.DisplayFor(modelItem => item.PreferredDate) <span class="text-success"><strong>(Upcoming!)</strong></span>
                     }
                 </td>
                 <td>

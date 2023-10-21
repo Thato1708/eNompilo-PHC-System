@@ -27,6 +27,9 @@ namespace eNompilo.v3._0._1.Controllers
 		{
 
 			var patientId = 0; if (User.IsInRole(RoleConstants.Patient)) { patientId = dbContext.tblPatient.Where(p => p.UserId == _userManager.GetUserAsync(User).Result.Id).FirstOrDefault().Id; }
+
+
+
             IEnumerable<SMPAppointment> objList = dbContext.tblMedicalProcedureAppointment.Include(pr => pr.Practitioner).ThenInclude(u => u.Users).Include(p => p.Patient).ThenInclude(u => u.Users);
             //if (_signInManager.IsSignedIn(User))
             //{

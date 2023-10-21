@@ -1,0 +1,77 @@
+﻿@using Microsoft.AspNetCore.Identity;
+@using eNompilo.v3._0._1.Models.SystemUsers;
+@using eNompilo.v3._0._1.Constants;
+@* @model eNompilo.v3._0._1.Models.SystemUsers.ApplicationUser *@
+@model eNompilo.v3._0._1.Models.ViewModels.LoginViewModel
+@inject eNompilo.v3._0._1.Areas.Identity.Data.ApplicationDbContext _context
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@{
+	ViewData["Title"] = "User Account Disabled";
+	Layout = "~/Views/Shared/_AuthenticationLayout.cshtml";
+
+}
+
+<a asp-action="Index" asp-controller="Home" style="display:flex;align-items: center; text-decoration:none; color: #1e36cc; font-weight: 500;"><i class="bi bi-arrow-left-square-fill" style="color: #1e36cc; font-size:25px;"></i> &nbsp; <span>Back to Home</span></a>
+<div class="margined-page pt-4" id="Landing">
+	<div>
+		<h2 class="text-danger">Disabled User Account</h2>
+		<hr />
+		<table class="table table-responsive" style="width: 100%;">
+			<tbody>
+				<tr>
+					<td>
+						<dl class="row" style="margin-left:auto;margin-right:auto;">
+							<dt class="col-sm-2 mb-4">
+								Username:
+							</dt>
+							<dd class="col-sm-10">
+								@Html.DisplayFor(model => model.Users.IdNumber)
+							</dd>
+
+							<dt class="col-sm-2 mb-4">
+								Full Name:
+							</dt>
+							<dd class="col-sm-10">
+								@Html.DisplayFor(model => model.Users.Titles). @Html.DisplayFor(model => model.Users.FirstName) @Html.DisplayFor(model => model.Users.LastName)
+							</dd>
+
+							<dt class="col-sm-2 mb-4">
+								@Html.DisplayNameFor(model => model.Users.PhoneNumber):
+							</dt>
+							<dd class="col-sm-10">
+								@Html.DisplayFor(model => model.Users.PhoneNumber)
+							</dd>
+
+							<dt class="col-sm-2 mb-4">
+								@Html.DisplayNameFor(model => model.Users.Email):
+							</dt>
+							<dd class="col-sm-10">
+								@Html.DisplayFor(model => model.Users.Email)
+							</dd>
+
+							<dt class="col-sm-2 mb-4">
+								@Html.DisplayNameFor(model => model.Users.CreatedOn):
+							</dt>
+							<dd class="col-sm-10">
+								@Html.DisplayFor(model => model.Users.CreatedOn)
+							</dd>
+						</dl>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<p class="text-danger">
+			<strong>
+				The user account for the user with the details above has been blocked or disabled.<br />
+				If you wish to reanable your account, please contact your system admin immediately.<br />
+				For more information on how to contact them, see the contact section on our home page or visit the eNompilo clinic!
+			</strong>
+		</p>
+	</div>
+	@* <div>
+		<a asp-action="EditUser" asp-route-id="@Model?.Id">Edit</a> |
+		<a asp-action="Index">Back to List</a>
+	</div> *@
+</div>

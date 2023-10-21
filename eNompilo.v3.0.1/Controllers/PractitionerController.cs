@@ -45,11 +45,12 @@ namespace eNompiloCounselling.Controllers
 
         public IActionResult PendingAppointments()
         {
+            int practId = dbContext.tblPractitioner.Where(p=>p.UserId == _userManager.GetUserAsync(User).Result.Id).FirstOrDefault().Id;
             var model = new AppointmentsViewModel();
-            model.GenAppointmentList = dbContext.tblGeneralAppointment.Where(ga => ga.Archived == false && ga.SessionConfirmed == false).Include(p=>p.Patient).Include(pr=>pr.Practitioner).OrderBy(ga => ga.PreferredDate).OrderBy(ga => ga.PreferredTime).ToList();
-            model.CounsAppointmentList = dbContext.tblCounsellingAppointment.Where(ga => ga.Archived == false && ga.SessionConfirmed == false).Include(p => p.Patient).Include(pr=>pr.Practitioner).OrderBy(ga => ga.PreferredDate).OrderBy(ga => ga.PreferredTime).ToList();
-            model.FPAppointmentList = dbContext.tblFamilyPlanningAppointment.Where(ga => ga.Archived == false && ga.SessionConfirmed == false).Include(p => p.Patient).Include(pr=>pr.Practitioner).OrderBy(ga => ga.PreferredDate).OrderBy(ga => ga.PreferredTime).ToList();
-            model.VaxAppointmentList = dbContext.tblVaccinationAppointment.Where(ga => ga.Archived == false && ga.SessionConfirmed == false).Include(p => p.Patient).Include(pr=>pr.Practitioner).OrderBy(ga => ga.PreferredDate).OrderBy(ga => ga.PreferredTime).ToList();
+            model.GenAppointmentList = dbContext.tblGeneralAppointment.Where(ga => (ga.Archived == false && ga.SessionConfirmed == false) && (ga.PractitionerId == practId || ga.PractitionerId == null)).Include(p=>p.Patient).Include(pr=>pr.Practitioner).OrderBy(ga => ga.PreferredDate).OrderBy(ga => ga.PreferredTime).ToList();
+            model.CounsAppointmentList = dbContext.tblCounsellingAppointment.Where(ga => (ga.Archived == false && ga.SessionConfirmed == false) && (ga.PractitionerId == practId || ga.PractitionerId == null)).Include(p => p.Patient).Include(pr=>pr.Practitioner).OrderBy(ga => ga.PreferredDate).OrderBy(ga => ga.PreferredTime).ToList();
+            model.FPAppointmentList = dbContext.tblFamilyPlanningAppointment.Where(ga => (ga.Archived == false && ga.SessionConfirmed == false) && (ga.PractitionerId == practId || ga.PractitionerId == null)).Include(p => p.Patient).Include(pr=>pr.Practitioner).OrderBy(ga => ga.PreferredDate).OrderBy(ga => ga.PreferredTime).ToList();
+            model.VaxAppointmentList = dbContext.tblVaccinationAppointment.Where(ga => (ga.Archived == false && ga.SessionConfirmed == false) && (ga.PractitionerId == practId || ga.PractitionerId == null)).Include(p => p.Patient).Include(pr=>pr.Practitioner).OrderBy(ga => ga.PreferredDate).OrderBy(ga => ga.PreferredTime).ToList();
             return View(model);
         }
 

@@ -3,202 +3,162 @@
 @using eNompilo.v3._0._1.Constants;
 @using eNompilo.v3._0._1.Models.SystemUsers;
 @using System.Threading.Tasks;
-@inject SignInManager<ApplicationUser> SignInManager;
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
 @inject eNompilo.v3._0._1.Areas.Identity.Data.ApplicationDbContext _context
 
 @model IEnumerable<eNompilo.v3._0._1.Models.SystemUsers.Practitioner>
 
 @{
-	ViewData["Title"] = "Index";
-	Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
 
+    string profilePicture = "";
 }
 
-<div id="example">
-	<h1>Index</h1>
+@if (SignInManager.IsSignedIn(User) && (User.IsInRole(RoleConstants.Admin) || User.IsInRole(RoleConstants.Receptionist)))
+{
+    <div id="example">
+        <h1>Index</h1>
 
-	@* @if (SignInManager.IsSignedIn(User))
-	{
-		@if (User.IsInRole(RoleConstants.Receptionist) || User.IsInRole(RoleConstants.Admin))
-		{
-			<p>
-				<a asp-controller="Users" asp-action="CreateUser">Create New</a>
-			</p>
-		}
+        <table id="dtPractitioner" class="table table-striped" style="margin-left:auto;margin-right:auto;">
+            <thead>
+                <tr>
+                    <th>Full Staff Table</th>
+                </tr>
+                <tr>
+                    <th>
+                        Full Name
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.PractitionerType)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CounsellorType)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Users.Email)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Users.PhoneNumber)
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model@* .Where(x => x.PractitionerType == PractitionerType.Counsellor) *@
+               )
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Users.FirstName) @Html.DisplayFor(modelItem => item.Users.MiddleName) @Html.DisplayFor(modelItem => item.Users.LastName) (@Html.DisplayFor(modelItem => item.Users.Titles).)
+                        </td>
+                        <td>
+                            @item.PractitionerType
+                        </td>
+                        <td>
+                            @if (item.PractitionerType != PractitionerType.Counsellor)
+                            {
+                                <span><em>Not Counsellor</em></span>
+                            }
+                            else
+                            {
+                                try
+                                {
+                                    @item.CounsellorType.GetDisplayName()
+                                }
+                                catch (NullReferenceException)
+                                {
+                                    <span></span>
+                                }
+                            }
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Users.Email)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Users.PhoneNumber)
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
 
-	} *@
-	@*     <table id="dtPractitioner" class="table table-striped" style="margin-left:auto;margin-right:auto;">
-	<thead>
-	<tr>
-	<th>
-	Full Name
-	</th>
-	<th>
-	@Html.DisplayNameFor(model => model.PractitionerType)
-	</th>
-	<th>
-	@Html.DisplayNameFor(model => model.CounsellorType)
-	</th>
-	<th></th>
-	</tr>
-	</thead>
-	<tbody>
-	@foreach (var item in Model.Where(x=>x.PractitionerType == PractitionerType.Counsellor))
-	{
-
-	<tr>
-	<td>
-	@Html.DisplayFor(modelItem => item.Users.Titles) @Html.DisplayFor(modelItem => item.Users.FirstName) @Html.DisplayFor(modelItem => item.Users.MiddleName) @Html.DisplayFor(modelItem => item.Users.LastName)
-	</td>
-	<td>
-	@Html.DisplayFor(modelItem => item.PractitionerType)
-	</td>
-	<td>
-	@Html.DisplayFor(modelItem => item.CounsellorType)
-	</td>
-	<td>
-	<a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-	<a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-	<a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-	</td>
-	</tr>
-	}
-	</tbody>
-	</table> *@
-
-
-
-	<table id="dtPractitioner" class="table table-striped" style="margin-left:auto;margin-right:auto;">
-		<thead>
-			<tr>
-				<th>Full Staff Table</th>
-			</tr>
-			<tr>
-				<th>
-					Full Name
-				</th>
-				<th>
-					@Html.DisplayNameFor(model => model.PractitionerType)
-				</th>
-				<th>
-					@Html.DisplayNameFor(model => model.CounsellorType)
-				</th>
-				<th>
-					@Html.DisplayNameFor(model => model.Users.Email)
-				</th>
-				<th>
-					@Html.DisplayNameFor(model => model.Users.PhoneNumber)
-				</th>
-			</tr>
-		</thead>
-		<tbody>
-			@foreach (var item in Model@* .Where(x => x.PractitionerType == PractitionerType.Counsellor) *@)
-			{
-				<tr>
-					<td>
-						@Html.DisplayFor(modelItem => item.Users.FirstName) @Html.DisplayFor(modelItem => item.Users.MiddleName) @Html.DisplayFor(modelItem => item.Users.LastName) (@Html.DisplayFor(modelItem => item.Users.Titles).)
-					</td>
-					<td>
-						@item.PractitionerType
-					</td>
-					<td>
-						@if (item.PractitionerType != PractitionerType.Counsellor)
-						{
-							<span><em>Not Counsellor</em></span>
-						}
-						else
-						{
-							try
-							{
-								@item.CounsellorType.GetDisplayName();
-							}
-							catch (NullReferenceException)
-							{
-								<span></span>
-							}
-						}
-					</td>
-					<td>
-						@Html.DisplayFor(modelItem => item.Users.Email)
-					</td>
-					<td>
-						@Html.DisplayFor(modelItem => item.Users.PhoneNumber)
-					</td>
-				</tr>
-			}
-			@*NURSE DETAILS*@
-			@* <tr>
-			<td colspan="3">
-			<table class="table" width="100%">
-			<thead>
-			<tr><th><h5>Nurse Details</h5></th></tr>
-			<tr>
-			<th colspan="2">
-			Full Name
-			</th>
-			<th>
-			@Html.DisplayNameFor(model => model.Users.Email)
-			</th>
-			<th>
-			@Html.DisplayNameFor(model => model.Users.PhoneNumber)
-			</th>
-			</tr>
-			</thead>
-			@foreach (var item in Model.Where(x => x.PractitionerType == PractitionerType.Nurse))
-			{
-			<tr>
-			<td colspan="2">
-			@Html.DisplayFor(modelItem => item.Users.FirstName) @Html.DisplayFor(modelItem => item.Users.MiddleName) @Html.DisplayFor(modelItem => item.Users.LastName) (@Html.DisplayFor(modelItem => item.Users.Titles))
-			</td>
-			<td>
-			@Html.DisplayFor(modelItem => item.Users.Email)
-			</td>
-			<td>
-			@Html.DisplayFor(modelItem => item.Users.PhoneNumber)
-			</td>
-			</tr>
-			}
-			</table>
-			</td>
-			</tr>
-			@*DOCTOR DETAILS*@
-			@*<tr>
-			<td colspan="3">
-			<table class="table" width="100%">
-			<thead>
-			<tr><th><h5>Doctor Details</h5></th></tr>
-			<tr>
-			<th colspan="2">
-			Full Name
-			</th>
-			<th>
-			@Html.DisplayNameFor(model => model.Users.Email)
-			</th>
-			<th>
-			@Html.DisplayNameFor(model => model.Users.PhoneNumber)
-			</th>
-			</tr>
-			</thead>
-			@foreach (var item in Model.Where(x => x.PractitionerType == PractitionerType.Doctor))
-			{
-			<tr>
-			<td colspan="2">
-			@Html.DisplayFor(modelItem => item.Users.FirstName) @Html.DisplayFor(modelItem => item.Users.MiddleName) @Html.DisplayFor(modelItem => item.Users.LastName) (@Html.DisplayFor(modelItem => item.Users.Titles))
-			</td>
-			<td>
-			@Html.DisplayFor(modelItem => item.Users.Email)
-			</td>
-			<td>
-			@Html.DisplayFor(modelItem => item.Users.PhoneNumber)
-			</td>
-			</tr>
-			}
-			</table>
-			</td>
-			</tr> *@
-		</tbody>
-	</table>
-
-</div>
-
-
+    </div>
+}
+else if (SignInManager.IsSignedIn(User))
+{
+    @if (User.IsInRole(RoleConstants.Patient))
+    {
+        <h1>Meet Our Medical Staff</h1>
+    }
+    else
+    {
+        <h1>Meet Your Colleagues</h1>
+    }
+    <ul class="list-group list-group-flush">
+        @foreach (var item in Model)
+        {
+            try
+            {
+                @if (item.ProfilePicture != null)
+                {
+                    profilePicture = item.ProfilePicture;
+                }
+                else
+                {
+                    profilePicture = "DefaultProfilePicture.png";
+                }
+            }
+            catch (NullReferenceException)
+            {
+                profilePicture = "DefaultProfilePicture.png";
+            }
+            <li class="list-group-item" style="background: #e4e7fb !important;">
+                <div class="d-flex flex-row">
+                    <div class="p-2 d-flex justify-content-center align-items-center"><img src="@("~/img/uploads/"+profilePicture)" asp-append-version="true" style="width:275px;" /></div>
+                    <div class="p-2 ps-5 d-flex flex-column justify-content-center fs-6">
+                        <dl class="row">
+                            <dt class="col-sm-10 fs-5">
+                                <strong>Position:</strong>
+                            </dt>
+                            <dd class="col-sm-10 fs-5">
+                                @if (item.PractitionerType != PractitionerType.Counsellor)
+                                {
+                                    <strong>@item.PractitionerType.GetDisplayName()</strong>
+                                }
+                                else
+                                {
+                                    <strong>@item.PractitionerType.GetDisplayName() (@item.CounsellorType.GetDisplayName())</strong>
+                                }
+                            </dd>
+                        </dl>
+                        <dl class="row">
+                            <dt class="col-sm-10">
+                                Name:
+                            </dt>
+                            <dd class="col-sm-10">
+                                @_context.Users.Where(x=>x.Id == item.UserId).FirstOrDefault().Titles. @_context.Users.Where(x=>x.Id == item.UserId).FirstOrDefault().FirstName @_context.Users.Where(x=>x.Id == item.UserId).FirstOrDefault().MiddleName @_context.Users.Where(x=>x.Id == item.UserId).FirstOrDefault().LastName
+                            </dd>
+                        </dl>
+                        <dl class="row">
+                            <dt class="col-sm-10">
+                                Phone Number:
+                            </dt>
+                            <dd class="col-sm-10">
+                                @_context.Users.Where(x=>x.Id == item.UserId).FirstOrDefault().PhoneNumber
+                            </dd>
+                        </dl>
+                        <dl class="row">
+                            <dt class="col-sm-10">
+                                Email:
+                            </dt>
+                            <dd class="col-sm-10">
+                                @_context.Users.Where(x=>x.Id == item.UserId).FirstOrDefault().Email
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+            </li>
+        }
+    </ul>
+}

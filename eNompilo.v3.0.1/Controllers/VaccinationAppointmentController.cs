@@ -25,17 +25,22 @@ namespace eNompilo.v3._0._1Controllers
 		{
             if (_signInManager.IsSignedIn(User))
             {
-                if (User.IsInRole(RoleConstants.Patient))
+                if (User.IsInRole(RoleConstants.Patient) || User.IsInRole(RoleConstants.Receptionist))
                 {
                     IEnumerable<VaccinationAppointment> objList = dbContext.tblVaccinationAppointment.Where(va=>va.Archived == false).Include(pr => pr.Practitioner).ThenInclude(u => u.Users).Include(p => p.Patient).ThenInclude(u => u.Users).ToList();
 			        return View(objList);
                 }
                 else if (User.IsInRole(RoleConstants.Admin))
                 {
-                    IEnumerable<VaccinationAppointment> objList = dbContext.tblVaccinationAppointment;
+                    IEnumerable<VaccinationAppointment> objList = dbContext.tblVaccinationAppointment.Include(pr => pr.Practitioner).ThenInclude(u => u.Users).Include(p => p.Patient).ThenInclude(u => u.Users);
 			        return View(objList);
-                }
-            }
+				}
+				else if (User.IsInRole(RoleConstants.Practitioner))
+				{
+					IEnumerable<VaccinationAppointment> objList = dbContext.tblVaccinationAppointment.Where(va => va.Archived == false).Include(pr => pr.Practitioner).ThenInclude(u => u.Users).Include(p => p.Patient).ThenInclude(u => u.Users).ToList();
+					return View(objList);
+				}
+			}
             return NotFound();
         }
 
@@ -54,8 +59,20 @@ namespace eNompilo.v3._0._1Controllers
         public IActionResult Book(VaccinationAppointment model)
         {
             if(model.PreviousVaccine != null && model.VaccinableDiseases != null && model.PreferredDate != null && model.PreferredTime != null && model.PatientId != null)
-            {
-                dbContext.tblVaccinationAppointment.Add(model);
+			{
+				VaccinationAppointment va = new VaccinationAppointment()
+				{
+					BeenVaccinated = model.BeenVaccinated,
+					PreviousVaccine = model.PreviousVaccine,
+					IsPregnant = model.IsPregnant,
+					VaccinableDiseases = model.VaccinableDiseases,
+					PreferredDate = model.PreferredDate,
+					PreferredTime = model.PreferredTime,
+					PatientId = model.PatientId,
+					PractitionerId = model.PractitionerId,
+					SessionConfirmed = model.SessionConfirmed,
+				};
+				dbContext.tblVaccinationAppointment.Add(va);
                 dbContext.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -91,7 +108,7 @@ namespace eNompilo.v3._0._1Controllers
 
         public IActionResult Details(int? Id)
         {
-            var obj = dbContext.tblVaccinationAppointment.Find(Id);
+            var obj = dbContext.tblVaccinationAppointment.Where(x => x.Id == Id).Include(x => x.Patient).ThenInclude(x => x.Users).Include(x => x.Practitioner).ThenInclude(x => x.Users).FirstOrDefault();
             if (obj == null)
                 return View("PageNotFound", "Home");
             return View(obj);

@@ -30,16 +30,21 @@ namespace eNompiloCounselling.Controllers
         {
             if (_signInManager.IsSignedIn(User))
             {
-                if (User.IsInRole(RoleConstants.Patient))
+                if (User.IsInRole(RoleConstants.Patient) || User.IsInRole(RoleConstants.Receptionist))
                 {
-                    IEnumerable<CounsellingAppointment> objList = dbContext.tblCounsellingAppointment.Where(va => va.Archived == false).Include(pr => pr.Practitioner).ThenInclude(u => u.Users).Include(p => p.Patient).ThenInclude(u => u.Users).ToList(); ;
+                    IEnumerable<CounsellingAppointment> objList = dbContext.tblCounsellingAppointment.Where(va => va.Archived == false).Include(pr => pr.Practitioner).ThenInclude(u => u.Users).Include(p => p.Patient).ThenInclude(u => u.Users).ToList();
                     return View(objList);
                 }
-            else if (User.IsInRole(RoleConstants.Admin))
-            {
-                IEnumerable<CounsellingAppointment> objList = dbContext.tblCounsellingAppointment;
-                return View(objList);
-            }
+                else if (User.IsInRole(RoleConstants.Admin))
+                {
+                    IEnumerable<CounsellingAppointment> objList = dbContext.tblCounsellingAppointment.Include(pr => pr.Practitioner).ThenInclude(u => u.Users).Include(p => p.Patient).ThenInclude(u => u.Users);
+                    return View(objList);
+                }
+                else if (User.IsInRole(RoleConstants.Practitioner))
+                {
+                    IEnumerable<CounsellingAppointment> objList = dbContext.tblCounsellingAppointment.Where(va => va.Archived == false).Include(pr => pr.Practitioner).ThenInclude(u => u.Users).Include(p => p.Patient).ThenInclude(u => u.Users).ToList();
+                    return View(objList);
+                }
             }
       
             return NotFound();
@@ -61,8 +66,19 @@ namespace eNompiloCounselling.Controllers
         public IActionResult Book(CounsellingAppointment model)
         {
             if(model.BookingReasons != null && model.ChallengesSpecific != null && model.SessionPreference != null && model.PreferredDate != null && model.PreferredTime != null && model.PatientId != null)
-            {
-                dbContext.tblCounsellingAppointment.Add(model);
+			{
+				CounsellingAppointment ca = new CounsellingAppointment()
+				{
+					SessionPreference = model.SessionPreference,
+					BookingReasons = model.BookingReasons,
+					ChallengesSpecific = model.ChallengesSpecific,
+					PreferredDate = model.PreferredDate,
+					PreferredTime = model.PreferredTime,
+					PatientId = model.PatientId,
+					PractitionerId = model.PractitionerId,
+					SessionConfirmed = model.SessionConfirmed,
+				};
+				dbContext.tblCounsellingAppointment.Add(ca);
                 dbContext.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -123,7 +139,7 @@ namespace eNompiloCounselling.Controllers
 
         public IActionResult Details(int? Id)
         {
-            var obj = dbContext.tblCounsellingAppointment.Find(Id);
+            var obj = dbContext.tblCounsellingAppointment.Where(x=>x.Id == Id).Include(x=>x.Patient).ThenInclude(x=>x.Users).Include(x=>x.Practitioner).ThenInclude(x=>x.Users).FirstOrDefault();
             if (obj == null)
                 return View("PageNotFound", "Home");
             return View(obj);

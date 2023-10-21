@@ -8,7 +8,7 @@
 @inject eNompilo.v3._0._1.Areas.Identity.Data.ApplicationDbContext _context
 
 @{
-	ViewData["Title"] = "ConfirmGeneralAppointments";
+	ViewData["Title"] = "Confirm General Appointments";
 	Layout = "~/Views/Shared/_DashboardLayout.cshtml";
 }
 
@@ -18,11 +18,22 @@
 	<div class="col-md-4">
 		<form asp-action="ConfirmGeneralAppointments" method="post">
 			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
-			<div class="form-group" hidden>
-				<label asp-for="PractitionerId" class="control-label"></label>
-				<input asp-for="PractitionerId" value="@_context.tblPractitioner.Where(p=>p.UserId == UserManager.GetUserAsync(User).Result.Id).FirstOrDefault().Id" class="form-control" />
-				<span asp-validation-for="PractitionerId" class="text-danger"></span>
-			</div>
+			@if(Model.PractitionerId == null){
+				<div class="form-group" hidden>
+					<label asp-for="PractitionerId" class="control-label"></label>
+					<input asp-for="PractitionerId" value="@_context.tblPractitioner.Where(p=>p.UserId == UserManager.GetUserAsync(User).Result.Id).FirstOrDefault().Id" class="form-control" />
+					<span asp-validation-for="PractitionerId" class="text-danger"></span>
+				</div>
+			}
+			else
+			{
+				<div class="form-group" hidden>
+					<label asp-for="PractitionerId" class="control-label"></label>
+					<input asp-for="PractitionerId" value="@Model.PractitionerId" class="form-control" />
+					<span asp-validation-for="PractitionerId" class="text-danger"></span>
+				</div>
+			}
+			
 			<div class="form-group" hidden>
 				<label asp-for="PatientId" class="control-label"></label>
 				<input asp-for="PatientId" class="form-control" />
@@ -37,8 +48,17 @@
 				<dd class="col-sm-10">@_context.tblGeneralAppointment.Where(a=>a.Id==Model.GenAppointmentId).FirstOrDefault().Patient.Titles. @_context.tblGeneralAppointment.Where(a=>a.Id==Model.GenAppointmentId).FirstOrDefault().Patient.FirstName @_context.tblGeneralAppointment.Where(a=>a.Id==Model.GenAppointmentId).FirstOrDefault().Patient.MiddleName @_context.tblGeneralAppointment.Where(a=>a.Id==Model.GenAppointmentId).FirstOrDefault().Patient.LastName</dd>
 
 
-				<dt class="col-sm-2 mb-4"> Practitioner</dt>
-				<dd class="col-sm-10">@_context.tblPractitioner.Where(p=>p.UserId == UserManager.GetUserAsync(User).Result.Id).FirstOrDefault().Users.Titles. @_context.tblPractitioner.Where(p=>p.UserId == UserManager.GetUserAsync(User).Result.Id).FirstOrDefault().Users.FirstName @_context.tblPractitioner.Where(p=>p.UserId == UserManager.GetUserAsync(User).Result.Id).FirstOrDefault().Users.MiddleName @_context.tblPractitioner.Where(p=>p.UserId == UserManager.GetUserAsync(User).Result.Id).FirstOrDefault().Users.LastName</dd>
+				@if (Model.PractitionerId == null)
+				{
+					<dt class="col-sm-2 mb-4"> Practitioner</dt>
+					<dd class="col-sm-10">@_context.tblPractitioner.Where(p=>p.UserId == UserManager.GetUserAsync(User).Result.Id).FirstOrDefault().Users.Titles. @_context.tblPractitioner.Where(p=>p.UserId == UserManager.GetUserAsync(User).Result.Id).FirstOrDefault().Users.FirstName @_context.tblPractitioner.Where(p=>p.UserId == UserManager.GetUserAsync(User).Result.Id).FirstOrDefault().Users.MiddleName @_context.tblPractitioner.Where(p=>p.UserId == UserManager.GetUserAsync(User).Result.Id).FirstOrDefault().Users.LastName</dd>
+				}
+				else
+				{
+					<dt class="col-sm-2 mb-4"> Practitioner</dt>
+					<dd class="col-sm-10">@_context.tblPractitioner.Where(p=>p.Id == Model.PractitionerId).FirstOrDefault().Users.Titles. @_context.tblPractitioner.Where(p=>p.Id == Model.PractitionerId).FirstOrDefault().Users.FirstName @_context.tblPractitioner.Where(p=>p.Id == Model.PractitionerId).FirstOrDefault().Users.MiddleName @_context.tblPractitioner.Where(p=>p.Id == Model.PractitionerId).FirstOrDefault().Users.LastName</dd>
+				}
+
 
 				@*<div class="form-group">
 				<label asp-for="CounsAppointmentId" class="control-label"></label>

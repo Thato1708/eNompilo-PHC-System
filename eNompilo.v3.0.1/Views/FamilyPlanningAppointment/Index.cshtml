@@ -81,7 +81,7 @@
             </table>
         </div>
     }
-    else if ((User.IsInRole(RoleConstants.Practitioner) || User.IsInRole(RoleConstants.Receptionist)) && (_context.tblPractitioner.Where(p => p.UserId == user.Id).FirstOrDefault().PractitionerType == PractitionerType.Doctor || _context.tblPractitioner.Where(p => p.UserId == user.Id).FirstOrDefault().PractitionerType == PractitionerType.Nurse))
+    else if (User.IsInRole(RoleConstants.Receptionist) || (_context.tblPractitioner.Where(p => p.UserId == user.Id).FirstOrDefault().PractitionerType == PractitionerType.Doctor || _context.tblPractitioner.Where(p => p.UserId == user.Id).FirstOrDefault().PractitionerType == PractitionerType.Nurse))
     {
         <div class="margined-page pt-4" style="margin-left:auto;margin-right:auto;">
 
@@ -112,9 +112,6 @@
                         <tr>
                             <td>
                                 @Html.DisplayFor(modelItem => item.BookingReasons)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.PreferredDate)
                             </td>
                             <td>
                                 @Convert.ToDateTime(item.PreferredDate).ToString("dd/MMM/yyyy")

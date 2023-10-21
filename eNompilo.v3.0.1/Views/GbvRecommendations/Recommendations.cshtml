@@ -53,11 +53,29 @@ div class="margined-page pt-4">
                 <label asp-for="PractitionerRecommendation" class="control-label"></label>
                 <textarea asp-for="PractitionerRecommendation" class="form-control"></textarea>
                 <span asp-validation-for="PractitionerRecommendation" class="text-danger"></span>
-            </div>          
+            </div>
+            <span class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmBookingModal">Practitioner Recommendation:</span>
+
+            <div class="modal fade" id="confirmBookingModal" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="text-danger">Confirm </h5>
+                        </div>
+                        <div class="modal-body">
+                            <p>
+                                Do you want to submit this recommendation?
+                            </p>
+                        </div>
+                        <div class="modal-footer">
+                            <input type="submit" value="Submit" class="btn btn-primary" />
+                            <span class="btn btn-secondary" data-bs-dismiss="modal">Close</span>
+                        </div>
             <div class="form-group">
             </div>
 </form>
 
+       
         <div>
             <a asp-controller="Home" asp-action="Index">Back to Home</a>
         </div>
@@ -68,6 +86,7 @@ div class="margined-page pt-4">
             <script>
             </script>
         }
+        
 
 
 

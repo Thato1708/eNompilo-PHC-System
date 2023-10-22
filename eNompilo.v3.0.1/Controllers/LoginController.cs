@@ -50,7 +50,7 @@ namespace eNompilo.v3._0._1.Controllers
 			{
 				var user = _context.Users.Where(u => u.UserName == model.IdNumber).FirstOrDefault();
 				var result = await _signInManager.PasswordSignInAsync(user.UserName, model.Password, model.RememberMe, false);
-				int userTypeId = 0;
+				//int userTypeId = 0;
 				if (result.Succeeded && user.Archived == false)
                 {
                     _logger.LogInformation("User logged in.");
@@ -60,35 +60,42 @@ namespace eNompilo.v3._0._1.Controllers
 						_context.Users.Update(user);
 						_context.SaveChanges();
 					}
-					if (user.UserRole == UserRole.Patient)
-					{
-						userTypeId = _context.tblPatient.Where(p => p.UserId == user.Id).FirstOrDefault().Id;
-					}
-					else if (user.UserRole == UserRole.Admin)
-					{
-						userTypeId = _context.tblAdmin.Where(p => p.UserId == user.Id).FirstOrDefault().Id;
-					}
-					else if (user.UserRole == UserRole.Practitioner)
-					{
-						userTypeId = _context.tblPractitioner.Where(p => p.UserId == user.Id).FirstOrDefault().Id;
-					}
-					else if (user.UserRole == UserRole.Receptionist)
-					{
-						userTypeId = _context.tblReceptionist.Where(p => p.UserId == user.Id).FirstOrDefault().Id;
-					}
-					else
-					{
-						userTypeId = 999;
-					}
+					//if (user.UserRole == UserRole.Patient)
+					//{
+					//	userTypeId = _context.tblPatient.Where(p => p.UserId == user.Id).FirstOrDefault().Id;
+					//}
+					//else if (user.UserRole == UserRole.Admin)
+					//{
+					//	userTypeId = _context.tblAdmin.Where(p => p.UserId == user.Id).FirstOrDefault().Id;
+					//}
+					//else if (user.UserRole == UserRole.Practitioner)
+					//{
+					//	userTypeId = _context.tblPractitioner.Where(p => p.UserId == user.Id).FirstOrDefault().Id;
+					//}
+					//else if (user.UserRole == UserRole.Receptionist)
+					//{
+					//	userTypeId = _context.tblReceptionist.Where(p => p.UserId == user.Id).FirstOrDefault().Id;
+					//}
+					//else
+					//{
+					//	userTypeId = 999;
+					//}
 
 					if (string.IsNullOrEmpty(returnUrl) && user.UserRole == UserRole.Patient)
 					{
 						return RedirectToAction("Index", "Home");
 					}
-					else if (string.IsNullOrEmpty(returnUrl))
+					else if (string.IsNullOrEmpty(returnUrl) && user.UserRole == UserRole.Practitioner)
 					{
-						returnUrl = "/Users/UserProfile/" + userTypeId;
-						return Redirect(returnUrl);
+						return RedirectToAction("UserProfile", "Users", new { _context.tblPractitioner.Where(p => p.UserId == user.Id).FirstOrDefault().Id });
+					}
+					else if (string.IsNullOrEmpty(returnUrl) && user.UserRole == UserRole.Admin)
+					{
+						return RedirectToAction("UserProfile", "Users", new { _context.tblAdmin.Where(p => p.UserId == user.Id).FirstOrDefault().Id });
+					}
+					else if (string.IsNullOrEmpty(returnUrl) && user.UserRole == UserRole.Receptionist)
+					{
+						return RedirectToAction("UserProfile", "Users", new { _context.tblReceptionist.Where(p => p.UserId == user.Id).FirstOrDefault().Id });
 					}
 					else
 					{
@@ -97,10 +104,11 @@ namespace eNompilo.v3._0._1.Controllers
 				}
 				else if (result.Succeeded && user.Archived == true)
 				{
-					returnUrl = "/Login/BlockedUser/" + user.Id;
+					var userId = Convert.ToString(user.Id);
+					//returnUrl = "/Login/BlockedUser/" + user.Id;
 					await _signInManager.SignOutAsync();
 					_logger.LogInformation("User logged out.");
-					return Redirect(returnUrl);
+					return RedirectToAction("BlockedUser","Login",new {user.Id});
 				}
 			}
 			ModelState.AddModelError(string.Empty, "Invalid login attempt.");
@@ -109,7 +117,7 @@ namespace eNompilo.v3._0._1.Controllers
 
 		[AllowAnonymous]
 		[HttpGet]
-		public IActionResult BlockedUser(string? Id)
+		public IActionResult BlockedUser(string Id)
 		{
 			if (Id == null || Id == "")
 			{

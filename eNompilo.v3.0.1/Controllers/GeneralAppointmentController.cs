@@ -1,4 +1,5 @@
 ﻿using eNompilo.v3._0._1.Areas.Identity.Data;
+using eNompilo.v3._0._1.Constants;
 using eNompilo.v3._0._1.Models;
 using eNompilo.v3._0._1.Models.SystemUsers;
 using eNompilo.v3._0._1.Models.ViewModels;
@@ -23,7 +24,12 @@ namespace eNompiloCounselling.Controllers
 		public IActionResult Index()
 		{
 			var patientId = _contextAccessor.HttpContext.Session.GetInt32("PatientId");
-			IEnumerable<GeneralAppointment> objList = dbContext.tblGeneralAppointment.Where(x=>x.Archived == false).Include(pr=>pr.Practitioner).ThenInclude(u=>u.Users).Include(p=>p.Patient).ThenInclude(u => u.Users);
+
+			ViewBag.GASuccessMessage = TempData["GASuccessMessage"] as string;
+			ViewBag.GAUpdateSuccessMessage = TempData["GAUpdateSuccessMessage"] as string;
+
+
+            IEnumerable<GeneralAppointment> objList = dbContext.tblGeneralAppointment.Where(x=>x.Archived == false).Include(pr=>pr.Practitioner).ThenInclude(u=>u.Users).Include(p=>p.Patient).ThenInclude(u => u.Users);
 
 			//var patient = dbContext.tblPatient.Select(p => new SelectListItem
 			//{
@@ -69,7 +75,8 @@ namespace eNompiloCounselling.Controllers
 				};
 				dbContext.tblGeneralAppointment.Add(ga);
 				dbContext.SaveChanges();
-				return RedirectToAction("Index");
+                TempData["GASuccessMessage"] = "Appointment for date: " + ga.PreferredDate + " successfully booked!";
+                return RedirectToAction("Index");
 			}
 			return View(model);
 		}
@@ -80,7 +87,14 @@ namespace eNompiloCounselling.Controllers
 			{
 				return NotFound();
 			}
-			var obj = dbContext.tblGeneralAppointment.Where(x=>x.Id == Id && x.Archived == false).FirstOrDefault();
+			var obj = new GeneralAppointment();
+			if(User.IsInRole(RoleConstants.Practitioner) || User.IsInRole(RoleConstants.Receptionist))
+				obj = dbContext.tblGeneralAppointment.Where(x=>x.Id == Id && x.Archived == false).FirstOrDefault();
+			else if(User.IsInRole(RoleConstants.Patient))
+				obj = dbContext.tblGeneralAppointment.Where(x=>x.Id == Id && x.Archived == false && x.SessionConfirmed == false).FirstOrDefault();
+			else if(User.IsInRole(RoleConstants.Admin))
+				obj = dbContext.tblGeneralAppointment.FirstOrDefault();
+
 			if (obj == null)
 			{
 				return NotFound();
@@ -122,7 +136,8 @@ namespace eNompiloCounselling.Controllers
 
             dbContext.tblGeneralAppointment.Update(obj);
 			dbContext.SaveChanges();
-			return RedirectToAction("Index");
+            TempData["GAUpdateSuccessMessage"] = "Appointment for date: " + obj.PreferredDate + " successfully update!";
+            return RedirectToAction("Index");
 		}
 
 		public IActionResult Details(int? Id)

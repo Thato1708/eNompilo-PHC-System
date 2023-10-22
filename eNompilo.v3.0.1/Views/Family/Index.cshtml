@@ -8,8 +8,14 @@
 <div class="margined-page pt-4" style="margin-left:auto;margin-right:auto;">
 
     <p>
-        <a asp-action="Book">Make a new booking</a>
-        <a asp-action="PatientRecords">User Reports</a>
+        <form asp-controller="Family" asp-action="Book" method="get">
+            <button type="submit" class="btn btn-primary" style="margin-bottom: 10px;">Make a new booking</button>
+        </form>
+
+        <form asp-controller="Family" asp-action="PatientRecords" method="get">
+            <button type="submit" class="btn btn-secondary" style="margin-top: 10px;">User Reports</button>
+        </form>
+
     </p>
     <table id="dtFamPlanApp" class="table table-striped" style="margin-left:auto;margin-right:auto;">
         <thead>

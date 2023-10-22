@@ -2,87 +2,96 @@
     ViewData["Title"] = "Patient Records";
     Layout = "~/Views/Shared/_DashboardLayout.cshtml";
 }
-<div class="container">
-    <div class="row">
-        <h1>Medical History</h1>
-        <hr />
-        <div class="col-md-6">
-            <strong>Full Name:</strong> @ViewBag.LoginpatientF
-        </div>
-        <div class="col-md-6">
-            <strong>Email:</strong> @ViewBag.LoginpatientE
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6">
-            <strong>ID Number:</strong> @ViewBag.LoginpatientI
-        </div>
-        <div class="col-md-6">
-            <strong>Phone Number:</strong> @ViewBag.LoginpatientP
-        </div>
-    </div>
+<div class="margined-page pt-4">
+    <div class="container">
+        <div class="container">
+            <div class="text-center">
+                <h1>Medical History</h1>
+                <hr />
+            </div>
 
+            <div class="row">
+                <div class="col-md-6">
+                    <strong>Full Name:</strong> @ViewBag.LoginpatientF
+                </div>
+                <div class="col-md-6">
+                    <strong>Email:</strong> @ViewBag.LoginpatientE
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <strong>ID Number:</strong> @ViewBag.LoginpatientI
+                </div>
+                <div class="col-md-6">
+                    <strong>Phone Number:</strong> @ViewBag.LoginpatientP
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <hr />
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="card-title">Booking Records</h3>
+                            <p class="card-text">@ViewBag.BookingCount</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="card-title">Contraceptive Type Records</h3>
+                            <p class="card-text">@ViewBag.ContraceptiveTypeCount</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="card-title">Collection Status Records</h3>
+                            <p class="card-text">@ViewBag.CollectionStatusCount</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-3">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="card-title">Contraceptive Discontinuation Records</h3>
+                            <p class="card-text">@ViewBag.DiscontinuationCount</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="card-title">Weekly Appointment Records</h3>
+                            <p class="card-text">@ViewBag.WeeklyAppointmentCount</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <hr />
+            <div class="text-center">
+                <h1>Medical Report</h1>
+            </div>
+
+            <!-- Add the canvas element to display the chart -->
+            <canvas id="statisticsChart" width="400" height="200"></canvas>
+        </div>
+    </div>
 </div>
-<div class="container">
-    <hr />
-    <div class="row">
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-body">
-                    <h3 class="card-title">Booking Records</h3>
-                    <p class="card-text">@ViewBag.BookingCount</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-body">
-                    <h3 class="card-title">Contraceptive Type Records</h3>
-                    <p class="card-text">@ViewBag.ContraceptiveTypeCount</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-body">
-                    <h3 class="card-title">Collection Status Records</h3>
-                    <p class="card-text">@ViewBag.CollectionStatusCount</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row mt-3">
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-body">
-                    <h3 class="card-title">Contraceptive Discontinuation Records</h3>
-                    <p class="card-text">@ViewBag.DiscontinuationCount</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-body">
-                    <h3 class="card-title">Weekly Appointment Records</h3>
-                    <p class="card-text">@ViewBag.WeeklyAppointmentCount</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <hr />
-</div>
-<hr />
-<div class="container">
-    <h1>Medical Report</h1>
-
-    <!-- Add the canvas element to display the chart -->
-    <canvas id="statisticsChart" width="400" height="200"></canvas>
-</div>
-
 @section Scripts {
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 

@@ -49,10 +49,17 @@ namespace eNompilo.v3._0._1.Controllers
 			if (ModelState.IsValid)
 			{
 				var user = _context.Users.Where(u => u.UserName == model.IdNumber).FirstOrDefault();
-				var result = await _signInManager.PasswordSignInAsync(user.IdNumber, model.Password, model.RememberMe, false);
+				var result = await _signInManager.PasswordSignInAsync(user.UserName, model.Password, model.RememberMe, false);
 				int userTypeId = 0;
 				if (result.Succeeded && user.Archived == false)
-				{
+                {
+                    _logger.LogInformation("User logged in.");
+					if (user != null)
+					{
+						user.LastLogin = DateTime.UtcNow;
+						_context.Users.Update(user);
+						_context.SaveChanges();
+					}
 					if (user.UserRole == UserRole.Patient)
 					{
 						userTypeId = _context.tblPatient.Where(p => p.UserId == user.Id).FirstOrDefault().Id;

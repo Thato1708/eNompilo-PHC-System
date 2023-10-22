@@ -27,7 +27,7 @@
 	var practitioner = _context.tblPractitioner.Select(p => new SelectListItem
 			{
 				Value = p.Id.ToString(),
-				Text = p.Users.FirstName + " " + p.Users.LastName,
+				Text = p.Users.FirstName + " " + p.Users.LastName + " (" + p.PractitionerType.GetDisplayName() + ")",
 				/*Text = "(" + Enum.GetName(typeof(Titles), p.Users.Titles) + ".) " + p.Users.FirstName + " " + p.Users.LastName,*/
 			}).ToList();
 	var practitionerValue = 0;

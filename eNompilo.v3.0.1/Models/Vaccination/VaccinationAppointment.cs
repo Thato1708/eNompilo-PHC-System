@@ -27,12 +27,6 @@ namespace eNompilo.v3._0._1.Models.Vaccination
         [Display(Name = "Disease vaccinating for.")]
         public VaccinableDiseases VaccinableDiseases { get; set; }
 
-        [NotMapped]
-        public int PractitionerDiaryId { get; set; }
-        [NotMapped]
-        [ForeignKey("PractitionerDiaryId")]
-        public PractitionerDiary PractitionerDiary { get; set; }
-
         [Required]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MM-yyyy}")]
         [DataType(DataType.Date)]

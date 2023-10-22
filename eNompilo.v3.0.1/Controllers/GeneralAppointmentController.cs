@@ -80,7 +80,7 @@ namespace eNompiloCounselling.Controllers
 			{
 				return NotFound();
 			}
-			var obj = dbContext.tblGeneralAppointment.Where(x=>x.Id == Id && x.Archived == false);
+			var obj = dbContext.tblGeneralAppointment.Where(x=>x.Id == Id && x.Archived == false).FirstOrDefault();
 			if (obj == null)
 			{
 				return NotFound();

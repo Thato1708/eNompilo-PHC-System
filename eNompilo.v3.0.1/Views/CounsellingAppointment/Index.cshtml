@@ -89,7 +89,7 @@
         </div>
 
     }
-    else if ((User.IsInRole(RoleConstants.Practitioner) || User.IsInRole(RoleConstants.Receptionist)) && _context.tblPractitioner.Where(p => p.UserId == user.Id).FirstOrDefault().PractitionerType == PractitionerType.Counsellor)
+    else if ((User.IsInRole(RoleConstants.Practitioner) @* && _context.tblPractitioner.Where(x => x.Id == practitionerId).FirstOrDefault().PractitionerType == PractitionerType.Counsellor *@) || User.IsInRole(RoleConstants.Receptionist))
     {
         <div class="margined-page pt-4">
             <h1>Index</h1>
@@ -134,7 +134,6 @@
                             <td>
                                 @Html.DisplayFor(modelItem => item.ChallengesSpecific)
                             </td>
-                            <td>
                             <td>
                                 @Convert.ToDateTime(item.PreferredDate).ToString("dd/MMM/yyyy")
                             </td>

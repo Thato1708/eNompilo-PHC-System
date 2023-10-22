@@ -1,0 +1,52 @@
+﻿@model eNompilo.v3._0._1.Models.Family_Planning.FamilyPRecord
+
+@{
+    ViewBag.Title = "Create Record";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h2 class="text-center">Create Family Planning Record</h2>
+
+            <form asp-action="CreateRecord" asp-controller="Family" method="post">
+                @Html.AntiForgeryToken()
+
+                <div class="form-group">
+                    <label asp-for="FamilyPlanningAppointmentId">Family Planning Appointment</label>
+                    <select asp-for="FamilyPlanningAppointmentId" asp-items="ViewBag.FamilyPlanningAppointmentId" class="form-control">
+                        <option value="">Select an Appointment</option>
+                    </select>
+                </div>
+
+                
+
+                <div class="form-group">
+                    <label asp-for="MedicalNotes">Medical Notes</label>
+                    <textarea asp-for="MedicalNotes" class="form-control"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="StartDate">Start Date</label>
+                    <input asp-for="StartDate" class="form-control" />
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="EndDate">End Date</label>
+                    <input asp-for="EndDate" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="DosageAmount"></label>
+                    <input asp-for="DosageAmount" class="form-control" />
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="DosageDuration"></label>
+                    <input asp-for="DosageDuration" class="form-control" />
+                </div>
+                <button type="submit" class="btn btn-primary">Create</button>
+            </form>
+        </div>
+    </div>
+</div>

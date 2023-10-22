@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using eNompilo.v3._0._1.Areas.Identity.Data;
 
@@ -11,9 +12,10 @@ using eNompilo.v3._0._1.Areas.Identity.Data;
 namespace eNompilo.v3._0._1.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231021175430_ModifyFimalyplanningRords")]
+    partial class ModifyFimalyplanningRords
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -275,7 +277,7 @@ namespace eNompilo.v3._0._1.Migrations
                     b.ToTable("SelectedCondition");
                 });
 
-            modelBuilder.Entity("eNompilo.v3._0._1.Models.GBV.GbvRecommendations", b =>
+            modelBuilder.Entity("eNompilo.v3._0._1.Models.GBV.PractitionerRecommendations", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -286,9 +288,21 @@ namespace eNompilo.v3._0._1.Migrations
                     b.Property<bool>("Archived")
                         .HasColumnType("bit");
 
+                    b.Property<string>("Cell")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime?>("Date")
                         .IsRequired()
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("PatientId")
                         .HasColumnType("int");
@@ -301,16 +315,13 @@ namespace eNompilo.v3._0._1.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("Reffered")
-                        .HasColumnType("bit");
+                    b.Property<string>("Surname")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PatientId");
-
-                    b.HasIndex("PractitionerId");
-
-                    b.ToTable("GbvRecommendations");
+                    b.ToTable("PractitionerRecommendations");
                 });
 
             modelBuilder.Entity("eNompilo.v3._0._1.Models.GBV.Questionnaire", b =>
@@ -1624,25 +1635,6 @@ namespace eNompilo.v3._0._1.Migrations
                     b.Navigation("Doctor");
 
                     b.Navigation("FamilyPlanningAppointment");
-                });
-
-            modelBuilder.Entity("eNompilo.v3._0._1.Models.GBV.GbvRecommendations", b =>
-                {
-                    b.HasOne("eNompilo.v3._0._1.Models.SystemUsers.Patient", "Patient")
-                        .WithMany()
-                        .HasForeignKey("PatientId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("eNompilo.v3._0._1.Models.SystemUsers.Practitioner", "Practitioner")
-                        .WithMany()
-                        .HasForeignKey("PractitionerId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Patient");
-
-                    b.Navigation("Practitioner");
                 });
 
             modelBuilder.Entity("eNompilo.v3._0._1.Models.GBV.ReportGBV", b =>

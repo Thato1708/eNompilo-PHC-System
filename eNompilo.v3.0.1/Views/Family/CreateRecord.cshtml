@@ -1,4 +1,4 @@
-﻿@model eNompilo.v3._0._1.Models.Family_Planning.FamilyPRecord
+﻿@model eNompilo.v3._0._1.Models.Family_Planning.ViewModel.FamilyPlanningViewModel
 
 @{
     ViewBag.Title = "Create Record";
@@ -17,10 +17,14 @@
                     <label asp-for="FamilyPlanningAppointmentId">Family Planning Appointment</label>
                     <select asp-for="FamilyPlanningAppointmentId" asp-items="ViewBag.FamilyPlanningAppointmentId" class="form-control">
                         <option value="">Select an Appointment</option>
+                        @foreach (var appointment in ViewBag.FamilyPlanningAppointments)
+                        {
+                            <option value="@appointment.FamilyPlanningAppointmentId">
+                                @appointment.BookingReasons.ToString() - @appointment.Patient.FullName
+                            </option>
+                        }
                     </select>
                 </div>
-
-                
 
                 <div class="form-group">
                     <label asp-for="MedicalNotes">Medical Notes</label>

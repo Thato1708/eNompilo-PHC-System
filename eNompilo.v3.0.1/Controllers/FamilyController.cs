@@ -15,6 +15,7 @@ using eNompilo.v3._0._1.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Net;
+using eNompilo.v3._0._1.Models.Family_Planning.ViewModel;
 
 namespace eNompilo.v3._0._1.Controllers
 {
@@ -756,45 +757,103 @@ namespace eNompilo.v3._0._1.Controllers
             }
             
         }
-
         public ActionResult CreateRecord()
         {
             var availableAppointments = _context.tblFamilyPlanningAppointment
-                                             .Where(appointment => !_context.FamilyPRecords.Any(record => record.FamilyPlanningAppointmentId == appointment.Id))
-                                             .ToList();
+                                            .Where(appointment => !_context.FamilyPRecords.Any(record => record.FamilyPlanningAppointmentId == appointment.Id))
+                                            .ToList();
 
-            // Populate the ViewBag with a MultiSelectList.
-            ViewBag.FamilyPlanningAppointmentId = new MultiSelectList(availableAppointments, "Id", "Id");
+            var viewModelList = new List<FamilyPlanningViewModel>();
 
+            foreach (var appointment in availableAppointments)
+            {
+                var patient = _context.tblPatient.FirstOrDefault(p => p.Id == appointment.PatientId);
+
+                if (patient != null)
+                {
+                    viewModelList.Add(new FamilyPlanningViewModel
+                    {
+                        FamilyPlanningAppointmentId = appointment.Id,
+                        BookingReasons = appointment.BookingReasons,
+                        Patient = patient
+                    });
+                }
+            }
+
+            // Populate the ViewBag with the ViewModel list.
+            ViewBag.FamilyPlanningAppointments = viewModelList;
 
             return View();
         }
 
-        // POST: FamilyPRecord/Create
+        //public ActionResult CreateRecord()
+        //{
+        //    var availableAppointments = _context.tblFamilyPlanningAppointment
+        //        .Where(appointment => !_context.FamilyPRecords.Any(record => record.FamilyPlanningAppointmentId == appointment.Id))
+        //        .ToList();
+
+        //    var viewModelList = new List<FamilyPlanningViewModel>();
+
+        //    foreach (var appointment in availableAppointments)
+        //    {
+        //        var patient = _context.tblPatient.FirstOrDefault(p => p.Id == appointment.PatientId);
+
+        //        if (patient != null)
+        //        {
+        //            viewModelList.Add(new FamilyPlanningViewModel
+        //            {
+        //                FamilyPlanningAppointmentId = appointment.Id,
+        //                CombinedText = $"{appointment.BookingReasons} - {patient.FullName}"
+        //            });
+        //        }
+        //    }
+
+        //    // Populate the ViewBag with the ViewModel list.
+        //    ViewBag.FamilyPlanningAppointments = new SelectList(viewModelList, "FamilyPlanningAppointmentId", "CombinedText");
+
+        //    return View();
+        //}
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateRecord(FamilyPRecord familyPRecord)
+        public ActionResult CreateRecord(FamilyPlanningViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
-                var pts = _context.tblPractitioner.Where(p => p.UserId == _userManager.GetUserId(User)).FirstOrDefault();
-                familyPRecord.DoctorId = pts.UserId;
-                familyPRecord.IsDiscontinued = false;
-                familyPRecord.DateOfVisit = DateTime.Now;
-                _context.FamilyPRecords.Add(familyPRecord);
-                _context.SaveChanges();
-                return RedirectToAction("FPRecord"); // Redirect to the appropriate action.
+                var selectedAppointmentId = viewModel.FamilyPlanningAppointmentId;
+
+                // Fetch the related appointment using the selected ID.
+                var selectedAppointment = _context.tblFamilyPlanningAppointment.FirstOrDefault(appointment => appointment.Id == selectedAppointmentId);
+
+                if (selectedAppointment != null)
+                {
+                    // Create a new FamilyPRecord and populate its properties.
+                    var familyPRecord = new FamilyPRecord
+                    {
+                        FamilyPlanningAppointmentId = selectedAppointment.Id,
+                        DoctorId = selectedAppointment.ResponsiblePractitionerId, // Assuming the doctor is the patient's user.
+                        DateOfVisit = DateTime.Now,
+                        IsDiscontinued = false, // You can set the default value here.
+                        MedicalNotes = viewModel.MedicalNotes,
+                        StartDate = viewModel.StartDate,
+                        EndDate = viewModel.EndDate,
+                        DosageAmount = viewModel.DosageAmount,
+                        DosageDuration = viewModel.DosageDuration,
+                    };
+
+                    _context.FamilyPRecords.Add(familyPRecord);
+                    _context.SaveChanges();
+
+                    return RedirectToAction("FPRecord"); // Redirect to the appropriate action.
+                }
             }
 
-            var availableAppointments = _context.tblFamilyPlanningAppointment
-                                       .Where(appointment => !_context.FamilyPRecords.Any(record => record.FamilyPlanningAppointmentId == appointment.Id))
-                                       .ToList();
-
-            // You can now use 'availableAppointments' to populate your dropdown list.
-            ViewBag.FamilyPlanningAppointmentId = new SelectList(availableAppointments, "Id", "Id");
-
-            return View(familyPRecord);
+            // If the model is not valid or there's an error, return to the view.
+            // You may want to add error handling here.
+            return View(viewModel);
         }
+
 
         // Dispose of the DbContext when it's no longer needed.
         protected override void Dispose(bool disposing)
@@ -818,6 +877,21 @@ namespace eNompilo.v3._0._1.Controllers
         {
             var familyPlanningMedicalRecords = _context.FamilyPRecords.ToList();
             return View(familyPlanningMedicalRecords);
+        }
+        // GET: FamilyPlanningMedicalRecords
+        public IActionResult PatientRecord()
+        {
+            var pts = _context.tblPatient.Where(p => p.UserId == _userManager.GetUserId(User)).FirstOrDefault();
+            if (pts != null)
+            {
+                var patientId = pts.Id;
+                var familyPlanningMedicalRecords = _context.FamilyPRecords.Where(v => v.FamilyPlanningAppointment.PatientId == patientId).ToList();
+                return View(familyPlanningMedicalRecords);
+            }
+            else
+            {
+                return View();
+            }
         }
 
         // GET: FamilyPRecord/Edit/5

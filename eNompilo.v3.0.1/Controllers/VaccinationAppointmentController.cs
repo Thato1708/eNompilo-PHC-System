@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using eNompilo.v3._0._1.Models.ViewModels;
+using eNompilo.v3._0._1.Models;
 
 namespace eNompilo.v3._0._1Controllers
 {
@@ -25,6 +26,8 @@ namespace eNompilo.v3._0._1Controllers
 		{
             if (_signInManager.IsSignedIn(User))
             {
+                ViewBag.VASuccessMessage = TempData["VASuccessMessage"] as string;
+                ViewBag.VAUpdateSuccessMessage = TempData["VAUpdateSuccessMessage"] as string;
                 if (User.IsInRole(RoleConstants.Patient) || User.IsInRole(RoleConstants.Receptionist))
                 {
                     IEnumerable<VaccinationAppointment> objList = dbContext.tblVaccinationAppointment.Where(va=>va.Archived == false).Include(pr => pr.Practitioner).ThenInclude(u => u.Users).Include(p => p.Patient).ThenInclude(u => u.Users).ToList();
@@ -74,6 +77,7 @@ namespace eNompilo.v3._0._1Controllers
 				};
 				dbContext.tblVaccinationAppointment.Add(va);
                 dbContext.SaveChanges();
+                TempData["VASuccessMessage"] = "Appointment for date: " + va.PreferredDate + " successfully booked!";
                 return RedirectToAction("Index");
             }
             return View(model);
@@ -85,8 +89,14 @@ namespace eNompilo.v3._0._1Controllers
             {
                 return NotFound();
             }
-            var obj = dbContext.tblVaccinationAppointment.Find(Id);
-            if(obj == null)
+            var obj = new VaccinationAppointment();
+            if (User.IsInRole(RoleConstants.Practitioner) || User.IsInRole(RoleConstants.Receptionist))
+                obj = dbContext.tblVaccinationAppointment.Where(x => x.Id == Id && x.Archived == false).FirstOrDefault();
+            else if (User.IsInRole(RoleConstants.Patient))
+                obj = dbContext.tblVaccinationAppointment.Where(x => x.Id == Id && x.Archived == false && x.SessionConfirmed == false).FirstOrDefault();
+            else if (User.IsInRole(RoleConstants.Admin))
+                obj = dbContext.tblVaccinationAppointment.FirstOrDefault();
+            if (obj == null)
             {
                 return NotFound();
             }
@@ -103,6 +113,7 @@ namespace eNompilo.v3._0._1Controllers
             }
             dbContext.tblVaccinationAppointment.Update(model);
             dbContext.SaveChanges();
+            TempData["VAUpdateSuccessMessage"] = "Appointment for date: " + model.PreferredDate + " successfully update!";
             return RedirectToAction("Index");
         }
 

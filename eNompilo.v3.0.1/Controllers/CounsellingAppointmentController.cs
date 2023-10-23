@@ -29,8 +29,10 @@ namespace eNompiloCounselling.Controllers
         public IActionResult Index()
         {
             if (_signInManager.IsSignedIn(User))
-            {
-                if (User.IsInRole(RoleConstants.Patient) || User.IsInRole(RoleConstants.Receptionist))
+			{
+				ViewBag.CASuccessMessage = TempData["CASuccessMessage"] as string;
+				ViewBag.CAUpdateSuccessMessage = TempData["CAUpdateSuccessMessage"] as string;
+				if (User.IsInRole(RoleConstants.Patient) || User.IsInRole(RoleConstants.Receptionist))
                 {
                     IEnumerable<CounsellingAppointment> objList = dbContext.tblCounsellingAppointment.Where(va => va.Archived == false).Include(pr => pr.Practitioner).ThenInclude(u => u.Users).Include(p => p.Patient).ThenInclude(u => u.Users).ToList();
                     return View(objList);
@@ -80,7 +82,8 @@ namespace eNompiloCounselling.Controllers
 				};
 				dbContext.tblCounsellingAppointment.Add(ca);
                 dbContext.SaveChanges();
-                return RedirectToAction("Index");
+				TempData["CASuccessMessage"] = "Appointment for date: " + ca.PreferredDate + " successfully booked!";
+				return RedirectToAction("Index");
             }
             return View(model);
         }
@@ -91,8 +94,14 @@ namespace eNompiloCounselling.Controllers
             {
                 return NotFound();
             }
-            var obj = dbContext.tblCounsellingAppointment.Find(Id);
-            if(obj == null)
+            var obj = new CounsellingAppointment();
+            if (User.IsInRole(RoleConstants.Practitioner) || User.IsInRole(RoleConstants.Receptionist))
+                obj = dbContext.tblCounsellingAppointment.Where(x => x.Id == Id && x.Archived == false).FirstOrDefault();
+            else if (User.IsInRole(RoleConstants.Patient))
+                obj = dbContext.tblCounsellingAppointment.Where(x => x.Id == Id && x.Archived == false && x.SessionConfirmed == false).FirstOrDefault();
+            else if (User.IsInRole(RoleConstants.Admin))
+                obj = dbContext.tblCounsellingAppointment.FirstOrDefault();
+            if (obj == null)
             {
                 return NotFound();
             }
@@ -134,7 +143,8 @@ namespace eNompiloCounselling.Controllers
 
             dbContext.tblCounsellingAppointment.Update(obj);
             dbContext.SaveChanges();
-            return RedirectToAction("Index");
+			TempData["CAUpdateSuccessMessage"] = "Appointment for date: " + obj.PreferredDate + " successfully updated!";
+			return RedirectToAction("Index");
         }
 
         public IActionResult Details(int? Id)

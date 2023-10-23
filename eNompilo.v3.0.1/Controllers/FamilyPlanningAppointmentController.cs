@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using eNompilo.v3._0._1.Models.ViewModels;
 using eNompilo.v3._0._1.Models.Vaccination;
 using eNompilo.v3._0._1.Models.Counselling;
+using eNompilo.v3._0._1.Models;
 
 namespace eNompilo.v3._0._1.Controllers
 {
@@ -28,6 +29,8 @@ namespace eNompilo.v3._0._1.Controllers
         {
             if (_signInManager.IsSignedIn(User))
             {
+                ViewBag.FPASuccessMessage = TempData["FPASuccessMessage"] as string;
+                ViewBag.FPAUpdateSuccessMessage = TempData["FPAUpdateSuccessMessage"] as string;
                 if (User.IsInRole(RoleConstants.Patient) || User.IsInRole(RoleConstants.Receptionist))
                 {
                     IEnumerable<FamilyPlanningAppointment> objList = dbContext.tblFamilyPlanningAppointment.Where(va=>va.Archived == false).Include(pr => pr.Practitioner).ThenInclude(u => u.Users).Include(p => p.Patient).ThenInclude(u => u.Users).ToList();
@@ -74,6 +77,7 @@ namespace eNompilo.v3._0._1.Controllers
 				};
 				dbContext.tblFamilyPlanningAppointment.Add(fpa);
                 dbContext.SaveChanges();
+                TempData["FPASuccessMessage"] = "Appointment for date: " + fpa.PreferredDate + " successfully booked!";
                 return RedirectToAction("Index");
             }
             return View(model);
@@ -85,7 +89,13 @@ namespace eNompilo.v3._0._1.Controllers
             {
                 return NotFound();
             }
-            var obj = dbContext.tblFamilyPlanningAppointment.Find(Id);
+            var obj = new FamilyPlanningAppointment();
+            if (User.IsInRole(RoleConstants.Practitioner) || User.IsInRole(RoleConstants.Receptionist))
+                obj = dbContext.tblFamilyPlanningAppointment.Where(x => x.Id == Id && x.Archived == false).FirstOrDefault();
+            else if (User.IsInRole(RoleConstants.Patient))
+                obj = dbContext.tblFamilyPlanningAppointment.Where(x => x.Id == Id && x.Archived == false && x.SessionConfirmed == false).FirstOrDefault();
+            else if (User.IsInRole(RoleConstants.Admin))
+                obj = dbContext.tblFamilyPlanningAppointment.FirstOrDefault();
             if (obj == null)
             {
                 return NotFound();
@@ -103,6 +113,7 @@ namespace eNompilo.v3._0._1.Controllers
             }
             dbContext.tblFamilyPlanningAppointment.Update(model);
             dbContext.SaveChanges();
+            TempData["FPAUpdateSuccessMessage"] = "Appointment for date: " + model.PreferredDate + " successfully updated!";
             return RedirectToAction("Index");
         }
 

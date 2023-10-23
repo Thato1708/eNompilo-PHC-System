@@ -7,39 +7,47 @@
 
 <button class="btn btn-danger" id="btnReport">Print</button>
 
-<div class="margined-page pt-4">
-    <div>
-        <h2>Your Recommendations</h2>
-        <hr />
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Click Function Example</title>
+</head>
+<body>
+    <dl class="row" style="margin-left:auto; margin-right:auto;">
+        <dt class="col-sm-2 mb-4">
+            Name of Practitioner
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(Model=>Model.PractitionerId)
+        </dd>
         <dl class="row" style="margin-left:auto; margin-right:auto;">
             <dt class="col-sm-2 mb-4">
-                Name of Practitioner
+                Name of patient
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(Model=>Model.PractitionerId)
+                @Html.DisplayFor(Model=>Model.PatientId)
             </dd>
             <dl class="row" style="margin-left:auto; margin-right:auto;">
                 <dt class="col-sm-2 mb-4">
-                    Name of patient
+                    Date
                 </dt>
                 <dd class="col-sm-10">
-                    @Html.DisplayFor(Model=>Model.PatientId)
+                    @Html.DisplayFor(Model=>Model.Date)
                 </dd>
                 <dl class="row" style="margin-left:auto; margin-right:auto;">
                     <dt class="col-sm-2 mb-4">
-                        Date
+                        Is the patient reffered for further medical treatment
                     </dt>
                     <dd class="col-sm-10">
-                        @Html.DisplayFor(Model=>Model.Date)
+                        @Html.DisplayFor(Model=>Model.Reffered)
                     </dd>
-                    <dl class="row" style="margin-left:auto; margin-right:auto;">
-                        <dt class="col-sm-2 mb-4">
-                            Is the patient reffered for further medical treatment
-                        </dt>
-                        <dd class="col-sm-10">
-                            @Html.DisplayFor(Model=>Model.Reffered)
-                        </dd>
-                        </div>
+                    </div>
+                    </div>
+</body>
+</html>
+
+
+
     <script src="~/lib/jquery/dist/jquery.js"></script>
     <script>
         $('#btnReport').click(function () {
@@ -50,7 +58,7 @@
 
         })
     </script>
-                        </div>
+                        
 
 
 

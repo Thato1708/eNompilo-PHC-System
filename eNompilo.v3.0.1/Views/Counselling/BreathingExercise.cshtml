@@ -1,0 +1,27 @@
+﻿
+@{
+    ViewData["Title"] = "BreathingExercise";
+}
+
+    <style>
+
+    </style>
+  <div class="couContainer">
+
+<h1>Breathing Exercise</h1>
+      <div id="sphere" class="sphere"></div>
+      <div id="couText"></div>
+  </div>
+
+  <script>
+let sphere = document.getElementById('sphere');
+let text = document.getElementById('text');
+
+sphere.addEventListener('animationiteration', function() {
+  if (sphere.style.transform === 'scale(1)') {
+    text.textContent = 'breathe out';
+  } else if(sphere.style.transform === 'scale(1.5)') {
+    text.textContent = 'breathe in';
+  }
+});
+  </script>

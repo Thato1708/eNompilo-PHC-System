@@ -67,6 +67,19 @@ namespace eNompilo.v3._0._1.Controllers
             
         }
 
+        public IActionResult Details(int? Id)
+        {
+            var obj = _context.tblRecommendations.Find(Id);
+            if (obj == null)
+            {
+                return View("PageNotFound", "Home");
+
+            }
+            return View(obj);
+        }
+
+
+
         public IActionResult Update(int? Id)
         {
             if (Id == null || Id == 0)

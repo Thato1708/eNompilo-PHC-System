@@ -58,32 +58,8 @@
 							<label asp-for="PatientId" class="control-label"></label>
 							<input asp-for="PatientId" class="form-control" value="@_context.tblPatient.Where(p=>p.UserId == UserManager.GetUserAsync(User).Result.Id).FirstOrDefault().Id" />
 						</div>
-						@*<div class="form-group form-check mb-4">
-				<label class="form-check-label">
-				<input class="form-check-input" asp-for="Archived" /> @Html.DisplayNameFor(model => model.Archived)
-				</label>
-				</div>*@
-						<span class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmBookingModal">Book appointment</span> 
-
-						<div class="modal fade" id="confirmBookingModal" tabindex="-1">
-							<div class="modal-dialog">
-								<div class="modal-content">
-									<div class="modal-header">
-										<h5 class="text-danger">Confirm Booking</h5>
-									</div>
-									<div class="modal-body">
-										<p>
-											Are you sure want to make this booking?
-										</p>
-									</div>
-									<div class="modal-footer">
-										<input type="submit" value="Submit" class="btn btn-primary" />
-										<span class="btn btn-secondary" data-bs-dismiss="modal">Close</span>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="form-group">
+						<div class="form-group mb-4">
+							<input type="submit" value="Create" class="btn btn-primary" />
 						</div>
 					</form>
 				</div>
@@ -133,35 +109,8 @@
 								<input class="form-check-input" asp-for="SessionConfirmed" />
 							</label>
 						</div>
-						@*>>>>>>>>>>>>*@
-
-
-						@*<div class="form-group form-check mb-4">
-				<label class="form-check-label">
-				<input class="form-check-input" asp-for="Archived" /> @Html.DisplayNameFor(model => model.Archived)
-				</label>
-				</div>*@
-						<span class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmBookingModal">Book appointment</span>
-
-						<div class="modal fade" id="confirmBookingModal" tabindex="-1">
-							<div class="modal-dialog">
-								<div class="modal-content">
-									<div class="modal-header">
-										<h5 class="text-danger">Confirm Booking</h5>
-									</div>
-									<div class="modal-body">
-										<p>
-											Are you sure want to make this booking?
-										</p>
-									</div>
-									<div class="modal-footer">
-										<input type="submit" value="Submit" class="btn btn-primary" />
-										<span class="btn btn-secondary" data-bs-dismiss="modal">Close</span>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="form-group">
+						<div class="form-group mb-4">
+							<input type="submit" value="Create" class="btn btn-primary" />
 						</div>
 					</form>
 				</div>

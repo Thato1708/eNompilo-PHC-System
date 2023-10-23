@@ -1,6 +1,7 @@
 ﻿@model eNompilo.v3._0._1.Models.ViewModels.LoginViewModel
 
 @{
+    ViewData["Title"] = "Login";
     Layout = "~/Views/Shared/_AuthenticationLayout.cshtml";
 }
 
@@ -8,7 +9,6 @@
 <div class="row">
     <form id="account" method="post" class="p-5">
         <h1 class="text-center" style="color: #2036d9;"><strong>Log in</strong></h1>
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <br />
         <div class="form-group mb-4">
             <label asp-for="IdNumber" class="form-label"></label>
@@ -42,6 +42,7 @@
             <a id="resend-confirmation" asp-page="./ResendEmailConfirmation">Resend email confirmation</a>
             </p>*@
         </div>
+        <div asp-validation-summary="ModelOnly" class="badge bg-danger text-wrap list-group-item"></div>
     </form>
     @* <div class="col-md-6 col-md-offset-2">
     <section>

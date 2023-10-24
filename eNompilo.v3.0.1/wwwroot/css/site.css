@@ -372,9 +372,6 @@ image-align {
 .couContainer {
     min-width: 100vw;
     min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 .sphere {
@@ -383,11 +380,15 @@ image-align {
     background-color: yellow;
     border-radius: 50%;
     animation: scale 2s infinite alternate;
-    margin-bottom: 10px;
+    margin-top: 15%;
+    margin-left: 30%;
+    margin-right: auto;
 }
 
 #couText {
     font-size: 20px;
+    z-index: 15;
+    color: white;
 }
 
 

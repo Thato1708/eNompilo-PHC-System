@@ -1,28 +1,24 @@
-﻿
-@{
-    ViewData["Title"] = "Breathing Exercise";
-    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+﻿@{
+	ViewData["Title"] = "Breathing Exercise";
+	Layout = "~/Views/Shared/_DashboardLayout.cshtml";
 }
-
-    <style>
-
-    </style>
-  <div class="couContainer">
-
 <h1>Breathing Exercise</h1>
-      <div id="sphere" class="sphere"></div>
-      <div id="couText"></div>
-  </div>
+<div class="couContainer">
 
-  <script>
-let sphere = document.getElementById('sphere');
-let text = document.getElementById('text');
+	<div id="sphere" class="sphere">
+		<div id="couText"></div>
+	</div>
+</div>
 
-sphere.addEventListener('animationiteration', function() {
-  if (sphere.style.transform === 'scale(1)') {
-    text.textContent = 'breathe out';
-  } else if(sphere.style.transform === 'scale(1.5)') {
-    text.textContent = 'breathe in';
-  }
-});
-  </script>
+<script>
+	let sphere = document.getElementById('sphere');
+	let text = document.getElementById('couText');
+
+	sphere.addEventListener('animationiteration', function () {
+		if (sphere.style.scale === 'scale(1)') {
+			text.textContent = 'breathe out';
+		} else if (sphere.style.scale === 'scale(1.5)') {
+			text.textContent = 'breathe in';
+		}
+	});
+</script>

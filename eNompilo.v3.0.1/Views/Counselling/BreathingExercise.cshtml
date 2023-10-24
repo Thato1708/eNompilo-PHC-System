@@ -6,19 +6,5 @@
 <div class="couContainer">
 
 	<div id="sphere" class="sphere">
-		<div id="couText"></div>
 	</div>
 </div>
-
-<script>
-	let sphere = document.getElementById('sphere');
-	let text = document.getElementById('couText');
-
-	sphere.addEventListener('animationiteration', function () {
-		if (sphere.style.scale === 'scale(1)') {
-			text.textContent = 'breathe out';
-		} else if (sphere.style.scale === 'scale(1.5)') {
-			text.textContent = 'breathe in';
-		}
-	});
-</script>

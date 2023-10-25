@@ -117,14 +117,19 @@ namespace eNompilo.v3._0._1.Controllers
 
             return View(userViewModel);
         }
-        public IActionResult PatientDetails(string id)
+        public IActionResult PatientDetails(int id)
         {
             if (id == null)
             {
                 return NotFound();
             }
+            var userp = _context.tblPatient.FirstOrDefault(p => p.Id == id);
 
-            var user = _userManager.FindByIdAsync(id).Result; 
+            if (userp == null)
+            {
+                return NotFound();
+            }
+            var user = _userManager.FindByIdAsync(userp.UserId).Result; 
             if (user == null)
             {
                 return NotFound();
@@ -152,32 +157,32 @@ namespace eNompilo.v3._0._1.Controllers
             ViewBag.BookedAppointments = bookedAppointments;
             return View();
         }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Book(FamilyPlanningAppointment model)
         {
             if (ModelState.IsValid)
             {
-                var userId = _userManager.GetUserId(User);
-                var randomPractitioner = _context.Users
-                    .Where(p => p.UserRole == UserRole.Practitioner)
-                    .ToList();
-                var random = new Random();
-                var rp = randomPractitioner[random.Next(randomPractitioner.Count)];
-                if (randomPractitioner != null)
+                var doctors = _context.tblPractitioner.Where(p => p.PractitionerType == PractitionerType.Doctor).ToList();
+
+                if (doctors.Count > 0)
                 {
+                    var random = new Random();
+                    var shuffledDoctors = doctors.OrderBy(x => random.Next()).ToList(); // Shuffle the list
+                    var randomDoctor = shuffledDoctors.First();
+
                     model.IsCollected = false;
-                    model.ResponsiblePractitionerId = rp.Id;
+                    model.ResponsiblePractitionerId = randomDoctor.UserId;
                     _context.tblFamilyPlanningAppointment.Add(model);
                     _context.SaveChanges();
                     return RedirectToAction("Index");
                 }
+                else
                 {
                     return View("NoPA");
                 }
-
             }
+
             return View(model);
         }
 
@@ -621,8 +626,8 @@ namespace eNompilo.v3._0._1.Controllers
             {
                 return NotFound();
             }
-
-            _context.tblFamilyPlanningAppointment.Remove(familyPlanningAppointment);
+            familyPlanningAppointment.Archived = true;
+            _context.tblFamilyPlanningAppointment.Update(familyPlanningAppointment);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
@@ -646,7 +651,7 @@ namespace eNompilo.v3._0._1.Controllers
         // POST: FamilyPlanningAppointment/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,BookingReasons,PreferredDate,PreferredTime,PatientId,PatientFileId,ResponsiblePractitionerId,Archived")] FamilyPlanningAppointment familyPlanningAppointment)
+        public async Task<IActionResult> Edit(int id, FamilyPlanningAppointment familyPlanningAppointment)
         {
             if (id != familyPlanningAppointment.Id)
             {
@@ -657,7 +662,24 @@ namespace eNompilo.v3._0._1.Controllers
             {
                 try
                 {
-                    _context.Update(familyPlanningAppointment);
+                    var existingAppointment = _context.tblFamilyPlanningAppointment.FirstOrDefault(a => a.Id == id);
+
+                    if (existingAppointment == null)
+                    {
+                        return NotFound();
+                    }
+
+                    // Update the properties of the existing appointment with the new values.
+                    existingAppointment.BookingReasons = existingAppointment.BookingReasons;
+                    existingAppointment.PreferredDate = familyPlanningAppointment.PreferredDate;
+                    existingAppointment.PreferredTime = familyPlanningAppointment.PreferredTime;
+                    existingAppointment.PatientId = existingAppointment.PatientId;
+                    existingAppointment.PractitionerId = existingAppointment.PractitionerId;
+                    existingAppointment.SessionConfirmed = existingAppointment.SessionConfirmed;
+                    existingAppointment.IsCollected = existingAppointment.IsCollected;
+                    existingAppointment.Archived = existingAppointment.Archived;
+
+                    // Save the changes to the database.
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)

@@ -369,3 +369,51 @@ image-align {
 
 /* The element to apply the animation to */
 
+.couContainer {
+    min-width: 100vw;
+    min-height: 100vh;
+}
+
+.sphere {
+    width: 350px;
+    height: 350px;
+    background-color: yellow;
+    border-radius: 50%;
+    animation: scaleAnimation 3.25s infinite alternate, backgroundAnimation none 3.25s infinite alternate;
+    margin-top: 15%;
+    margin-left: 30%;
+    margin-right: auto;
+    position: relative;
+}
+
+#couText {
+    z-index: 1000;
+    width: 100%;
+    height: 100%;
+}
+
+
+@keyframes scaleAnimation {
+    from {
+        transform: scale(1);
+    }
+
+    to {
+        transform: scale(1.5);
+    }
+}
+
+
+@keyframes backgroundAnimation {
+    from {
+        background-image: url('breathe_out.png');
+        background-size: contain;
+        transition: none !important;
+    }
+
+    to {
+        background-image: url('breathe_in.png');
+        background-size: contain;
+        transition: none !important;
+    }
+}

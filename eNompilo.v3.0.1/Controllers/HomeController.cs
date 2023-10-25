@@ -67,6 +67,7 @@ namespace eNompilo.v3._0._1.Controllers
             }
 			else if (_signInManager.IsSignedIn(User) && User.IsInRole(RoleConstants.Admin))
 			{
+                return RedirectToAction("UserProfile", "Users", new { _context.tblAdmin.Where(p => p.UserId == _userManager.GetUserAsync(User).Result.Id).FirstOrDefault().Id });
 				var userId = _userManager.GetUserId(User);
 				var patient = _context.tblAdmin.SingleOrDefault(c => c.UserId == userId);
 				var patientId = patient.Id;
@@ -79,11 +80,11 @@ namespace eNompilo.v3._0._1.Controllers
                 {
                     Admin = admin
                 };
-
                 return View(viewModel);
             }
 			else if (_signInManager.IsSignedIn(User) && User.IsInRole(RoleConstants.Practitioner))
 			{
+				return RedirectToAction("UserProfile", "Users", new { _context.tblPractitioner.Where(p => p.UserId == _userManager.GetUserAsync(User).Result.Id).FirstOrDefault().Id });
 				var userId = _userManager.GetUserId(User);
 				var patient = _context.tblPractitioner.SingleOrDefault(c => c.UserId == userId);
 				var patientId = patient.Id;
@@ -97,10 +98,11 @@ namespace eNompilo.v3._0._1.Controllers
                     Practitioner = practitioner
                 };
 
-                return View(viewModel);
+				return View(viewModel);
             }
 			else if (_signInManager.IsSignedIn(User) && User.IsInRole(RoleConstants.Receptionist))
 			{
+				return RedirectToAction("UserProfile", "Users", new { _context.tblReceptionist.Where(p => p.UserId == _userManager.GetUserAsync(User).Result.Id).FirstOrDefault().Id });
 				var userId = _userManager.GetUserId(User);
 				var patient = _context.tblReceptionist.SingleOrDefault(c => c.UserId == userId);
 				var patientId = patient.Id;
@@ -114,7 +116,7 @@ namespace eNompilo.v3._0._1.Controllers
                     Receptionist = receptionist
                 };
 
-                return View(viewModel);
+				return View(viewModel);
             }
 
 			return View();

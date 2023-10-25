@@ -27,10 +27,10 @@
 
 }
 
-  
 
 
 
+<button class="btn btn-danger" id="btnReport">Print</button>
 
 <div class="margined-page pt-4">
 <h2>Practitioner Recommendations</h2>
@@ -103,17 +103,8 @@
 </div>
 
    
-        <div>
+<div>
             <a asp-controller="Home" asp-action="Index">Back to Home</a>
-        </div>
-        @section Scripts{ 
-            @{
-                await Html.RenderPartialAsync("_ValidationScriptsPartial");
-            }
-            <script>
-            </script>
-        }
-        
-
+ </div>
 
 

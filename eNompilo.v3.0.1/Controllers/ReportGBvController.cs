@@ -28,7 +28,7 @@ namespace eNompilo.v3._0._1.Controllers
             {
                 if (User.IsInRole(RoleConstants.Patient))
                 {
-                    IEnumerable<ReportGBV> objList = _context.tblReportGBV.Where(va => va.Archived == false).ToList();
+                    IEnumerable<ReportGBV> objList = _context.tblReportGBV.Where(va => va.Archived == false && va.Patient.UserId == _userManager.GetUserAsync(User).Result.Id).Include(p=>p.Patient).ToList();
                     return View(objList);
                 }
                 else if (User.IsInRole(RoleConstants.Admin))

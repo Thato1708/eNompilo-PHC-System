@@ -2,6 +2,7 @@
 using eNompilo.v3._0._1.Models;
 using eNompilo.v3._0._1.Models.SystemUsers;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace eNompiloCounselling.Controllers
 {
@@ -15,16 +16,15 @@ namespace eNompiloCounselling.Controllers
         }
         public IActionResult Index()
         {
-            IEnumerable<Session> objList = dbContext.tblSession;
+            IEnumerable<Session> objList = dbContext.tblSession.Include(x=>x.Patient).Include(x=>x.Practitioner);
             return View(objList);
         }
 
         public IActionResult NewSession()
         {
-            IEnumerable<SessionNotes> objList = dbContext.tblSessionNotes;
             //Will (hopefully) display session notes into the session page below the Take Notes page.
             //Just reference the session notes bit
-            return View(objList);
+            return View();
         }
 
         public IActionResult Details(int? Id) 

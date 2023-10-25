@@ -7,9 +7,11 @@ using Microsoft.EntityFrameworkCore;
 using eNompilo.v3._0._1.Constants;
 using eNompilo.v3._0._1.Models.ViewModels;
 using eNompilo.v3._0._1.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace eNompilo.v3._0._1.Controllers
 {
+	[Authorize]
 	public class SMPAppointmentController : Controller
 	{
 		private readonly ApplicationDbContext dbContext;

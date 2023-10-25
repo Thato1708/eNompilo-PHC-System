@@ -5,14 +5,33 @@
     Layout = "~/Views/Shared/_DashboardLayout.cshtml";
 }
 
-<button class="btn btn-danger" id="btnReport">Print</button>
+<head>
+    <!-- Correct the path to jQuery library -->
+    <script src="path/to/jquery.js"></script>
+    <script>
+        // Wait for the document to be ready
+        $(document).ready(function () {
+            // Select the button by its ID
+            $('#btnRepor567t').click(function () {
+                // Replace this with the appropriate selector for your content
+                var contentToPrint = $('#report').html();
+                document.body.innerHTML = contentToPrint;
+                window.print();
+                location.reload();
+            });
+        });
+    </script>
+</head>
+
+<button class="btn btn-danger" id="btnRepor567t">Print</button>
 
 <!DOCTYPE html>
 <html>
 <head>
     <title>Click Function Example</title>
 </head>
-<body>
+<body id="report">
+    <div id="report">
     <dl class="row" style="margin-left:auto; margin-right:auto;">
         <dt class="col-sm-2 mb-4">
             Name of Practitioner
@@ -42,7 +61,12 @@
                         @Html.DisplayFor(Model=>Model.Reffered)
                     </dd>
                     </div>
-                    </div>
+                    </dl>
+                    </dl>
+                    </dl>
+  <div>
+    <div>
+    <div>
 </body>
 </html>
 

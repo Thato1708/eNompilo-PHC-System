@@ -6,11 +6,6 @@
 
 <style>
     /* Add some basic styling for the quiz */
-    body {
-        font-family: Arial, sans-serif;
-        text-align: center;
-    }
-
     h1 {
         color: #333;
     }
@@ -28,7 +23,7 @@
     }
 </style>
 
-<div class="container">
+<div class="container margined-page">
 
     <h1>Mental and Emotional Well-being Quiz</h1>
     <div id="quiz">
@@ -132,10 +127,10 @@
 		// Determine the user's well-being state based on the total score
 		let resultText, adviceText;
 
-		if (totalScore <= 10) {
+		if (totalScore <= 13) {
 			resultText = "You are in a good state of mental and emotional well-being.";
 			adviceText = "Keep up the good work, and remember to prioritize self-care.";
-		} else if (totalScore > 10 && totalScore <= 20) {
+		} else if (totalScore > 13 && totalScore <= 20) {
 			resultText = "You may be experiencing some stress and emotional challenges.";
 			adviceText = "Consider seeking support from a mental health professional and practicing stress-reduction techniques.";
 		} else {

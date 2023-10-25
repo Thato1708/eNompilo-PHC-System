@@ -1,10 +1,33 @@
 ﻿@model eNompilo.v3._0._1.Models.GBV.GbvRecommendations
 @using eNompilo.v3._0._1.Constants;
 @inject IHttpContextAccessor contextAccessor
+@using Microsoft.AspNetCore.Identity;
+@using eNompilo.v3._0._1.Models.SystemUsers;
+@inject UserManager<ApplicationUser> UserManager
+@inject SignInManager<ApplicationUser> SignInManager
+@inject eNompilo.v3._0._1.Areas.Identity.Data.ApplicationDbContext _context
 
 @{
     ViewData["Title"] = "Update";
     Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+
+    var patient = _context.tblPatient.Select(p => new SelectListItem
+            {
+                Value = p.Id.ToString(),
+                Text = p.FirstName + " " + p.LastName + " (" + p.IdNumber + ")",
+            }).ToList();
+      
+    var practitioner = _context.tblPractitioner.Select(p => new SelectListItem
+            {
+                Value = p.Id.ToString(),
+                Text = p.Users.FirstName + " " + p.Users.LastName,
+            }).ToList();
+
+    var practitionerValue = _context.tblPractitioner.Where(p => p.UserId == UserManager.GetUserAsync(User).Result.Id).FirstOrDefault().Id;
+
+
+
+
 }
 
 <div class="margined-page pt-4">
@@ -15,25 +38,33 @@
             <form asp-action="Update">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group mb-4">
-                    <label asp-for="PractitionerId" class="control-label"></label>
-                    <input asp-for="PractitionerId" class="form-control" />
-                </div>
-                <div class="form-group mb-4">
-                    <label asp-for="PatientId" class="control-label"></label>
-                    <input asp-for="PatientId" class="form-control" />
-                </div>
+                <label asp-for="PractitionerId" class="control-label"></label>
+                <select asp-for="PractitionerId" class="form-control" asp-items="@(new SelectList(practitioner,"Value","Text"))">
+                    <option disabled selected hidden>Please select an option</option>
+                    </select>               
+            </div>
+            <div class="form-group mb-4">
+                <label asp-for="PatientId" class="control-label"></label>
+                <select asp-for="PatientId" class="form-control" asp-items="@(new SelectList(patient, "Value", "Text"))">
+                    <option disabled selected hidden>Please select an option</option>
+                </select>               
+            </div>
                 <div class="form-group mb-4">
                     <label asp-for="Date" class="control-label"></label>
                     <input asp-for="Date" class="form-control" />
                 </div>
-                <div class="form-group mb-4">
-                    <label asp-for="Reffered" class="control-label"></label>
-                    <input asp-for="Reffered" class="form-control" />
-                </div>
-                <div class="form-group mb-4">
-                    <label asp-for="PractitionerRecommendation" class="control-label"></label>
-                    <input asp-for="PractitionerRecommendation" class="form-control" />
-                </div>
+              <div class="form-group mb-4">
+                <label asp-for="Reffered" class="control-label"></label>
+                    <select asp-for="Reffered" class="form-control">
+                        <option disabled selected hidden>Please select an option</option>
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>               
+            </div>
+            <div class="form-group mb-4">
+                <label asp-for="PractitionerRecommendation" class="control-label"></label>
+                    <textarea asp-for="PractitionerRecommendation" class="form-control"></textarea>               
+            </div>
                 <div class="form-group mb-4">
                     <input type="submit" value="Submit" class="btn btn-primary" />
                 </div>

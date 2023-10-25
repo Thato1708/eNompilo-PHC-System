@@ -1,0 +1,60 @@
+﻿@model eNompilo.v3._0._1.Models.GBV.GbvRecommendations
+
+@{
+    ViewData["Title"] = "View";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+<div class="row pt-2">
+    <button onclick="window.print()" class="btn btn-primary col-2">
+        <i class="bx bxs-printer" style="color:#01acff"></i>
+        Print
+    </button>
+</div>
+
+<div class="margined-page pt-4">
+</div>
+    <h2>Practitioner Recommendation</h2>
+    <hr />
+    <dl class="row" style="margin-left:auto;margin-right:auto;"  
+    <dt class="col-sm-2 mb-4">
+        Name Of Practitioner
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(Model =>Model.PractitionerId)
+    </dd>
+    <dt class="col-sm-2 mb-4">
+        Name Of Patient
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(Model =>Model.PatientId)
+    </dd>
+     <dt class="col-sm-2 mb-4">
+        Date of Recommendation
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(Model =>Model.Date)
+     </dd>     
+     <dt class="col-sm-2 mb-4">
+        Practitioner Recommendation
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(Model =>Model.PractitionerRecommendation)
+     </dd>
+     </dl>
+</div>
+  
+
+
+
+
+
+
+ 
+                        
+
+
+
+        
+
+        

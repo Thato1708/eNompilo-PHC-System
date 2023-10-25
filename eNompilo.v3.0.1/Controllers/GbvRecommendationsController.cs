@@ -67,7 +67,7 @@ namespace eNompilo.v3._0._1.Controllers
             
         }
 
-        public IActionResult Details(int? Id)
+        public IActionResult View(int? Id)
         {
             var obj = _context.tblRecommendations.Find(Id);
             if (obj == null)

@@ -126,6 +126,17 @@
                             </div>
                         </div>
 
+                        <div class="dashboard-nav-dropdown">
+                            <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle">
+                                <i class="bi bi-heart-pulse" style="font-size:1.5rem;"></i> Specialised Medical Procedures
+                            </a>
+                            <div class="dashboard-nav-dropdown-menu">
+                                <a asp-controller="Home" asp-action="ProcedureVideos" class="dashboard-nav-dropdown-item">Procedure Videos</a>
+                                <a asp-controller="SMPAppointment" asp-action="Index" class="dashboard-nav-dropdown-item">My Appointments</a>
+                                <a asp-controller="SMPAppointment" asp-action="SMPBookAppointment" class="dashboard-nav-dropdown-item">Book A Medical Procedure </a>
+                            </div>
+                        </div>
+
                         <a asp-controller="Practitioner" asp-action="Index" class="dashboard-nav-item"><i class="bi bi-people-fill me-2" style="font-size:1.5rem;"></i> Practitioners</a>
 
 

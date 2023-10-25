@@ -1,5 +1,6 @@
 ﻿using eNompilo.v3._0._1.Models.Counselling;
 using eNompilo.v3._0._1.Models.Family_Planning;
+using eNompilo.v3._0._1.Models.SMP;
 using eNompilo.v3._0._1.Models.SystemUsers;
 using eNompilo.v3._0._1.Models.Vaccination;
 using System.ComponentModel.DataAnnotations;
@@ -56,6 +57,7 @@ namespace eNompilo.v3._0._1.Models.ViewModels
         public List<FamilyPlanningAppointment>? FPAppointment { get; set; }
 
         public List<VaccinationAppointment>? VaccinationAppointment { get; set; }
+        public List<SMPAppointment>? SMPAppointment { get; set; }
 
 
     }

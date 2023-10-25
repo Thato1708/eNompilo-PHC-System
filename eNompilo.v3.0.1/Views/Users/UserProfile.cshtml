@@ -28,6 +28,7 @@
 	var counsellingAppointments = _context.tblCounsellingAppointment.Where(p => p.Patient.UserId == user.Id).FirstOrDefault();
 	var familyPlanningAppointments = _context.tblFamilyPlanningAppointment.Where(p => p.Patient.UserId == user.Id).FirstOrDefault();
 	var vaccinationAppointments = _context.tblVaccinationAppointment.Where(p => p.Patient.UserId == user.Id).FirstOrDefault();
+	var procedureAppointments = _context.tblMedicalProcedureAppointment.Where(p => p.Patient.UserId == user.Id).FirstOrDefault();
 
 	var dayOfLastLogin = (DateTime.UtcNow - user.CreatedOn).Days;
 	var userTypeAge = 0;
@@ -332,6 +333,39 @@
 												}
 									</td>
 								</tr>
+								<tr><th colspan="3"><center>Medical Procedure Appointments</center></th></tr>
+										@foreach (var i in Model.SMPAppointment.OrderBy(ga=>ga.PreferredDate).OrderBy(ga => ga.PreferredTime).ToList())
+										{
+											<tr>
+												<td>
+													@if ((i.PreferredDate == DateTime.Now.Date && TimeOnly.FromDateTime(Convert.ToDateTime(i.PreferredTime)) == currentTime) || (i.PreferredDate == DateTime.Now.Date && TimeOnly.FromDateTime(Convert.ToDateTime(i.PreferredTime)) > currentTime))
+													{
+														@Html.DisplayFor(modelItem => i.PreferredDate) <span class="text-warning"><strong>(Due Today!)</strong></span>
+													}
+													else if (i.PreferredDate < DateTime.Now.Date || (i.PreferredDate == DateTime.Now.Date && TimeOnly.FromDateTime(Convert.ToDateTime(i.PreferredTime)) < currentTime))
+													{
+														@Html.DisplayFor(modelItem => i.PreferredDate) <span class="text-danger"><strong>(Passed Appointment!)</strong></span>
+													}
+													else
+													{
+														@Html.DisplayFor(modelItem => i.PreferredDate) <span class="text-success"><strong>(Upcoming!)</strong></span>
+													}
+												</td>
+										<td>
+													@Convert.ToDateTime(i.PreferredTime).ToString("HH:mm")
+										</td>
+										<td>
+													@if (i.SessionConfirmed)
+													{
+														<span class="text-success"><strong>Booking confirmed with @i.Practitioner.Users.Titles. @i.Practitioner.Users.FirstName @i.Practitioner.Users.LastName</strong></span>
+													}
+													else
+													{
+														<span><strong>Booking Pending</strong></span>
+													}
+										</td>
+											</tr>
+										}
 									}
 
 						</tbody>

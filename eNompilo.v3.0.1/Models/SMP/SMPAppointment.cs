@@ -4,13 +4,15 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using RequiredAttribute = Microsoft.Build.Framework.RequiredAttribute;
 
+
+
 namespace eNompilo.v3._0._1.Models.SMP
 {
 	public class SMPAppointment
 	{
 		[Key]
 		public int Id { get; set; }
-
+		
 		[Required]
 		[Display(Name = "Have you or a family member ever had a serious reaction to anesthesia (other than nausea and vomiting)?")]
 		public bool AnaesthesiaReaction { get; set; }

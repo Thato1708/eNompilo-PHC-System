@@ -62,5 +62,9 @@ namespace eNompilo.v3._0._1.Models.SystemUsers
 
         [Required]
         public bool Archived { get; set; } = false;
+        public string FullName
+        {
+            get { return $"{FirstName} {LastName}"; }
+        }
     }
 }

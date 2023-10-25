@@ -12,31 +12,31 @@ namespace eNompilo.v3._0._1.Models
         public int Id { get; set; }
 
         [Required]
+        [ForeignKey("Patient")]
         public int PatientId { get; set; }
-        [ForeignKey("PatientId")]
-        public Patient Patient { get; set; }
+        public virtual Patient? Patient { get; set; }
 
+        [ForeignKey("Practitioner")]
         public int? PractitionerId { get; set; }
-        [ForeignKey("PractitionerId")]
-        public Practitioner Practitioner { get; set; }
+        public virtual Practitioner? Practitioner { get; set; }
 
         [NotMapped]
+        [ForeignKey("VaccinationAppointment")]
         public int VaccinationAppointmentId { get; set; }
-        [ForeignKey("VaccinationAppointmentId")]
         [NotMapped]
-        public VaccinationAppointment VaccinationAppointment { get; set; }
+        public virtual VaccinationAppointment? VaccinationAppointment { get; set; }
 
         [NotMapped]
+        [ForeignKey("CounsellingAppointment")]
         public int CounsellingAppointmentId { get; set; }
-        [ForeignKey("CounsellingAppointmentId")]
         [NotMapped]
-        public CounsellingAppointment CounsellingAppointment { get; set; }
+        public virtual CounsellingAppointment? CounsellingAppointment { get; set; }
 
         [NotMapped]
+        [ForeignKey("GeneralAppointment")]
         public int GeneralAppointmentId { get; set; }
-        [ForeignKey("GeneralAppointmentId")]
         [NotMapped]
-        public GeneralAppointment GeneralAppointment { get; set; }
+        public virtual GeneralAppointment? GeneralAppointment { get; set; }
 
         [Required]
         [Display(Name = "Did patient arrive for session?")]
@@ -54,9 +54,9 @@ namespace eNompilo.v3._0._1.Models
         [Display(Name = "Session end time")]
         public DateTime? EndTime { get; set; }
 
+        [ForeignKey("SessionNotes")]
         public int SessionNotesId { get; set; }
-        [ForeignKey("SessionNotesId")]
-        public SessionNotes? SessionNotes { get; set; }
+        public virtual SessionNotes? SessionNotes { get; set; }
 
         [Required]
         public bool Archived { get; set; }

@@ -98,7 +98,9 @@
                             <div class='dashboard-nav-dropdown-menu'>
                                 <a asp-controller="CounsellingAppointment" asp-action="Book" class="dashboard-nav-dropdown-item">Book to See a Counsellor</a>
                                 <a asp-controller="CounsellingAppointment" asp-action="Index" class="dashboard-nav-dropdown-item">View All Counselling Appointments</a>
-                                <a asp-controller="Counselling" asp-action="AdditionalResources" class="dashboard-nav-dropdown-item">Additional Resources (dont open 😭)</a>
+                                <a asp-controller="Counselling" asp-action="AdditionalResources" class="dashboard-nav-dropdown-item">Additional Resources (don't open 😭)</a>
+                                <a asp-controller="Counselling" asp-action="BreathingExercise" class="dashboard-nav-dropdown-item">Breathing Exercises</a>
+                                <a asp-controller="Counselling" asp-action="MentalQuiz" class="dashboard-nav-dropdown-item">Mental State Quiz</a>
                             </div>
                         </div>
 
@@ -110,8 +112,21 @@
                                 <a asp-controller="Family" asp-action="RecommendContraceptive" class="dashboard-nav-dropdown-item">+ Recommend Contraceptive</a>
                                 <a asp-controller="Family" asp-action="Info" class="dashboard-nav-dropdown-item">+ Contraceptive Info</a>
                                 <a asp-controller="Family" asp-action="Index" class="dashboard-nav-dropdown-item">+ Booking</a>
-                                <a asp-controller="FamilyPlanningAppointment" asp-action="Book" class="dashboard-nav-dropdown-item">Book For Family Planning</a>
-                                <a asp-controller="FamilyPlanningAppointment" asp-action="Index" class="dashboard-nav-dropdown-item">Family Planning Appointments</a>
+                                <a asp-controller="Family" asp-action="PatientRecords" class="dashboard-nav-dropdown-item">+ User Report</a>
+                                <a asp-controller="Family" asp-action="PatientRecord" class="dashboard-nav-dropdown-item">+ View Records</a>
+
+                                @*  Give feedback about the contracptive, change the action from info to feedback*@
+                            </div>
+                        </div>
+
+                        <div class='dashboard-nav-dropdown'>
+                            <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle">
+                                <i class="bi bi-person-fill-slash me-2" style="font-size:1.5rem;"></i> Gender-Based Violence
+                            </a>
+                            <div class='dashboard-nav-dropdown-menu'>
+                                <a asp-controller="GbvFaq" asp-action="Index" class="dashboard-nav-dropdown-item">GBV Frequently Asked Questions</a>
+                                <a asp-controller="ReportGBv" asp-action="report" class="dashboard-nav-dropdown-item">Report GBV</a>
+                                <a asp-controller="GbvSupport" asp-action="Create" class="dashboard-nav-dropdown-item">Support Group Registration</a>
                                 @*  Give feedback about the contracptive, change the action from info to feedback*@
                             </div>
                         </div>
@@ -211,6 +226,17 @@
                             </div>
                         </div>
 
+                        <div class="dashboard-nav-dropdown">
+                            <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle">
+                                    <i class="bi bi-person-fill-slash me-2" style="font-size:1.5rem;"></i> Gender-Based Violence
+                            </a>
+
+                            <div class="dashboard-nav-dropdown-menu">
+                                <a asp-controller="GbvRecommendations" asp-action="Recommendations" class="dashboard-nav-dropdown-item">Make new Recommendation</a>
+                                <a asp-controller="GbvRecommendations" asp-action="Index" class="dashboard-nav-dropdown-item">Recommendations made</a>
+                               
+                            </div>
+                        </div>
 
                         <div class="dashboard-nav-dropdown">
                             <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle">
@@ -222,6 +248,8 @@
                                 <a asp-controller="FamilyPlanningAppointment" asp-action="Index" class="dashboard-nav-dropdown-item">Confirmed Family Planning Appointments</a>
 
                             </div>
+
+
                         </div>
                         }
                         

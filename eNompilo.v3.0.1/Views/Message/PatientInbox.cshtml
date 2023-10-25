@@ -6,23 +6,34 @@
 }
 
 <div class="margined-page pt-4">
-    <h2>Inbox</h2>
+    <h2 class="text-center">Inbox</h2>
     <hr />
-    <div class="row">
-        <ul class="list-group">
-            @foreach (var message in Model)
-            {
-                <li class="list-group-item">
-                    <a asp-action="PatientCreate" asp-route-id="@message.Id">
-                        From: @message.SenderUser - @message.Timestamp.ToString("yyyy-MM-dd HH:mm:ss")
-                    </a>
-                </li>
-            }
-        </ul>
+
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <ul class="list-group">
+                @foreach (var message in Model)
+                {
+                    <li class="list-group-item">
+                        <div class="message-container">
+                            <div class="message-sender">
+                                From: @message.SenderUser
+                            </div>
+                            <div class="message-timestamp">
+                                @message.Timestamp.ToString("yyyy-MM-dd HH:mm:ss")
+                            </div>
+                            <a asp-action="PatientCreate" asp-route-id="@message.Id" class="message-link">
+                                @message.Content
+                            </a>
+                        </div>
+                    </li>
+                }
+            </ul>
+        </div>
     </div>
 
-    <div>
-        <a asp-action="Index">Back to List</a>
+    <div class="text-center">
+        <a asp-controller="Family" asp-action="Index" class="btn btn-secondary">Back to List</a>
     </div>
 </div>
 
@@ -31,3 +42,24 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 }
+
+<style>
+    .message-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .message-sender {
+        font-weight: bold;
+    }
+
+    .message-timestamp {
+        color: #888;
+    }
+
+    .message-link {
+        text-decoration: none;
+        color: #333;
+    }
+</style>

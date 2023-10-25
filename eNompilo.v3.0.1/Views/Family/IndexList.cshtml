@@ -90,19 +90,19 @@
                                                 </td>
 
                                                 <td>
-                                                    <a asp-action="PatientDetails" asp-route-id="@item.ResponsiblePractitionerId">View Patient Details</a>
-                                                    <a asp-action="CreateFamilyPlanningMedicalRecord" asp-route-id="@item.Id">Add Record</a>
-                                                    <a asp-action="Createreacord" metode="post">Add Record</a>
+                                                    <a asp-action="PatientDetails" asp-route-id="@item.ResponsiblePractitionerId"><i class="bi bi-info-square-fill text-secondary"></i></a>
+                                                   <a asp-action="Createreacord" metode="post"><i class="bi bi-plus"></i></a>
                                                 </td>
                                                 <td>
-                                                    <a asp-action="Detailz" asp-route-id="@item.Id">Details</a> |
-                                                    @if (item.IsCollected == false )
+                                                    <a asp-action="Detailz" asp-route-id="@item.Id"><i class="bi bi-info-circle"></i></a>
+                                                    @if (item.IsCollected == false)
                                                     {
-                                                        <form asp-action="Collect" asp-route-id="@item.Id" method="post" onsubmit="return confirm('Areyou sure the correct patient has collected the correct prescription?');">
-                                                            <button type="submit" class="btn btn-primary">Collect</button>
+                                                        <form asp-action="Collect" asp-route-id="@item.Id" method="post" onsubmit="return confirm('Are you sure the correct patient has collected the correct prescription?');">
+                                                            <button type="submit" class="btn btn-primary"><i class="bi bi-check-circle"></i> </button>
                                                         </form>
                                                     }
                                                 </td>
+
                                             </tr>
                                         }
                                     </tbody>

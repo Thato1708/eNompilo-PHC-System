@@ -6,10 +6,8 @@
 }
 
 <h1>Family planning records</h1>
-<hr/>
-<p>
-    <a asp-action="CreateRecord">Add New</a>
-</p>
+<hr />
+
 <table class="table">
     <thead>
         <tr>
@@ -35,28 +33,29 @@
                 @Html.DisplayNameFor(model => model.DosageDuration)
             </th>
             <th>
-               Appointment
+                Appointment
             </th>
-            
+
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateOfVisit)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MedicalNotes)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StartDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EndDate)
-            </td>
-            <td>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateOfVisit)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MedicalNotes)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EndDate)
+                </td>
+                <td>
                     @if (item.IsDiscontinued == true)
                     {
                         <span>Yes</span>
@@ -69,19 +68,19 @@
                     {
                         <span>N/A</span> <!-- Display "N/A" for null values -->
                     }
-            </td>
-               
-            <td>
-                @Html.DisplayFor(modelItem => item.DosageAmount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DosageDuration)
-            </td>
-            <td>
-                <a asp-action="RecordAppointmentDetails" asp-route-id="@item.FamilyPlanningAppointmentId">View Appointment</a> |
-            </td>
-            
-            <td>
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.DosageAmount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DosageDuration)
+                </td>
+                <td>
+                    <a asp-action="RecordAppointmentDetails" asp-route-id="@item.FamilyPlanningAppointmentId">View Appointment</a> |
+                </td>
+
+                <td>
                     @if (item.IsDiscontinued == false)
                     {
                         <form asp-controller="Family" asp-action="RecordEdit" asp-route-id="@item.Id" method="post" onsubmit="return confirm('Clicking this means the patient no longer requires this contraceptive?');">
@@ -90,13 +89,13 @@
                         </form>
 
                     }
-                    
+
                     <a asp-action="RecordAppointmentDetails" asp-route-id="@item.Id">Details</a>
-            </td>
-        </tr>
-}
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
 <div class="text-center mt-3">
-    <a asp-controller="Family" asp-action="IndexList">Back to List</a>
+    <a asp-controller="Family" asp-action="Index">Back to List</a>
 </div>

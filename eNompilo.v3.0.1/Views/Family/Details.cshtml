@@ -30,10 +30,19 @@
             @Html.DisplayFor(model => model.PreferredTime)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IsCollected)
+            Collection Status
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IsCollected)
+            @{
+                string status = "N/A"; // Default value
+
+                if (Model.IsCollected.HasValue)
+                {
+                    status = Model.IsCollected.Value ? "Collected" : "Pending";
+                }
+
+                @status
+            }
         </dd>
     </dl>
 </div>

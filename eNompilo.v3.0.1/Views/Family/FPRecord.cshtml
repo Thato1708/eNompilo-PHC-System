@@ -86,7 +86,7 @@
                     {
                         <form asp-controller="Family" asp-action="RecordEdit" asp-route-id="@item.Id" method="post" onsubmit="return confirm('Clicking this means the patient no longer requires this contraceptive?');">
                             @Html.AntiForgeryToken()
-                            <button type="submit" class="btn btn-primary">Discontinue This Record</button>
+                            <button type="submit" class="btn btn-primary">Discontinue Contraceptive</button>
                         </form>
 
                     }

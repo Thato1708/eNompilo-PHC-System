@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using eNompilo.v3._0._1.Constants;
+using System.Text.RegularExpressions;
 
 namespace eNompilo.v3._0._1.Controllers
 {
@@ -32,6 +34,17 @@ namespace eNompilo.v3._0._1.Controllers
         {
             return View();
         }
+        public string GetYoutubeVideoId(string url)
+        {
+            var videoId = string.Empty;
+            var regex = new Regex(@"youtu(?:\.be\/|be\.com\/watch\?v=|\.com\/)([\w-]{11})", RegexOptions.IgnoreCase);
+            var match = regex.Match(url);
+            if (match.Success)
+            {
+                videoId = match.Groups[1].Value;
+            }
+            return videoId;
+        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -51,7 +64,17 @@ namespace eNompilo.v3._0._1.Controllers
             }
             if (model.ImageName != null && model.Title != null && model.Description != null && model.YoutubeLink != null)
             {
-                dbContext.tblAddResources.Add(model);
+                var videoId = GetYoutubeVideoId(model.YoutubeLink);
+                var embedUrl = $"https://www.youtube.com/embed/{videoId}";
+                var obj = new AddResources
+                {
+                    Title = model.Title,
+                    Description = model.Description,
+                    ImageName = model.ImageName,
+                    YoutubeLink = embedUrl,
+                };
+
+                dbContext.tblAddResources.Add(obj);
                 dbContext.SaveChanges();
                 return RedirectToAction("AdditionalResources");
             }

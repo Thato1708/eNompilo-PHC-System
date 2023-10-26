@@ -159,5 +159,78 @@
 				</div>
 			</div>
 		}
+
+		else if (User.IsInRole(RoleConstants.Patient) || User.IsInRole(RoleConstants.Practitioner))
+		{
+			<h2>Update Your User Details</h2>
+
+			<hr />
+			<div class="row d-flex align-items-center">
+				<div class="col-md-4" style="margin-left:auto;margin-right:auto;">
+					<form asp-action="EditUser" method="post">
+						<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+						<input type="hidden" asp-for="Id" />
+						<div class="form-group mb-4" hidden>
+							<label asp-for="IdNumber" class="control-label"></label>
+							<input asp-for="IdNumber" class="form-control" />
+							<span asp-validation-for="IdNumber" class="text-danger"></span>
+						</div>
+						<div class="form-group mb-4" hidden>
+							<label asp-for="Titles" class="control-label"></label>
+							<select asp-for="Titles" class="form-control" asp-items="Html.GetEnumSelectList<Titles>()">
+								<option disabled selected hidden>Please select an option</option>
+							</select>
+							<span asp-validation-for="Titles" class="text-danger"></span>
+						</div>
+						<div class="row mb-4 d-flex align-content-between" hidden>
+							<div class="col-6 form-group">
+								<label asp-for="FirstName" class="control-label"></label>
+								<input asp-for="FirstName" class="form-control" placeholder="Enter your first name" />
+								<span asp-validation-for="FirstName" class="text-danger"></span>
+							</div>
+							<div class="col-6 form-group">
+								<label asp-for="MiddleName" class="control-label"></label>
+								<input asp-for="MiddleName" class="form-control" placeholder="Enter your middle name" />
+								<span asp-validation-for="MiddleName" class="text-danger"></span>
+							</div>
+						</div>
+
+						<div class="form-group mb-4">
+							<label asp-for="LastName" class="control-label"></label>
+							<input asp-for="LastName" class="form-control" placeholder="Enter your last name" />
+							<span asp-validation-for="LastName" class="text-danger"></span>
+						</div>
+
+						<div class="form-group mb-4">
+							<label asp-for="Email" class="control-label"></label>
+							<input asp-for="Email" class="form-control" placeholder="Enter your email address" />
+							<span asp-validation-for="Email" class="text-danger"></span>
+						</div>
+
+						@* <div class="form-group mb-4">
+							<label asp-for="UserRole" class="control-label"></label>
+							<select asp-for="UserRole" class="form-control" id="roleChanged" asp-items="Html.GetEnumSelectList<UserRole>()">
+								<option disabled selected hidden>Please select an option</option>
+							</select>
+							<span asp-validation-for="UserRole" class="text-danger"></span>
+						</div> *@
+
+						<div class="form-group mb-4">
+							<label asp-for="PhoneNumber" class="control-label"></label>
+							<input asp-for="PhoneNumber" type="number" class="form-control" placeholder="Enter your phone number" />
+							<span asp-validation-for="PhoneNumber" class="text-danger"></span>
+						</div>
+						<div class="form-group form-check mb-4" hidden>
+							<label class="form-check-label">
+								<input class="form-check-input" asp-for="Archived" /> @Html.DisplayNameFor(model => model.Archived)
+							</label>
+						</div>
+						<div class="form-group mb-4">
+							<input type="submit" value="Update Account" class="btn btn-primary" />
+						</div>
+					</form>
+				</div>
+			</div>
+		}
 	}
 </div>

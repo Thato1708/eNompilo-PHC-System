@@ -34,6 +34,7 @@ namespace eNompilo.v3._0._1.Controllers
 		}
 		public IActionResult Index()
 		{
+			
 			IEnumerable<ApplicationUser> objList = _context.Users; //don't pull false arrchived as we need to confirm active and inactive accounts in the index
 			return View(objList);
 		}
@@ -443,6 +444,10 @@ namespace eNompilo.v3._0._1.Controllers
 
 			_context.tblPatient.Update(patient);
 			_context.SaveChanges();
+			if (User.IsInRole(RoleConstants.Patient))
+			{
+				return RedirectToAction("UserProfile");
+			}
 			return RedirectToAction("Index");
 		}
 
@@ -567,77 +572,69 @@ namespace eNompilo.v3._0._1.Controllers
 ;
 		}
 
-		//Edit Patient Details HERE!!!!
-		public IActionResult EditUserProfile(int? Id)
-		{
-			if(_signInManager.IsSignedIn(User) && User.IsInRole(RoleConstants.Patient))
-			{
-				var patient = _context.tblPatient.Where(u => u.Id == Id).FirstOrDefault();
-				if (patient == null)
-					return NotFound();
-				var generalApp = _context.tblGeneralAppointment.Where(ga=>ga.PatientId == patient.Id && ga.SessionConfirmed == true).Include(p=>p.Patient).Include(pr=>pr.Practitioner).ThenInclude(u=>u.Users).OrderBy(ga=>ga.PreferredDate).OrderBy(ga=>ga.PreferredTime).ToList();
-				var counsellinglApp = _context.tblCounsellingAppointment.Where(ga=>ga.PatientId == patient.Id && ga.SessionConfirmed == true).Include(p=>p.Patient).Include(pr=>pr.Practitioner).ThenInclude(u=>u.Users).OrderBy(ga=>ga.PreferredDate).OrderBy(ga=>ga.PreferredTime).ToList();
-				var fPApp = _context.tblFamilyPlanningAppointment.Where(ga=>ga.PatientId == patient.Id && ga.SessionConfirmed == true).Include(p=>p.Patient).Include(pr=>pr.Practitioner).ThenInclude(u=>u.Users).OrderBy(ga=>ga.PreferredDate).OrderBy(ga=>ga.PreferredTime).ToList();
-				var vaxApp = _context.tblVaccinationAppointment.Where(ga=>ga.PatientId == patient.Id && ga.SessionConfirmed == true).Include(p=>p.Patient).Include(pr=>pr.Practitioner).ThenInclude(u=>u.Users).OrderBy(ga=>ga.PreferredDate).OrderBy(ga=>ga.PreferredTime).ToList();
-				var model = new UserProfileViewModel
-				{
-					AppUserId = patient.UserId,
-					PatientId = patient.Id,
-					GeneralAppointment = generalApp,
-					CounsellingAppointment = counsellinglApp,
-					FPAppointment = fPApp,
-					VaccinationAppointment = vaxApp,
-				};
+		////Edit Patient Details HERE!!!!
+		//public IActionResult EditUserProfile(int? Id)
+		//{
 
-				return View(model);
+		//}
 
-            }
-			else if(_signInManager.IsSignedIn(User) && User.IsInRole(RoleConstants.Admin))
-			{
-				var admin = _context.tblAdmin.Where(u => u.Id == Id).FirstOrDefault();
-                if (admin == null)
-                    return NotFound();
+		////Edit Patient Details HERE!!!!
+		//public async Task<IActionResult> EditUserProfile(UserProfileViewModel model)
+		//{
 
-                var model = new UserProfileViewModel
-                {
-					AppUserId = admin.UserId,
-                    AdminId = admin.Id
-                };
-
-				return View(model);
-            }
-			else if(_signInManager.IsSignedIn(User) && User.IsInRole(RoleConstants.Practitioner))
-			{
-				var practitioner = _context.tblPractitioner.Where(u => u.Id == Id).FirstOrDefault();
-                if (practitioner == null)
-                    return NotFound();
-
-                var model = new UserProfileViewModel
-                {
-					AppUserId = practitioner.UserId,
-                    PractitionerId = practitioner.Id
-                };
-
-				return View(model);
-            }
-			else if(_signInManager.IsSignedIn(User) && User.IsInRole(RoleConstants.Receptionist))
-			{
-				var receptionist = _context.tblReceptionist.Where(u => u.Id == Id).FirstOrDefault();
-                if (receptionist == null)
-                    return NotFound();
-
-                var model = new UserProfileViewModel
-                {
-					AppUserId = receptionist.UserId,
-                    ReceptionistId = receptionist.Id
-                };
-
-				return View(model);
-            }
-
-			return NotFound();
-;
-		}
+		//	if (model.ApplicationUsers.UserRole == UserRole.Admin && model.Admins.ProfilePictureImageFile != null)
+		//	{
+		//		string wwwRootPath = webHostEnvironment.WebRootPath;
+		//		//string fileName = Path.GetFileNameWithoutExtension(model.ProfilePictureImageFile.FileName);
+		//		string fileName = model.ApplicationUsers.FirstName.ToLower().ToString() + "_" + model.ApplicationUsers.LastName.ToLower().ToString();
+		//		string ext = Path.GetExtension(model.Admins.ProfilePictureImageFile.FileName);
+		//		model.Admins.ProfilePicture = fileName = fileName + "_" + DateTime.Now.ToString("ddMMyyyyHHmmss") + ext;
+		//		string path = Path.Combine(wwwRootPath + "/img/uploads", fileName);
+		//		using (var fileStream = new FileStream(path, FileMode.Create))
+		//		{
+		//			await model.Admins.ProfilePictureImageFile.CopyToAsync(fileStream);
+		//		}
+		//	}
+		//	else if (model.ApplicationUsers.UserRole == UserRole.Practitioner && model.Practitioners.ProfilePictureImageFile != null)
+		//	{
+		//		string wwwRootPath = webHostEnvironment.WebRootPath;
+		//		//string fileName = Path.GetFileNameWithoutExtension(model.ProfilePictureImageFile.FileName);
+		//		string fileName = model.ApplicationUsers.FirstName.ToLower().ToString() + "_" + model.ApplicationUsers.LastName.ToLower().ToString();
+		//		string ext = Path.GetExtension(model.Practitioners.ProfilePictureImageFile.FileName);
+		//		model.Practitioners.ProfilePicture = fileName = fileName + "_" + DateTime.Now.ToString("ddMMyyyyHHmmss") + ext;
+		//		string path = Path.Combine(wwwRootPath + "/img/uploads", fileName);
+		//		using (var fileStream = new FileStream(path, FileMode.Create))
+		//		{
+		//			await model.Practitioners.ProfilePictureImageFile.CopyToAsync(fileStream);
+		//		}
+		//	}
+		//	else if (model.ApplicationUsers.UserRole == UserRole.Receptionist && model.Receptionists.ProfilePictureImageFile != null)
+		//	{
+		//		string wwwRootPath = webHostEnvironment.WebRootPath;
+		//		//string fileName = Path.GetFileNameWithoutExtension(model.ProfilePictureImageFile.FileName);
+		//		string fileName = model.ApplicationUsers.FirstName.ToLower().ToString() + "_" + model.ApplicationUsers.LastName.ToLower().ToString();
+		//		string ext = Path.GetExtension(model.Receptionists.ProfilePictureImageFile.FileName);
+		//		model.Receptionists.ProfilePicture = fileName = fileName + "_" + DateTime.Now.ToString("ddMMyyyyHHmmss") + ext;
+		//		string path = Path.Combine(wwwRootPath + "/img/uploads", fileName);
+		//		using (var fileStream = new FileStream(path, FileMode.Create))
+		//		{
+		//			await model.Receptionists.ProfilePictureImageFile.CopyToAsync(fileStream);
+		//		}
+		//	}
+		//	else if (model.ApplicationUsers.UserRole == UserRole.Patient && model.PersonalDetails.ProfilePictureImageFile != null)
+		//	{
+		//		string wwwRootPath = webHostEnvironment.WebRootPath;
+		//		//string fileName = Path.GetFileNameWithoutExtension(model.ProfilePictureImageFile.FileName);
+		//		string fileName = model.ApplicationUsers.FirstName.ToLower().ToString() + "_" + model.ApplicationUsers.LastName.ToLower().ToString();
+		//		string ext = Path.GetExtension(model.PersonalDetails.ProfilePictureImageFile.FileName);
+		//		model.PersonalDetails.ProfilePicture = fileName = fileName + "_" + DateTime.Now.ToString("ddMMyyyyHHmmss") + ext;
+		//		string path = Path.Combine(wwwRootPath + "/img/uploads", fileName);
+		//		using (var fileStream = new FileStream(path, FileMode.Create))
+		//		{
+		//			await model.PersonalDetails.ProfilePictureImageFile.CopyToAsync(fileStream);
+		//		}
+		//	}
+		//}
 	}
 }
 /*

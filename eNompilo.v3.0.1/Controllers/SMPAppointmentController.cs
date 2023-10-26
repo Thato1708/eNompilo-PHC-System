@@ -129,12 +129,12 @@ namespace eNompilo.v3._0._1.Controllers
 			if (obj.PractitionerId != null)
 				obj.SessionConfirmed= true;
 			
-			dbContext.tblMedicalProcedureAppointment.Update(model);
+			dbContext.tblMedicalProcedureAppointment.Update(obj);
 			dbContext.SaveChanges();
 			return RedirectToAction("Index");
 		}
 
-		public IActionResult Delete(int?Id)
+		public IActionResult Cancel(int?Id)
 		{
 			if (Id==0 || Id == null)
 			{
@@ -157,7 +157,7 @@ namespace eNompilo.v3._0._1.Controllers
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 
-		public IActionResult Delete(ArchiveItemViewModel model)
+		public IActionResult Cancel(ArchiveItemViewModel model)
 		{
 			if (!ModelState.IsValid)
 			{
@@ -180,7 +180,7 @@ namespace eNompilo.v3._0._1.Controllers
 
 		public IActionResult Details(int? Id)
 		{
-			var obj = dbContext.tblMedicalProcedureAppointment.Find(Id);
+			var obj = dbContext.tblMedicalProcedureAppointment.Where(p=>p.Id == Id).Include(p=>p.Patient).ThenInclude(p=>p.Users).Include(p=>p.Practitioner).ThenInclude(p=>p.Users).FirstOrDefault();
 			if (obj == null)
 			{
 				return View("PageNotFound", "Home");
@@ -188,5 +188,6 @@ namespace eNompilo.v3._0._1.Controllers
 			}
 			return View(obj);
 		}
+
 	}
 }

@@ -7,7 +7,7 @@
 @inject ApplicationDbContext _context
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Cancel";
     Layout = "~/Views/Shared/_DashboardLayout.cshtml";
 
     var smp = _context.tblMedicalProcedureAppointment.Where(va => va.Id == Model.Id).FirstOrDefault();
@@ -69,7 +69,7 @@
             </dd>*@
         </dl>
 
-        <form asp-action="Delete" method="post">
+        <form asp-action="Cancel" method="post">
             <input type="hidden" asp-for="Id" />
             <div class="form-group form-check mb-4">
                 <label class="form-check-label">

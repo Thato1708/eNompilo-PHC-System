@@ -40,6 +40,9 @@ namespace eNompilo.v3._0._1.Models.ViewModels
         [ForeignKey("VaccinationAppointment")]
         public int? VaccinationAppointmentId { get; set; }
 
+        [ForeignKey("SMPAppointment")]
+        public int? SMPAppoinmentId { get; set; }
+
         public DateTime LastLogin { get; set; }
 
         public virtual ApplicationUser ApplicationUsers { get; set; }

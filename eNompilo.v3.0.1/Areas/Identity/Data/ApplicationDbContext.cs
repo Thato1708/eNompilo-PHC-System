@@ -77,6 +77,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<SupportMembership> tblSupportGroup { get; set; }
     public DbSet<GbvRecommendations> tblRecommendations { get; set; }
     public DbSet<SMPAppointment> tblMedicalProcedureAppointment { get; set; }
+    public DbSet<AddResources> tblAddResources { get; set; }
 
 
     //Xoliswa Tables

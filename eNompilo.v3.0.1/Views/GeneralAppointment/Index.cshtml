@@ -32,7 +32,7 @@
     @if (User.IsInRole(RoleConstants.Patient))
     {
 		<div class="margined-page pt-4">
-            <h1>Index</h1>
+            <h1>Booking History</h1>
 
             <p>
                 <a asp-action="Book">Create New</a>
@@ -95,8 +95,8 @@
     else if (User.IsInRole(RoleConstants.Practitioner))
     {
 		<div class="margined-page pt-4">
-			
-            <h1>Index</h1>
+
+            <h1>Booking History</h1>
 
             <p>
                 <a asp-action="Book">Create New</a>

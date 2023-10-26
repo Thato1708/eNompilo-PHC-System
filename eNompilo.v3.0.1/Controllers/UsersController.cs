@@ -529,11 +529,21 @@ namespace eNompilo.v3._0._1.Controllers
 				var practitioner = _context.tblPractitioner.Where(u => u.Id == Id).FirstOrDefault();
                 if (practitioner == null)
                     return NotFound();
+                var generalApp = _context.tblGeneralAppointment.Where(ga => ga.PractitionerId == practitioner.Id && ga.SessionConfirmed == true).Include(p => p.Patient).ThenInclude(p => p.Users).Include(pr => pr.Practitioner).ThenInclude(u => u.Users).OrderBy(ga => ga.PreferredDate).OrderBy(ga => ga.PreferredTime).ToList();
+                var counsellinglApp = _context.tblCounsellingAppointment.Where(ga => ga.PractitionerId == practitioner.Id && ga.SessionConfirmed == true).Include(p => p.Patient).ThenInclude(p => p.Users).Include(pr => pr.Practitioner).ThenInclude(u => u.Users).OrderBy(ga => ga.PreferredDate).OrderBy(ga => ga.PreferredTime).ToList();
+                var fPApp = _context.tblFamilyPlanningAppointment.Where(ga => ga.PractitionerId == practitioner.Id && ga.SessionConfirmed == true).Include(p => p.Patient).ThenInclude(p => p.Users).Include(pr => pr.Practitioner).ThenInclude(u => u.Users).OrderBy(ga => ga.PreferredDate).OrderBy(ga => ga.PreferredTime).ToList();
+                var vaxApp = _context.tblVaccinationAppointment.Where(ga => ga.PractitionerId == practitioner.Id && ga.SessionConfirmed == true).Include(p => p.Patient).ThenInclude(p => p.Users).Include(pr => pr.Practitioner).ThenInclude(u => u.Users).OrderBy(ga => ga.PreferredDate).OrderBy(ga => ga.PreferredTime).ToList();
+                var smpApp = _context.tblMedicalProcedureAppointment.Where(ga => ga.PractitionerId == practitioner.Id && ga.SessionConfirmed == true).Include(p => p.Patient).ThenInclude(p => p.Users).Include(pr => pr.Practitioner).ThenInclude(u => u.Users).OrderBy(ga => ga.PreferredDate).OrderBy(ga => ga.PreferredTime).ToList();
 
                 var model = new UserProfileViewModel
                 {
 					AppUserId = practitioner.UserId,
-                    PractitionerId = practitioner.Id
+                    PractitionerId = practitioner.Id,
+					GeneralAppointment = generalApp,
+                    CounsellingAppointment = counsellinglApp,
+                    FPAppointment = fPApp,
+                    VaccinationAppointment = vaxApp,
+                    SMPAppointment = smpApp,
                 };
 
 				return View(model);

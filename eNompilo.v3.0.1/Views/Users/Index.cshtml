@@ -72,15 +72,7 @@
 
                     <td>
                         <a asp-action="EditUser" asp-route-id="@item.Id"><i class="bi bi-pencil-fill"></i></a> |
-                        <a asp-action="UserDetails" asp-route-id="@item.Id"><i class="bi bi-info-square-fill text-secondary"></i></a> |
-                        @if (item.Archived == false)
-                        {
-                            <a asp-action="DeleteUser" asp-route-id="@item.Id"><i class="bi bi-trash-fill text-danger"></i></a>
-                        }
-                        else
-                        {
-                            <a asp-action="DeleteUser" asp-route-id="@item.Id" style="pointer-events: none;"><i class="bi bi-trash-fill text-secondary"></i></a>
-                        }
+                        <a asp-action="UserDetails" asp-route-id="@item.Id"><i class="bi bi-info-square-fill text-secondary"></i></a> 
 
                     </td>
                 </tr>

@@ -1,111 +1,124 @@
-﻿
-@{
-    ViewData["Title"] = "Mental and Emotional Well-being Quiz";
-    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+﻿@{
+	ViewData["Title"] = "Mental and Emotional Well-being Quiz";
+	Layout = "~/Views/Shared/_DashboardLayout.cshtml";
 }
 
 <style>
-    /* Add some basic styling for the quiz */
-    h1 {
-        color: #333;
-    }
+	/* Add some basic styling for the quiz */
+	h1 {
+		color: #333;
+	}
 
-    .question {
-        margin: 20px 0;
-    }
+	.question {
+		margin: 20px 0;
+	}
 
-    .btn {
-        background-color: #007BFF;
-        color: white;
-        border: none;
-        padding: 10px 20px;
-        cursor: pointer;
-    }
+	/*.btn {
+			background-color: #007BFF;
+			color: white;
+			border: none;
+			padding: 10px 20px;
+			cursor: pointer;
+		}*/
 </style>
 
 <div class="container margined-page">
 
-    <h1>Mental and Emotional Well-being Quiz</h1>
-    <div id="quiz">
-        <div class="question">
-            <p>How often do you feel overwhelmed by stress?</p>
-            <input type="radio" name="q1" value="1">Rarely
-            <input type="radio" name="q1" value="2">Sometimes
-            <input type="radio" name="q1" value="3">Frequently
-        </div>
-        <div class="question">
-            <p>Do you often experience feelings of sadness or hopelessness?</p>
-            <input type="radio" name="q2" value="1">Rarely
-            <input type="radio" name="q2" value="2">Sometimes
-            <input type="radio" name="q2" value="3">Frequently
-        </div>
-        <div class="question">
-            <p>How often do you experience difficulty sleeping or insomnia?</p>
-            <input type="radio" name="q3" value="1">Rarely
-            <input type="radio" name="q3" value="2">Sometimes
-            <input type="radio" name="q3" value="3">Frequently
-        </div>
+	<h1>Mental and Emotional Well-being Quiz</h1>
+	<div id="quiz" style="font-size: 18px;">
+		<div class="question">
+			<p>How often do you feel overwhelmed by stress?</p>
+			<input type="radio" name="q1" value="1">Rarely<br />
+			<input type="radio" name="q1" value="2">Sometimes<br />
+			<input type="radio" name="q1" value="3">Frequently<br />
+		</div>
+		<div class="question">
+			<p>Do you often experience feelings of sadness or hopelessness?</p>
+			<input type="radio" name="q2" value="1">Rarely<br />
+			<input type="radio" name="q2" value="2">Sometimes<br />
+			<input type="radio" name="q2" value="3">Frequently<br />
+		</div>
+		<div class="question">
+			<p>How often do you experience difficulty sleeping or insomnia?</p>
+			<input type="radio" name="q3" value="1">Rarely<br />
+			<input type="radio" name="q3" value="2">Sometimes<br />
+			<input type="radio" name="q3" value="3">Frequently<br />
+		</div>
 
-        <div class="question">
-            <p>Do you find it challenging to concentrate or make decisions in your daily life?</p>
-            <input type="radio" name="q4" value="1">Rarely
-            <input type="radio" name="q4" value="2">Sometimes
-            <input type="radio" name="q4" value="3">Frequently
-        </div>
+		<div class="question">
+			<p>Do you find it challenging to concentrate or make decisions in your daily life?</p>
+			<input type="radio" name="q4" value="1">Rarely<br />
+			<input type="radio" name="q4" value="2">Sometimes<br />
+			<input type="radio" name="q4" value="3">Frequently<br />
+		</div>
 
-        <div class="question">
-            <p>How often do you feel anxious or experience panic attacks?</p>
-            <input type="radio" name="q5" value="1">Rarely
-            <input type="radio" name="q5" value="2">Sometimes
-            <input type="radio" name="q5" value="3">Frequently
-        </div>
+		<div class="question">
+			<p>How often do you feel anxious or experience panic attacks?</p>
+			<input type="radio" name="q5" value="1">Rarely<br />
+			<input type="radio" name="q5" value="2">Sometimes<br />
+			<input type="radio" name="q5" value="3">Frequently<br />
+		</div>
 
-        <div class="question">
-            <p>Have you lost interest in activities or hobbies you used to enjoy?</p>
-            <input type="radio" name="q6" value="1">Rarely
-            <input type="radio" name="q6" value="2">Sometimes
-            <input type="radio" name="q6" value="3">Frequently
-        </div>
+		<div class="question">
+			<p>Have you lost interest in activities or hobbies you used to enjoy?</p>
+			<input type="radio" name="q6" value="1">Rarely<br />
+			<input type="radio" name="q6" value="2">Sometimes<br />
+			<input type="radio" name="q6" value="3">Frequently<br />
+		</div>
 
-        <div class="question">
-            <p>How often do you feel isolated or lonely?</p>
-            <input type="radio" name="q7" value="1">Rarely
-            <input type="radio" name="q7" value="2">Sometimes
-            <input type="radio" name="q7" value="3">Frequently
-        </div>
+		<div class="question">
+			<p>How often do you feel isolated or lonely?</p>
+			<input type="radio" name="q7" value="1">Rarely<br />
+			<input type="radio" name="q7" value="2">Sometimes<br />
+			<input type="radio" name="q7" value="3">Frequently<br />
+		</div>
 
-        <div class="question">
-            <p>Do you have a support system or someone to talk to when you're feeling down?</p>
-            <input type="radio" name="q8" value="1">Yes, I have a strong support system.
-            <input type="radio" name="q8" value="2">I have some support, but it could be better.
-            <input type="radio" name="q8" value="3">No, I feel quite isolated.
-        </div>
+		<div class="question">
+			<p>Do you have a support system or someone to talk to when you're feeling down?</p>
+			<input type="radio" name="q8" value="1">Yes, I have a strong support system.<br />
+			<input type="radio" name="q8" value="2">I have some support, but it could be better.<br />
+			<input type="radio" name="q8" value="3">No, I feel quite isolated.<br />
+		</div>
 
-        <div class="question">
-            <p>How often do you engage in stress-relief activities such as exercise or meditation?</p>
-            <input type="radio" name="q9" value="1">Regularly
-            <input type="radio" name="q9" value="2">Sometimes
-            <input type="radio" name="q9" value="3">Rarely
-        </div>
+		<div class="question">
+			<p>How often do you engage in stress-relief activities such as exercise or meditation?</p>
+			<input type="radio" name="q9" value="1">Regularly<br />
+			<input type="radio" name="q9" value="2">Sometimes<br />
+			<input type="radio" name="q9" value="3">Rarely<br />
+		</div>
 
-        <div class="question">
-            <p>Do you often experience a sense of purpose and fulfillment in your life?</p>
-            <input type="radio" name="q10" value="1">Yes, I feel fulfilled.
-            <input type="radio" name="q10" value="2">I'm not sure, I sometimes question my purpose.
-            <input type="radio" name="q10" value="3">No, I feel aimless and unfulfilled.
-        </div>
+		<div class="question">
+			<p>Do you often experience a sense of purpose and fulfillment in your life?</p>
+			<input type="radio" name="q10" value="1">Yes, I feel fulfilled.<br />
+			<input type="radio" name="q10" value="2">I'm not sure, I sometimes question my purpose.<br />
+			<input type="radio" name="q10" value="3">No, I feel aimless and unfulfilled.<br />
+		</div>
 
 
-        <button class="btn" onclick="calculateResult()">Submit</button>
-    </div>
-
-    <div id="results" style="display: none;">
-        <h2>Your Results</h2>
-        <p id="resultText"></p>
-        <p id="adviceText"></p>
-    </div>
+		<button class="btn btn-primary" data-bs-toggle="modal" onclick="calculateResult()" data-bs-target="#mentalCheckResult">Submit</button>
+		<!-- Button trigger modal -->
+		<!-- Modal -->
+		<div class="modal fade" id="mentalCheckResult" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="mentalCheckResultLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="mentalCheckResultLabel">Your Mental State:</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body" id="results" style="display: none;">
+						<h2>Your Results</h2>
+						<p id="resultText"></p>
+						<p id="adviceText"></p>
+						<p class="moreText" style="display:none;">You may want to consider booking a counselling appointment with us <a asp-controller="CounsellingAppointment" asp-action="Book">here</a></p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
-
 <script>
 	function calculateResult() {
 		// Retrieve the user's answers
@@ -133,10 +146,11 @@
 		} else if (totalScore > 13 && totalScore <= 20) {
 			resultText = "You may be experiencing some stress and emotional challenges.";
 			adviceText = "Consider seeking support from a mental health professional and practicing stress-reduction techniques.";
+			document.querySelector(".moreText").style.display = "block";
 		} else {
 			resultText = "Your mental and emotional well-being may be at risk.";
 			adviceText = "It's crucial to seek help from a mental health professional and talk to someone you trust about your feelings.";
-
+			document.querySelector(".moreText").style.display = "block";
 		}
 
 		// Display the results

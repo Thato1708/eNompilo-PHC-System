@@ -18,7 +18,7 @@
                 <th>Date of the Recommendation: </th>
                 <th>Have you reffered the patient for further medical treatment:</th>
                 <th>Please enter your Recommendation here:</th>
-                <th></th>
+                <th></th>             
             </tr>
         </thead>
         <tbody>
@@ -26,24 +26,28 @@
             {
                 <tr>
                     <td>
-                        @Html.DisplayFor(ModelItem => item.PractitionerId)
+                        @item.Practitioner.Users.FirstName @item.Practitioner.Users.LastName
                     </td>
                     <td>
-                        @Html.DisplayFor(ModelItem => item.PatientId)
+                        @item.Patient.Users.FirstName @item.Patient.Users.LastName
                     </td>
                     <td>
                         @Html.DisplayFor(ModelItem => item.Date)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(ModelItem => item.Reffered)
-                    </td>
+                    </td>                  
+                        @if(item.Reffered){
+                            <td>Yes</td>
+                        }
+                        else
+                        {
+                          <td>No</td>  
+                        }                   
                     <td>
                         @Html.DisplayFor(ModelItem => item.PractitionerRecommendation)
                     </td>
                     <td>
-                        <a asp-action="Update" asp-route-id="@item.Id">Update</a>|
-                        <a asp-action="Cancel" asp-route-id="@item.Id">Cancel</a>|
-                        <a asp-action="View" asp-route-id="@item.Id">View</a>
+                        <a asp-action="Update" asp-route-id="@item.Id"><i class="bi bi-pencil-fill" ></i></a>
+                        <a asp-action="Cancel" asp-route-id="@item.Id"><i class="bi bi-trash-fill text-danger"></i></a>
+                        <a asp-action="View" asp-route-id="@item.Id">Click To View</a>
                     </td>
                 </tr>
             }

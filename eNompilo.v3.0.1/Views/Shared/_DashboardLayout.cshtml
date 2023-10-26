@@ -119,17 +119,18 @@
 							</div>
 						</div>
 
-						<div class='dashboard-nav-dropdown'>
-							<a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle">
-								<i class="bi bi-person-fill-slash me-2" style="font-size:1.5rem;"></i> Gender-Based Violence
-							</a>
-							<div class='dashboard-nav-dropdown-menu'>
-								<a asp-controller="GbvFaq" asp-action="Index" class="dashboard-nav-dropdown-item">GBV Frequently Asked Questions</a>
-								<a asp-controller="ReportGBv" asp-action="report" class="dashboard-nav-dropdown-item">Report GBV</a>
-								<a asp-controller="GbvSupport" asp-action="Create" class="dashboard-nav-dropdown-item">Support Group Registration</a>
-								@*  Give feedback about the contracptive, change the action from info to feedback*@
-							</div>
-						</div>
+                        <div class='dashboard-nav-dropdown'>
+                            <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle">
+                                <i class="bi bi-person-fill-slash me-2" style="font-size:1.5rem;"></i> Gender-Based Violence
+                            </a>
+                            <div class='dashboard-nav-dropdown-menu'>
+                                <a asp-controller="GbvFaq" asp-action="Index" class="dashboard-nav-dropdown-item">GBV Frequently Asked Questions</a>
+                                <a asp-controller="ReportGBv" asp-action="report" class="dashboard-nav-dropdown-item">Report GBV</a>
+                                <a asp-controller="GbvSupport" asp-action="Create" class="dashboard-nav-dropdown-item">Support Group Registration</a>
+                                <a asp-controller="GbvSupport" asp-action="Index" class="dashboard-nav-dropdown-item">My Details</a>
+                                @*  Give feedback about the contracptive, change the action from info to feedback*@
+                            </div>
+                        </div>
 
 						<div class='dashboard-nav-dropdown'>
 							<a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle">

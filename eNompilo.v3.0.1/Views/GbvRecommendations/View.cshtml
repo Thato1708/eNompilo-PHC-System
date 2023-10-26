@@ -1,4 +1,5 @@
 ﻿@model eNompilo.v3._0._1.Models.GBV.GbvRecommendations
+@inject IHttpContextAccessor contextAccessor;
 
 @{
     ViewData["Title"] = "View";
@@ -12,36 +13,50 @@
     </button>
 </div>
 
-<div class="margined-page pt-4">
-</div>
-    <h2>Practitioner Recommendation</h2>
-    <hr />
-    <dl class="row" style="margin-left:auto;margin-right:auto;"  
-    <dt class="col-sm-2 mb-4">
-        Name Of Practitioner
-    </dt>
-    <dd class="col-sm-10">
-        @Html.DisplayFor(Model =>Model.PractitionerId)
-    </dd>
-    <dt class="col-sm-2 mb-4">
-        Name Of Patient
-    </dt>
-    <dd class="col-sm-10">
-        @Html.DisplayFor(Model =>Model.PatientId)
-    </dd>
-     <dt class="col-sm-2 mb-4">
-        Date of Recommendation
-    </dt>
-    <dd class="col-sm-10">
-        @Html.DisplayFor(Model =>Model.Date)
-     </dd>     
-     <dt class="col-sm-2 mb-4">
-        Practitioner Recommendation
-    </dt>
-    <dd class="col-sm-10">
-        @Html.DisplayFor(Model =>Model.PractitionerRecommendation)
-     </dd>
-     </dl>
+<div class="card-container" style="display:flex;justify-content:center">
+    @*  <div class="card login-logout-card" style="width:25%;border-radius:40px;"> *@
+    <div class="card-body">
+        <div class="row justify-content-center">
+            <div class="col-10 my-4">
+                <div class="row">
+                    <div class="col-12">
+                        <section>
+                            <div class="card-img" style="text-align:center; padding-top:20px">
+                                <a asp-controller="Home" asp-action="Index"><img src="~/img/Adobe_Express_20230527_0911500_1[4494].png" style="width:150px;" class="auth-image" /></a>
+                            </div>
+                            <div style=" height: 10px;"></div>
+                            <form asp-action="GbvRecommendations" method="post">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <div class="form-floating">
+                                    <h1>Details</h1>
+
+                                    <dl>
+                                        <dt>Name of Practitioner :</dt>
+                                        <dd>@Model.Practitioner.Users.FirstName @Model.Practitioner.Users.LastName</dd>
+                                        <dt>Name of Patient :</dt>
+                                        <dd>@Model.Patient.Users.FirstName @Model.Patient.Users.LastName</dd>
+                                        <dt>Date of Recommendation:</dt>
+                                        <dd>@Html.DisplayFor(Model =>Model.Date)</dd>
+                                        <dt>Practitioner Recommendation:</dt>
+                                        <dd>@Html.DisplayFor(Model =>Model.PractitionerRecommendation)</dd>
+                                    </dl>
+
+                                </div>
+
+                            </form>
+                            <br />
+
+                            <div style=" height: 10px;"></div>
+                            <div class="text-center">
+                                <a asp-action="Index">Back to Recommendations List</a>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @* </div> *@
 </div>
   
 

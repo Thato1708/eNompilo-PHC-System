@@ -6,7 +6,7 @@
 }
 
 <div class="margined-page pt-4">
-    <h1>Index</h1>
+    <h1>My Details</h1>
 
     <p>
         <a asp-action="Create">GBV Support Group Registration</a>
@@ -61,12 +61,12 @@
                     else
                     {
                         <td>No</td>
-                    }
+                    } 
 
                
                     <td>
-                        <a asp-action="Update" asp-route-id="@item.Id">Update</a> |
-                        <a asp-action="Cancel" asp-route-id="@item.Id">Cancel</a>
+                        <a asp-action="Update" asp-route-id="@item.Id"><i class="bi bi-pencil-fill" ></i></a> 
+                        <a asp-action="Cancel" asp-route-id="@item.Id"><i class="bi bi-trash-fill text-danger"></i></a>
                     </td>
                 </tr>
                 

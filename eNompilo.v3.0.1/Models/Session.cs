@@ -71,7 +71,7 @@ namespace eNompilo.v3._0._1.Models
 
         [Required]
         [DisplayName("Prescription Medication")]
-        public string Prescription { get; set; }
+        public string? Prescription { get; set; }
 
         [Required]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0: HH:mm}")]

@@ -31,12 +31,12 @@ namespace eNompilo.v3._0._1.Controllers
             {
                 if (User.IsInRole(RoleConstants.Practitioner))
                 {
-                    IEnumerable<GbvRecommendations> objList = _context.tblRecommendations;
+                    IEnumerable<GbvRecommendations> objList = _context.tblRecommendations.Include(x=>x.Patient).ThenInclude(x=>x.Users).Include(x=>x.Practitioner).ThenInclude(x=>x.Users);
                     return View(objList);
                 }
                 else if (User.IsInRole(RoleConstants.Admin))
                 {
-                    IEnumerable<GbvRecommendations> objList = _context.tblRecommendations;
+                    IEnumerable<GbvRecommendations> objList = _context.tblRecommendations.Include(x => x.Patient).ThenInclude(x => x.Users).Include(x => x.Practitioner).ThenInclude(x => x.Users); ;
                     return View(objList);
                 }
 
@@ -69,7 +69,7 @@ namespace eNompilo.v3._0._1.Controllers
 
         public IActionResult View(int? Id)
         {
-            var obj = _context.tblRecommendations.Find(Id);
+            var obj = _context.tblRecommendations.Where(x=>x.Id == Id).Include(x => x.Patient).ThenInclude(x => x.Users).Include(x => x.Practitioner).ThenInclude(x => x.Users).FirstOrDefault();
             if (obj == null)
             {
                 return View("PageNotFound", "Home");

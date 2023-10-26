@@ -57,8 +57,8 @@
                 <label asp-for="Reffered" class="control-label"></label>
                     <select asp-for="Reffered" class="form-control">
                         <option disabled selected hidden>Please select an option</option>
-                        <option value="Yes">Yes</option>
-                        <option value="No">No</option>
+                        <option value=@true>Yes</option>
+                        <option value=@false>No</option>
                     </select>               
             </div>
             <div class="form-group mb-4">

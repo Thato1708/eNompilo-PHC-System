@@ -1,6 +1,12 @@
 ﻿@using eNompilo.v3._0._1.Constants;
+@using Microsoft.AspNetCore.Identity;
+@using System.Collections;
+@using eNompilo.v3._0._1.Models.SystemUsers;
 @inject IHttpContextAccessor contextAccessor;
 @model eNompilo.v3._0._1.Models.SystemUsers.PersonalDetails
+@inject UserManager<ApplicationUser> UserManager
+@inject SignInManager<ApplicationUser> SignInManager
+@inject eNompilo.v3._0._1.Areas.Identity.Data.ApplicationDbContext _context
 
 @{
     ViewData["Title"] = "AddPersonalDetails";
@@ -19,24 +25,17 @@
                     <input asp-for="ProfilePictureImageFile" class="form-control" type="file" id="formFile" accept="image/*" />
                     <span asp-validation-for="ProfilePictureImageFile" class="text-danger"></span>
                 </div>
-                @if (contextAccessor.HttpContext.Session.GetInt32("PatientId2") == null)
+                @if (_context.tblPatient.Where(x=>x.UserId == UserManager.GetUserAsync(User).Result.Id).FirstOrDefault() == null)
                 {
                     <div class="form-group mb-4" hidden>
                         <label asp-for="PatientId" class="control-label"></label>
-                        <input asp-for="PatientId" class="form-control" value="@contextAccessor.HttpContext.Session.GetInt32("PatientId")" />
+                        <input asp-for="PatientId" class="form-control" value="@_context.tblPatient.Where(x=>x.UserId == UserManager.GetUserAsync(User).Result.Id).FirstOrDefault().Id" />
                     </div>
                 }
-                else if (contextAccessor.HttpContext.Session.GetInt32("PatientId") == null)
+                else
                 {
-                <div class="form-group mb-4" hidden>
-                        <label asp-for="PatientId" class="control-label"></label>
-                        <input asp-for="PatientId" class="form-control" value="@contextAccessor.HttpContext.Session.GetInt32("PatientId2")" />
-                    </div>
+                    <script>alert("ERROR REGISTERING! Please request eNompilo System Admin to register you!")</script>
                 }
-            else
-            {
-                <script>alert("User not found! Please clear your cookies and try again or contact the system administrator")</script>
-            }
 
                 @*Maybe an if statement where if a patient is logged in, we get the above but if a receptionist is logged in, it's then a list of patients just registered - maybe sorted by the date of creation*@
                 <div class="form-group mb-4">

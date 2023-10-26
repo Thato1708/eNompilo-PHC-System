@@ -377,7 +377,7 @@ image-align {
 .sphere {
     width: 350px;
     height: 350px;
-    background-color: yellow;
+    background-color: white;
     border-radius: 50%;
     animation: scaleAnimation 3.25s infinite alternate, backgroundAnimation none 3.25s infinite alternate;
     margin-top: 15%;

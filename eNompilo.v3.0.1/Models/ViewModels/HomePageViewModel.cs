@@ -14,6 +14,7 @@ namespace eNompilo.v3._0._1.Models.ViewModels
 
 
 
+
         //Added for loginPartial, otherwise ignore
         public ApplicationUser AppUser { get; set; }
         public Patient Patient { get; set; }

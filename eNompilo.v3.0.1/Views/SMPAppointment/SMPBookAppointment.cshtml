@@ -28,6 +28,7 @@
     var practitionerValue = 0;
     @if (User.IsInRole(RoleConstants.Practitioner)) { practitionerValue = _context.tblPractitioner.Where(p => p.UserId == UserManager.GetUserAsync(User).Result.Id).FirstOrDefault().Id; }
 }
+
 @if (SignInManager.IsSignedIn(User))
 {
     <div class="margined-page pt-4">
@@ -91,7 +92,7 @@
                         </div>
                         <div class="form-group mb-4" hidden>
                             <label asp-for="PatientId" class="control-label"></label>
-                            <input asp-for="PatientId" class="form-control" value="@contextAccessor.HttpContext.Session.GetInt32("PatientId")" />
+                            <input asp-for="PatientId" class="form-control" value="@_context.tblPatient.Where(p=>p.UserId == UserManager.GetUserAsync(User).Result.Id).FirstOrDefault().Id" />
                         </div>
                         <div class="form-group mb-4">
                             <input type="submit" value="Submit" class="btn btn-primary" />
@@ -103,7 +104,7 @@
             else if (User.IsInRole(RoleConstants.Practitioner))
             {
                 <div class="col-md-4" style="margin-left:auto;margin-right:auto;">
-                    <form asp-action="SMPBookAppointment">
+                    <form asp-action="SMPBookAppointment" method="post">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             <div class="form-check form-check-inline mb-4">
                                 <label class="form-check-label">
@@ -125,6 +126,16 @@
                                     <input class="form-check-input" asp-for="Movement" /> @Html.DisplayNameFor(model => model.Movement)
                                 </label>
                             </div>
+                        <div class="form-group mb-4">
+                            <label asp-for="PreferredDate" class="control-label"></label>
+                            <input id="dateof" asp-for="PreferredDate" type="date" class="form-control" />
+                            <span asp-validation-for="PreferredDate" class="text-danger"></span>
+                        </div>
+                        <div class="form-group mb-4">
+                            <label asp-for="PreferredTime" class="control-label"></label>
+                            <input id="timeof" asp-for="PreferredTime" type="time" class="form-control" min="08:00" max="15:00" />
+                            <span asp-validation-for="PreferredTime" class="text-danger"></span>
+                        </div>
                             <div class="form-check form-check-inline mb-4">
                                 <label class="form-check-label">
                                     <input class="form-check-input" asp-for="HeartAttack" /> @Html.DisplayNameFor(model => model.HeartAttack)
@@ -214,83 +225,3 @@
         }
     </script>
 }
-@*<div class="margined-page pt-4">
-    <div class="form-check-inline">
-    <p>Have you or a family member ever had a serious reaction to anesthesia (other than nausea and vomiting)?</p>
-    </div>
-    <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" name="inlineCheckOptions" id="inlineCheck1" value="option1">
-        <label class="form-check-label" for="inlineCheck1">Yes</label>
-    </div>
-    <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" name="inlineRadioOptions" id="inlineCheck2" value="option2">
-        <label class="form-check-label" for="inlineCheck2">No</label>
-    </div>
-    <br/>
-    <div class="form-check-inline">
-        <p>If you have had surgery, were you told that it was to put in a breathing tube?</p>
-    </div>
-    <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" name="inlineRadioOptions" id="inlineRadio3" value="option3">
-        <label class="form-check-label" for="inlineRadio1">Yes</label>
-    </div>
-    <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" name="inlineRadioOptions" id="inlineRadio4" value="option4">
-        <label class="form-check-label" for="inlineRadio2">No</label>
-    </div>
-    <br/>
-    <div class="form-check-inline">
-        <p>Do you have any difficulty opening your mouth or moving your head or neck?</p>
-    </div>
-    <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" name="inlineRadioOptions" id="inlineRadio5" value="option1">
-        <label class="form-check-label" for="inlineRadio1">Yes</label>
-    </div>
-    <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" name="inlineRadioOptions" id="inlineRadio6" value="option2">
-        <label class="form-check-label" for="inlineRadio2">No</label>
-    </div>
-    <br/>
-    <div class="form-check-inline">
-        <p>Have you ever had a heartattack or a myocardial infarction?</p>
-    </div>
-    <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" name="inlineRadioOptions" id="inlineRadio7" value="option1">
-        <label class="form-check-label" for="inlineRadio1">Yes</label>
-    </div>
-    <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" name="inlineRadioOptions" id="inlineRadio8" value="option2">
-        <label class="form-check-label" for="inlineRadio2">No</label>
-    </div>
-    <br/>
-    <div class="form-group mb-4">
-		<label asp-for="HeartAttackDate" class="control-label"></label>
-		<input id="date" asp-for="HeartAttackDate" type="date" class="form-control" />
-		<span asp-validation-for="HeartAttackDate" class="text-danger"></span>
-	</div>
-    <br />
-    <div class="form-check-inline">
-        <p>Do you have diabetes or a problem with high blood sugars?</p>
-    </div>
-    <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" name="inlineRadioOptions" id="inlineRadio9" value="option1" />
-        <label class="form-check-label" for="inlineRadio1">Yes</label>
-    </div>
-    <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" name="inlineRadioOptions" id="inlineRadio10" value="option2">
-        <label class="form-check-label" for="inlineRadio2">No</label>
-    </div>
-    <br />
-    <div class="form-check-inline">
-        <p>If you have diabetes, are you taking insulin?</p>
-    </div>
-    <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" name="inlineRadioOptions" id="inlineRadio11" value="option1" />
-        <label class="form-check-label" for="inlineRadio1">Yes</label>
-    </div>
-    <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" name="inlineRadioOptions" id="inlineRadio12" value="option2">
-        <label class="form-check-label" for="inlineRadio2">No</label>
-    </div>
-</div>
-*@

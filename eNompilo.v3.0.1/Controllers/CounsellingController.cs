@@ -25,7 +25,7 @@ namespace eNompilo.v3._0._1.Controllers
         public IActionResult AdditionalResources()
         {
             IEnumerable<AddResources> objList = dbContext.tblAddResources;
-            return View();
+            return View(objList);
         }
 
         public IActionResult AddResources()
@@ -37,23 +37,23 @@ namespace eNompilo.v3._0._1.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult AddResources(AddResources model)
         {
-            if (model.ProfilePictureImageFile != null)
+            if (model.ImageFile != null)
             {
                 string wwwRootPath = webHostEnvironment.WebRootPath;
-                string fileName = Path.GetFileNameWithoutExtension(model.ProfilePictureImageFile.FileName);
-                string ext = Path.GetExtension(model.ProfilePictureImageFile.FileName);
-                model.ProfilePicture = fileName = fileName + "_" + DateTime.Now.ToString("ddMMyyyyHHmmss") + ext;
+                string fileName = Path.GetFileNameWithoutExtension(model.ImageFile.FileName);
+                string ext = Path.GetExtension(model.ImageFile.FileName);
+                model.ImageName = fileName = fileName + "_" + DateTime.Now.ToString("ddMMyyyyHHmmss") + ext;
                 string path = Path.Combine(wwwRootPath + "/img/uploads/", fileName);
                 using (var fileStream = new FileStream(path, FileMode.Create))
                 {
-                    model.ProfilePictureImageFile.CopyTo(fileStream);
+                    model.ImageFile.CopyTo(fileStream);
                 }
             }
-            if (ModelState.IsValid)
+            if (model.ImageName != null && model.Title != null && model.Description != null && model.YoutubeLink != null)
             {
                 dbContext.tblAddResources.Add(model);
                 dbContext.SaveChanges();
-                return RedirectToAction("AddMedicalHistory");
+                return RedirectToAction("AdditionalResources");
             }
             return View(model);
         }

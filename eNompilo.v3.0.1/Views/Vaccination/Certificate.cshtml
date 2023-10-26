@@ -1,4 +1,5 @@
-﻿@model eNompilo.v3._0._1.Models.Vaccination.DoseTracking
+﻿@using eNompilo.v3._0._1.Constants;
+@model eNompilo.v3._0._1.Models.Vaccination.DoseTracking
 
 @{
 	ViewData["Title"] = "Certificate";
@@ -21,7 +22,7 @@
 			Certificate Issue date
 		</dt>
 		<dd class="col-sm-8 mb-4">
-			@Model.IssuedDate 
+			@Model.IssuedDate
 		</dd>
 
 		<dt class="col-sm-4 mb-4">
@@ -50,7 +51,7 @@
 			@Html.DisplayNameFor(model => model.Patient)
 		</dt>
 		<dd class="col-sm-8 mb-4 mt-5">
-			@Model.Patient.FirstName @Model.Patient.LastName 
+			@Model.Patient.FirstName @Model.Patient.LastName
 		</dd>
 		<dt class="col-sm-4 mb-4">
 			Vaccine Name
@@ -78,10 +79,14 @@
 		</dd>
 
 		<dt class="mt-5">This is to certify that @Model.Patient.FirstName @Model.Patient.LastName has recieved the @Model.VaccinationInventory.VaccineName vaccinations(s) as indicated. <br /></dt>
-		<dt style="color: red;">This certificate is not transferable and is for the individual named.</dt>		
-		
+		<dt style="color: red;">This certificate is not transferable and is for the individual named.</dt>
+
 	</dl>
 </div>
 <div>
-	<a asp-action="ViewDoseTrackings">Back to List</a>
+	@if (User.IsInRole(RoleConstants.Practitioner))
+	{
+		<a asp-action="ViewDoseTrackings">Back to List</a>
+	}
+
 </div>

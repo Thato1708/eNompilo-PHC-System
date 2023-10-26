@@ -71,7 +71,6 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<PractitionerDiary> tblPractitionerDiary { get; set; }
     public DbSet<PrescriptionMeds> tblPrescriptionMeds { get; set; }
     public DbSet<Session> tblSession { get; set; }
-    public DbSet<SessionNotes> tblSessionNotes { get; set; }
     public DbSet<ReportGBV> tblReportGBV { get; set; }
     public DbSet<Questionnaire> tblQuestionnaire { get; set; }
     public DbSet<SupportMembership> tblSupportGroup { get; set; }

@@ -138,6 +138,7 @@
                             <div class='dashboard-nav-dropdown-menu'>
                                 <a asp-controller="VaccinationAppointment" asp-action="Book" class="dashboard-nav-dropdown-item">Book for a Vaccine</a>
                                 <a asp-controller="VaccinationAppointment" asp-action="Index" class="dashboard-nav-dropdown-item">View Vaccination Appointments</a>
+                                <a asp-controller="Vaccination" asp-action="Certificate" asp-route-id="@_context.tblDoseTracking.Where(x => x.PatientId == patientId).FirstOrDefault().ID" class="dashboard-nav-dropdown-item">Certificate</a>
                             </div>
                         </div>
 
@@ -178,7 +179,7 @@
                                 <i class="bi bi-calendar-check-fill me-2" style="font-size:1.5rem;"></i> General Appointment
                             </a>
                             <div class='dashboard-nav-dropdown-menu'>
-                                <a asp-controller="Practitioner" asp-action="PendingAppointments" class="dashboard-nav-dropdown-item" style="text-align:center;">Pending Patient Appointments</a>
+                                <a asp-controller="Practitioner" asp-action="PendingAppointments" class="dashboard-nav-dropdown-item" style="text-align:center;">Patient Appointment History</a>
                                 <a asp-controller="GeneralAppointment" asp-action="Index" class="dashboard-nav-dropdown-item">Confirmed Bookings</a>
 
                             </div>

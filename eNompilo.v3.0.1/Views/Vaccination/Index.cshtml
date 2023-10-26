@@ -44,9 +44,18 @@
 				</td>
 				@if (item.Quantity > 0)
 				{
-					<td>
-						@Html.DisplayFor(modelItem => item.Quantity)
-					</td>
+					if (item.Quantity > 0 && item.Quantity < 100)
+					{
+						<td style="color:darkorange;">
+							@Html.DisplayFor(modelItem => item.Quantity) (Almost Out of Stock!)
+						</td>
+					}
+					else
+					{
+						<td>
+							@Html.DisplayFor(modelItem => item.Quantity)
+						</td>
+					}
 				}
 				else
 				{

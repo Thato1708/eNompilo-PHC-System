@@ -29,7 +29,7 @@
     @if (User.IsInRole(RoleConstants.Patient))
     {
         <div class="margined-page pt-4">
-            <h1>Index</h1>
+            <h1>Specialized Medical Procedures</h1>
 
             <p><a asp-action="SMPBookAppointment">Book New Medical Procedure Appointment</a></p>
             <table id="SMPApp1" class="table table-striped" style="margin-left:auto; margin-right:auto;">
@@ -85,49 +85,15 @@
             </table>
         </div>
     }
-
-}
-else if (User.IsInRole(RoleConstants.Receptionist) || (User.IsInRole(RoleConstants.Practitioner) && _context.tblPractitioner.Where(p => p.UserId == user.Id).FirstOrDefault().PractitionerType == PractitionerType.Doctor || _context.tblPractitioner.Where(p => p.UserId == user.Id).FirstOrDefault().PractitionerType == PractitionerType.Nurse))
+else if (User.IsInRole(RoleConstants.Receptionist) || ((User.IsInRole(RoleConstants.Practitioner) && _context.tblPractitioner.Where(p => p.UserId == user.Id).FirstOrDefault().PractitionerType == PractitionerType.Doctor || _context.tblPractitioner.Where(p => p.UserId == user.Id).FirstOrDefault().PractitionerType == PractitionerType.Nurse)))
 {
     <div class="margined-page pt-4">
         <h1>Index</h1>
 
         <p><a asp-controller="SMPAppointment" asp-action="SMPBookAppointment">Book A Patient In</a></p>
-        <table id="SMPApp1" class="table table-striped" style="=margin-left:auto;margin-right:auto;">
+        <table id="SMPApp1" class="table table-striped" style="margin-left:auto;margin-right:auto;">
             <thead>
                 <tr>
-                    <th>
-
-                        <p>Reaction to Anaesthesia</p>
-                    </th>
-                    <th>
-
-                        <p>Description Of Reaction</p>
-                    </th>
-                    <th>
-
-                        <p>Has Had Breathing Tube Surgery</p>
-                    </th>
-                    <th>
-
-                        <p>Issues With Movement</p>
-                    </th>
-                    <th>
-
-                        <p> Has Had A Heart Attack</p>
-                    </th>
-                    <th>
-
-                        <p>Date Of Heart Attack</p>
-                    </th>
-                    <th>
-
-                        <p>Has Diabetes</p>
-                    </th>
-                    <th>
-
-                        <p>Takes Insulin</p>
-                    </th>
                     <th>
 
                         <p>Appointment Date</p>
@@ -137,58 +103,21 @@ else if (User.IsInRole(RoleConstants.Receptionist) || (User.IsInRole(RoleConstan
                         <p>Appointment Time</p>
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model=>model.Patient)
+                        Appointment Status
                     </th>
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in Model.Where(p=>p.PatientId==patientId && p.Archived == false).ToList())
+                @foreach (var item in Model.Where(p=>p.PractitionerId==practitionerId && p.Archived == false).ToList())
                 {
                     <tr>
-                        <td>
-                            @if(item.AnaesthesiaReaction){<span>Yes</span>}else{<span>N/A</span>}
-                        </td>
-                        <td>
-                            @if (item.NatureOfReaction != null)
-                            {
-                                @Html.DisplayFor(modelItem => item.NatureOfReaction)
-                            }
-                            else
-                            {
-                                <span>N/A</span>
-                            }
-                        </td>
-                        <td>
-                            @if (item.BreathingtubeSurgery){<span>Yes</span>}else{<span>N/A</span>}
-                        </td>
-                        <td>
-                            @if (item.Movement){<span>Yes</span>}else{<span>N/A</span>}
-                        </td>
-                        <td>
-                            @if(item.HeartAttack){<span>Yes</span>}else{<span>N/A</span>}
-                        </td>
-                        <td>
-                            @if (item.HeartAttackDate != null)
-                            {
-                                @Html.DisplayFor(modelItem => item.HeartAttackDate)
-                            }
-                            else
-                            {
-                                <span>N/A</span>
-                            }
-                        </td>
-                        <td>
-                            @if (item.DiabetesQuestion){<span>Yes</span>}else{<span>N/A</span>}
-                        </td>
-                        <td>
-                            @if (item.InsulinQuestion){<span>Yes</span>}else{<span>N/A</span>}
-                        </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.PreferredDate)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.PreferredTime)
                         </td>
+
                         <td>
                             @if (item.SessionConfirmed)
                             {
@@ -202,13 +131,15 @@ else if (User.IsInRole(RoleConstants.Receptionist) || (User.IsInRole(RoleConstan
                         <td>
                             <a asp-action="Update" asp-route-id="@item.Id"><i class="bi bi-pencil-fill"></i></a> |
                             <a asp-action="Details" asp-route-id="@item.Id"><i class="bi bi-info-square-fill text-secondary"></i></a> |
-                            <a asp-action="Delete" asp-route-id="@item.Id"><i class="bi bi-trash-fill text-danger"></i></a>
+                            <a asp-action="Cancel" asp-route-id="@item.Id"><i class="bi bi-trash-fill text-danger"></i></a>
                         </td>
                     </tr>
                 }
             </tbody>
         </table>
     </div>
+}
+
 }
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css" />

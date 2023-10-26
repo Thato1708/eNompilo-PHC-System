@@ -12,18 +12,26 @@ namespace eNompilo.v3._0._1.Models.Counselling
 		[Key]
 		public int Id { get; set; }
 
+		[Required]
 		[PersonalData]
-		[Display(Name = "Profile Picture")]
-		public string? ProfilePicture { get; set; }
+		[Display(Name = "Image Name")]
+		public string ImageName { get; set; }
 
 		[NotMapped]
-		[Display(Name = "Upload Profile Image")]
-		public IFormFile? ProfilePictureImageFile { get; set; }
+		[Display(Name = "Upload Image")]
+		public IFormFile ImageFile { get; set; }
 
-        public string Title { get; set; }
-        public string Description { get; set; }
 		[Required]
+        public string Title { get; set; }
 
+		[Required]
+        public string Description { get; set; }
+
+		[Required]
         public string YoutubeLink { get; set; }
+
+		public bool Archived { get; set; } = false;
+
+
     }
 }

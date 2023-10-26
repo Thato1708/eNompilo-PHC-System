@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using eNompilo.v3._0._1.Areas.Identity.Data;
 
@@ -11,9 +12,10 @@ using eNompilo.v3._0._1.Areas.Identity.Data;
 namespace eNompilo.v3._0._1.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231026121916_renamedFieldsAndAddedColumn")]
+    partial class renamedFieldsAndAddedColumn
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -626,11 +628,16 @@ namespace eNompilo.v3._0._1.Migrations
                     b.Property<int>("PractitionerId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("SessionNotesId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("PatientId");
 
                     b.HasIndex("PractitionerId");
+
+                    b.HasIndex("SessionNotesId");
 
                     b.ToTable("PrescriptionMeds");
                 });
@@ -653,35 +660,18 @@ namespace eNompilo.v3._0._1.Migrations
                     b.Property<bool>("Arrived")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("ConditionIndication")
-                        .HasColumnType("bit");
-
                     b.Property<DateTime?>("EndTime")
                         .IsRequired()
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("IsADanger")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsAbused")
-                        .HasColumnType("bit");
-
                     b.Property<int>("PatientId")
                         .HasColumnType("int");
-
-                    b.Property<string>("PotentialCondition")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("PractitionerId")
                         .HasColumnType("int");
 
-                    b.Property<string>("PractitionerNotes")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Prescription")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("SessionNotesId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Status")
                         .HasColumnType("nvarchar(max)");
@@ -692,7 +682,41 @@ namespace eNompilo.v3._0._1.Migrations
 
                     b.HasIndex("PractitionerId");
 
+                    b.HasIndex("SessionNotesId");
+
                     b.ToTable("Session");
+                });
+
+            modelBuilder.Entity("eNompilo.v3._0._1.Models.SessionNotes", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<bool>("Archived")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("ConditionIndication")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsADanger")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsAbused")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("PotentialCondition")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PractitionerNotes")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SessionNotes");
                 });
 
             modelBuilder.Entity("eNompilo.v3._0._1.Models.SMP.SMPAppointment", b =>
@@ -1736,6 +1760,10 @@ namespace eNompilo.v3._0._1.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("eNompilo.v3._0._1.Models.SessionNotes", null)
+                        .WithMany("PrescriptionMeds")
+                        .HasForeignKey("SessionNotesId");
+
                     b.Navigation("Patient");
 
                     b.Navigation("Practitioner");
@@ -1753,9 +1781,17 @@ namespace eNompilo.v3._0._1.Migrations
                         .WithMany()
                         .HasForeignKey("PractitionerId");
 
+                    b.HasOne("eNompilo.v3._0._1.Models.SessionNotes", "SessionNotes")
+                        .WithMany()
+                        .HasForeignKey("SessionNotesId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.Navigation("Patient");
 
                     b.Navigation("Practitioner");
+
+                    b.Navigation("SessionNotes");
                 });
 
             modelBuilder.Entity("eNompilo.v3._0._1.Models.SMP.SMPAppointment", b =>
@@ -1949,6 +1985,11 @@ namespace eNompilo.v3._0._1.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("eNompilo.v3._0._1.Models.SessionNotes", b =>
+                {
+                    b.Navigation("PrescriptionMeds");
                 });
 #pragma warning restore 612, 618
         }

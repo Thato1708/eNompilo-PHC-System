@@ -82,7 +82,6 @@ namespace eNompiloCounselling.Controllers
             var personalDetails = dbContext.tblPersonalDetails.SingleOrDefault(c => c.PatientId == patientId);
             var personalDetailsId = personalDetails.Id;
 
-            var sessionNotes = dbContext.tblSessionNotes.SingleOrDefault();
 
             //var condition = dbContext.tblSessionNotes.Where(x => x.Id).ToList();
 

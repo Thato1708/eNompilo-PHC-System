@@ -495,6 +495,7 @@ namespace eNompilo.v3._0._1.Controllers
 				var counsellinglApp = _context.tblCounsellingAppointment.Where(ga=>ga.PatientId == patient.Id && ga.SessionConfirmed == true).Include(p=>p.Patient).Include(pr=>pr.Practitioner).ThenInclude(u=>u.Users).OrderBy(ga=>ga.PreferredDate).OrderBy(ga=>ga.PreferredTime).ToList();
 				var fPApp = _context.tblFamilyPlanningAppointment.Where(ga=>ga.PatientId == patient.Id && ga.SessionConfirmed == true).Include(p=>p.Patient).Include(pr=>pr.Practitioner).ThenInclude(u=>u.Users).OrderBy(ga=>ga.PreferredDate).OrderBy(ga=>ga.PreferredTime).ToList();
 				var vaxApp = _context.tblVaccinationAppointment.Where(ga=>ga.PatientId == patient.Id && ga.SessionConfirmed == true).Include(p=>p.Patient).Include(pr=>pr.Practitioner).ThenInclude(u=>u.Users).OrderBy(ga=>ga.PreferredDate).OrderBy(ga=>ga.PreferredTime).ToList();
+				var smpApp = _context.tblMedicalProcedureAppointment.Where(ga=>ga.PatientId == patient.Id && ga.SessionConfirmed == true).Include(p=>p.Patient).Include(pr=>pr.Practitioner).ThenInclude(u=>u.Users).OrderBy(ga=>ga.PreferredDate).OrderBy(ga=>ga.PreferredTime).ToList();
 				var model = new UserProfileViewModel
 				{
 					AppUserId = patient.UserId,
@@ -503,6 +504,7 @@ namespace eNompilo.v3._0._1.Controllers
 					CounsellingAppointment = counsellinglApp,
 					FPAppointment = fPApp,
 					VaccinationAppointment = vaxApp,
+					SMPAppointment = smpApp,
 				};
 
 				return View(model);

@@ -444,9 +444,9 @@ namespace eNompilo.v3._0._1.Controllers
 
 			_context.tblPatient.Update(patient);
 			_context.SaveChanges();
-			if (User.IsInRole(RoleConstants.Patient))
+			if (_userManager.GetUserAsync(User).Result.UserRole == UserRole.Patient)
 			{
-				return RedirectToAction("UserProfile");
+				return RedirectToAction("UserProfile", new {patient.Id});
 			}
 			return RedirectToAction("Index");
 		}

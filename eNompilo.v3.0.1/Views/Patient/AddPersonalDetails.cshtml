@@ -25,17 +25,10 @@
                     <input asp-for="ProfilePictureImageFile" class="form-control" type="file" id="formFile" accept="image/*" />
                     <span asp-validation-for="ProfilePictureImageFile" class="text-danger"></span>
                 </div>
-                @if (_context.tblPatient.Where(x=>x.UserId == UserManager.GetUserAsync(User).Result.Id).FirstOrDefault() == null)
-                {
-                    <div class="form-group mb-4" hidden>
+                <div class="form-group mb-4" hidden>
                         <label asp-for="PatientId" class="control-label"></label>
                         <input asp-for="PatientId" class="form-control" value="@_context.tblPatient.Where(x=>x.UserId == UserManager.GetUserAsync(User).Result.Id).FirstOrDefault().Id" />
                     </div>
-                }
-                else
-                {
-                    <script>alert("ERROR REGISTERING! Please request eNompilo System Admin to register you!")</script>
-                }
 
                 @*Maybe an if statement where if a patient is logged in, we get the above but if a receptionist is logged in, it's then a list of patients just registered - maybe sorted by the date of creation*@
                 <div class="form-group mb-4">

@@ -51,7 +51,7 @@ namespace eNompilo.v3._0._1.Controllers
         {
             if (User.IsInRole(RoleConstants.Practitioner))
             {
-                IEnumerable<DoseTracking> doses = _context.tblDoseTracking.Where(ds=>ds.Archived == false).Include(d => d.Patient).Include(d => d.VaccinationInventory);
+                IEnumerable<DoseTracking> doses = _context.tblDoseTracking.Where(ds => ds.Archived == false).Include(d => d.Patient).Include(d => d.VaccinationInventory);
                 return View(doses);
             }
             return View();
@@ -84,19 +84,20 @@ namespace eNompilo.v3._0._1.Controllers
                 //    SiteAddress = model.SiteAddress,
                 //};
 
-                VaccinationInventory vaxInv = _context.tblVaccinationInventory.Where(x=>x.ID == model.VaccineInventoryId).FirstOrDefault();
-                
+                VaccinationInventory vaxInv = _context.tblVaccinationInventory.Where(x => x.ID == model.VaccineInventoryId).FirstOrDefault();
+
                 if (vaxInv != null && model.SecondDose == null && vaxInv.Quantity > 0)
                 {
                     vaxInv.Quantity = vaxInv.Quantity - 1;
                 }
-                else if(vaxInv != null && model.SecondDose != null && vaxInv.Quantity > 0)
+                else if (vaxInv != null && model.SecondDose != null && vaxInv.Quantity > 0)
                 {
                     vaxInv.Quantity = vaxInv.Quantity - 2;
                 }
                 else
                 {
-                    return NotFound();
+                    ViewBag.OutOfStockMessage = "Vaccine Out Of Stock! Please Restock!".ToString();
+                    return View();
                 }
 
 
@@ -301,50 +302,50 @@ namespace eNompilo.v3._0._1.Controllers
             return RedirectToAction("Index");
         }
 
-		public IActionResult RemoveVax(int? id)
-		{
-			if (id == 0 || id == null)
-			{
-				return NotFound();
-			}
+        public IActionResult RemoveVax(int? id)
+        {
+            if (id == 0 || id == null)
+            {
+                return NotFound();
+            }
 
-			var obj = _context.tblVaccinationInventory.Where(va => va.ID == id).FirstOrDefault();
-			if (obj == null)
-			{
-				return NotFound();
-			}
+            var obj = _context.tblVaccinationInventory.Where(va => va.ID == id).FirstOrDefault();
+            if (obj == null)
+            {
+                return NotFound();
+            }
 
-			var model = new ArchiveItemViewModel
-			{
-				Id = obj.ID,
-				VaxInventoryID = obj.ID,
-				Archived = obj.Archived,
-			};
+            var model = new ArchiveItemViewModel
+            {
+                Id = obj.ID,
+                VaxInventoryID = obj.ID,
+                Archived = obj.Archived,
+            };
 
-			return View(model);
-		}
+            return View(model);
+        }
 
-		[HttpPost]
-		[ValidateAntiForgeryToken]
-		public IActionResult RemoveVax(ArchiveItemViewModel model)
-		{
-			if (!ModelState.IsValid)
-			{
-				return View(model);
-			}
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult RemoveVax(ArchiveItemViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
 
-			var obj = _context.tblVaccinationInventory.Where(va => va.ID == model.Id).FirstOrDefault();
+            var obj = _context.tblVaccinationInventory.Where(va => va.ID == model.Id).FirstOrDefault();
 
-			if (obj == null)
-			{
-				return NotFound();
-			}
+            if (obj == null)
+            {
+                return NotFound();
+            }
 
-			obj.Archived = model.Archived;
+            obj.Archived = model.Archived;
 
-			_context.tblVaccinationInventory.Update(obj);
-			_context.SaveChanges();
-			return RedirectToAction("Index");
-		}
-	}
+            _context.tblVaccinationInventory.Update(obj);
+            _context.SaveChanges();
+            return RedirectToAction("Index");
+        }
+    }
 }

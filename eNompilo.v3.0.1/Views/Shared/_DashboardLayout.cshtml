@@ -21,7 +21,10 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 	<link rel="icon" type="image/x-icon" href="~/img/Adobe_Express_20230527_0911500_3_4496_-removebg-preview.png" />
 	<style>
-
+		.dashboard-nav-item.active{
+			background: rgba(6, 11, 40, 0.25);
+			color: rgba(255, 255, 255, 0.75)
+		}
 	</style>
 </head>
 <body>
@@ -63,7 +66,7 @@
 					<i class="bi bi-speedometer me-2" style="font-size:1.5rem;"></i> Dashboard
 					</a> *@
 
-						<a asp-controller="Users" asp-action="UserProfile" asp-route-id="@patientId" class="dashboard-nav-item active">
+						<a asp-controller="Users" asp-action="UserProfile" asp-route-id="@patientId" class="dashboard-nav-item">
 							<i class="bi bi-person-circle me-2" style="font-size:1.5rem;"></i> Profile
 						</a>
 
@@ -86,8 +89,8 @@
 								<i class="bi bi-calendar-plus-fill me-2" style="font-size:1.5rem;"></i> General Appointments
 							</a>
 							<div class='dashboard-nav-dropdown-menu'>
-								<a asp-controller="GeneralAppointment" asp-action="Book" class="dashboard-nav-dropdown-item">Book an Appointment</a>
-								<a asp-controller="GeneralAppointment" asp-action="Index" class="dashboard-nav-dropdown-item">View Appointments</a>
+								<a asp-controller="GeneralAppointment" asp-action="Book" class="dashboard-nav-dropdown-item dashboard-nav-item">Book an Appointment</a>
+								<a asp-controller="GeneralAppointment" asp-action="Index" class="dashboard-nav-dropdown-item dashboard-nav-item">View Appointments</a>
 							</div>
 						</div>
 
@@ -96,11 +99,11 @@
 								<i class="bi bi-journal-text me-2" style="font-size:1.5rem;"></i> Counselling
 							</a>
 							<div class='dashboard-nav-dropdown-menu'>
-								<a asp-controller="CounsellingAppointment" asp-action="Book" class="dashboard-nav-dropdown-item">Book to See a Counsellor</a>
-								<a asp-controller="CounsellingAppointment" asp-action="Index" class="dashboard-nav-dropdown-item">View All Counselling Appointments</a>
-								<a asp-controller="Counselling" asp-action="AdditionalResources" class="dashboard-nav-dropdown-item">Additional Resources (don't open 😭)</a>
-								<a asp-controller="Counselling" asp-action="BreathingExercise" class="dashboard-nav-dropdown-item">Breathing Exercises</a>
-								<a asp-controller="Counselling" asp-action="MentalQuiz" class="dashboard-nav-dropdown-item">Mental State Quiz</a>
+								<a asp-controller="CounsellingAppointment" asp-action="Book" class="dashboard-nav-dropdown-item dashboard-nav-item">Book to See a Counsellor</a>
+								<a asp-controller="CounsellingAppointment" asp-action="Index" class="dashboard-nav-dropdown-item dashboard-nav-item">View All Counselling Appointments</a>
+								<a asp-controller="Counselling" asp-action="AdditionalResources" class="dashboard-nav-dropdown-item dashboard-nav-item">Additional Resources</a>
+								<a asp-controller="Counselling" asp-action="BreathingExercise" class="dashboard-nav-dropdown-item dashboard-nav-item">Breathing Exercises</a>
+								<a asp-controller="Counselling" asp-action="MentalQuiz" class="dashboard-nav-dropdown-item dashboard-nav-item">Mental State Quiz</a>
 							</div>
 						</div>
 
@@ -109,11 +112,11 @@
 								<i class="bi bi-people me-2" style="font-size:1.5rem;"></i> Family Planning
 							</a>
 							<div class='dashboard-nav-dropdown-menu'>
-								<a asp-controller="Family" asp-action="RecommendContraceptive" class="dashboard-nav-dropdown-item">+ Recommend Contraceptive</a>
-								<a asp-controller="Family" asp-action="Info" class="dashboard-nav-dropdown-item">+ Contraceptive Info</a>
-								<a asp-controller="Family" asp-action="Index" class="dashboard-nav-dropdown-item">+ Booking</a>
-								<a asp-controller="Family" asp-action="PatientRecords" class="dashboard-nav-dropdown-item">+ User Report</a>
-								<a asp-controller="Family" asp-action="PatientRecord" class="dashboard-nav-dropdown-item">+ View Records</a>
+								<a asp-controller="Family" asp-action="RecommendContraceptive" class="dashboard-nav-dropdown-item dashboard-nav-item">+ Recommend Contraceptive</a>
+								<a asp-controller="Family" asp-action="Info" class="dashboard-nav-dropdown-item dashboard-nav-item">+ Contraceptive Info</a>
+								<a asp-controller="Family" asp-action="Index" class="dashboard-nav-dropdown-item dashboard-nav-item">+ Booking</a>
+								<a asp-controller="Family" asp-action="PatientRecords" class="dashboard-nav-dropdown-item dashboard-nav-item">+ User Report</a>
+								<a asp-controller="Family" asp-action="PatientRecord" class="dashboard-nav-dropdown-item dashboard-nav-item">+ View Records</a>
 
 								@*  Give feedback about the contracptive, change the action from info to feedback*@
 							</div>
@@ -124,10 +127,10 @@
                                 <i class="bi bi-person-fill-slash me-2" style="font-size:1.5rem;"></i> Gender-Based Violence
                             </a>
                             <div class='dashboard-nav-dropdown-menu'>
-                                <a asp-controller="GbvFaq" asp-action="Index" class="dashboard-nav-dropdown-item">GBV Frequently Asked Questions</a>
-                                <a asp-controller="ReportGBv" asp-action="report" class="dashboard-nav-dropdown-item">Report GBV</a>
-                                <a asp-controller="GbvSupport" asp-action="Create" class="dashboard-nav-dropdown-item">Support Group Registration</a>
-                                <a asp-controller="GbvSupport" asp-action="Index" class="dashboard-nav-dropdown-item">My Details</a>
+								<a asp-controller="GbvFaq" asp-action="Index" class="dashboard-nav-dropdown-item dashboard-nav-item">GBV Frequently Asked Questions</a>
+								<a asp-controller="ReportGBv" asp-action="report" class="dashboard-nav-dropdown-item dashboard-nav-item">Report GBV</a>
+								<a asp-controller="GbvSupport" asp-action="Create" class="dashboard-nav-dropdown-item dashboard-nav-item">Support Group Registration</a>
+								<a asp-controller="GbvSupport" asp-action="Index" class="dashboard-nav-dropdown-item dashboard-nav-item">My Details</a>
                                 @*  Give feedback about the contracptive, change the action from info to feedback*@
                             </div>
                         </div>
@@ -137,11 +140,11 @@
 								<i class="bi bi-virus2" style="font-size:1.5rem;"></i> Vaccination
 							</a>
 							<div class='dashboard-nav-dropdown-menu'>
-								<a asp-controller="VaccinationAppointment" asp-action="Book" class="dashboard-nav-dropdown-item">Book for a Vaccine</a>
-								<a asp-controller="VaccinationAppointment" asp-action="Index" class="dashboard-nav-dropdown-item">View Vaccination Appointments</a>
+								<a asp-controller="VaccinationAppointment" asp-action="Book" class="dashboard-nav-dropdown-item dashboard-nav-item">Book for a Vaccine</a>
+								<a asp-controller="VaccinationAppointment" asp-action="Index" class="dashboard-nav-dropdown-item dashboard-nav-item">View Vaccination Appointments</a>
 								@if (@_context.tblDoseTracking.Where(x => x.PatientId == patientId).FirstOrDefault() != null)
 								{
-									<a asp-controller="Vaccination" asp-action="Certificate" asp-route-id="@_context.tblDoseTracking.Where(x => x.PatientId == patientId).FirstOrDefault().ID" class="dashboard-nav-dropdown-item">Certificate</a>
+									<a asp-controller="Vaccination" asp-action="Certificate" asp-route-id="@_context.tblDoseTracking.Where(x => x.PatientId == patientId).FirstOrDefault().ID" class="dashboard-nav-dropdown-item dashboard-nav-item">Certificate</a>
 								}
 
 							</div>
@@ -152,8 +155,8 @@
 								<i class="bi bi-heart-pulse" style="font-size:1.5rem;"></i> Specialised Medical Procedures
 							</a>
 							<div class="dashboard-nav-dropdown-menu">
-								<a asp-controller="SMPAppointment" asp-action="Index" class="dashboard-nav-dropdown-item">My Appointments</a>
-								<a asp-controller="SMPAppointment" asp-action="SMPBookAppointment" class="dashboard-nav-dropdown-item">Book A Medical Procedure </a>
+								<a asp-controller="SMPAppointment" asp-action="Index" class="dashboard-nav-dropdown-item dashboard-nav-item">My Appointments</a>
+								<a asp-controller="SMPAppointment" asp-action="SMPBookAppointment" class="dashboard-nav-dropdown-item dashboard-nav-item">Book A Medical Procedure </a>
 							</div>
 						</div>
 
@@ -200,7 +203,7 @@
 									<a asp-controller="CounsellingAppointment" asp-action="Book" class="dashboard-nav-dropdown-item">Book to See a Counsellor</a>
 									<a asp-controller="CounsellingAppointment" asp-action="Index" class="dashboard-nav-dropdown-item">Confirmed Counselling Appointments</a>
 									<a asp-controller="Counselling" asp-action="AddResources" class="dashboard-nav-dropdown-item">Add Self-Help Resources</a>
-									<a asp-controller="Counselling" asp-action="AdditionalResources" class="dashboard-nav-dropdown-item">Additional Resources (don't open 😭)</a>
+									<a asp-controller="Counselling" asp-action="AdditionalResources" class="dashboard-nav-dropdown-item">Additional Resources</a>
 								</div>
 							</div>
 						}
@@ -397,6 +400,17 @@
 		new DataTable('#dtViewDoses');
 		new DataTable('#dtRepGbv');
 		new DataTable('#dtPendingApps');
+	</script>
+	<script>
+		let navigation = document.querySelector(".dashboard-nav-list");
+		let btns = navigation.querySelectorAll(".dashboard-nav-item");
+		for (let i = 0; i < btns.length; i++){
+			btns[i].addEventListiner("click", function () {
+				let current = document.querySelector(".active");
+				current[0].className = current[0].className.replace(" active", "");
+				this.className += " active";
+			});
+		}
 	</script>
 	}
 </body>

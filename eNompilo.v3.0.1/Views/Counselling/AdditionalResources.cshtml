@@ -12,70 +12,68 @@
 @inject eNompilo.v3._0._1.Areas.Identity.Data.ApplicationDbContext dbContext
 
 @{
-	ViewData["Title"] = "Additional Resources";
-	Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+    ViewData["Title"] = "Additional Resources";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
 }
 
 <h1>Additional Resources</h1>
 
-	@if (User.IsInRole(RoleConstants.Practitioner))
+@if (User.IsInRole(RoleConstants.Practitioner))
 {
-	<a asp-controller="Counselling" asp-action="AddResources">Add Video Resource</a>	
+    <a asp-controller="Counselling" asp-action="AddResources">Add Video Resource</a>
 }
 <div>
-	<div>
-		<h2>Self help video resources for triggers and struggles</h2>
-		<b class="text-danger">Please Note</b>
-		<p>
-			These resources are merely to assist in instances where a counsellor cannot be reached or accessed and are in no way intended to replace professional assistance and experties!<br />
-			As immediately as you can, please seek out counsellors or psychiatric help!
-		</p>
-	</div>
-	<div class=" m-4 row row-cols-1 row-cols-md-3 g-4">
-		@if (Model.Count() > 0)
-		{
-			@foreach (var item in Model)
-			{
-				<div class="col">
-					<div class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal_@item.Id">
-						<div class="card" style="width:365px !important; min-height: 395px !important;">
-							<img src="~/img/uploads/@item.ImageName" class="card-img-top" alt="@item.Description" style="width:365px; height:365px;">
-							<div class="card-body">
-								<h5 class="card-title text-black">@item.Title</h5>
-								<p class="card-text text-black-50">@item.Description</p>
-							</div>
-						</div>
-					</div>
-					
-				</div>
+    <div>
+        <h2>Self help video resources for triggers and struggles</h2>
+        <b class="text-danger">Please Note</b>
+        <p>
+            These resources are merely to assist in instances where a counsellor cannot be reached or accessed and are in no way intended to replace professional assistance and experties!<br />
+            As immediately as you can, please seek out counsellors or psychiatric help!
+        </p>
+    </div>
+    <div class=" m-4 row row-cols-1 row-cols-md-3 g-4">
+        @if (Model.Count() > 0)
+        {
+            @foreach (var item in Model)
+            {
+                <div class="col">
+                    <div class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal_@item.Id">
+                        <div class="card" style="width:365px !important; min-height: 395px !important;">
+                            <img src="~/img/uploads/@item.ImageName" class="card-img-top" alt="@item.Description" style="width:365px; height:365px;">
+                            <div class="card-body">
+                                <h5 class="card-title text-black">@item.Title</h5>
+                                <p class="card-text text-black-50">@item.Description</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
 
 
-				<div class="modal fade" id="modal_@item.Id" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-					<div class="modal-dialog">
-						<div class="modal-dialog modal-dialog-centered">
-						<div class="modal-content">
-							<div class="modal-header">
-								<h5 class="modal-title" id="exampleModalLabel">@item.Title</h5>
-								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-							</div>
-							<div class="modal-body">
-								<iframe style="width:90% !important;" src="@item.YoutubeLink">
-								</iframe>
-							</div>
-							<div class="modal-footer">
-								<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-							</div>
-						</div>
-						</div>
-					</div>
-				</div>
-			}
-		}
-		else
-		{
-			<ul class="list-group-flush" style="width: 100% !important">
-				<li class="list-group-item">No resources found. Please consult with your counsellor or system administrator</li>
-			</ul>
-		}
-	</div>
+                <div class="modal fade" id="modal_@item.Id" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-fullscreen">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">@item.Title</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <iframe style="width:97% !important; height: 97% !important;" src="@item.YoutubeLink">
+                                </iframe>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <ul class="list-group-flush" style="width: 100% !important">
+                <li class="list-group-item">No resources found. Please consult with your counsellor or system administrator</li>
+            </ul>
+        }
+    </div>
 </div>

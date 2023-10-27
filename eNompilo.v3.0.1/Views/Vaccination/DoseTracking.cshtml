@@ -90,6 +90,19 @@
     <a asp-action="ViewDoseTrackings">Back to List</a>
 </div>
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css" />
+
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+
+    <script>
+
+        var strValue = "@((string)ViewBag.OutOfStockMessage)";
+        if (strValue !== null && strValue !== '') {
+            swal("", strValue, "error");
+        }
+
+
+    </script>}
 }

@@ -27,6 +27,12 @@ namespace eNompiloCounselling.Controllers
             return View();
         }
 
+        [HttpPost]
+        public IActionResult NewSession(Session model)
+        {
+            return View();
+        }
+
         public IActionResult Details(int? Id) 
         {
             if(Id == null || Id == 0)

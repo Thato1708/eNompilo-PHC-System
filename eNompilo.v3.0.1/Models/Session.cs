@@ -17,8 +17,9 @@ namespace eNompilo.v3._0._1.Models
         public int PatientId { get; set; }
         public virtual Patient? Patient { get; set; }
 
+        [Required]
         [ForeignKey("Practitioner")]
-        public int? PractitionerId { get; set; }
+        public int PractitionerId { get; set; }
         public virtual Practitioner? Practitioner { get; set; }
 
         [NotMapped]
@@ -49,27 +50,21 @@ namespace eNompilo.v3._0._1.Models
         [Display(Name = "Patient arrival time")]
         public DateTime? ArrivalTime { get; set; }
 
-        [Required]
         [Display(Name = "Practitioner's Notes")]
-        public string PractitionerNotes { get; set; }
+        public string? PractitionerNotes { get; set; }
 
-        [Required]
         [Display(Name = "Does patient indicate any signs for a potential condition?")]
-        public bool ConditionIndication { get; set; }
+        public bool? ConditionIndication { get; set; }
 
         [Display(Name = "What potential condition may the patient have?")]
         public string? PotentialCondition { get; set; }
 
-        [Required]
         [Display(Name = "Does the patient indicate to be a danger to themselves or others?")]
-        public bool IsADanger { get; set; }
+        public bool? IsADanger { get; set; }
 
-        [Required]
         [Display(Name = "Does the patient indicate to be in danger (in an active abusive relationship?)")]
-        public bool IsAbused { get; set; } //if yes, mark patient account as abused and patient folder, and enable booking link
+        public bool? IsAbused { get; set; } //if yes, mark patient account as abused and patient folder, and enable booking link
 
-
-        [Required]
         [DisplayName("Prescription Medication")]
         public string? Prescription { get; set; }
 
@@ -81,8 +76,6 @@ namespace eNompilo.v3._0._1.Models
 
         [Required]
         public bool Archived { get; set; }
-
-        public string? Status { get; set; }
 
     }
 }

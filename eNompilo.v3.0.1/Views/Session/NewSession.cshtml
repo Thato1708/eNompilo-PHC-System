@@ -1,8 +1,21 @@
 ﻿@model eNompilo.v3._0._1.Models.Session
+@using Microsoft.AspNetCore.Identity;
+@using System.Collections;
+@using eNompilo.v3._0._1.Constants;
+@using eNompilo.v3._0._1.Models.SystemUsers;
+@inject UserManager<ApplicationUser> UserManager
+@inject SignInManager<ApplicationUser> SignInManager
+@inject eNompilo.v3._0._1.Areas.Identity.Data.ApplicationDbContext _context
 
 @{
     ViewData["Title"] = "NewSession";
     Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+
+    var patient = _context.tblPatient.Select(p => new SelectListItem
+            {
+                Value = p.Id.ToString(),
+                Text = p.FirstName + " " + p.LastName + " (" + p.IdNumber + ")",
+            }).ToList();
 }
 
 <h1>NewSession</h1>
@@ -12,21 +25,23 @@
     <div class="col-md-4">
         <form asp-action="NewSession">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="PatientId" class="control-label"></label>
-                <select asp-for="PatientId" class="form-control" asp-items="ViewBag.PatientId"></select>
+            <div class="form-group mb-4">
+                <label asp-for="Patient" class="control-label"></label>
+                <select asp-for="PatientId" id="selectedPatient" class="form-control" asp-items="@(new SelectList(patient, "Value", "Text"))">
+                    <option disabled selected hidden>Please select an option</option>
+                </select>
+                <span asp-validation-for="PatientId" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group" hidden>
                 <label asp-for="PractitionerId" class="control-label"></label>
-                <select asp-for="PractitionerId" class="form-control" asp-items="ViewBag.PractitionerId"></select>
+                <input asp-for="PractitionerId" value="@_context.tblPractitioner.Where(x=>x.UserId == UserManager.GetUserAsync(User).Result.Id).FirstOrDefault().Id" class="form-control" />
             </div>
             <div class="form-group form-check">
                 <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Arrived" /> @Html.DisplayNameFor(model => model.Arrived)
+                    <input id ="employedCheckbox" class="form-check-input" asp-for="Arrived" /> @Html.DisplayNameFor(model => model.Arrived)
                 </label>
             </div>
-            @if (Model.Arrived == true)
-            {
+            <div id="workTelDiv">
                 <div class="form-group">
                     <label asp-for="ArrivalTime" class="control-label"></label>
                     <input asp-for="ArrivalTime" class="form-control" />
@@ -34,7 +49,7 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="PractitionerNotes" class="control-label"></label>
-                    <input asp-for="PractitionerNotes" class="form-control" />
+                    <textarea asp-for="PractitionerNotes" class="form-control" />
                     <span asp-validation-for="PractitionerNotes" class="text-danger"></span>
                 </div>
                 <div class="form-group form-check">
@@ -58,26 +73,21 @@
                     </label>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Prescription" class="control-label"></label>
-                    <input asp-for="Prescription" class="form-control" />
-                    <span asp-validation-for="Prescription" class="text-danger"></span>
-                </div>
-                <div class="form-group">
                     <label asp-for="EndTime" class="control-label"></label>
                     <input asp-for="EndTime" class="form-control" />
                     <span asp-validation-for="EndTime" class="text-danger"></span>
                 </div>
-            }
+                <div class="form-group">
+                    <label asp-for="Prescription" class="control-label"></label>
+                    <textarea asp-for="Prescription" class="form-control"></textarea>
+                    <span asp-validation-for="Prescription" class="text-danger"></span>
+                </div>
+            </div>
 
             <div class="form-group form-check">
                 <label class="form-check-label">
                     <input class="form-check-input" asp-for="Archived" /> @Html.DisplayNameFor(model => model.Archived)
                 </label>
-            </div>
-            <div class="form-group">
-                <label asp-for="Status" class="control-label"></label>
-                <input asp-for="Status" class="form-control" />
-                <span asp-validation-for="Status" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
@@ -93,5 +103,21 @@
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        <script>
+            window.onload = function () {
+                var checkbox = document.getElementById('employedCheckbox');
+                var workTelDiv = document.getElementById('workTelDiv');
+
+                checkbox.addEventListener('change', function () {
+                    if (checkbox.checked) {
+                        workTelDiv.style.display = 'block';
+                    } else {
+                        workTelDiv.style.display = 'none';
+                    }
+                });
+                // Trigger change event to set initial visibility
+                checkbox.dispatchEvent(new Event('change'));
+            };
+        </script>
     }
 }
